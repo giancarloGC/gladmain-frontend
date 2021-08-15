@@ -1,0 +1,27 @@
+nav a {
+	display:inline-block;
+	color:rgb(236, 172, 74);
+	text-decoration:none;
+	padding:10px 20px;
+	line-height:normal;
+	font-size:20px;
+	font-weight:bold;
+	-webkit-transition:all 500ms ease;
+	-o-transition:all 500ms ease;
+	transition:all 500ms ease;
+}
+
+.nav-link {
+	color: rgb(19, 75, 139);
+}
+
+.nav-link:hover {
+	color: #fff;
+	background-color: #fd650d;
+	border-radius: 50px;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #fd650d;
+}
