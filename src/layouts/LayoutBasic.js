@@ -10,7 +10,7 @@ import animationVision from './../assets/animations/17490-vision-text-blob.json'
 import Logo from "./../assets/img/logocomfaoriente.png";
 import Wallpaper from "./../assets/img/natalya-zaritskaya-SIOdjcYotms-unsplash.jpg"; 
 
-import GalleryHome from "../components/GalleryHome";
+import GalleryHome from "../components/GalleryHome/GalleryHome";
 import "./LayoutBasic.scss";
 
 export default function LayoutBasic({routes}){
@@ -75,6 +75,7 @@ export default function LayoutBasic({routes}){
 
                     <Row>
                         <Col>
+                        <GalleryHome />
                                                 </Col>
                     </Row>
                 </Container>
