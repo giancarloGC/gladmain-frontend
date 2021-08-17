@@ -1,18 +1,10 @@
-import Home from "../pages/Home";
-import LayoutBasic from "../layouts/LayoutBasic";
+import Welcome from "../pages/Welcome/Welcome";
 
 const routes = [
     {
         path: "/",
-        exact: false,
-        component: LayoutBasic,
-        routes: [
-            {
-                path: "/",
-                component: Home,
-                exact: true
-            }
-        ]
+        exact: true,
+        component: Welcome,
     }
 ];
 
