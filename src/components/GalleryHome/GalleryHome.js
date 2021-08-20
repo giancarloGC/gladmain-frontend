@@ -1,16 +1,19 @@
 import React,{ Fragment } from 'react';
-
+import { Container, Row, Col } from "react-bootstrap";
+import Gallery1 from "../../assets/img/gallery1.PNG";
 import "./GalleryHome.scss";
 export default function GalleryHome(){
     return(
         <Fragment>
+			<Container>
+				<Row>
 <div className="wrapper">
-
+<Col md={4} sm={3}>
 	<div className="containerCard" id="c0">
 		<div className="image" id="i0">
 			
 			<div className="city">
-
+			{/* 
 			<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 	viewBox="0 0 300 225" space="preserve">
 			<ellipse className="st4" id="sh1" cx="170.5" cy ="124.75" rx="37.5" ry="37.5"/>
@@ -37,16 +40,15 @@ export default function GalleryHome(){
 			<circle id="XMLID_14_" className="st3" cx="174.5" cy="92.5" r="1.0"/>
 
 			</svg>
+*/}
+<img src={Gallery1}/>
+			</div>
+		</div>
 
-			</div>
-		</div>
-		<div className="story" id="s0">
-			<div className="info">
-			<h3>Pyramids</h3>
-			<p> Built during a time when Egypt was one of the richest and most powerful civilizations in the world. Their massive scale reflects the unique role that the pharaoh played in ancient Egyptian society.</p>
-			</div>
-		</div>
 	</div>
+	</Col>
+
+	<Col md={4} sm={3}>
 	<div className="containerCard" id="c1">
 		<div className="image" id="i1">
 			<div className="city">
@@ -93,6 +95,9 @@ export default function GalleryHome(){
 			</div>
 		</div>
 	</div>
+	</Col>
+
+	<Col md={4} sm={3}>
 
 	<div className="containerCard" id="c2">
 		<div className="image" id="i2">
@@ -147,10 +152,11 @@ export default function GalleryHome(){
 		</div>
 	</div>
 
+</Col>
 
 </div>
-	
-
+</Row>
+</Container>
 		</Fragment>
     );
 }

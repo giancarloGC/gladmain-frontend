@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:200');
 .wrapper {
-  position: relative;
+  //position: relative;
   top: 10%;
-  left: 40%;
-  width: 300px;
+  //left: 40%;
+  //width: 300px;
   height: 500px;
   perspective: 900px;
 }
 
 .containerCard {
-  position: absolute;
+  //position: absolute;
   top: 0%;
   width: 100%;
   height: 100%;
@@ -21,15 +21,15 @@
 }
 
 #c0 {
-  position: absolute;
+  /*position: absolute;
   top: 0%;
   width: 100%;
   height: 100%;
   background: linear-gradient(to bottom, #eba65b 30%, #d99267 100%);
   z-index: 300;
-  box-shadow: 0px 20px 100px #555;
+  box-shadow: 0px 20px 100px #555;*/
 }
-
+/*
 #c1 {
   background: linear-gradient(to bottom, #59476f 30%, #7b88d1 100%);
   box-shadow: 0px 20px 100px #555;
@@ -43,16 +43,16 @@
   background: linear-gradient(to bottom, #59476f 30%, #7b88d1 100%);
   box-shadow: 0px 20px 100px #555;
 }
-
+*/
 .containerCard:hover {
   cursor: pointer;
   transform: rotate(0deg) scale(1) translateY(10px);
   transition: .5s all ease;
-  z-index: 400;
+  z-index: 400; 
 }
 
 .image {
-  position: absolute;
+  //position: absolute;
   top: 0%;
   left: 0%;
   width: 100%;

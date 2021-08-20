@@ -1,15 +1,23 @@
 import React from 'react';
-import { Col, Row, Form, Button } from "react-bootstrap";
+import { Col, Row, Form, Button, Modal, Container } from "react-bootstrap";
 import { Formik } from "formik";
 import Logo from "./../../assets/img/logoGladmain.PNG";
+
 import "./LoginForm.scss";
 
-export default function LoginForm() {
+export default function LoginForm(props) {
+  const { showLogin, setShowLogin } = props;
     return(
-        <div className="my-5 p-5 mx-5 bg-white">
+      <Modal show={showLogin} size="xl"  onHide={() => setShowLogin(false)}  centered aria-labelledby="example-custom-modal-styling-title"
+      >
+                <Modal.Header closeButton>
+                <Modal.Title id="example-custom-modal-styling-title"> Inicio de Sesión</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="show-grid">
+        <Container className="p-5">
             <Row>
-                <Col md={6} className="text-center">
-                <h1 className="mb-5 mt-5">Iniciar sesión</h1>
+                <Col sm={2} md={6} className="text-center">
+                <h1 className="mb-5">Iniciar sesión</h1>
 
                 <Formik
                 initialValues={{ email: "" }}
@@ -83,10 +91,12 @@ export default function LoginForm() {
     </Formik>                
 
                 </Col>
-                <Col md={6}>
-                    <img src={Logo} alt="img-logo" />
+                <Col sm={2} md={6}>
+                    <img src={Logo} alt="img-logo" className="fluid"/>
                 </Col>
             </Row>
-        </div>
+        </Container>
+        </Modal.Body>
+        </Modal>
     )
 }

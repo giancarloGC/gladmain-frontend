@@ -1,7 +1,6 @@
-import React,{ Fragment } from 'react';
+import React,{ Fragment, useState } from 'react';
 import { Container, Row, Col, Navbar, Nav  } from 'react-bootstrap';
 
-import { Route, Switch } from "react-router-dom";
 import Lottie from 'react-lottie';
 import animationMom from './../../assets/animations/41351-baby-mom-love.json';
 import animationMission from './../../assets/animations/17374-mission-1.json';
@@ -10,6 +9,7 @@ import animationVision from './../../assets/animations/17490-vision-text-blob.js
 import Logo from "./../../assets/img/logocomfaoriente.png";
 
 import GalleryHome from "../../components/GalleryHome/GalleryHome";
+import LoginForm from "../../components/Login/LoginForm";
 import "./Welcome.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
@@ -17,7 +17,8 @@ import { faFacebookF, faLinkedinIn, faInstagram, faYoutube, faTwitter } from '@f
 
 import * as Scroll from 'react-scroll';
 
-export default function Welcome({routes}){
+export default function Welcome(){
+    const [showLogin, setShowLogin] = useState(false);
     const scroll = Scroll.animateScroll;
     const scrollToTop = () => {
         scroll.scrollToTop();
@@ -30,23 +31,22 @@ export default function Welcome({routes}){
                 <Container>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="me-auto" navbarScroll variant="pills" defaultActiveKey="/login">
+                    <Nav className="me-auto" navbarScroll variant="pills" defaultActiveKey="#login">
                         <Nav.Link href="#about-we" >Sobre Nosotros</Nav.Link>
                         <Nav.Link href="#gallery">Galeria</Nav.Link>
                         <Nav.Link href="#contact">Contacto</Nav.Link>
-                        <Nav.Link href="/login" >Log in</Nav.Link>
+                        <Nav.Link href="#login" onClick={() => setShowLogin(true)}>Log in</Nav.Link>
                     </Nav>
-                    <Navbar.Brand href="#home"><img
-                src={Logo}
-                className="d-inline-block align-top"
-                alt="React Bootstrap logo"
-                /></Navbar.Brand>
-                                    </Navbar.Collapse>
+                    <Navbar.Brand href="#home">
+                        <img src={Logo} className="d-inline-block align-top" alt="React Bootstrap logo"/>
+                    </Navbar.Brand>
+                    </Navbar.Collapse>
 
                 </Container>
             </Navbar>
             </header>
             <content>
+                <LoginForm showLogin={showLogin} setShowLogin={setShowLogin} />
                 <Container fluid>
                     <Row>
                         <Col className="justify-content-center align-content-center text-center mb-5">
