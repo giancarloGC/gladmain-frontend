@@ -1,23 +1,8 @@
 import { urlBackend } from "./config";
 
-export function getRolesApi(){
-    const url = `${urlBackend}sesion/LISTAR_ROLES`;
-    const params = {
-        headers: {
-            "Content-Type": "application/json"
-        },
-        method: "GET"
-    };
 
-    return fetch(url, params)
-            .then(response => {return response.json()})
-            .then(result => {return result})
-            .catch(err => {return err});
-}
-
-
-export function insertRolApi(data){
-    const url = `${urlBackend}rol/REGISTRAR_ROL`;
+export function insertContVaccApi(data){
+    const url = `${urlBackend}control_vacunacion/REGISTRAR_CONTROL_VACUNACION`;
     const params = {
         headers: {
             "Content-Type": "application/json"
@@ -32,23 +17,8 @@ export function insertRolApi(data){
             .catch(err => {return err});
 }
 
-export function getRolByIdApi(id){
-    const url = `${urlBackend}rol/CONSULTAR_ROL/${id}`;
-    const params = {
-        headers: {
-            "Content-Type": "application/json"
-        },
-        method: "GET"
-    };
-
-    return fetch(url, params)
-            .then(response => {return response.json()})
-            .then(result => {return result})
-            .catch(err => {return err});
-}
-
-export function updateRolApi(data){
-    const url = `${urlBackend}rol/ACTUALIZAR_ROL`;
+export function updateContVaccApi(data){
+    const url = `${urlBackend}control_vacunacion/ACTUALIZAR_CONTROL_VACUNACION`;
     const params = {
         headers: {
             "Content-Type": "application/json"
@@ -63,8 +33,8 @@ export function updateRolApi(data){
             .catch(err => {return err});
 }
 
-export function deleteRolApi(id){
-    const url = `${urlBackend}rol/ELIMINAR_ROL/${id}`;
+export function deleteContVaccApi(id){
+    const url = `${urlBackend}control_vacunacion/ELIMINAR_CONTROL_VACUNACION/${id}`;
     const params = {
         headers: {
             "Content-Type": "application/json"
@@ -78,9 +48,8 @@ export function deleteRolApi(id){
             .catch(err => {return err});
 }
 
-//Preguntar a Danny
-export function getAssignRolApi(id, data){
-    const url = `${urlBackend}rol/ASIGNAR_ROL/${id}/${data}`;
+export function getContVaccApi(data){
+    const url = `${urlBackend}control_vacunacion/LISTAR_CONTROLES_VACUNACION/${data}`;
     const params = {
         headers: {
             "Content-Type": "application/json"
@@ -93,9 +62,24 @@ export function getAssignRolApi(id, data){
             .then(result => {return result})
             .catch(err => {return err});
 }
-//Preguntar a Danny
-export function getRemoveRolApi(id, data){
-    const url = `${urlBackend}rol/RETIRAR_ROL/${id}/${data}`;
+
+export function getContVaccByIdApi(id){
+    const url = `${urlBackend}control_vacunacion/CONSULTAR_CONTROL_VACUNACION/${id}`;
+    const params = {
+        headers: {
+            "Content-Type": "application/json"
+        },
+        method: "GET"
+    };
+
+    return fetch(url, params)
+            .then(response => {return response.json()})
+            .then(result => {return result})
+            .catch(err => {return err});
+}
+
+export function getVaccXDocApi(data){
+    const url = `${urlBackend}control_vacunacion/LISTAR_VACUNACION_DOCUMENTO/${data}`;
     const params = {
         headers: {
             "Content-Type": "application/json"

@@ -1,23 +1,8 @@
 import { urlBackend } from "./config";
 
-export function getRolesApi(){
-    const url = `${urlBackend}sesion/LISTAR_ROLES`;
-    const params = {
-        headers: {
-            "Content-Type": "application/json"
-        },
-        method: "GET"
-    };
-
-    return fetch(url, params)
-            .then(response => {return response.json()})
-            .then(result => {return result})
-            .catch(err => {return err});
-}
-
-
-export function insertRolApi(data){
-    const url = `${urlBackend}rol/REGISTRAR_ROL`;
+//Preguntar a Danny
+export function insertControlApi(data){
+    const url = `${urlBackend}control/REGISTRAR_CONTROL/false`;
     const params = {
         headers: {
             "Content-Type": "application/json"
@@ -32,23 +17,8 @@ export function insertRolApi(data){
             .catch(err => {return err});
 }
 
-export function getRolByIdApi(id){
-    const url = `${urlBackend}rol/CONSULTAR_ROL/${id}`;
-    const params = {
-        headers: {
-            "Content-Type": "application/json"
-        },
-        method: "GET"
-    };
-
-    return fetch(url, params)
-            .then(response => {return response.json()})
-            .then(result => {return result})
-            .catch(err => {return err});
-}
-
-export function updateRolApi(data){
-    const url = `${urlBackend}rol/ACTUALIZAR_ROL`;
+export function updateControlApi(data){
+    const url = `${urlBackend}control/ACTUALIZAR_CONTROL`;
     const params = {
         headers: {
             "Content-Type": "application/json"
@@ -63,8 +33,8 @@ export function updateRolApi(data){
             .catch(err => {return err});
 }
 
-export function deleteRolApi(id){
-    const url = `${urlBackend}rol/ELIMINAR_ROL/${id}`;
+export function deleteControlApi(id){
+    const url = `${urlBackend}control/ELIMINAR_CONTROL/${id}`;
     const params = {
         headers: {
             "Content-Type": "application/json"
@@ -78,9 +48,8 @@ export function deleteRolApi(id){
             .catch(err => {return err});
 }
 
-//Preguntar a Danny
-export function getAssignRolApi(id, data){
-    const url = `${urlBackend}rol/ASIGNAR_ROL/${id}/${data}`;
+export function getControlByIdApi(id){
+    const url = `${urlBackend}control/CONSULTAR_CONTROL/${id}`;
     const params = {
         headers: {
             "Content-Type": "application/json"
@@ -93,9 +62,58 @@ export function getAssignRolApi(id, data){
             .then(result => {return result})
             .catch(err => {return err});
 }
-//Preguntar a Danny
-export function getRemoveRolApi(id, data){
-    const url = `${urlBackend}rol/RETIRAR_ROL/${id}/${data}`;
+
+//PREGUNTAR A DANNY
+export function getControlNutriApi(data){
+    const url = `${urlBackend}control/LISTAR_CONTROLES_NUTRICIONALES/${data}`;
+    const params = {
+        headers: {
+            "Content-Type": "application/json"
+        },
+        method: "GET"
+    };
+
+    return fetch(url, params)
+            .then(response => {return response.json()})
+            .then(result => {return result})
+            .catch(err => {return err});
+}
+
+//PREGUNTAR A DANNY
+export function getControlCyDApi(data){
+    const url = `${urlBackend}control/LISTAR_CONTROLES_CYD/${data}`;
+    const params = {
+        headers: {
+            "Content-Type": "application/json"
+        },
+        method: "GET"
+    };
+
+    return fetch(url, params)
+            .then(response => {return response.json()})
+            .then(result => {return result})
+            .catch(err => {return err});
+}
+
+//PREGUNTAR A DANNY
+export function getLatestCyDApi(data){
+    const url = `${urlBackend}control/ULTIMO_CONTROL_CYD/${data}`;
+    const params = {
+        headers: {
+            "Content-Type": "application/json"
+        },
+        method: "GET"
+    };
+
+    return fetch(url, params)
+            .then(response => {return response.json()})
+            .then(result => {return result})
+            .catch(err => {return err});
+}
+
+//PREGUNTAR A DANNY
+export function getListLatestControlsApi(data, data2){
+    const url = `${urlBackend}control/ULTIMO_CONTROL_CYD/${data}/${data2}`;
     const params = {
         headers: {
             "Content-Type": "application/json"

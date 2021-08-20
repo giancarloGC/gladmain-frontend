@@ -1,23 +1,8 @@
 import { urlBackend } from "./config";
 
-export function getRolesApi(){
-    const url = `${urlBackend}sesion/LISTAR_ROLES`;
-    const params = {
-        headers: {
-            "Content-Type": "application/json"
-        },
-        method: "GET"
-    };
 
-    return fetch(url, params)
-            .then(response => {return response.json()})
-            .then(result => {return result})
-            .catch(err => {return err});
-}
-
-
-export function insertRolApi(data){
-    const url = `${urlBackend}rol/REGISTRAR_ROL`;
+export function insertInfantIncomeApi(data){
+    const url = `${urlBackend}control_seguimiento/REGISTRAR_INGRESO_INFANTE`;
     const params = {
         headers: {
             "Content-Type": "application/json"
@@ -32,23 +17,8 @@ export function insertRolApi(data){
             .catch(err => {return err});
 }
 
-export function getRolByIdApi(id){
-    const url = `${urlBackend}rol/CONSULTAR_ROL/${id}`;
-    const params = {
-        headers: {
-            "Content-Type": "application/json"
-        },
-        method: "GET"
-    };
-
-    return fetch(url, params)
-            .then(response => {return response.json()})
-            .then(result => {return result})
-            .catch(err => {return err});
-}
-
-export function updateRolApi(data){
-    const url = `${urlBackend}rol/ACTUALIZAR_ROL`;
+export function updateInfantIncomeApi(data){
+    const url = `${urlBackend}control_seguimiento/ACTUALIZAR_INGRESO_INFANTE`;
     const params = {
         headers: {
             "Content-Type": "application/json"
@@ -63,8 +33,38 @@ export function updateRolApi(data){
             .catch(err => {return err});
 }
 
-export function deleteRolApi(id){
-    const url = `${urlBackend}rol/ELIMINAR_ROL/${id}`;
+export function getInfantIncomeApi(data){
+    const url = `${urlBackend}control_seguimiento/LISTAR_INGRESOS_INFANTE/${data}`;
+    const params = {
+        headers: {
+            "Content-Type": "application/json"
+        },
+        method: "GET"
+    };
+
+    return fetch(url, params)
+            .then(response => {return response.json()})
+            .then(result => {return result})
+            .catch(err => {return err});
+}
+
+export function getInfantIncomeXIdApi(id){
+    const url = `${urlBackend}control_seguimiento/CONSULTAR_INGRESO_INFANTE${id}`;
+    const params = {
+        headers: {
+            "Content-Type": "application/json"
+        },
+        method: "GET"
+    };
+
+    return fetch(url, params)
+            .then(response => {return response.json()})
+            .then(result => {return result})
+            .catch(err => {return err});
+}
+
+export function deleteInfantIncomeApi(id){
+    const url = `${urlBackend}control_seguimiento/ELIMINAR_INGRESO/${id}`;
     const params = {
         headers: {
             "Content-Type": "application/json"
@@ -78,33 +78,3 @@ export function deleteRolApi(id){
             .catch(err => {return err});
 }
 
-//Preguntar a Danny
-export function getAssignRolApi(id, data){
-    const url = `${urlBackend}rol/ASIGNAR_ROL/${id}/${data}`;
-    const params = {
-        headers: {
-            "Content-Type": "application/json"
-        },
-        method: "GET"
-    };
-
-    return fetch(url, params)
-            .then(response => {return response.json()})
-            .then(result => {return result})
-            .catch(err => {return err});
-}
-//Preguntar a Danny
-export function getRemoveRolApi(id, data){
-    const url = `${urlBackend}rol/RETIRAR_ROL/${id}/${data}`;
-    const params = {
-        headers: {
-            "Content-Type": "application/json"
-        },
-        method: "GET"
-    };
-
-    return fetch(url, params)
-            .then(response => {return response.json()})
-            .then(result => {return result})
-            .catch(err => {return err});
-}
