@@ -1,6 +1,5 @@
 import React,{ Fragment } from 'react';
 
-import { Image } from "react-bootstrap";
 import "./GalleryHome.scss";
 export default function GalleryHome(){
     return(

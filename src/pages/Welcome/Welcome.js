@@ -1,5 +1,5 @@
 import React,{ Fragment } from 'react';
-import { Container, Row, Col, Navbar, Nav, Image  } from 'react-bootstrap';
+import { Container, Row, Col, Navbar, Nav  } from 'react-bootstrap';
 
 import { Route, Switch } from "react-router-dom";
 import Lottie from 'react-lottie';
