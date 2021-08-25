@@ -10,3 +10,9 @@
 .imgLogo {
     max-width: 350px;
 }
+
+@media (max-width: 600px) {
+    .imgLogo {
+        max-width: 100px;
+    }    
+}

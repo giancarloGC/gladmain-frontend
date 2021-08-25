@@ -1,17 +1,19 @@
 import { urlBackend } from "./config";
 
 export function getRolesApi(){
-    const url = `${urlBackend}sesion/LISTAR_ROLES`;
+    const url = `/api/sesion/LISTAR_ROLES`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
-        method: "GET"
+        method: "GET",
     };
 
     return fetch(url, params)
             .then(response => {return response.json()})
-            .then(result => {return result})
+            .then(result => {
+                return result;
+            })
             .catch(err => {return err});
 }
 

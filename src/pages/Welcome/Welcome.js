@@ -9,6 +9,8 @@ import animationVision from './../../assets/animations/17490-vision-text-blob.js
 import Logo from "./../../assets/img/logocomfaoriente.png";
 
 import GalleryHome from "../../components/GalleryHome/GalleryHome";
+import Gallery from "../../components/Gallery/Gallery";
+
 import LoginForm from "../../components/Login/LoginForm";
 import "./Welcome.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -82,7 +84,7 @@ export default function Welcome(){
                         <Col>
                             <h1 className="text-center">Galeria</h1>
                             <h5 className="text-center">Los niños son el recurso mas importante del mundo y la esperanza para el futuro </h5>
-                            <GalleryHome />
+                            <Gallery />
                         </Col>
                     </Row>
                 </Container>
