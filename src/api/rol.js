@@ -18,10 +18,36 @@ export function getRolesApi(){
 }
 
 
-export function insertRolApi(data){
-    const url = `${urlBackend}rol/REGISTRAR_ROL`;
+export function insertRolApi({name, token}){
+    const data = {
+        rol: {
+            idRol: 0,
+            nombre: name
+        },
+        privilegios: [
+            {
+                id: 1,
+                nombre: "CONSULTAR_ROL"
+            },
+               {
+                id: 3,
+                nombre: "ASIGNAR_ROL"
+            },
+               {
+                id: 9,
+                nombre: "RETIRAR_ROL"
+            },
+               {
+                id: 4,
+                nombre: "LISTAR_ROLES"
+            }
+        ]
+    };
+
+    const url = `/api/rol/REGISTRAR_ROL`;
     const params = {
         headers: {
+            "Authorization": token,
             "Content-Type": "application/json"
         },
         method: "POST",

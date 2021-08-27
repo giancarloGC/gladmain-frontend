@@ -3,6 +3,8 @@ import Welcome from "../pages/Welcome/Welcome";
 import LayoutAdmin from "../layouts/LayoutAdmin";
 import Login from "../pages/Login/Login";
 import Home from "../pages/Home/Home";
+import ListRol from "../pages/Rol/ListRol";
+import AddRol from "../pages/Rol/AddRol";
 
 const routes = [
     {
@@ -25,6 +27,16 @@ const routes = [
                 exact: true,
                 component: Home,
             },
+            {
+                path: "/admin/roles",
+                exact: true,
+                component: ListRol,
+            },
+            {
+                path: "/admin/addRol",
+                exact: true,
+                component: AddRol,
+            },              
         ]
     }   
 ];

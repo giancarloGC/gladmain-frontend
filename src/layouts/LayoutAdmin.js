@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch, Redirect, Link} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faUserTie, faUsers, faLaptopMedical, faHome } from '@fortawesome/free-solid-svg-icons';
 import Logo from "./../assets/img/logocomfaoriente.png";
@@ -58,12 +58,12 @@ export default function LayoutAdmin(props){
         
                 <div className="options__menu">	
         
-                    <a href="#" className="selected">
+                    <Link to="/admin/roles" className="selected">
                         <div className="option">
                             <FontAwesomeIcon icon={faUserTie} className="icon" size="2x" />
                             <h4 className="subtitlesMenu">Roles</h4>
                         </div>
-                    </a>
+                    </Link>
         
                     <a href="#">
                         <div className="option">
