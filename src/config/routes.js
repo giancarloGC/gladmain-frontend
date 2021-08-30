@@ -5,6 +5,14 @@ import Login from "../pages/Login/Login";
 import Home from "../pages/Home/Home";
 import ListRol from "../pages/Rol/ListRol";
 import AddRol from "../pages/Rol/AddRol";
+import ListUsers from "../pages/Users/ListUsers";
+import AddUser from "../pages/Users/AddUser";
+import EditUser from "../pages/Users/EditUser";
+import User from "../pages/Users/User";
+
+import Page from "../pages/Example/Page";
+
+import NotFound404 from "../pages/NotFound404";
 
 const routes = [
     {
@@ -36,7 +44,35 @@ const routes = [
                 path: "/admin/addRol",
                 exact: true,
                 component: AddRol,
-            },              
+            },
+            {
+                path: "/admin/users",
+                exact: true,
+                component: ListUsers,
+            },  
+            {
+                path: "/admin/addUser",
+                exact: true,
+                component: AddUser,
+            },  
+            {
+                path: "/admin/user",
+                exact: true,
+                component: User,
+            },   
+            {
+                path: "/admin/editUser/:documento",
+                exact: true,
+                component: EditUser,
+            },   
+            {
+                path: "/admin/addExample",
+                exact: true,
+                component: Page,
+            },                    
+            {
+                component: NotFound404,
+            },                         
         ]
     }   
 ];

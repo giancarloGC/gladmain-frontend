@@ -1,10 +1,13 @@
 import { urlBackend } from "./config";
 
 export function insertUserApi(data){
-    const url = `${urlBackend}usuario/REGISTRAR_USUARIO`;
+    let newDocument = parseInt(data.documento);
+    data.documento = newDocument;
+    const url = `/api/usuario/REGISTRAR_USUARIO`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": data.token
         },
         method: "POST",
         body: JSON.stringify(data)
@@ -16,13 +19,15 @@ export function insertUserApi(data){
             .catch(err => {return err});
 }
 
-export function updateUserApi(data){
-    const url = `${urlBackend}usuario/ACTUALIZAR_USUARIO`;
+export function updateUserApi(data, token){
+    const url = `/api/usuario/ACTUALIZAR_USUARIO`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
+
         },
-        method: "PUT",
+        method: "POST",
         body: JSON.stringify(data)
     };
 
@@ -32,26 +37,12 @@ export function updateUserApi(data){
             .catch(err => {return err});
 }
 
-export function deleteUserApi(id){
-    const url = `${urlBackend}usuario/ELIMINAR_USUARIO/${id}`;
+export function deleteUserApi(id, token){
+    const url = `/api/usuario/ELIMINAR_USUARIO/${id}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
-        },
-        method: "DELETE"
-    };
-
-    return fetch(url, params)
-            .then(response => {return response.json()})
-            .then(result => {return result})
-            .catch(err => {return err});
-}
-
-export function getUserApi(){
-    const url = `${urlBackend}usuario/LISTAR_USUARIOS`;
-    const params = {
-        headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET"
     };
@@ -62,11 +53,28 @@ export function getUserApi(){
             .catch(err => {return err});
 }
 
-export function getUserByIdApi(id){
-    const url = `${urlBackend}usuario/CONSULTAR_USUARIO/${id}`;
+export function getUserApi(token){
+    const url = `/api/usuario/LISTAR_USUARIOS`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
+        },
+        method: "GET"
+    };
+
+    return fetch(url, params)
+            .then(response => {return response.json()})
+            .then(result => {return result})
+            .catch(err => {return err});
+}
+
+export function getUserByIdApi(documento, token){
+    const url = `/api/usuario/CONSULTAR_USUARIO/${documento}`;
+    const params = {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET"
     };

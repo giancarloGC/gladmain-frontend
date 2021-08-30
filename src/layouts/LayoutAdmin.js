@@ -13,6 +13,7 @@ import useAuth from '../hooks/useAuth';
 export default function LayoutAdmin(props){
     const { routes } = props;
     const [ openMenu, setOpenMenu ] = useState(false);
+    const [ linkSelected, setLinkSelected ] = useState({roles: true, users: false, controls: false});
     const { user, isLoading } = useAuth();
     console.log(user);
     //useEffect(() => {
@@ -29,7 +30,7 @@ export default function LayoutAdmin(props){
     //}, []);
         if(user && !isLoading){
             return(
-                <body className={openMenu ? "body body_move" : "body"}>
+                <div className={openMenu ? "body body_move" : "body"}>
             <header className="headers">
                 <div className="icon__menu">
                     <FontAwesomeIcon icon={faBars} id="btn_open" onClick={() => setOpenMenu(!openMenu)} className="icon"/>
@@ -58,26 +59,30 @@ export default function LayoutAdmin(props){
         
                 <div className="options__menu">	
         
-                    <Link to="/admin/roles" className="selected">
+                    <Link to="/admin/roles" className={linkSelected.roles ? "selected" : ""} 
+                        onClick={() => setLinkSelected({roles: true, users: false, controls: false})}
+                    >
                         <div className="option">
-                            <FontAwesomeIcon icon={faUserTie} className="icon" size="2x" />
+                            <FontAwesomeIcon icon={faUserTie} className="icon" size="2x"/>
                             <h4 className="subtitlesMenu">Roles</h4>
                         </div>
                     </Link>
         
-                    <a href="#">
+                    <Link to="/admin/users" className={linkSelected.users ? "selected" : ""}                             onClick={() => setLinkSelected({roles: false, users: true, controls: false})}
+                            onClick={() => setLinkSelected({roles: false, users: true, controls: false})}
+                    >
                         <div className="option">
-                        <FontAwesomeIcon icon={faUsers} className="icon" size="2x" />
+                        <FontAwesomeIcon icon={faUsers} className="icon" size="2x"/>
                             <h4 className="subtitlesMenu" >Usuarios</h4>
                         </div>
-                    </a>
+                    </Link>
                     
-                    <a href="#">
+                    <Link to="/" className={linkSelected.controls ? "selected" : ""}>
                         <div className="option">
                         <FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" />
                             <h4 className="subtitlesMenu">Controles</h4>
                         </div>
-                    </a>
+                    </Link>
                 </div>
         
             </div>
@@ -85,7 +90,7 @@ export default function LayoutAdmin(props){
                 <LoadRoutes routes={routes}/>
             </main>
         
-                </body>
+                </div>
             );
         }
 

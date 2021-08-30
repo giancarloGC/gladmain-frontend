@@ -31,7 +31,7 @@ export default function AddRol(){
                 onSubmit={(valores, {resetForm}) => {
                     resetForm();
                     valores.token = token;
-                    insertRolApi(valores,).then(response => {
+                    insertRolApi(valores).then(response => {
                         if(response.status === 500 && response.message === "NO EXISTE UN ROL CON ESTE ID"){
                             setTextFormSend({
                                 variant: "success", heading: "¡Excelente, registro exitoso!",

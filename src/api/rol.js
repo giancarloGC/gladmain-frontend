@@ -106,12 +106,14 @@ export function deleteRolApi(id){
             .catch(err => {return err});
 }
 
-//Preguntar a Danny
-export function getAssignRolApi(id, data){
-    const url = `${urlBackend}rol/ASIGNAR_ROL/${id}/${data}`;
+export function getAssignRolApi(idRol, documento, token){
+    const doc = parseInt(documento);
+    const url = `/api/rol/ASIGNAR_ROL/${parseInt(idRol)}/${doc}`;
+    
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET"
     };
@@ -120,6 +122,7 @@ export function getAssignRolApi(id, data){
             .then(response => {return response.json()})
             .then(result => {return result})
             .catch(err => {return err});
+            
 }
 //Preguntar a Danny
 export function getRemoveRolApi(id, data){

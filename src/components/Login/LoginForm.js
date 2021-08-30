@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Row, Image, Form, Button, Modal, Container, InputGroup } from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
+import bcrypt from "bcryptjs";
 import Logo from "./../../assets/img/logoGladmain.PNG";
 import LayoutAdmin from "../../layouts/LayoutAdmin";
 
@@ -58,6 +59,11 @@ export default function LoginForm(props) {
                 }}
                 onSubmit={(valores, {resetForm}) => {
                   resetForm();
+                  /*bcrypt.genSalt(10, function(err, salt) {
+                      bcrypt.hash("12345678", salt, function(err, hash) {
+                          valores.password = hash;
+                      });
+                  });*/
                   loginApi(valores).then(response => {
                     if(response.status === 500){
                       setTextFormSend("¡Usuario o clave incorrectos, intentelo nuevamente!");
@@ -125,7 +131,7 @@ export default function LoginForm(props) {
               isValid={!errors.role && touched.role} isInvalid={!!errors.role && touched.role}
       >
       <option disabled selected>Selecciona tu rol</option>
-      {rolesApi && (
+      {rolesApi.length > 0 && (
         rolesApi.map((data, index) => (
           <option key={index} value={data.idRol}>{data.nombre}</option>
         ))
