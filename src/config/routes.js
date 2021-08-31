@@ -11,11 +11,13 @@ import EditUser from "../pages/Users/EditUser";
 import User from "../pages/Users/User";
 
 import AddControlNutri from "../pages/ControlNutri/AddControlNutri";
+import AddControlCyD from "../pages/ControlCyD/AddControlCyD";
 
 import Page from "../pages/Example/Page";
 
 
 import NotFound404 from "../pages/NotFound404";
+
 
 const routes = [
     {
@@ -72,7 +74,12 @@ const routes = [
                 path: "/admin/addControlNutri",
                 exact: true,
                 component: AddControlNutri,
-            },      
+            },     
+            {
+                path: "/admin/addControlCyD",
+                exact: true,
+                component: AddControlCyD,
+            },  
             {
                 path: "/admin/addExample",
                 exact: true,

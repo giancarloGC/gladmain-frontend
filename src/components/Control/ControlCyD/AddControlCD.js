@@ -3,7 +3,7 @@ import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-boots
 import { Formik, Field, ErrorMessage } from "formik";
 
 
-export default function AddControlN(){
+export default function AddControlCD(){
 
     return(
         <Container>
