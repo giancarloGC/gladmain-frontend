@@ -9,12 +9,16 @@ import ListUsers from "../pages/Users/ListUsers";
 import AddUser from "../pages/Users/AddUser";
 import EditUser from "../pages/Users/EditUser";
 import User from "../pages/Users/User";
-import ControlHome from "../pages/ControlHome/ControlHome";
 import ListVac from "../pages/ControlVac/ListVac";
+
+import AddControlNutri from "../pages/ControlNutri/AddControlNutri";
+import AddControlCyD from "../pages/ControlCyD/AddControlCyD";
 
 import Page from "../pages/Example/Page";
 
+
 import NotFound404 from "../pages/NotFound404";
+
 
 const routes = [
     {
@@ -68,20 +72,21 @@ const routes = [
                 component: EditUser,
             },   
             {
+                path: "/admin/addControlNutri",
+                exact: true,
+                component: AddControlNutri,
+            },     
+            {
+                path: "/admin/addControlCyD",
+                exact: true,
+                component: AddControlCyD,
+            },  
+            {
                 path: "/admin/addExample",
                 exact: true,
                 component: Page,
-            },    
-            {
-                path: "/admin/controlHome",
-                exact: true,
-                component: ControlHome,
-            },     
-            {
-                path: "/admin/vaccines",
-                exact: true,
-                component: ListVac,
-            },             
+            },   
+            
             {
                 component: NotFound404,
             },                         
