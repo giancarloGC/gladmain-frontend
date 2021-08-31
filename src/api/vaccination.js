@@ -49,7 +49,7 @@ export function deleteContVaccApi(id){
 }
 
 export function getContVaccApi(data){
-    const url = `${urlBackend}control_vacunacion/LISTAR_CONTROLES_VACUNACION/${data}`;
+    const url = `/api/control_vacunacion/LISTAR_CONTROLES_VACUNACION/${data}`;
     const params = {
         headers: {
             "Content-Type": "application/json"
@@ -58,9 +58,11 @@ export function getContVaccApi(data){
     };
 
     return fetch(url, params)
-            .then(response => {return response.json()})
-            .then(result => {return result})
-            .catch(err => {return err});
+    .then(response => {return response.json()})
+    .then(result => {
+        return result;
+    })
+    .catch(err => {return err});
 }
 
 export function getContVaccByIdApi(id){

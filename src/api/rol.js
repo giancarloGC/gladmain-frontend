@@ -124,7 +124,7 @@ export function getAssignRolApi(idRol, documento, token){
             .catch(err => {return err});
             
 }
-//Preguntar a Danny
+
 export function getRemoveRolApi(id, data){
     const url = `${urlBackend}rol/RETIRAR_ROL/${id}/${data}`;
     const params = {

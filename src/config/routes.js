@@ -9,6 +9,8 @@ import ListUsers from "../pages/Users/ListUsers";
 import AddUser from "../pages/Users/AddUser";
 import EditUser from "../pages/Users/EditUser";
 import User from "../pages/Users/User";
+import ControlHome from "../pages/ControlHome/ControlHome";
+import ListVac from "../pages/ControlVac/ListVac";
 
 import Page from "../pages/Example/Page";
 
@@ -69,7 +71,17 @@ const routes = [
                 path: "/admin/addExample",
                 exact: true,
                 component: Page,
-            },                    
+            },    
+            {
+                path: "/admin/controlHome",
+                exact: true,
+                component: ControlHome,
+            },     
+            {
+                path: "/admin/vaccines",
+                exact: true,
+                component: ListVac,
+            },             
             {
                 component: NotFound404,
             },                         
