@@ -10,7 +10,10 @@ import AddUser from "../pages/Users/AddUser";
 import EditUser from "../pages/Users/EditUser";
 import User from "../pages/Users/User";
 
+import AddControlNutri from "../pages/ControlNutri/AddControlNutri";
+
 import Page from "../pages/Example/Page";
+
 
 import NotFound404 from "../pages/NotFound404";
 
@@ -66,10 +69,15 @@ const routes = [
                 component: EditUser,
             },   
             {
+                path: "/admin/addControlNutri",
+                exact: true,
+                component: AddControlNutri,
+            },      
+            {
                 path: "/admin/addExample",
                 exact: true,
                 component: Page,
-            },                    
+            },               
             {
                 component: NotFound404,
             },                         
