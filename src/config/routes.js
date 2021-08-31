@@ -88,6 +88,12 @@ const routes = [
             },   
             
             {
+                path: "/admin/listVaccines",
+                exact: true,
+                component: ListVac,
+            },   
+
+            {
                 component: NotFound404,
             },                         
         ]
