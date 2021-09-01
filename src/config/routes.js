@@ -13,6 +13,7 @@ import ListVac from "../pages/ControlVac/ListVac";
 import ListControlNutri from "../pages/ControlNutri/ListControlNutri";
 import AddControlNutri from "../pages/ControlNutri/AddControlNutri";
 import AddControlCyD from "../pages/ControlCyD/AddControlCyD";
+import ListControlCyD from "../pages/ControlCyD/ListControlCyD";
 
 import Page from "../pages/Example/Page";
 
@@ -97,6 +98,12 @@ const routes = [
                 path: "/admin/listControlNutri",
                 exact: true,
                 component: ListControlNutri,
+            }, 
+
+            {
+                path: "/admin/listControlCyD",
+                exact: true,
+                component: ListControlCyD,
             }, 
 
             {
