@@ -10,7 +10,7 @@ import AddUser from "../pages/Users/AddUser";
 import EditUser from "../pages/Users/EditUser";
 import User from "../pages/Users/User";
 import ListVac from "../pages/ControlVac/ListVac";
-
+import ListControlNutri from "../pages/ControlNutri/ListControlNutri";
 import AddControlNutri from "../pages/ControlNutri/AddControlNutri";
 import AddControlCyD from "../pages/ControlCyD/AddControlCyD";
 import AllUserControl from "../pages/ControlHome/AllUserControl";
@@ -108,6 +108,12 @@ const routes = [
             },   
             
                
+
+            {
+                path: "/admin/listControlNutri",
+                exact: true,
+                component: ListControlNutri,
+            }, 
 
             {
                 component: NotFound404,
