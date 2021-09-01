@@ -13,6 +13,9 @@ import ListVac from "../pages/ControlVac/ListVac";
 
 import AddControlNutri from "../pages/ControlNutri/AddControlNutri";
 import AddControlCyD from "../pages/ControlCyD/AddControlCyD";
+import AllUserControl from "../pages/ControlHome/AllUserControl";
+import AddControlVac from "../pages/ControlVac/AddControlVac";
+
 
 import Page from "../pages/Example/Page";
 
@@ -82,16 +85,29 @@ const routes = [
                 component: AddControlCyD,
             },  
             {
+                path: "/admin/listVaccines",
+                exact: true,
+                component: ListVac,
+            },
+            {
+                path: "/admin/listUserControl",
+                exact: true,
+                component: AllUserControl,
+            },
+            {
+                path: "/admin/addControlVac",
+                exact: true,
+                component: AddControlVac,
+            },
+
+            
+            {
                 path: "/admin/addExample",
                 exact: true,
                 component: Page,
             },   
             
-            {
-                path: "/admin/listVaccines",
-                exact: true,
-                component: ListVac,
-            },   
+               
 
             {
                 component: NotFound404,
