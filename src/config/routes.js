@@ -13,9 +13,9 @@ import ListVac from "../pages/ControlVac/ListVac";
 import ListControlNutri from "../pages/ControlNutri/ListControlNutri";
 import AddControlNutri from "../pages/ControlNutri/AddControlNutri";
 import AddControlCyD from "../pages/ControlCyD/AddControlCyD";
+import ListControlCyD from "../pages/ControlCyD/ListControlCyD";
 import AllUserControl from "../pages/ControlHome/AllUserControl";
 import AddControlVac from "../pages/ControlVac/AddControlVac";
-
 
 import Page from "../pages/Example/Page";
 
@@ -90,6 +90,16 @@ const routes = [
                 component: ListVac,
             },
             {
+                path: "/admin/listControlNutri",
+                exact: true,
+                component: ListControlNutri,
+            }, 
+            {
+                path: "/admin/listControlCyD",
+                exact: true,
+                component: ListControlCyD,
+            },
+            {
                 path: "/admin/listUserControl",
                 exact: true,
                 component: AllUserControl,
@@ -99,22 +109,6 @@ const routes = [
                 exact: true,
                 component: AddControlVac,
             },
-
-            
-            {
-                path: "/admin/addExample",
-                exact: true,
-                component: Page,
-            },   
-            
-               
-
-            {
-                path: "/admin/listControlNutri",
-                exact: true,
-                component: ListControlNutri,
-            }, 
-
             {
                 component: NotFound404,
             },                         
