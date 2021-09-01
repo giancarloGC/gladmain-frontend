@@ -1,7 +1,8 @@
 //import React, { useState, useEffect } from 'react'
-import { Container, ListGroup, Col, Row, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, InputGroup, ListGroup} from "react-bootstrap";
 import { faPrint } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Formik, Field, ErrorMessage } from "formik";
 
 export default function ListControlCyDe(){
     /* const [ vacApi, setVacApi ] = useState([]);
@@ -13,10 +14,85 @@ export default function ListControlCyDe(){
              setRolesApi(response);
          })();
      }, []);*/
+
+     const dateFormat = (date) => {
+        if(date){
+        let dateFormated = date.split('T');
+        return dateFormated[0];
+        }
+      }
  
      return(
          <Container>
-             
+            <Row>
+                <Col sm={4}></Col>
+                <Col sm={4}> 
+                <Formik
+                initialValues={{ 
+                    ultimoControl: '',
+                    proximoControl: '',
+                }}
+                
+                onSubmit={(valores, {resetForm}) => {
+                  /*  resetForm();
+                    valores.token = token;
+                    insertUserApi(valores).then(response => {
+                        console.log(repsonse);
+                  });*/
+                }}
+                >
+                {props => {
+                    const { values, touched, errors, dirty, isSubmitting,
+                            handleChange, handleBlur, handleSubmit, handleReset
+                    } = props;
+                    return (   
+                    <Form onSubmit={handleSubmit}>
+
+                        <Form.Group as={Row} className="mb-3">
+                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Fecha ultimo control</Form.Label>
+                        <Col sm="8">
+                          <InputGroup hasValidation>
+                              <Form.Control type="date" size="lg" id="ultimoControl" name="ultimoControl" 
+                               /* defaultValue={dateFormat(user.ultimoControl)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.ultimoControl && touched.ultimoControl}
+                                isValid={!errors.ultimoControl && touched.ultimoControl}*/
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                  {errors.ultimoControl}
+                              </Form.Control.Feedback>
+                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          </InputGroup>
+                        </Col>
+                        </Form.Group> 
+
+                        <Form.Group as={Row} className="mb-3">
+                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Fecha proximo control</Form.Label>
+                        <Col sm="8">
+                          <InputGroup hasValidation>
+                              <Form.Control type="date" size="lg" id="proximoControl" name="proximoControl" 
+                                /*defaultValue={dateFormat(user.proximoControl)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.proximoControl && touched.proximoControl}
+                                isValid={!errors.proximoControl && touched.proximoControl}*/
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                  {errors.proximoControl}
+                              </Form.Control.Feedback>
+                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          </InputGroup>
+                        </Col>
+                        </Form.Group> 
+                        
+
+
+                        </Form>
+                            );
+                        }}
+                      </Formik> 
+
+                </Col>
+                <Col sm={4}></Col>
+            </Row>
+
+
+
              <ListGroup >
                 <ListGroup.Item className="shadow border mt-2 mb-3">
                 <Container>

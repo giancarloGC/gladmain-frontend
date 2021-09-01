@@ -6,7 +6,7 @@ import { TOKEN } from "../../../utils/constans";
 import { getRolesApi, getAssignRolApi } from "../../../api/rol";
 import "./FormEdit.scss";
 
-export default function FormEdit(props){
+export default function FormEdit(props){   
     const { user } = props;
     const [ textFormSend, setTextFormSend ] = useState({});
     const token = localStorage.getItem(TOKEN);
