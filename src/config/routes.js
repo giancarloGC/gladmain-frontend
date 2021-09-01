@@ -98,7 +98,7 @@ const routes = [
                 path: "/admin/listControlCyD",
                 exact: true,
                 component: ListControlCyD,
-            }, 
+            },
             {
                 path: "/admin/listUserControl",
                 exact: true,

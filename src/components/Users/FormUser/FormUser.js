@@ -244,7 +244,7 @@ export default function FormUser(){
 
                         <Form.Group className="mb-3 mt-3">
                         <InputGroup hasValidation>
-                            <Form.Control type="number" placeholder="Dígita aquí la edad" size="lg" id="edad" name="edad" 
+                            <Form.Control type="number" placeholder="Dígita aquí la edad en meses" size="lg" id="edad" name="edad" 
                             value={values.edad} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
                             isValid={!errors.edad && touched.edad}
                             />
