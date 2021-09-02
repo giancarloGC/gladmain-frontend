@@ -7,8 +7,7 @@ import AllUserC from "../../components/Control/ControlHome/AllUserC";
 export default function AllUserControl(){ 
     return(
         <Container>
-            <h1 className="text-center">Listado de Infantes<FontAwesomeIcon icon={faUserPlus} size="lg" color="#2D61A4"/>
-            </h1>
+            <h1 className="text-center">Listado de Infantes </h1>
            <AllUserC />
         </Container>
     )
