@@ -7,8 +7,7 @@ import AddControlCD from "../../components/Control/ControlCyD/AddControlCD";
 export default function AddControlCyD(){ 
     return(
         <Container>
-            <h1 className="text-center">Formulario para añadir Control de Crecimiento y Desarrollo
-            </h1>
+            <h1 className="text-center">Añadir Control de Crecimiento y Desarrollo</h1>
             <AddControlCD />
         </Container>
     )

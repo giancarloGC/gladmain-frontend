@@ -85,7 +85,7 @@ const routes = [
                 component: AddControlCyD,
             },   
             {
-                path: "/admin/listVaccines",
+                path: "/admin/listVaccines/:documento",
                 exact: true,
                 component: ListVac,
             },   
@@ -95,7 +95,7 @@ const routes = [
                 component: ListControlNutri,
             }, 
             {
-                path: "/admin/listControlCyD",
+                path: "/admin/listControlCyD/:documento",
                 exact: true,
                 component: ListControlCyD,
             },

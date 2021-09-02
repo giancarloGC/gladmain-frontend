@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Row, Spinner } from "react-bootstrap";
-import {BrowserRouter as Router, Route, Switch, Redirect, Link} from "react-router-dom";
+import {BrowserRouter as Route, Switch, Redirect, Link} from "react-router-dom";
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

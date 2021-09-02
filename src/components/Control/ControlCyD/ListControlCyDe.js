@@ -25,6 +25,19 @@ export default function ListControlCyDe(){
      return(
          <Container>
              <Row className="mb-3 mt-5">
+                 <Col md={3}>
+                 </Col>
+                 <Col md={6}>
+                    <InputGroup hasValidation>
+                        <Form.Control type="search" placeholder="Buscar Usuario" size="lg" id="busqueda" name="busqueda" />
+                        <Button class="btn btn-outline-success" type="submit">Buscar</Button>
+                    </InputGroup>
+                 </Col>
+                 <Col md={3}>
+                 </Col>
+             </Row>
+
+             <Row className="mb-3 mt-5">
                     <Form.Label column sm="3" >
                         Fecha Ultimo Control
                     </Form.Label>
@@ -32,7 +45,7 @@ export default function ListControlCyDe(){
                     <Form.Control type="date" size="lg" id="ultimoControl" name="ultimoControl" 
                     />
                     </Col>
-                    <Form.Label column sm="3">
+                    <Form.Label column sm="3" >
                         Fecha Proximo Control
                     </Form.Label>
                     <Col md={3} className="row justify-content-center">
