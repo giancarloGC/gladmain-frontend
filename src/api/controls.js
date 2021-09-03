@@ -1,11 +1,12 @@
 import { urlBackend } from "./config";
 
-//Preguntar a Danny
+
 export function insertControlApi(data){
-    const url = `${urlBackend}control/REGISTRAR_CONTROL/false`;
+    const url = `/api/control/REGISTRAR_CONTROL/false`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": data.token
         },
         method: "POST",
         body: JSON.stringify(data)

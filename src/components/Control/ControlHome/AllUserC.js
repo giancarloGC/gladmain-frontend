@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Row, Spinner } from "react-bootstrap";
-import {BrowserRouter as Router, Route, Switch, Redirect, Link} from "react-router-dom";
+import {BrowserRouter as Route, Switch, Redirect, Link} from "react-router-dom";
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -68,21 +68,21 @@ export default function AllUserC (){
                                     </div>
                                     <div className="sci">
                                         <div className="liB">
-                                            <Link className="enlace" to="/">
+                                            <Link className="enlace"  to="/">
                                                <FontAwesomeIcon icon={faNutritionix} size="lg" color="#2D61A4"
                                                data-tip data-for = "boton1"/>
                                                <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Nutrición </ReactTooltip>
                                             </Link>
                                         </div>
                                         <div className="liB">
-                                            <Link className="enlace" to="/">
+                                            <Link className="enlace" to={`/admin/listControlCyD/${item.documento}`}>
                                                 <FontAwesomeIcon icon={faChartLine} size="lg" color="#2D61A4"
                                                 data-tip data-for = "boton2"/>
                                                 <ReactTooltip id="boton2" place="bottom" type="dark" effect="float"> Crecimiento y Desarrollo </ReactTooltip>
                                             </Link>
                                         </div>
                                         <div className="liB">
-                                            <Link className="enlace" to="/">
+                                            <Link className="enlace" to={`/admin/listVaccines/${item.documento}`}>
                                                 <FontAwesomeIcon icon={faSyringe} size="lg" color="#2D61A4"
                                                 data-tip data-for = "boton3"/>
                                                 <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Vacunación </ReactTooltip>
