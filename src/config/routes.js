@@ -19,6 +19,8 @@ import AddControlVac from "../pages/ControlVac/AddControlVac";
 import AddControlFollow from "../pages/ControlFollow/AddControlFollow";
 import AddInfantIncome from "../pages/ControlFollow/AddInfantIncome";
 
+import StatisticNutri from "../pages/ControlNutri/StatisticNutri";
+
 import NotFound404 from "../pages/NotFound404";
 
 
@@ -87,6 +89,11 @@ const routes = [
                 path: "/admin/listVaccines/:documento",
                 exact: true,
                 component: ListVac,
+            },
+            {
+                path: "/admin/StatisticNutri",
+                exact: true,
+                component: StatisticNutri,                
             },   
             {
                 path: "/admin/listControlNutri",

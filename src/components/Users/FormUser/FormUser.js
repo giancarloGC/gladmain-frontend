@@ -10,6 +10,7 @@ export default function FormUser(){
     const token = localStorage.getItem(TOKEN);
     const [show, setShow] = useState(false);
     const [ rolesApi, setRolesApi ] = useState([]);
+    
 
     useEffect(() => {
       getRolesApi().then(response => {
@@ -20,8 +21,8 @@ export default function FormUser(){
     return(
         <Container>
             <Row>
-                <Col sm={4}></Col>
-                <Col sm={4}> 
+                <Col sm={2}></Col>
+                <Col sm={8}> 
                 <Formik
                 initialValues={{ 
                     documento: '',
@@ -31,12 +32,15 @@ export default function FormUser(){
                     fechaNacimiento: '',
                     celular: '',
                     edad: '',
+                    meses: '',
                     municipio: '',
                     direccion: '',
                     correoElectronico: '',
                     role: '',
-                    clave: ''
-                }}
+                    clave: '',
+                    confirmClave: '',
+                    edadaños: ''
+                }} 
                 validate={(valores) => {
                   let errores = {};
                   if(!valores.tipoDocumento){
@@ -60,6 +64,7 @@ export default function FormUser(){
                   if(!valores.sexo){
                     errores.sexo = 'Asegurese de selecionar una opción';
                   }
+
                   const dateCurrently = new Date();
 
                   if(!valores.fechaNacimiento){
@@ -81,6 +86,10 @@ export default function FormUser(){
                   }else if(valores.edad <= 0 || valores.edad > 90){
                     errores.edad = 'Edad invalida, intente con otra';
                   }       
+
+                  if(!valores.meses){
+                    errores.meses = 'Asegurese de selecionar una opción';
+                  }
 
                   if(!valores.municipio){
                     errores.municipio = 'No se permiten campos vacíos'
@@ -108,6 +117,10 @@ export default function FormUser(){
                     errores.clave = 'Por favor, ingresa una contraseña'
                   }else if(valores.clave.length < 8){
                     errores.clave = 'La contraseña debe tener un minimo de 8 caracteres'
+                  }
+
+                  if (valores.confirmClave != valores.clave){
+                    errores.confirmClave = 'la clave no coincide'
                   }
 
                   return errores;
@@ -154,7 +167,8 @@ export default function FormUser(){
                     } = props;
                     return (   
                     <Form onSubmit={handleSubmit}>
-                        <Form.Group>
+                        <Form.Group as={Row} className="mb-3 mt-5">
+                       <Col md={6}>
                         <InputGroup hasValidation>
                             <Form.Select size="lg" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
                                     isValid={!errors.tipoDocumento && touched.tipoDocumento} isInvalid={!!errors.tipoDocumento && touched.tipoDocumento}
@@ -170,9 +184,9 @@ export default function FormUser(){
                                         </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
-                        </Form.Group>
+                        </Col>
 
-                        <Form.Group className="mb-3 mt-3">
+                        <Col md={6}>
                         <InputGroup hasValidation>
                             <Form.Control type="text" placeholder="Dígita aquí el documento" size="lg" id="documento" name="documento" 
                             value={values.documento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.documento && touched.documento}
@@ -183,9 +197,11 @@ export default function FormUser(){
                             </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
+                        </Col>
                         </Form.Group>
 
-                        <Form.Group className="mb-3">
+                        <Form.Group as={Row} className="mb-3">
+                        <Col md={6}>
                         <InputGroup hasValidation>
                             <Form.Control type="text" placeholder="Dígita aquí el nombre" size="lg" id="nombre" name="nombre" 
                             value={values.nombre} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombre && touched.nombre}
@@ -196,10 +212,9 @@ export default function FormUser(){
                             </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
-                        </Form.Group>   
+                        </Col>
 
-
-                        <Form.Group>
+                        <Col md={6}>
                         <InputGroup hasValidation>
                         <Form.Select size="lg" name="sexo" onChange={handleChange} onBlur={handleBlur}
                                     isValid={!errors.sexo && touched.sexo} isInvalid={!!errors.sexo && touched.sexo}
@@ -214,9 +229,11 @@ export default function FormUser(){
                                         </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
-                        </Form.Group>
+                        </Col>
+                        </Form.Group>   
 
-                        <Form.Group className="mb-3">
+                        <Form.Group as={Row} className="mb-3">
+                        <Col md={6}>
                         <InputGroup hasValidation>
                             <Form.Control type="date" placeholder="Fecha de nacimiento" size="lg" id="fechaNacimiento" name="fechaNacimiento" 
                             value={values.fechaNacimiento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaNacimiento && touched.fechaNacimiento}
@@ -227,9 +244,9 @@ export default function FormUser(){
                             </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
-                        </Form.Group> 
+                        </Col>
 
-                        <Form.Group className="mb-3 mt-3">
+                        <Col md={6}>
                         <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="Dígita aquí Teléfono" size="lg" id="celular" name="celular" 
                             value={values.celular} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.celular && touched.celular}
@@ -240,11 +257,14 @@ export default function FormUser(){
                             </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
-                        </Form.Group>
+                        </Col>
+                        </Form.Group> 
 
-                        <Form.Group className="mb-3 mt-3">
+
+                        <Form.Group as={Row} className="mb-3 mt-3">
+                        <Col md={3}>
                         <InputGroup hasValidation>
-                            <Form.Control type="number" placeholder="Dígita aquí la edad en meses" size="lg" id="edad" name="edad" 
+                            <Form.Control type="number" placeholder="edad " size="lg" id="edad" name="edad" 
                             value={values.edad} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
                             isValid={!errors.edad && touched.edad}
                             />
@@ -253,9 +273,26 @@ export default function FormUser(){
                             </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
-                        </Form.Group>
+                        </Col>
 
-                        <Form.Group className="mb-3">
+                        <Col md={3}>
+                        <InputGroup hasValidation>
+                        <Form.Select size="lg" name="seleccionar" onChange={handleChange} onBlur={handleBlur}
+                                    isValid={!errors.meses && touched.meses} isInvalid={!!errors.meses && touched.meses}
+                            >
+                            <option disabled selected>Selecciona una opción</option>
+                            <option value="meses">meses</option>
+                            <option value="años">años</option>
+
+                            </Form.Select>
+                            <Form.Control.Feedback type="invalid">
+                                        {errors.sexo}
+                                        </Form.Control.Feedback>
+                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                        </InputGroup>
+                        </Col>
+
+                        <Col md={6}>
                         <InputGroup hasValidation>
                             <Form.Control type="text" placeholder="Dígita aquí el municipio" size="lg" id="municipio" name="municipio" 
                             value={values.municipio} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.municipio && touched.municipio}
@@ -266,9 +303,11 @@ export default function FormUser(){
                             </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
-                        </Form.Group>   
+                        </Col>
+                        </Form.Group>
 
-                        <Form.Group className="mb-3">
+                        <Form.Group as={Row} className="mb-3">
+                        <Col md={6}>
                         <InputGroup hasValidation>
                             <Form.Control type="text" placeholder="Dígita aquí la dirección" size="lg" id="direccion" name="direccion" 
                             value={values.direccion} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.direccion && touched.direccion}
@@ -279,9 +318,9 @@ export default function FormUser(){
                             </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
-                        </Form.Group> 
+                        </Col>
 
-                        <Form.Group className="mb-3">
+                        <Col md={6}>
                         <InputGroup hasValidation>
                             <Form.Control type="email" placeholder="Dígita aquí el Correo " size="lg" id="correoElectronico" name="correoElectronico" 
                             value={values.correoElectronico} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.correoElectronico && touched.correoElectronico}
@@ -292,8 +331,38 @@ export default function FormUser(){
                             </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
+                        </Col>
                         </Form.Group> 
 
+                      <Form.Group as={Row} className="mb-3">
+                      <Col md={6}>
+                        <InputGroup hasValidation>
+                        <Form.Control size="lg" type="password" placeholder="Password" id="clave" name="clave" 
+                        value={values.clave} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.clave && touched.clave}
+                        isValid={!errors.clave && touched.clave}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                                    {errors.clave}
+                                </Form.Control.Feedback>
+                                <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                        </InputGroup>
+                      </Col>
+
+                      <Col md={6}>
+                        <InputGroup hasValidation>
+                        <Form.Control size="lg" type="password" placeholder="Password" id="confirmClave" name="confirmClave" 
+                        value={values.confirmClave} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.confirmClave && touched.confirmClave}
+                        isValid={!errors.confirmClave && touched.confirmClave}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                                    {errors.confirmClave}
+                                </Form.Control.Feedback>
+                                <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                        </InputGroup>
+                      </Col>
+                      </Form.Group>  
+
+                      <Form.Group as={Row} className="mb-3">
                         <InputGroup hasValidation>
                             <Form.Select size="lg" name="role" onChange={handleChange} onBlur={handleBlur}
                                     isValid={!errors.role && touched.role} isInvalid={!!errors.role && touched.role}
@@ -310,22 +379,9 @@ export default function FormUser(){
                                       </Form.Control.Feedback>
                           <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                       </InputGroup>
+                      </Form.Group>
 
-
-                        <Form.Group className="mb-3">
-                        <InputGroup hasValidation>
-                        <Form.Control size="lg" type="password" placeholder="Password" id="clave" name="clave" 
-                        value={values.clave} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.clave && touched.clave}
-                        isValid={!errors.clave && touched.clave}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                                    {errors.clave}
-                                </Form.Control.Feedback>
-                                <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                        </Form.Group>  
-
-                        <div className="d-grid gap-2">
+                        <div className="d-grid gap-2 mb-3">
                             <Button variant="primary" type="submit" size="lg">
                                 Añadir usuario
                             </Button>
@@ -346,7 +402,7 @@ export default function FormUser(){
                         </Alert>
                     )}
                 </Col>
-                <Col sm={4}></Col>
+                <Col sm={2}></Col>
             </Row>
         </Container>
     )
