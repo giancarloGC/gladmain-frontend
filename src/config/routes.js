@@ -16,9 +16,8 @@ import AddControlCyD from "../pages/ControlCyD/AddControlCyD";
 import ListControlCyD from "../pages/ControlCyD/ListControlCyD";
 import AllUserControl from "../pages/ControlHome/AllUserControl";
 import AddControlVac from "../pages/ControlVac/AddControlVac";
-
-import Page from "../pages/Example/Page";
-
+import AddControlFollow from "../pages/ControlFollow/AddControlFollow";
+import AddInfantIncome from "../pages/ControlFollow/AddInfantIncome";
 
 import NotFound404 from "../pages/NotFound404";
 
@@ -110,8 +109,16 @@ const routes = [
                 component: AddControlVac,
             },
             {
-                component: NotFound404,
-            },                         
+                path: "/admin/addControlFollow",
+                exact: true,
+                component: AddControlFollow,
+            },
+            {
+                path: "/admin/addInfantIncome",
+                exact: true,
+                component: AddInfantIncome,
+            }  
+                       
         ]
     }   
 ];
