@@ -20,9 +20,9 @@ export default function FormUser(){
 
     return(
         <Container>
-            <Row>
+            <Row style={{backgroundColor: '#f1f1f1'}}>
                 <Col sm={2}></Col>
-                <Col sm={8}> 
+                <Col sm={8} background="background-color:#A42D55"> 
                 <Formik
                 initialValues={{ 
                     documento: '',
@@ -39,7 +39,7 @@ export default function FormUser(){
                     role: '',
                     clave: '',
                     confirmClave: '',
-                    edadaños: ''
+                    edadAños: ''
                 }} 
                 validate={(valores) => {
                   let errores = {};
@@ -262,7 +262,7 @@ export default function FormUser(){
 
 
                         <Form.Group as={Row} className="mb-3 mt-3">
-                        <Col md={3}>
+                        <Col md={2}>
                         <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="edad " size="lg" id="edad" name="edad" 
                             value={values.edad} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
@@ -275,18 +275,18 @@ export default function FormUser(){
                         </InputGroup>
                         </Col>
 
-                        <Col md={3}>
+                        <Col md={4}>
                         <InputGroup hasValidation>
-                        <Form.Select size="lg" name="seleccionar" onChange={handleChange} onBlur={handleBlur}
+                        <Form.Select size="lg" name="meses" onChange={handleChange} onBlur={handleBlur}
                                     isValid={!errors.meses && touched.meses} isInvalid={!!errors.meses && touched.meses}
                             >
-                            <option disabled selected>Selecciona una opción</option>
+                            <option disabled selected>Seleccionar opción</option>
                             <option value="meses">meses</option>
                             <option value="años">años</option>
 
                             </Form.Select>
                             <Form.Control.Feedback type="invalid">
-                                        {errors.sexo}
+                                        {errors.meses}
                                         </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
@@ -381,7 +381,7 @@ export default function FormUser(){
                       </InputGroup>
                       </Form.Group>
 
-                        <div className="d-grid gap-2 mb-3">
+                        <div className="d-grid gap-2 mb-3 mt-4">
                             <Button variant="primary" type="submit" size="lg">
                                 Añadir usuario
                             </Button>
