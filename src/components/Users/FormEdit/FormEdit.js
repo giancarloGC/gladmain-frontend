@@ -184,7 +184,7 @@ export default function FormEdit(props){
                     } = props;
                     return (   
                     <Form onSubmit={handleSubmit}>
-                        <Form.Group as={Row} className="mb-3">
+                        <Form.Group as={Row} className="mb-1 mt-3">
                         <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Tipo documento</Form.Label>
                         <Col sm="4">
                         <InputGroup hasValidation>
@@ -220,7 +220,7 @@ export default function FormEdit(props){
                         </Form.Group>
 
 
-                        <Form.Group as={Row} className="mb-3">
+                        <Form.Group as={Row} className="mb-4">
                         <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Nombre</Form.Label>
                         <Col sm="4">
                           <InputGroup hasValidation>
@@ -254,7 +254,7 @@ export default function FormEdit(props){
                           </Col>
                         </Form.Group>   
 
-                        <Form.Group as={Row} className="mb-3">
+                        <Form.Group as={Row} className="mt-4">
                         <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Fecha nacimiento</Form.Label>
                         <Col sm="4">
                           <InputGroup hasValidation>
@@ -284,7 +284,7 @@ export default function FormEdit(props){
                         </Col>
                         </Form.Group> 
 
-                        <Form.Group as={Row} className="mb-3">
+                        <Form.Group as={Row} className="mb-4">
                         <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Edad</Form.Label>
                         <Col sm="2">
                           <InputGroup hasValidation>
@@ -327,7 +327,7 @@ export default function FormEdit(props){
                         </Col>
                         </Form.Group>
 
-                        <Form.Group as={Row} className="mb-3">
+                        <Form.Group as={Row} >
                         <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Direccion</Form.Label>
                         <Col sm="4">
                           <InputGroup hasValidation>
@@ -357,7 +357,7 @@ export default function FormEdit(props){
                         </Col>
                         </Form.Group> 
 
-                      <Form.Group as={Row} className="mb-3">
+                      <Form.Group as={Row} className="mb-2">
                       <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Contraseña</Form.Label>
                       <Col sm="4">
                         <InputGroup hasValidation>
@@ -391,7 +391,7 @@ export default function FormEdit(props){
 
                       <Form.Group as={Row} className="mb-3">
                       <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Rol</Form.Label>
-                      <Col sm="4">
+                      <Col sm="10">
                         <InputGroup hasValidation>
                             <Form.Select size="lg" name="role" onChange={handleChange} onBlur={handleBlur}
                                   isValid={!errors.role && touched.role} isInvalid={!!errors.role && touched.role}
