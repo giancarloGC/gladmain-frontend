@@ -8,8 +8,8 @@ export default function AddControlF(){
     return(
         <Container>
             <Row>
-                <Col sm={3}></Col>
-                <Col sm={6} className="mt-2 mb-4"> 
+                <Col sm={1}></Col>
+                <Col sm={10} className="mt-2 mb-4"> 
                 <Formik
                 initialValues={{ 
                     
@@ -126,21 +126,8 @@ export default function AddControlF(){
 
                     <Form.Group as={Row} className="mb-3">
                         <InputGroup hasValidation>
-                        <Form.Label column sm="5" style={{"font-size": "12px !important"}}>Nombre del Usuario</Form.Label>
-                        <Form.Control type="text" placeholder="nombre usuario" size="lg" id="nombre" name="nombre" 
-                               value={values.nombre} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombre && touched.nombre}
-                               isValid={!errors.nombre && touched.nombre}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.nombre}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                    </Form.Group>
-                    <Form.Group>
-                        <InputGroup hasValidation>
-                        <Form.Label column sm="5" style={{"font-size": "12px !important"}}>Tipo de Documento</Form.Label>
-                            <Form.Select sm="7" size="lg" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
+                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Tipo de Documento</Form.Label>
+                            <Form.Select sm="4" size="lg" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
                                     isValid={!errors.tipoDocumento && touched.tipoDocumento} isInvalid={!!errors.tipoDocumento && touched.tipoDocumento}
                             >
                             <option disabled selected>Selecciona el tipo de documento</option>
@@ -154,10 +141,9 @@ export default function AddControlF(){
                                         </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
-                    </Form.Group>
-                    <Form.Group className="mb-3 mt-3">
+
                         <InputGroup hasValidation>
-                            <Form.Label column sm="5" style={{"font-size": "12px !important"}}>Número Documento</Form.Label>
+                            <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Número Documento</Form.Label>
                             <Form.Control type="text" placeholder="Número documento" size="lg" id="idUsuario" name="idUsuario" 
                             value={values.idUsuario} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.documento && touched.idUsuario}
                             isValid={!errors.idUsuario && touched.idUsuario}
@@ -168,6 +154,21 @@ export default function AddControlF(){
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                     </Form.Group>
+
+                    <Form.Group as={Row} className="mb-3">
+                        <InputGroup hasValidation>
+                        <Form.Label column sm="5" style={{"font-size": "12px !important"}}>Nombre del Usuario</Form.Label>
+                        <Form.Control type="text" placeholder="nombre usuario" size="lg" id="nombre" name="nombre" 
+                               value={values.nombre} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombre && touched.nombre}
+                               isValid={!errors.nombre && touched.nombre}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.nombre}
+                            </Form.Control.Feedback>
+                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                        </InputGroup>
+                    </Form.Group>
+
                     <Form.Group className="mb-3 mt-3">
                         <InputGroup hasValidation>
                             <Form.Label column sm="5" style={{"font-size": "12px !important"}}>Número Celular</Form.Label>
@@ -250,7 +251,7 @@ export default function AddControlF(){
                         }}
                       </Formik> 
                 </Col>
-                <Col sm={3}></Col>
+                <Col sm={1}></Col>
             </Row>
         </Container>
     )
