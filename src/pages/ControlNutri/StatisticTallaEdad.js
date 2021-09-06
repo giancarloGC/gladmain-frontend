@@ -6,7 +6,7 @@ import ImageBackground from "../../assets/img/graphicsPrueba.png";
 //import { getContVaccApi } from "../../api/vaccination";
 
 export default function StatisticNutri(){
-const [ sizeImage, setSizeImage] = useState("750");
+const [ sizeImage, setSizeImage] = useState("150");
 
 const image = new Image();
 image.src = ImageBackground;
@@ -31,58 +31,44 @@ const plugin = {
 
 
 const data = {
- 
-    labels: [ 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 110 ],
+    labels: [ 0," ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "1 año", " ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "2 años" ],
     datasets: [{
-        label: '- 3',
-        data: [1.8, 2.5, 3.5, 4.6, 5.7, 6.6, 7.5, 8.2, 9.1, 10, 10.9, 11.9, 13, 14],
-        fill: false,
-        borderColor: '#4884FC',
-        tension: 0.1,
-      },
-      {
         label: '- 2',
-        data: [2.1, 2.8, 3.8, 5.1, 6.2, 7.2, 8, 8.9, 9.8, 10.8, 11.8, 12.8, 14, 15.4 ],
+        data: [45, 50, 53.8, 56.7, 59, 61, 62.9, 64.2, 65.6, 66.9, 68, 69.2, 70.3, 71.5, 72.6, 73.7, 74.7, 75.6, 76.5, 77.3, 78.2, 79, 79.9, 80.5, 81.2],
         fill: false,
-        borderColor: '#4884FC',
+        borderColor: '#F41156',
         tension: 0.1,
         borderDash: [10,5]
       },
+      
       {
         label: '- 1',
-        data: [2.3, 3, 4.1, 5.4, 6.7, 7.7, 8.8, 9.6, 10.6, 11.8, 12.8, 13.9, 15.3, 16.7],
+        data: [ 47, 52, 55.8, 58.8, 61.1, 63.1, 64.9, 66.4, 67.9, 69.2, 70.5, 71.8, 72.9, 74, 75.1, 76.2, 77.2, 78.2, 79.1, 80.1, 81.1, 82, 82.9, 83.7, 84.5 ],
         fill: false,
-        borderColor: '#8EB2FA',
-        tension: 0.1
+        borderColor: '#F41156',
+        tension: 0.1,
       },
+
       {
         label: '0',
-        data: [2.4, 3.2, 4.5, 5.9, 7.2, 8.5, 9.5, 10.4, 11.5, 12.6, 13.8, 15, 16.5, 18.1],
+        data: [ 49, 57.5, 63.2, 67, 70, 72.9, 75.2, 77.7, 80, 81.9, 83.9, 85.8, 87.5 ],
         fill: false,
-        borderColor: '#D8E5FD',
-        tension: 0.1
+        borderColor: '#F41156',
+        tension: 0.1,
       },
       {
         label: '+ 1',
-        data: [2.6, 3.6, 4.9, 6.5, 7.8, 9.1, 10.2, 11.3, 12.5, 13.6, 15, 16.5, 18, 20],
+        data: [ 51, 59.8, 65.3, 69.1, 72.3, 75, 77.7, 80, 82.4, 84.7, 86.8, 88.7, 90.5 ],
         fill: false,
-        borderColor: '#8EB2FA',
-        tension: 0.1
+        borderColor: '#F41156',
+        tension: 0.1,
       },
       {
         label: '+ 2',
-        data: [3, 3.9, 5.5, 7, 8.5, 10, 11.1, 12.3, 13.5, 15, 16.3, 17.9, 19.6, 22],
+        data: [ 53, 61.8, 67.5, 71.3, 74.7, 77.3, 80.1, 82.9, 85.1, 87.4, 89.8, 91.8, 93.9 ],
         fill: false,
-        borderColor: '#4884FC',
+        borderColor: '#F41156',
         tension: 0.1,
-        borderDash: [10,5]
-      },
-      {
-        label: '+ 3',
-        data: [3.3, 4.4, 5.9, 7.7, 9.5, 10.9, 12.4, 13.5, 14.8, 16.4, 17.9, 19.5, 21.6, 24],
-        fill: false,
-        borderColor: '#4884FC',
-        tension: 0.1
       }
     ]
   };

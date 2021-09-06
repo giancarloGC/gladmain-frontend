@@ -20,6 +20,9 @@ import AddControlFollow from "../pages/ControlFollow/AddControlFollow";
 import AddInfantIncome from "../pages/ControlFollow/AddInfantIncome";
 
 import StatisticNutri from "../pages/ControlNutri/StatisticNutri";
+import StatisticTallaEdad from "../pages/ControlNutri/StatisticTallaEdad";
+
+
 
 import NotFound404 from "../pages/NotFound404";
 
@@ -95,6 +98,11 @@ const routes = [
                 exact: true,
                 component: StatisticNutri,                
             },   
+            {
+                path: "/admin/statisticTallaEdad",
+                exact: true,
+                component: StatisticTallaEdad,                
+            },
             {
                 path: "/admin/listControlNutri",
                 exact: true,
