@@ -18,30 +18,13 @@ export function getRolesApi(){
 }
 
 
-export function insertRolApi({name, token}){
+export function insertRolApi({name, token, privilegios}){
     const data = {
         rol: {
             idRol: 0,
             nombre: name
         },
-        privilegios: [
-            {
-                id: 1,
-                nombre: "CONSULTAR_ROL"
-            },
-               {
-                id: 3,
-                nombre: "ASIGNAR_ROL"
-            },
-               {
-                id: 9,
-                nombre: "RETIRAR_ROL"
-            },
-               {
-                id: 4,
-                nombre: "LISTAR_ROLES"
-            }
-        ]
+        privilegios: privilegios
     };
 
     const url = `/api/rol/REGISTRAR_ROL`;
@@ -60,11 +43,12 @@ export function insertRolApi({name, token}){
             .catch(err => {return err});
 }
 
-export function getRolByIdApi(id){
-    const url = `${urlBackend}rol/CONSULTAR_ROL/${id}`;
+export function getRolByIdApi(id, token){
+    const url = `/api/rol/CONSULTAR_ROL/${id}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token,
         },
         method: "GET"
     };
@@ -75,13 +59,14 @@ export function getRolByIdApi(id){
             .catch(err => {return err});
 }
 
-export function updateRolApi(data){
-    const url = `${urlBackend}rol/ACTUALIZAR_ROL`;
+export function updateRolApi(data, token){
+    const url = `/api/rol/ACTUALIZAR_ROL`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
-        method: "PUT",
+        method: "POST",
         body: JSON.stringify(data)
     };
 
@@ -91,13 +76,14 @@ export function updateRolApi(data){
             .catch(err => {return err});
 }
 
-export function deleteRolApi(id){
-    const url = `${urlBackend}rol/ELIMINAR_ROL/${id}`;
+export function deleteRolApi(id, token){
+    const url = `/api/rol/ELIMINAR_ROL/${id}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
-        method: "DELETE"
+        method: "GET"
     };
 
     return fetch(url, params)

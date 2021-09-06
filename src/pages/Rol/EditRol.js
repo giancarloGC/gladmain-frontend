@@ -1,27 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-bootstrap";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
-import { insertRolApi } from "../../api/rol";
+import { getRolByIdApi, updateRolApi } from "../../api/rol";
 import { TOKEN } from "../../utils/constans";
 import { getPrivilegiosApi } from "../../api/consultar_privilegios";
+import { useParams } from "react-router-dom";
 
-export default function AddRol(){
+
+export default function EditRol(){
+    const { idRol } = useParams();
     const [ textFormSend, setTextFormSend ] = useState({});
     const token = localStorage.getItem(TOKEN);
     const [show, setShow] = useState(false);
     const [ listPrivilegios, setListPrivilegios ] = useState([]);
     const [ privilegiosSelected, setPrivilegiosSelected ] = useState([]);
-
+    const [ infoRol, setInfoRol ] = useState({rol: {}, privilegios: {}});
+    const [ name, setName ] = useState({ name: ''});
+    const [ loaded, setLoaded] = useState(false);
     useEffect(() => {
         (async () => {
+            const responseRol = await getRolByIdApi(idRol, token);
             const responsePrivilegios = await getPrivilegiosApi(token);
-            console.log(responsePrivilegios);
             let tal = responsePrivilegios.sort(function (a, b){
                 return (a.id - b.id)
             });
-            console.log(tal);
-            
+            setInfoRol({rol: responseRol.rol, privilegios: responseRol.privilegios});
+            setName({name: responseRol.rol.nombre});
             setListPrivilegios(responsePrivilegios);
+            setLoaded(true);
         })();
     }, []);
 
@@ -31,23 +37,32 @@ export default function AddRol(){
             nombre: item.nombre
         }
         if(e.target.checked){
-            setPrivilegiosSelected([...privilegiosSelected, privilegio]);
+            setInfoRol({rol: infoRol.rol, privilegios: [...infoRol.privilegios, privilegio]});
         }else{
-            const result = privilegiosSelected.filter((priv) => {
+            const result = infoRol.privilegios.filter((priv) => {
                 return priv.id != item.id && priv.nombre != item.nombre;
             });
-            setPrivilegiosSelected(result);
+            setInfoRol({rol: infoRol.rol, privilegios: result});
         }
+    }
+
+    const checkPrivilegio = (item) => {
+        const result = infoRol.privilegios.filter(privilegio => privilegio.nombre === item.nombre);
+        let checked = false;
+        if(result.length > 0){
+            checked = true;
+        }
+        return    <Form.Check type="checkbox" label={item.nombre} defaultChecked={checked} onChange={(e) => handleCheck(e, item)}/>
     }
 
     return(
         <Container>
-            <h1 className="text-center">Formulario de Rol</h1>
-
+            <h1 className="text-center">Editar Rol</h1>
+            {loaded ? (
             <Row>
                 <Col> 
                 <Formik
-                initialValues={{ name: '' }}
+                initialValues={ name }
                 validate={(valores) => {
                   let errores = {};
                   if(!valores.name){
@@ -59,7 +74,7 @@ export default function AddRol(){
                   return errores;
                 }}
                 onSubmit={(valores, {resetForm}) => {
-                    if(privilegiosSelected.length === 0){
+                    if(infoRol.privilegios.length === 0){
                         setTextFormSend({
                             variant: "danger", heading: "¡Opss, No has seleccionado funciones!",
                             message: `Debes seleccionar al menos una función para el rol`
@@ -69,11 +84,10 @@ export default function AddRol(){
                             setShow(false);
                         }, 3000);
                     }else{
+                        infoRol.rol.nombre = valores.name;
                         resetForm();
-                        valores.token = token;
-                        valores.privilegios = privilegiosSelected;
-                        insertRolApi(valores).then(response => {
-                            if(response.status === 500 && response.message === "NO EXISTE UN ROL CON ESTE ID"){
+                        updateRolApi(infoRol, token).then(response => {
+                            if(response === true){
                                 setTextFormSend({
                                     variant: "success", heading: "¡Excelente, registro exitoso!",
                                     message: `El rol ${valores.name} fue almacenado correctamente`
@@ -100,10 +114,11 @@ export default function AddRol(){
                     } = props;
                     return (   
                     <Form onSubmit={handleSubmit}>
+                        {infoRol && (
                         <Form.Group className="mb-3">
                         <InputGroup hasValidation>
                             <Form.Control type="text" placeholder="Dígita aquí el nombre del rol" size="lg" id="name" name="name" 
-                            value={values.name} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.name && touched.name}
+                            defaultValue={infoRol.rol.nombre} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.name && touched.name}
                             isValid={!errors.name && touched.name}
                             />
                             <Form.Control.Feedback type="invalid">
@@ -112,7 +127,7 @@ export default function AddRol(){
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                         </Form.Group>
-
+)}
                         {show && (
                         <Alert variant={textFormSend.variant} onClose={() => setShow(false)} dismissible className="mt-5">
                             <Alert.Heading>{textFormSend.heading}</Alert.Heading>
@@ -128,7 +143,7 @@ export default function AddRol(){
                             <Col md={4}>
                                 {listPrivilegios.map((item, index) => (
                                     index <= 17 && (
-                                        <Form.Check type="checkbox" label={item.nombre} onChange={(e) => handleCheck(e, item)}/>
+                                        checkPrivilegio(item)
                                     )
                                 ))}
                             </Col>
@@ -136,7 +151,7 @@ export default function AddRol(){
                             <Col md={4}>
                                 {listPrivilegios.map((item, index) => (
                                     index > 17 && index <= 35 && (
-                                        <Form.Check type="checkbox" label={item.nombre} onChange={(e) => handleCheck(e, item)}/>
+                                        checkPrivilegio(item)
                                     )
                                 ))}
                             </Col>
@@ -144,7 +159,7 @@ export default function AddRol(){
                             <Col md={4}>
                                 {listPrivilegios.map((item, index) => (
                                     index > 35 && index <= 53 && (
-                                        <Form.Check type="checkbox" label={item.nombre} onChange={(e) => handleCheck(e, item)}/>
+                                        checkPrivilegio(item)                                    
                                     )
                                 ))}
                             </Col>
@@ -153,7 +168,7 @@ export default function AddRol(){
 
                         <div className="d-grid gap-2">
                             <Button variant="primary" type="submit" size="lg">
-                                Añadir
+                                Actualizar
                             </Button>
                         </div>
 
@@ -163,6 +178,17 @@ export default function AddRol(){
                       </Formik> 
                 </Col>
             </Row>
+            )
+        :
+        (
+            <Row className="justify-content-md-center text-center">
+            <Col md={1} className="justify-content-center">
+            <Spinner animation="border" >
+            </Spinner> 
+            </Col>
+        </Row>
+        ) 
+        }
         </Container>
     )
 }

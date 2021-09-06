@@ -7,7 +7,7 @@ export default function AddControlV(){
 
     return(
         <Container>
-            <Row>
+            <Row style={{backgroundColor: '#f1f1f1'}}>
                 <Col sm={3}></Col>
                 <Col sm={6}> 
                 <Formik
@@ -62,7 +62,7 @@ export default function AddControlV(){
                     return (   
                     <Form onSubmit={handleSubmit}>
 
-                        <Form.Group as={Row} className="mb-3">
+                        <Form.Group as={Row} className="mb-3 mt-4">
                         <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Fecha nacimiento</Form.Label>
                         <Col sm="8">
                           <InputGroup hasValidation>
@@ -128,7 +128,7 @@ export default function AddControlV(){
                             </>
                         </Form.Group> 
 
-                        <div className="d-grid gap-2">
+                        <div className="d-grid gap-2 mb-4">
                             <Button variant="primary" type="submit" size="lg">
                                 Añadir Control
                             </Button>

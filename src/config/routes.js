@@ -5,6 +5,7 @@ import Login from "../pages/Login/Login";
 import Home from "../pages/Home/Home";
 import ListRol from "../pages/Rol/ListRol";
 import AddRol from "../pages/Rol/AddRol";
+import EditRol from "../pages/Rol/EditRol";
 import ListUsers from "../pages/Users/ListUsers";
 import AddUser from "../pages/Users/AddUser";
 import EditUser from "../pages/Users/EditUser";
@@ -16,8 +17,12 @@ import AddControlCyD from "../pages/ControlCyD/AddControlCyD";
 import ListControlCyD from "../pages/ControlCyD/ListControlCyD";
 import AllUserControl from "../pages/ControlHome/AllUserControl";
 import AddControlVac from "../pages/ControlVac/AddControlVac";
+import AddControlFollow from "../pages/ControlFollow/AddControlFollow";
+import AddInfantIncome from "../pages/ControlFollow/AddInfantIncome";
 
-import Page from "../pages/Example/Page";
+import StatisticNutri from "../pages/ControlNutri/StatisticNutri";
+import StatisticTallaEdad from "../pages/ControlNutri/StatisticTallaEdad";
+
 
 
 import NotFound404 from "../pages/NotFound404";
@@ -55,6 +60,11 @@ const routes = [
                 component: AddRol,
             },
             {
+                path: "/admin/editRol/:idRol",
+                exact: true,
+                component: EditRol
+            },
+            {
                 path: "/admin/users",
                 exact: true,
                 component: ListUsers,
@@ -88,7 +98,17 @@ const routes = [
                 path: "/admin/listVaccines/:documento",
                 exact: true,
                 component: ListVac,
+            },
+            {
+                path: "/admin/StatisticNutri",
+                exact: true,
+                component: StatisticNutri,                
             },   
+            {
+                path: "/admin/statisticTallaEdad",
+                exact: true,
+                component: StatisticTallaEdad,                
+            },
             {
                 path: "/admin/listControlNutri",
                 exact: true,
@@ -110,8 +130,16 @@ const routes = [
                 component: AddControlVac,
             },
             {
-                component: NotFound404,
-            },                         
+                path: "/admin/addControlFollow",
+                exact: true,
+                component: AddControlFollow,
+            },
+            {
+                path: "/admin/addInfantIncome",
+                exact: true,
+                component: AddInfantIncome,
+            }  
+                       
         ]
     }   
 ];

@@ -18,7 +18,7 @@ export default function LayoutAdmin(props){
     console.log(user);
     //useEffect(() => {
       //  console.log(user);
-        if(!user && !isLoading){
+        /*if(!user && !isLoading){
             console.log("entro");
             return (
                 <>
@@ -26,9 +26,9 @@ export default function LayoutAdmin(props){
                     <Redirect to="/" />
                 </>
             )
-        }
+        }*/
     //}, []);
-        if(user && !isLoading){
+        //if(user && !isLoading){
             return(
                 <div className={openMenu ? "body body_move" : "body"}>
             <header className="headers">
@@ -98,9 +98,9 @@ export default function LayoutAdmin(props){
         
                 </div>
             );
-        }
+        //}
 
-        return null;
+        //return null;
 }
 
 function LoadRoutes({routes}){
