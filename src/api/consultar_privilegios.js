@@ -1,10 +1,11 @@
 import { urlBackend } from "./config";
 
-export function getPrivilegiosApi(){
-    const url = `${urlBackend}rol/CONSULTAR_PRIVILEGIOS`;
+export function getPrivilegiosApi(token){
+    const url = `/api/rol/CONSULTAR_PRIVILEGIOS`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET"
     };

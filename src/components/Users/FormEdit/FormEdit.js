@@ -70,7 +70,7 @@ export default function FormEdit(props){
                 }}
                 validate={(valores) => {
                   let errores = {};
-                  /*if(!valores.tipoDocumento){
+                  if(!valores.tipoDocumento){
                     errores.tipoDocumento = 'Asegurese de selecionar una opción';
                   }
                   if(!valores.documento){
@@ -139,13 +139,13 @@ export default function FormEdit(props){
                     errores.clave = 'Por favor, ingresa una contraseña'
                   }else if(valores.clave.length < 8){
                     errores.clave = 'La contraseña debe tener un minimo de 8 caracteres'
-                  }*/
+                  }
 
                   return errores;
                 }}
                 onSubmit={(valores, {resetForm}) => {
                   console.log(valores.fechaNacimiento);
-                    /*resetForm();
+                    resetForm();
                     updateUserApi(valores, token).then(response => {
                         if(response.status !== 500){
                           getAssignRolApi(valores.role, valores.documento, valores.token).then(responseRol => {
@@ -173,7 +173,7 @@ export default function FormEdit(props){
                   });
                   setTimeout(() => {
                     setShow(false);
-                  }, 5000);*/
+                  }, 5000);
                 }}
                 >
                 {props => {

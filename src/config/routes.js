@@ -5,6 +5,7 @@ import Login from "../pages/Login/Login";
 import Home from "../pages/Home/Home";
 import ListRol from "../pages/Rol/ListRol";
 import AddRol from "../pages/Rol/AddRol";
+import EditRol from "../pages/Rol/EditRol";
 import ListUsers from "../pages/Users/ListUsers";
 import AddUser from "../pages/Users/AddUser";
 import EditUser from "../pages/Users/EditUser";
@@ -54,6 +55,11 @@ const routes = [
                 path: "/admin/addRol",
                 exact: true,
                 component: AddRol,
+            },
+            {
+                path: "/admin/editRol/:idRol",
+                exact: true,
+                component: EditRol
             },
             {
                 path: "/admin/users",
