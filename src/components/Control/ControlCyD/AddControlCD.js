@@ -7,8 +7,9 @@ export default function AddControlCD(){
 
     return(
         <Container className="b">
-            <Row >
-                <Col sm={12}> 
+            <Row  style={{backgroundColor: '#f1f1f1'}}>
+              <Col sm={1}> </Col>
+                <Col sm={10}> 
                 <Formik 
                 initialValues={{ 
                     dpcumento: '',
@@ -103,8 +104,8 @@ export default function AddControlCD(){
                     <Form onSubmit={handleSubmit}>
 
                     <Form.Group as={Row} className="mb-3 mt-5">
-                        <Form.Label column md={3} style={{"font-size": "12px !important"}} >Número documento</Form.Label>
-                        <Col md={3}>
+                        <Form.Label column md={2} style={{"font-size": "12px !important"}} >Número documento</Form.Label>
+                        <Col md={4}>
                             <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="Dígita el documento" size="lg" id="documento" name="documento" style={{marginLeft:10}}
                                value={values.documento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.documento && touched.documento}
@@ -133,8 +134,8 @@ export default function AddControlCD(){
                         </Form.Group>
 
                         <Form.Group as={Row} className="mb-3 mt-4">
-                        <Form.Label column sm="3" style={{"font-size": "12px !important"}}>Fecha nacimiento</Form.Label>
-                        <Col sm="3">
+                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Fecha nacimiento</Form.Label>
+                        <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaNacimiento" name="fechaNacimiento" 
                                  value={values.fechaNacimiento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaNacimiento && touched.fechaNacimiento}
@@ -181,8 +182,8 @@ export default function AddControlCD(){
                         </Form.Group> 
 
                         <Form.Group as={Row} className="mb-3 mt-4">
-                        <Form.Label column sm="3" style={{"font-size": "12px !important"}}>Fecha control</Form.Label>
-                        <Col sm="3">
+                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Fecha control</Form.Label>
+                        <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaControl" name="fechaControl" 
                                  value={values.fechaControl} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaControl && touched.fechaControl}
@@ -225,8 +226,8 @@ export default function AddControlCD(){
                         </Form.Group> 
 
                         <Form.Group as={Row} className="mb-3 mt-4">
-                        <Form.Label column sm="3" style={{"font-size": "12px !important"}}>IMC calculado</Form.Label>
-                        <Col sm="3">
+                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>IMC calculado</Form.Label>
+                        <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="text" placeholder="Valor de IMC" size="lg" id="imc" name="imc" 
                                value={values.imc} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.imc && touched.imc}
@@ -255,13 +256,11 @@ export default function AddControlCD(){
                         </Form.Group> 
 
                         <Row >
-                        <Col md={5} className="row justify-content-center align-self-center"> </Col>
-                        <Col md={5} className="row justify-content-center align-self-center"> </Col>
-                        <Col  className="row justify-content">
+                        <div  className="row justify-content mb-5">
                             <Button variant="primary" type="submit" size="lg">
                                 Guardar
                             </Button>
-                        </Col>
+                        </div>
                         </Row >
 
                     </Form>
@@ -269,7 +268,7 @@ export default function AddControlCD(){
                         }}
                       </Formik> 
                 </Col>
-                
+                <Col sm={1}> </Col>  
             </Row>
         </Container>
     )
