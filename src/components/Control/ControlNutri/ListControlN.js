@@ -1,5 +1,5 @@
 //import React, { useState, useEffect } from 'react'
-import { Container, ListGroup, Col, Row, Spinner } from "react-bootstrap";
+import { Container, ListGroup, Col, Row, Button, Form, InputGroup, Spinner } from "react-bootstrap";
 import { faPrint } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -16,7 +16,19 @@ export default function ListControlN(){
  
      return(
          <Container>
-             
+            <Row className="mb-3 mt-5">
+                 <Col md={3}>
+                 </Col>
+                 <Col md={6}>
+                    <InputGroup hasValidation>
+                        <Form.Control type="search" placeholder="Buscar Usuario" size="lg" id="busqueda" name="busqueda" />
+                        <Button class="btn btn-outline-success" type="submit">Buscar</Button>
+                    </InputGroup>
+                 </Col>
+                 <Col md={3}>
+                 </Col>
+             </Row>
+
              <ListGroup >
                 <ListGroup.Item className="shadow border mt-2 mb-3">
                 <Container>

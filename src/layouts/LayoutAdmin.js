@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faUserTie, faUsers, faLaptopMedical, faHome } from '@fortawesome/free-solid-svg-icons';
 import Logo from "./../assets/img/logocomfaoriente.png";
 import AvatarDefault from './../assets/img/avatar-default.jpg'
-import { Nav, Image } from "react-bootstrap";
+import { Nav, Image, NavDropdown } from "react-bootstrap";
 import "./LayoutAdmin.scss";
 import Welcome from "../pages/Welcome/Welcome";
 
@@ -80,7 +80,13 @@ export default function LayoutAdmin(props){
                     <Link to="/" className={linkSelected.controls ? "selected" : ""}>
                         <div className="option">
                         <FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" />
-                            <h4 className="subtitlesMenu">Controles</h4>
+                        <NavDropdown title="Controles" id="nav-dropdown" className="subtitlesMenu"
+                            style={{"font-size": "24px", "font-weight": 100, "color": "#ffff"}}
+                        >
+        <NavDropdown.Item><Link to="/admin/listUserControl/infantes"><h5>Infantes</h5></Link></NavDropdown.Item>
+        <NavDropdown.Divider />
+        <NavDropdown.Item><Link to="/admin/listUserControl/madresGestantes"><h5>Madres gestantes</h5></Link></NavDropdown.Item>
+      </NavDropdown>
                         </div>
                     </Link>
                 </div>

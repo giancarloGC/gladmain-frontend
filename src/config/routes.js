@@ -100,7 +100,7 @@ const routes = [
                 component: ListControlCyD,
             },
             {
-                path: "/admin/listUserControl",
+                path: "/admin/listUserControl/:role",
                 exact: true,
                 component: AllUserControl,
             },

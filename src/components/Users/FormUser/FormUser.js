@@ -140,9 +140,6 @@ export default function FormUser(){
                             setShow(true);
                         }
                   });
-
-
-
                   setTimeout(() => {
                     setShow(false);
                   }, 5000);
@@ -336,7 +333,7 @@ export default function FormUser(){
                         }}
                       </Formik> 
 
-
+                      
                       {show && (
                         <Alert variant={textFormSend.variant} onClose={() => setShow(false)} dismissible className="mt-5">
                             <Alert.Heading>{textFormSend.heading}</Alert.Heading>

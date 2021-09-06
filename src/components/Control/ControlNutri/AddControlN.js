@@ -1,22 +1,36 @@
-import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-bootstrap";
-import { Formik, Field, ErrorMessage } from "formik";
+import React, { useState, useEffect, useReducer } from "react";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner } from "react-bootstrap";
+import { Formik } from "formik";
+import { TOKEN } from "../../../utils/constans";
+import { getUserByIdApi } from "../../../api/user";
+import { insertControlApi } from "../../../api/controls";
+import  AuthContext  from "../../../hooks/useAuth";
 
 
-export default function AddControlN(){
+export default function AddControlN(props){
+    const { userControl } = props;
+    const { user } = AuthContext();
+    const token = localStorage.getItem(TOKEN);
+    const [ userApi, setUserByIdApi ] = useState({});
+    const [show, setShow] = useState(false);
+    const [ textFormSend, setTextFormSend ] = useState({});
+    const documentoLogin = user.sub.split('-');
+    const rolUser = "madre";
+
+    const dateFormat = (date) => {
+      if(date){
+      let dateFormated = date.split('T');
+      return dateFormated[0];
+      }
+    }
 
     return(
         <Container>
             <Row>
                 <Col sm={3}></Col>
                 <Col sm={6}> 
-                <Formik
+              <Formik
                 initialValues={{ 
-                    dpcumento: '',
-                    nombre: '',
-                    fechaNacimiento: '',
-                    sexo: '',
-                    edad: '',
                     fechaControl: '',
                     peso: '',
                     talla: '',
@@ -27,7 +41,7 @@ export default function AddControlN(){
                 validate={(valores) => {
                   let errores = {};
 
-                  if(!valores.documento){
+                  /*if(!valores.documento){
                     errores.documento = 'Por favor, ingresa números';
                   }else if(!/^([0-9])*$/.test(valores.documento)){
                     errores.documento = 'Documento incorrecto, solo puedes escribir números';
@@ -57,7 +71,7 @@ export default function AddControlN(){
                     errores.edad = 'Edad incorrecta, solo puedes escribir números';
                   }else if(valores.edad <= 0 || valores.edad > 90){
                     errores.edad = 'Edad invalida, intente con otra';
-                  }      
+                  }*/      
                   const dateCurrently2 = new Date();
                   if(!valores.fechaControl){
                     errores.fechaControl = 'Asegurese de selecionar una fecha';
@@ -65,17 +79,17 @@ export default function AddControlN(){
                     errores.fechaControl = 'Seleccione una fecha valida';
                   }
                   if(!valores.peso){
-                    errores.peso = 'Por favor, ingresa números';
+                    errores.peso = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9])*$/.test(valores.peso)){
                     errores.peso = 'Solo puedes escribir números';
                   }
                   if(!valores.talla){
-                    errores.talla = 'Por favor, ingresa números';
+                    errores.talla = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9])*$/.test(valores.talla)){
                     errores.talla = 'Solo puedes escribir números';
                   }
                   if(!valores.imc){
-                    errores.imc = 'Por favor, ingresa números';
+                    errores.imc = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9])*$/.test(valores.imc)){
                     errores.imc = 'Solo puedes escribir números';
                   }
@@ -88,17 +102,63 @@ export default function AddControlN(){
                 }}
 
                 onSubmit={(valores, {resetForm}) => {
-                  /*  resetForm();
-                    valores.token = token;
-                    insertUserApi(valores).then(response => {
-                        console.log(repsonse);
-                  });*/
+                  var tension = null;
+                  var edadGestacional = null;
+                  /*if(parametro === "mamita"){
+                    tension = valores.tension;
+                    edadGestacional = valores.edadGestacional;
+                  }*/
 
 
-
-
-                }}
-                >
+                  const formData = {
+                    idUsuario: userControl.documento,
+                    idUsuarioNutricionista: documentoLogin[0],
+                    nombre: userControl.nombre,
+                    fechaNacimiento: userControl.fechaNacimiento,
+                    sexo: userControl.sexo,
+                    edad: userControl.edad,
+                    fechaControl: valores.fechaControl,
+                    peso: valores.peso,
+                    talla: valores.talla,
+                    tension: tension,
+                    edadGestacional: edadGestacional,
+                    imc: valores.imc,
+                    estadoNutricional: valores.estadoNutricional,
+                    edad: userControl.edad,
+                  };
+                  console.log(formData);
+                  /*resetForm();
+                  valores.token = token;
+                  insertUserApi(valores).then(response => {
+                      if(response.status !== 500){
+                        getAssignRolApi(valores.role, valores.documento, valores.token).then(responseRol => {
+                            if(responseRol === true){
+                                setTextFormSend({
+                                  variant: "success", heading: "¡Excelente, registro exitoso!",
+                                  message: `El control ${valores.name} fue almacenado correctamente`
+                                });
+                                setShow(true);
+                          }else{
+                                setTextFormSend({
+                                  variant: "danger", heading: "¡Opss, ocurrió un error!",
+                                  message: "Revisaremos lo ocurrido, inténtalo nuevamente"
+                              });
+                              setShow(true);
+                          }
+                        });
+                      }else{
+                          setTextFormSend({
+                              variant: "danger", heading: "¡Opss, ocurrió un error!",
+                              message: "Revisaremos lo ocurrido, inténtalo nuevamente"
+                          });
+                          setShow(true);
+                      }
+                });*/
+                setTimeout(() => {
+                  setShow(false);
+                }, 5000);
+              }}
+            >
                 {props => {
                     const { values, touched, errors, dirty, isSubmitting,
                             handleChange, handleBlur, handleSubmit, handleReset
@@ -111,7 +171,7 @@ export default function AddControlN(){
                         <Col sm="8">
                             <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="Dígita aquí el documento" size="lg" id="documento" name="documento" 
-                               value={values.documento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.documento && touched.documento}
+                               value={userControl.documento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.documento && touched.documento}
                                isValid={!errors.documento && touched.documento}
                             />
                             <Form.Control.Feedback type="invalid">
@@ -127,7 +187,7 @@ export default function AddControlN(){
                         <Col sm="8">
                         <InputGroup hasValidation>
                             <Form.Control type="text" placeholder="Dígita aquí el nombre" size="lg" id="nombre" name="nombre" 
-                               value={values.nombre} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombre && touched.nombre}
+                               value={userControl.nombre} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombre && touched.nombre}
                                isValid={!errors.nombre && touched.nombre}
                             />
                             <Form.Control.Feedback type="invalid">
@@ -137,13 +197,13 @@ export default function AddControlN(){
                         </InputGroup>
                         </Col>
                         </Form.Group>
-
+                      
                         <Form.Group as={Row} className="mb-3">
                         <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Fecha nacimiento</Form.Label>
                         <Col sm="8">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaNacimiento" name="fechaNacimiento" 
-                                 value={values.fechaNacimiento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaNacimiento && touched.fechaNacimiento}
+                                 Value={dateFormat(userControl.fechaNacimiento)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaNacimiento && touched.fechaNacimiento}
                                  isValid={!errors.fechaNacimiento && touched.fechaNacimiento}
                               />
                               <Form.Control.Feedback type="invalid">
@@ -159,7 +219,7 @@ export default function AddControlN(){
                         <Col sm="8">
                           <InputGroup hasValidation>
                           <Form.Select size="lg" name="sexo" onChange={handleChange} onBlur={handleBlur}
-                                value={values.sexo} isValid={!errors.sexo && touched.sexo} isInvalid={!!errors.sexo && touched.sexo}
+                                value={userControl.sexo} isValid={!errors.sexo && touched.sexo} isInvalid={!!errors.sexo && touched.sexo}
                               >
                               <option disabled>Selecciona el sexo</option>
                               <option value="femenino">Femenino</option>
@@ -179,7 +239,7 @@ export default function AddControlN(){
                         <Col sm="8">
                           <InputGroup hasValidation>
                               <Form.Control type="number" placeholder="Dígita aquí la edad" size="lg" id="edad" name="edad" 
-                               value={values.edad} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
+                               value={userControl.edad} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
                                isValid={!errors.edad && touched.edad}
                               />
                               <Form.Control.Feedback type="invalid">
@@ -226,7 +286,7 @@ export default function AddControlN(){
                         <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Talla</Form.Label>
                         <Col sm="8">
                           <InputGroup hasValidation>
-                              <Form.Control type="number" placeholder="Dígita aquí la talla" size="lg" id="talla" name="talla" 
+                              <Form.Control type="number" placeholder="Escribe la talla sin punto ni coma" size="lg" id="talla" name="talla" 
                                value={values.talla} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.talla && touched.talla}
                               isValid={!errors.talla && touched.talla}
                               />
@@ -268,7 +328,11 @@ export default function AddControlN(){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
-                        </Form.Group>    
+                        </Form.Group> 
+
+                        {rolUser === "madre" && ( 
+                          <p>Campo de mamita TENSION</p>
+                        )}   
 
                         <div className="d-grid gap-2">
                             <Button variant="primary" type="submit" size="lg">
