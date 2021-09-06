@@ -23,7 +23,9 @@ export default function ListControlCyDe(){
       }
  
      return(
-         <Container>
+         <Container> 
+             
+             <Row  style={{backgroundColor: '#f1f1f1'}}> 
              <Row className="mb-3 mt-5">
                  <Col md={3}>
                  </Col>
@@ -37,7 +39,7 @@ export default function ListControlCyDe(){
                  </Col>
              </Row>
 
-             <Row className="mb-3 mt-5">
+             <Row className="mb-3 mt-5" >
                     <Form.Label column sm="3" >
                         Fecha Ultimo Control
                     </Form.Label>
@@ -90,9 +92,11 @@ export default function ListControlCyDe(){
                          </p>                     
                      </Col>
                  </Row>
+
                  </Container>
              </ListGroup.Item>
              </ListGroup>
+             </Row> 
          </Container>
      )
  }

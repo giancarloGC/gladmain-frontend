@@ -50,7 +50,7 @@ export default function FormEdit(props){
             )}
 
             {componentLoaded && (
-            <Row>
+            <Row style={{backgroundColor: '#f1f1f1'}}>
                 <Col sm={1}></Col>
                 <Col sm={10}> 
                 <Formik
@@ -389,7 +389,7 @@ export default function FormEdit(props){
                       </Form.Group>
 
 
-                      <Form.Group as={Row} className="mb-3">
+                      <Form.Group as={Row} className="mb-4">
                       <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Rol</Form.Label>
                       <Col sm="10">
                         <InputGroup hasValidation>
