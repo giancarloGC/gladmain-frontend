@@ -7,7 +7,7 @@ export default function AddControlF(){
 
     return(
         <Container>
-            <Row>
+            <Row style={{backgroundColor: '#f1f1f1'}}>
                 <Col sm={1}></Col>
                 <Col sm={10} className="mt-2 mb-4"> 
                 <Formik
@@ -93,9 +93,8 @@ export default function AddControlF(){
                     } = props;
                     return (   
                     <Form onSubmit={handleSubmit}>
-                        
-                    <Form.Group as={Row} className="mb-3 mt-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>No. Seguimiento</Form.Label>
+                    <Form.Group as={Row} className="mb-1 mt-3">
+                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>No. Seguimiento</Form.Label>
                         <Col sm="2">
                             <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="01" size="lg" id="idSeguimiento" name="idSeguimiento" 
@@ -108,9 +107,10 @@ export default function AddControlF(){
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                         </Col>
+                        <Col sm="4"> </Col>
 
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Fecha </Form.Label>
-                        <Col sm="4">
+                        <Form.Label column sm="1" style={{"font-size": "12px !important"}}>Fecha </Form.Label>
+                        <Col sm="3">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaSeg" name="fechaSeg" 
                                  value={values.fechaSeg} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaSeg && touched.fechaSeg}
@@ -124,10 +124,15 @@ export default function AddControlF(){
                         </Col>
                     </Form.Group>
 
+                    <center>
+                    <Form.Label column sm="4" style={{"font-size": "12px !important"}} className="align-self-center justify-content-around mb-4"> <u>INFORMACIÓN DEL ACUDIENTE </u> </Form.Label>
+                    </center>
+
                     <Form.Group as={Row} className="mb-3">
+                     <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Tipo de Documento</Form.Label>
+                        <Col md={4}>
                         <InputGroup hasValidation>
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Tipo de Documento</Form.Label>
-                            <Form.Select sm="4" size="lg" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
+                            <Form.Select  size="lg" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
                                     isValid={!errors.tipoDocumento && touched.tipoDocumento} isInvalid={!!errors.tipoDocumento && touched.tipoDocumento}
                             >
                             <option disabled selected>Selecciona el tipo de documento</option>
@@ -141,81 +146,11 @@ export default function AddControlF(){
                                         </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
+                        </Col>
 
+                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Número Documento</Form.Label>
+                        <Col md={4}>
                         <InputGroup hasValidation>
-                            <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Número Documento</Form.Label>
-                            <Form.Control type="text" placeholder="Número documento" size="lg" id="idUsuario" name="idUsuario" 
-                            value={values.idUsuario} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.documento && touched.idUsuario}
-                            isValid={!errors.idUsuario && touched.idUsuario}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.idUsuario}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                    </Form.Group>
-
-                    <Form.Group as={Row} className="mb-3">
-                        <InputGroup hasValidation>
-                        <Form.Label column sm="5" style={{"font-size": "12px !important"}}>Nombre del Usuario</Form.Label>
-                        <Form.Control type="text" placeholder="nombre usuario" size="lg" id="nombre" name="nombre" 
-                               value={values.nombre} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombre && touched.nombre}
-                               isValid={!errors.nombre && touched.nombre}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.nombre}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                    </Form.Group>
-
-                    <Form.Group className="mb-3 mt-3">
-                        <InputGroup hasValidation>
-                            <Form.Label column sm="5" style={{"font-size": "12px !important"}}>Número Celular</Form.Label>
-                            <Form.Control type="number" placeholder="Dígita aquí Teléfono" size="lg" id="celular" name="celular" 
-                            value={values.celular} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.celular && touched.celular}
-                            isValid={!errors.celular && touched.celular}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.celular}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                    </Form.Group>
-                    <Form.Group as={Row} className="mb-3">
-                        <InputGroup hasValidation>
-                        <Form.Label column sm="5" style={{"font-size": "12px !important"}}>Nombre del Acudiente</Form.Label>
-                               <Form.Control type="text" placeholder="Nombre del Acudiente" size="lg" id="nombreAcudiente" name="nombreAcudiente" 
-                               value={values.nombreAcudiente} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreAcudiente && touched.nombreAcudiente}
-                               isValid={!errors.nombreAcudiente && touched.nombreAcudiente}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.nombreAcudiente}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                    </Form.Group>
-                    <Form.Group>
-                        <InputGroup hasValidation>
-                        <Form.Label column sm="5" style={{"font-size": "12px !important"}}>Tipo de Documento</Form.Label>
-                            <Form.Select sm="7" size="lg" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
-                                    isValid={!errors.tipoDocumento && touched.tipoDocumento} isInvalid={!!errors.tipoDocumento && touched.tipoDocumento}
-                            >
-                            <option disabled selected>Selecciona el tipo de documento</option>
-                            <option value="CC">Cédula de ciudadanía</option>
-                            <option value="RC">Registro civil</option>
-                            <option value="CE">Cédula de extranjería</option>
-
-                            </Form.Select>
-                            <Form.Control.Feedback type="invalid">
-                                        {errors.tipoDocumento}
-                                        </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                    </Form.Group>
-                    <Form.Group className="mb-3 mt-3">
-                        <InputGroup hasValidation>
-                        <Form.Label column sm="5" style={{"font-size": "12px !important"}}>Documento acudiente</Form.Label>
                             <Form.Control type="text" placeholder="documento acudiente" size="lg" id="numeroDocAcudiente" name="numeroDocAcudiente" 
                             value={values.numeroDocAcudiente} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.numeroDocAcudiente && touched.numeroDocAcudiente}
                             isValid={!errors.numeroDocAcudiente && touched.numeroDocAcudiente}
@@ -225,10 +160,101 @@ export default function AddControlF(){
                             </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
+                        </Col>
                     </Form.Group>
-                    <Form.Group as={Row} className="mb-3">
+
+
+                    <Form.Group as={Row} className="mb-3 mt-3">
+                    <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Nombre</Form.Label>
+                    <Col md={10}>
                         <InputGroup hasValidation>
-                        <Form.Label column sm="5" style={{"font-size": "12px !important"}}>Estado nutricional</Form.Label>
+                               <Form.Control type="text" placeholder="Nombre del Acudiente" size="lg" id="nombreAcudiente" name="nombreAcudiente" 
+                               value={values.nombreAcudiente} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreAcudiente && touched.nombreAcudiente}
+                               isValid={!errors.nombreAcudiente && touched.nombreAcudiente}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.nombreAcudiente}
+                            </Form.Control.Feedback>
+                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                        </InputGroup>
+                     </Col>
+                    </Form.Group>
+
+                    <center>
+                    <Form.Label column sm="4" style={{"font-size": "12px !important"}} className="align-self-center justify-content-around mb-4 mt-3"> <u>INFORMACIÓN DEL USUARIO </u> </Form.Label>
+                    </center>
+
+                    <Form.Group as={Row} className="mb-3">
+                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Tipo de Documento</Form.Label>
+                        <Col md={4}>
+                        <InputGroup hasValidation>
+                            <Form.Select  size="lg" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
+                                    isValid={!errors.tipoDocumento && touched.tipoDocumento} isInvalid={!!errors.tipoDocumento && touched.tipoDocumento}
+                            >
+                            <option disabled selected>Selecciona el tipo de documento</option>
+                            <option value="CC">Cédula de ciudadanía</option>
+                            <option value="RC">Registro civil</option>
+                            <option value="CE">Cédula de extranjería</option>
+
+                            </Form.Select>
+                            <Form.Control.Feedback type="invalid">
+                                        {errors.tipoDocumento}
+                                        </Form.Control.Feedback>
+                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                            </InputGroup>
+                        </Col>
+                       
+                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Número Documento</Form.Label>
+                            <Col md={4}>
+                            <InputGroup hasValidation>
+                            <Form.Control  type="text" placeholder="Número documento" size="lg" id="idUsuario" name="idUsuario" 
+                            value={values.idUsuario} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.documento && touched.idUsuario}
+                            isValid={!errors.idUsuario && touched.idUsuario}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.idUsuario}
+                            </Form.Control.Feedback>
+                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                            </InputGroup>
+                            </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row} className="mb-3">
+                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Nombre </Form.Label>
+                        <Col md={4}>
+                        <InputGroup hasValidation>
+                        <Form.Control type="text" placeholder="nombre usuario" size="lg" id="nombre" name="nombre" 
+                               value={values.nombre} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombre && touched.nombre}
+                               isValid={!errors.nombre && touched.nombre}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.nombre}
+                            </Form.Control.Feedback>
+                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                        </InputGroup>
+                        </Col>
+
+                        
+                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Celular</Form.Label>
+                        <Col md={4}>
+                        <InputGroup hasValidation>
+                            <Form.Control type="number" placeholder="Dígita aquí Teléfono" size="lg" id="celular" name="celular" 
+                            value={values.celular} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.celular && touched.celular}
+                            isValid={!errors.celular && touched.celular}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.celular}
+                            </Form.Control.Feedback>
+                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                        </InputGroup>
+                        </Col>
+                    </Form.Group>
+
+                   
+                    <Form.Group as={Row} className="mb-4">
+                    <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Estado Nutricional</Form.Label>
+                    <Col md={10}>
+                        <InputGroup hasValidation>
                               <Form.Control type="text" placeholder="Estado nutricional calculado" size="lg" id="estadoNutricional" name="estadoNutricional" 
                                value={values.estadoNutricional} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.estadoNutricional && touched.estadoNutricional}
                               isValid={!errors.estadoNutricional && touched.estadoNutricional}
@@ -238,6 +264,7 @@ export default function AddControlF(){
                               </Form.Control.Feedback>
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
+                    </Col>
                     </Form.Group>                           
 
                         <div className="d-grid gap-2">
