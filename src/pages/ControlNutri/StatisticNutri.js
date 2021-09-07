@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import { Container } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
 import ListControlN from "../../components/Control/ControlNutri/ListControlN";
 import ImageBackground from "../../assets/img/graphicsPrueba.png";
@@ -42,7 +42,7 @@ const data = {
       },
       {
         label: '- 2',
-        data: [2.1, 2.8, 3.8, 5.1, 6.2, 7.2, 8, 8.9, 9.8, 10/10.8, 11.8, 12.8, 14, 15.4 ],
+        data: [2.1, 2.8, 3.8, 5.1, 6.2, 7.2, 8, 8.9, 9.8, 10.8, 11.8, 12.8, 14, 15.4 ],
         fill: false,
         borderColor: '#4884FC',
         tension: 0.1,
@@ -89,6 +89,8 @@ const data = {
     return(
         <Container>
              <h1 className="text-center">Estadística </h1>
+             <h2 className="text-center">Peso para la Talla Niños </h2>
+             <Form.Label column sm="4" style={{"font-size": "12px !important" }}>Puntuación Z (0 a 2 años)</Form.Label>
              <div style={{"max-width": "800px", "background-image": "url('../../assets/img/graphicsPrueba.png')"}}>
              <Line 
                 data={data}

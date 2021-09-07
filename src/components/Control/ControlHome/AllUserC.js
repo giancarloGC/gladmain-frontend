@@ -17,7 +17,7 @@ import { TOKEN } from "../../../utils/constans";
 
 import "../../../components/Control/ControlHome/AllUserC.scss";
 
-export default function AllUserC (){
+export default function AllUserC ({role}){
     const [ loading, setLoading ] = useState(true);
     const [ usersApi, setUsersApi ] = useState([]);
     const token = localStorage.getItem(TOKEN);

@@ -5,7 +5,7 @@ import ListControlN from "../../components/Control/ControlNutri/ListControlN";
 import ImageBackground from "../../assets/img/graphicsPrueba.png";
 //import { getContVaccApi } from "../../api/vaccination";
 
-export default function StatisticTallaEdad(){
+export default function StatisticPesoEdad(){
 const [ sizeImage, setSizeImage] = useState("150");
 
 const image = new Image();
@@ -31,10 +31,10 @@ const plugin = {
 
 
 const data = {
-    labels: [ 0," ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "1 año", " ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "2 años" ],
+    labels: [ 0, " ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "1 año", " ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "2 años" ],
     datasets: [{
         label: '- 2',
-        data: [45, 50, 53.8, 56.7, 59, 61, 62.9, 64.2, 65.6, 66.9, 68, 69.2, 70.3, 71.5, 72.6, 73.7, 74.7, 75.6, 76.5, 77.3, 78.2, 79, 79.9, 80.5, 81.2],
+        data: [ 2.4, 3.4, 4.4, 5, 5.6, 6, 6.4, 6.7, 7, 7.2, 7.4, 7.6, 7.8, 8, 8.1, 8.3, 8.4, 8.6, 8.7, 8.9, 9.1, 9.2, 9.4, 9.5, 9.6 ],
         fill: false,
         borderColor: '#4884FC',
         tension: 0.1,
@@ -43,29 +43,29 @@ const data = {
       
       {
         label: '- 1',
-        data: [ 47, 52, 55.8, 58.8, 61.1, 63.1, 64.9, 66.4, 67.9, 69.2, 70.5, 71.8, 72.9, 74, 75.1, 76.2, 77.2, 78.2, 79.1, 80.1, 81.1, 82, 82.9, 83.7, 84.5 ],
+        data: [ 2.8, 3.9, 4.9, 5.6, 6.2, 6.7, 7.1, 7.5, 7.8, 8.1, 8.3, 8.5, 8.7, 8.8, 9, 9.1, 9.3, 9.5, 9.7, 9.9, 10.1, 10.3, 10.5, 10.7, 10.9 ],
         fill: false,
-        borderColor: '#D8E5FD',
+        borderColor: '#8EB2FA',
         tension: 0.1,
       },
 
       {
         label: '0',
-        data: [ 49, 54, 57.5, 60.5, 63.1, 65.1, 67, 68.5, 70, 71.4, 72.8, 74, 75.2, 76.4, 77.6, 78.8, 80, 81, 82, 83, 84, 85, 85.9, 86.8, 87.6 ],
+        data: [ 3.4, 4.5, 5.5, 6.5, 7.2, 7.7, 8.1, 8.4, 8.7, 9, 9.3, 9.6, 9.8, 10, 10.2, 10.4, 10.6, 10.8, 11, 11.2, 11.4, 11.6, 11.8, 12, 12.2 ],
         fill: false,
-        borderColor: '#8EB2FA',
+        borderColor: '#4884FC',
         tension: 0.1,
       },
       {
         label: '+ 1',
-        data: [ 51, 56, 60, 63, 65.3, 67.4, 69.1, 70.8, 72.3, 73.8, 75, 76.3, 77.7, 79, 80.1, 81.3, 82.5, 83.7, 84.9, 86, 87, 88, 89, 89.8, 90.6 ],
+        data: [ 3.8, 5, 6.3, 7.2, 7.9, 8.4, 8.8, 9.2, 9.6, 9.9, 10.2, 10.5, 10.8, 11.1, 11.4, 11.7, 11.9, 12.1, 12.3, 12.5, 12.7, 12.9, 13.1, 13.3, 13.5 ],
         fill: false,
         borderColor: '#4884FC',
         tension: 0.1,
       },
       {
         label: '+ 2',
-        data: [ 53, 58, 62, 65, 67.3, 69.4, 71.2, 72.9, 74.5, 76, 77.4, 78.8, 80.1, 81.5, 82.8, 84, 85.1, 86.2, 87.4, 88.6, 89.7, 90.8, 91.9, 93, 94 ],
+        data: [ 4.4, 5.6, 7, 8, 8.8, 9.4, 9.9, 10.3, 10.7, 11.1, 11.4, 11.7, 12, 12.3, 12.6, 12.9, 13.2, 13.5, 13.8, 14.1, 14.4, 14.7, 14.9, 15.1, 15.3 ],
         fill: false,
         borderColor: '#4884FC',
         tension: 0.1,
@@ -75,7 +75,7 @@ const data = {
     return(
         <Container>
              <h1 className="text-center">Estadística </h1>
-             <h2 className="text-center">Talla para la Edad Niños </h2>
+             <h2 className="text-center">Peso para la Edad Niños </h2>
              <Form.Label column sm="4" style={{"font-size": "12px !important" }}>Puntuación Z (0 a 2 años)</Form.Label>
              <div style={{"max-width": "800px", "background-image": "url('../../assets/img/graphicsPrueba.png')"}}>
              <Line 

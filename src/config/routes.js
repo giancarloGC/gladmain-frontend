@@ -20,9 +20,10 @@ import AddControlVac from "../pages/ControlVac/AddControlVac";
 import AddControlFollow from "../pages/ControlFollow/AddControlFollow";
 import AddInfantIncome from "../pages/ControlFollow/AddInfantIncome";
 
-import StatisticNutri from "../pages/ControlNutri/StatisticNutri";
+import StatisticPesoTalla from "../pages/ControlNutri/StatisticNutri";
 import StatisticTallaEdad from "../pages/ControlNutri/StatisticTallaEdad";
-
+import StatisticPesoEdad from "../pages/ControlNutri/StatisticPesoEdad";
+import StatisticImcEdad from "../pages/ControlNutri/StatisticImcEdad";
 
 
 import NotFound404 from "../pages/NotFound404";
@@ -100,14 +101,24 @@ const routes = [
                 component: ListVac,
             },
             {
-                path: "/admin/StatisticNutri",
+                path: "/admin/statisticPesoTalla",
                 exact: true,
-                component: StatisticNutri,                
+                component: StatisticPesoTalla,                
             },   
             {
                 path: "/admin/statisticTallaEdad",
                 exact: true,
                 component: StatisticTallaEdad,                
+            },
+            {
+                path: "/admin/statisticPesoEdad",
+                exact: true,
+                component: StatisticPesoEdad,                
+            },
+            {
+                path: "/admin/statisticImcEdad",
+                exact: true,
+                component: StatisticImcEdad,          
             },
             {
                 path: "/admin/listControlNutri",
