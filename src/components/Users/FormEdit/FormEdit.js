@@ -284,23 +284,10 @@ export default function FormEdit(props){
                         </Form.Group> 
 
                         <Form.Group as={Row} className="mb-4">
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Edad</Form.Label>
-                        <Col sm="2">
+                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Edad en meses</Form.Label>
+                        <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="number" placeholder="edad" size="lg" id="edad" name="edad" 
-                              defaultValue={user.edad} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
-                              isValid={!errors.edad && touched.edad}
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.edad}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                        </Col>
-
-                        <Col sm="2">
-                          <InputGroup hasValidation>
-                              <Form.Control type="number" placeholder="mes|años" size="lg" id="meses" name="edad" 
                               defaultValue={user.edad} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
                               isValid={!errors.edad && touched.edad}
                               />
