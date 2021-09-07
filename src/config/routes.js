@@ -24,7 +24,9 @@ import StatisticPesoTalla from "../pages/ControlNutri/StatisticNutri";
 import StatisticTallaEdad from "../pages/ControlNutri/StatisticTallaEdad";
 import StatisticPesoEdad from "../pages/ControlNutri/StatisticPesoEdad";
 import StatisticImcEdad from "../pages/ControlNutri/StatisticImcEdad";
-
+import StatisticPesoTalla2a5 from "../pages/ControlNutri/StatisticPesoTalla2a5";
+import StatisticTallaEdad2a5 from "../pages/ControlNutri/StatisticTallaEdad2a5";
+import StatisticPesoEdad2a5 from "../pages/ControlNutri/StatisticPesoEdad2a5";
 
 import NotFound404 from "../pages/NotFound404";
 
@@ -119,6 +121,21 @@ const routes = [
                 path: "/admin/statisticImcEdad",
                 exact: true,
                 component: StatisticImcEdad,          
+            },
+            {
+                path: "/admin/statisticPesoTalla2a5",
+                exact: true,
+                component: StatisticPesoTalla2a5,                
+            }, 
+            {
+                path: "/admin/statisticTallaEdad2a5",
+                exact: true,
+                component: StatisticTallaEdad2a5,                
+            },
+            {
+                path: "/admin/statisticPesoEdad2a5",
+                exact: true,
+                component: StatisticPesoEdad2a5,                
             },
             {
                 path: "/admin/listControlNutri",
