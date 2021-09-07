@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
+//import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
+import "./AddInfantInc.scss";
 
 
 export default function AddInfantInc(){
 
     return(
         <Container>
-            <Row>
-                <Col sm={12} className="mt-2 mb-4"> 
+            <Row style={{backgroundColor: '#f1f1f1'}}>
+              <Col sm={1}> </Col>
+                <Col sm={10} className="mt-2 mb-4"> 
                 <Formik
                 initialValues={{ 
                     idSeguimiento: '',
@@ -97,10 +99,11 @@ export default function AddInfantInc(){
                     <Form onSubmit={handleSubmit}>
                         
                     <Form.Group as={Row} className="mb-3 mt-3">
-                        <Form.Label column sm="3" style={{"font-size": "12px !important"}}>No. Seguimiento</Form.Label>
-                        <Col sm="1">
+                        <Form.Label column sm="3" style={{"font-size": "8px !important"}}>No. Seguimiento</Form.Label>
+                          <Col sm="2" >
                             <InputGroup hasValidation>
-                            <Form.Control type="number" placeholder="01" size="lg" id="idSeguimiento" name="idSeguimiento" 
+                            <Form.Control
+                            type="number" className="text-center" placeholder="01" size="lg" id="idSeguimiento" name="idSeguimiento" 
                                value={values.idSeguimiento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.idSeguimiento && touched.idSeguimiento}
                                isValid={!errors.idSeguimiento && touched.idSeguimiento}
                             />
@@ -108,126 +111,145 @@ export default function AddInfantInc(){
                                 {errors.idSeguimiento}
                             </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                      </InputGroup>
+                          </InputGroup>
                       </Col>
                     </Form.Group>
-                    <Form.Group className="mb-3 mt-3">
+
+                    <Form.Group as={Row} className="mb-3 mt-5">
+                       <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Cuenta con afiliación al SGSSS</Form.Label>
+                        <Col sm="2" class="mid">
                         <InputGroup hasValidation>
-                        <Form.Label column sm="7" style={{"font-size": "12px !important"}}>Cuenta con afiliación al SGSSS</Form.Label>
-                            <Form.Select sm="5" size="lg" name="afiliacionSgsss" onChange={handleChange} onBlur={handleBlur}
-                                    isValid={!errors.afiliacionSgsss && touched.afiliacionSgsss} isInvalid={!!errors.afiliacionSgsss && touched.afiliacionSgsss}
-                            >
-                            <option disabled selected>Selecciona una opción</option>
-                            <option value="SI">Si</option>
-                            <option value="NO">No</option>
-                            </Form.Select>
+                          <label class="rocker rocker-small" size="lg" name="afiliacionSgsss">
+                          <input type="checkbox"></input>
+                          <span class="switch-left">Si</span>
+                          <span class="switch-right">No</span>
+                          </label>
                             <Form.Control.Feedback type="invalid">
                                         {errors.afiliacionSgsss}
                                         </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
                         </InputGroup>
-                    </Form.Group>
-                    <Form.Group className="mb-3 mt-3">
+                        </Col>
+
+                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Cuenta con valoración y controles en salud oral</Form.Label>
+                        <Col sm="2" class="mid">
                         <InputGroup hasValidation>
-                        <Form.Label column sm="7" style={{"font-size": "12px !important"}}>Cuenta con valoración y controles en salud oral</Form.Label>
-                            <Form.Select sm="5" size="lg" name="saludOral" onChange={handleChange} onBlur={handleBlur}
-                                    isValid={!errors.saludOral && touched.saludOral} isInvalid={!!errors.saludOral && touched.saludOral}
-                            >
-                            <option disabled selected>Selecciona una opción</option>
-                            <option value="SI">Si</option>
-                            <option value="NO">No</option>
-                            </Form.Select>
+                          <label class="rocker rocker-small" size="lg" name="saludOral">
+                          <input type="checkbox"></input>
+                          <span class="switch-left">Si</span>
+                          <span class="switch-right">No</span>
+                          </label>
                             <Form.Control.Feedback type="invalid">
                                         {errors.saludOral}
                                         </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
                         </InputGroup>
+                        </Col>
                     </Form.Group>
-                    <Form.Group className="mb-3 mt-3">
+
+                    <Form.Group as={Row} className="mb-3">
+                       <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Conoce la red de salud o a quien acudir en caso de urgencia</Form.Label>
+                        <Col sm="2" class="mid">
                         <InputGroup hasValidation>
-                        <Form.Label column sm="7" style={{"font-size": "12px !important"}}>Conoce la red de salud o a quien acudir en caso de urgencia</Form.Label>
-                            <Form.Select sm="5" size="lg" name="conoceUrgencias" onChange={handleChange} onBlur={handleBlur}
-                                    isValid={!errors.conoceUrgencias && touched.conoceUrgencias} isInvalid={!!errors.conoceUrgencias && touched.conoceUrgencias}
-                            >
-                            <option disabled selected>Selecciona una opción</option>
-                            <option value="SI">Si</option>
-                            <option value="NO">No</option>
-                            </Form.Select>
+                          <label class="rocker rocker-small" size="lg" name="conoceUrgencias">
+                          <input type="checkbox"></input>
+                          <span class="switch-left">Si</span>
+                          <span class="switch-right">No</span>
+                          </label>
                             <Form.Control.Feedback type="invalid">
                                         {errors.conoceUrgencias}
                                         </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
                         </InputGroup>
-                    </Form.Group>
-                    <Form.Group className="mb-3 mt-3">
+                        </Col>
+                        
+                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Identifican signos de alarmas de enfermedades prevalentes de la primera infancia (que ponen en peligro de muerte a niños y niñas)</Form.Label>
+                        <Col sm="2" class="mid">
                         <InputGroup hasValidation>
-                        <Form.Label column sm="7" style={{"font-size": "12px !important"}}>Identifican signos de alarmas de enfermedades prevalentes de la primera infancia (que ponen en peligro de muerte a niños y niñas)</Form.Label>
-                            <Form.Select sm="5" size="lg" name="alarmaPreventiva" onChange={handleChange} onBlur={handleBlur}
-                                    isValid={!errors.alarmaPreventiva && touched.alarmaPreventiva} isInvalid={!!errors.alarmaPreventiva && touched.alarmaPreventiva}
-                            >
-                            <option disabled selected>Selecciona una opción</option>
-                            <option value="SI">Si</option>
-                            <option value="NO">No</option>
-                            </Form.Select>
+                          <label class="rocker rocker-small" size="lg" name="alarmaPreventiva">
+                          <input type="checkbox"></input>
+                          <span class="switch-left">Si</span>
+                          <span class="switch-right">No</span>
+                          </label>
                             <Form.Control.Feedback type="invalid">
-                                        {errors.conoceUrgencias}
+                                        {errors.alarmaPreventiva}
                                         </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
                         </InputGroup>
+                        </Col>
                     </Form.Group>
-                    <Form.Group className="mb-3 mt-3">
+
+                    
+                    <Form.Group as={Row} className="mb-3 mt-5">
+                       <Form.Label column sm="4" style={{"font-size": "12px !important"}}>En niñas y menores de un mes se realizó validación médica</Form.Label>
+                        <Col sm="2" class="mid">
                         <InputGroup hasValidation>
-                        <Form.Label column sm="5" style={{"font-size": "12px !important"}}>En niñas y menores de un mes se realizó validación médica</Form.Label>
-                            <Form.Select sm="7" size="lg" name="valoracionMedica" onChange={handleChange} onBlur={handleBlur}
-                                    isValid={!errors.valoracionMedica && touched.valoracionMedica} isInvalid={!!errors.valoracionMedica && touched.valoracionMedica}
-                            >
-                            <option disabled selected>Selecciona una opción</option>
-                            <option value="SI">Si</option>
-                            <option value="NO">No</option>
-                            </Form.Select>
+                          <label class="rocker rocker-small" size="lg" name="valoracionMedica">
+                          <input type="checkbox"></input>
+                          <span class="switch-left">Si</span>
+                          <span class="switch-right">No</span>
+                          </label>
                             <Form.Control.Feedback type="invalid">
                                         {errors.valoracionMedica}
                                         </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
                         </InputGroup>
-                    </Form.Group>
-                    <Form.Group className="mb-3 mt-3">
+                        </Col>
+
+                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Las niñas y niños cuentan con controles de Crecimiento y Desarrollo</Form.Label>
+                        <Col sm="2" class="mid">
                         <InputGroup hasValidation>
-                        <Form.Label column sm="5" style={{"font-size": "12px !important"}}>Las niñas y niños cuentan con controles de Crecimiento y Desarrollo</Form.Label>
-                            <Form.Select sm="7" size="lg" name="controlCyD" onChange={handleChange} onBlur={handleBlur}
-                                    isValid={!errors.controlCyD && touched.controlCyD} isInvalid={!!errors.controlCyD && touched.controlCyD}
-                            >
-                            <option disabled selected>Selecciona una opción</option>
-                            <option value="SI">Si</option>
-                            <option value="NO">No</option>
-                            </Form.Select>
+                          <label class="rocker rocker-small" size="lg" name="controlCyD">
+                          <input type="checkbox"></input>
+                          <span class="switch-left">Si</span>
+                          <span class="switch-right">No</span>
+                          </label>
                             <Form.Control.Feedback type="invalid">
                                         {errors.controlCyD}
                                         </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
                         </InputGroup>
+                        </Col>
                     </Form.Group>
-                    <Form.Group className="mb-3 mt-3">
+
+                    <Form.Group as={Row} className="mb-3 mt-5">
+                       <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Presenta una patología asociada identificada por el SGSSS</Form.Label>
+                        <Col sm="2" class="mid">
                         <InputGroup hasValidation>
-                        <Form.Label column sm="5" style={{"font-size": "12px !important"}}>Presenta una patología asociada identificada por el SGSSS</Form.Label>
-                            <Form.Select sm="7" size="lg" name="patologiaIdentificadaSgsss" onChange={handleChange} onBlur={handleBlur}
-                                    isValid={!errors.patologiaIdentificadaSgsss && touched.patologiaIdentificadaSgsss} isInvalid={!!errors.patologiaIdentificadaSgsss && touched.patologiaIdentificadaSgsss}
-                            >
-                            <option disabled selected>Selecciona una opción</option>
-                            <option value="SI">Si</option>
-                            <option value="NO">No</option>
-                            </Form.Select>
+                          <label class="rocker rocker-small" size="lg" name="patologiaIdentificadaSgsss">
+                          <input type="checkbox"></input>
+                          <span class="switch-left">Si</span>
+                          <span class="switch-right">No</span>
+                          </label>
                             <Form.Control.Feedback type="invalid">
                                         {errors.patologiaIdentificadaSgsss}
                                         </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
                         </InputGroup>
-                    </Form.Group>
-                    <Form.Group as={Row} className="mb-3">
+                        </Col>
+
+                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Recibe medicamentos formulados por el SGSSS para alguna patología</Form.Label>
+                        <Col sm="2">
                         <InputGroup hasValidation>
-                        <Form.Label column sm="5" style={{"font-size": "12px !important"}}>¿Cuál?</Form.Label>
+                          <label class="rocker rocker-small" size="lg" name="recibeMedFormulada">
+                          <input type="checkbox"></input>
+                          <span class="switch-left">Si</span>
+                          <span class="switch-right">No</span>
+                          </label>
+                            <Form.Control.Feedback type="invalid">
+                                        {errors.recibeMedFormulada}
+                                        </Form.Control.Feedback>
+                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
+                        </InputGroup>
+                        </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row} className="mb-3">
+                    <Form.Label column sm="2" style={{"font-size": "12px !important"}}>¿Cuál?</Form.Label>
+                    <Col sm="10" class="mid">
+                        <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre Patología" size="lg" id="nombrePatologia" name="nombrePatologia" 
-                               value={values.nombrePatologia} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombrePatologia && touched.nombrePatologia}
+                               value={values.nombrePatologia} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
                                isValid={!errors.nombrePatologia && touched.nombrePatologia}
                             />
                             <Form.Control.Feedback type="invalid">
@@ -235,27 +257,14 @@ export default function AddInfantInc(){
                             </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
-                    </Form.Group>                        
-                    <Form.Group className="mb-3 mt-3">
-                        <InputGroup hasValidation>
-                        <Form.Label column sm="5" style={{"font-size": "12px !important"}}>Recibe medicamentos formulados por el SGSSS para alguna patología</Form.Label>
-                            <Form.Select sm="7" size="lg" name="recibeMedFormulada" onChange={handleChange} onBlur={handleBlur}
-                                    isValid={!errors.recibeMedFormulada && touched.recibeMedFormulada} isInvalid={!!errors.recibeMedFormulada && touched.recibeMedFormulada}
-                            >
-                            <option disabled selected>Selecciona una opción</option>
-                            <option value="SI">Si</option>
-                            <option value="NO">No</option>
-                            </Form.Select>
-                            <Form.Control.Feedback type="invalid">
-                                        {errors.recibeMedFormulada}
-                                        </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                    </Form.Group> 
+                    </Col>
+                    </Form.Group>
+                
                     <Form.Group as={Row} className="mb-3">
+                    <Form.Label column sm="2" style={{"font-size": "12px !important"}}>¿Cuál?</Form.Label>
+                    <Col sm="10">
                         <InputGroup hasValidation>
-                        <Form.Label column sm="5" style={{"font-size": "12px !important"}}>¿Cuál?</Form.Label>
-                               <Form.Control type="text" placeholder="Nombre Medicamento" size="lg" id="nombreMedFormulada" name="nombreMedFormulada" 
+                               <Form.Control type="text" placeholder="Nombre Medicamento Formulado" size="lg" id="nombreMedFormulada" name="nombreMedFormulada" 
                                value={values.nombreMedFormulada} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
                                isValid={!errors.nombreMedFormulada && touched.nombreMedFormulada}
                             />
@@ -264,10 +273,13 @@ export default function AddInfantInc(){
                             </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
+                      </Col>
                     </Form.Group>
+
                     <Form.Group as={Row} className="mb-3">
+                     <Form.Label column sm="2" style={{"font-size": "12px !important"}}>EAPB</Form.Label>
+                      <Col sm="4">
                         <InputGroup hasValidation>
-                        <Form.Label column sm="5" style={{"font-size": "12px !important"}}>EAPB</Form.Label>
                                <Form.Control type="text" placeholder="Nombre EAPB" size="lg" id="eapb" name="eapb" 
                                value={values.eapb} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.eapb && touched.eapb}
                                isValid={!errors.eapb && touched.eapb}
@@ -277,10 +289,12 @@ export default function AddInfantInc(){
                             </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
-                    </Form.Group>
-                    <Form.Group as={Row} className="mb-3">
+                        </Col>
+
+                        
+                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>IPS</Form.Label>
+                        <Col sm="4">
                         <InputGroup hasValidation>
-                        <Form.Label column sm="5" style={{"font-size": "12px !important"}}>IPS</Form.Label>
                                <Form.Control type="text" placeholder="Nombre IPS" size="lg" id="ips" name="ips" 
                                value={values.ips} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.ips && touched.ips}
                                isValid={!errors.ips && touched.ips}
@@ -290,26 +304,33 @@ export default function AddInfantInc(){
                             </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
+                        </Col>
                     </Form.Group>
-                    <Form.Group className="mb-3 mt-3">
+
+
+                    <Form.Group as={Row} className="mb-3 mt-5">
+                    <Col sm="3"> </Col>
+                       <Form.Label column sm="4" style={{"font-size": "12px !important"}}> <center>El usuario fue remitido a SGSSS </center></Form.Label>
+                        <Col sm="2">
                         <InputGroup hasValidation>
-                        <Form.Label column sm="5" style={{"font-size": "12px !important"}}>El usuario fue remitido a SGSSS</Form.Label>
-                            <Form.Select sm="7" size="lg" name="usuarioRemitido" onChange={handleChange} onBlur={handleBlur}
-                                    isValid={!errors.usuarioRemitido && touched.usuarioRemitido} isInvalid={!!errors.usuarioRemitido && touched.usuarioRemitido}
-                            >
-                            <option disabled selected>Selecciona una opción</option>
-                            <option value="SI">Si</option>
-                            <option value="NO">No</option>
-                            </Form.Select>
+                          <label class="rocker rocker-small" size="lg" name="usuarioRemitido">
+                          <input type="checkbox"></input>
+                          <span class="switch-left">Si</span>
+                          <span class="switch-right">No</span>
+                          </label>
                             <Form.Control.Feedback type="invalid">
                                         {errors.usuarioRemitido}
                                         </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
                         </InputGroup>
-                    </Form.Group> 
+                        </Col>
+                        <Col sm="3"> </Col>
+                    </Form.Group>
+
                     <Form.Group as={Row} className="mb-3">
+                    <Form.Label column sm="2" style={{"font-size": "12px !important"}}>¿Por qué?</Form.Label>
+                    <Col sm="10">
                         <InputGroup hasValidation>
-                        <Form.Label column sm="5" style={{"font-size": "12px !important"}}>¿Por qué?</Form.Label>
                                <Form.Control type="text" placeholder="Escriba la causa" size="lg" id="causa" name="causa" 
                                value={values.causa} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.causa && touched.causa}
                                isValid={!errors.causa && touched.causa}
@@ -319,10 +340,11 @@ export default function AddInfantInc(){
                             </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
+                    </Col>
                     </Form.Group>
                      
                     
-                        <div className="d-grid gap-2">
+                        <div className="d-grid gap-2 mt-5 mb-2">
                             <Button variant="primary" type="submit" size="lg">
                                Guardar
                             </Button>
@@ -333,6 +355,7 @@ export default function AddInfantInc(){
                         }}
                       </Formik> 
                 </Col>
+                <Col sm={1}> </Col>
             </Row>
         </Container>
     )
