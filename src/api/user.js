@@ -1,8 +1,8 @@
 import { urlBackend } from "./config";
 
 export function insertUserApi(data){
-    let newDocument = parseInt(data.documento);
-    data.documento = newDocument;
+    //let newDocument = parseInt(data.documento);
+    //data.documento = newDocument;
     const url = `/api/usuario/REGISTRAR_USUARIO`;
     const params = {
         headers: {

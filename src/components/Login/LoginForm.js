@@ -58,7 +58,7 @@ export default function LoginForm(props) {
                   return errores;
                 }}
                 onSubmit={(valores, {resetForm}) => {
-                  resetForm();
+                  //resetForm(valores);
                   /*bcrypt.genSalt(10, function(err, salt) {
                       bcrypt.hash("12345678", salt, function(err, hash) {
                           valores.password = hash;

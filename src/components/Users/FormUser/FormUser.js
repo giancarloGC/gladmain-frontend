@@ -10,7 +10,6 @@ export default function FormUser(){
     const token = localStorage.getItem(TOKEN);
     const [show, setShow] = useState(false);
     const [ rolesApi, setRolesApi ] = useState([]);
-    
 
     useEffect(() => {
       getRolesApi().then(response => {
@@ -126,10 +125,33 @@ export default function FormUser(){
                   return errores;
                 }}
                 onSubmit={(valores, {resetForm}) => {
-                    resetForm();
+                  const dateCurrently = new Date();
+                  console.log(dateCurrently);
+                    console.log(valores);
+                    if(valores.meses !== 'meses'){
+                      valores.edad = valores.meses / 12;
+                    };
+                    console.log(valores);
+
                     valores.token = token;
-                    insertUserApi(valores).then(response => {
-                        if(response.status !== 500){
+                    const data = {
+                      documento: valores.documento,
+                      tipoDocumento: valores.tipoDocumento,
+                      nombre: valores.nombre,
+                      sexo: valores.sexo,
+                      fechaNacimiento: valores.fechaNacimiento,
+                      celular: valores.celular,
+                      edad: valores.edad,
+                      municipio: valores.municipio,
+                      direccion: valores.direccion,
+                      correoElectronico: valores.correoElectronico,
+                      clave: valores.clave,
+                      token: token
+                    }
+                
+                    insertUserApi(data).then(response => {
+                      console.log(response);
+                      if(response === true){
                           getAssignRolApi(valores.role, valores.documento, valores.token).then(responseRol => {
                               if(responseRol === true){
                                   setTextFormSend({

@@ -110,7 +110,7 @@ export default function AllUsers(){
                 </div>
                 <div className="sci">
                     <div className="liB">
-                        <Link className="enlace" to="/">
+                        <Link className="enlace" to="/admin/user">
                         <FontAwesomeIcon icon={faEye} size="lg" color="#2D61A4"
                         />
                         </Link>

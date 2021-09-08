@@ -12,20 +12,16 @@ export default function FormEdit(props){
     const token = localStorage.getItem(TOKEN);
     const [show, setShow] = useState(false);
     const [ rolesApi, setRolesApi ] = useState([]);
-    const [ userLoaded, setUserLoaded ] = useState({});
+    const [ userLoaded, setUserLoaded ] = useState(user);
     const [ componentLoaded, setComponentLoaded ] = useState(false); 
     var loading = true;
   console.log(user);
-
     useEffect(() => {
-      loading = false;
       getRolesApi().then(response => {
         setRolesApi(response);
-      })
-      if(!loading){
+        setUserLoaded(user);
         setComponentLoaded(true); 
-      setUserLoaded(user);
-      }
+      })
     }, []);
 
 
@@ -39,36 +35,21 @@ export default function FormEdit(props){
 
     return(
         <Container>
-            {componentLoaded || (
+            {!componentLoaded ? (
                 <Row className="justify-content-md-center text-center">
                     <Col md={1} className="justify-content-center">
                     <Spinner animation="border" >
                     </Spinner> 
                     </Col>
                 </Row>
-            )}
-
-            {componentLoaded && (
+            )
+            :
+            (
             <Row style={{backgroundColor: '#f1f1f1'}}>
                 <Col sm={1}></Col>
                 <Col sm={10}> 
                 <Formik
-                initialValues={{ 
-                    documento: '', 
-                    tipoDocumento: '', 
-                    nombre: '', 
-                    sexo: '', 
-                    fechaNacimiento: '',
-                    celular: '',
-                    edad: '',
-                    municipio: '',
-                    direccion: '',
-                    correoElectronico: '',
-                    role: '',
-                    clave: '',
-                    confirmClave: '',
-                    meses:''
-                }}
+                initialValues={user}
                 validate={(valores) => {
                   let errores = {};
                   if(!valores.tipoDocumento){
@@ -79,8 +60,7 @@ export default function FormEdit(props){
                   }else if(!/^([0-9])*$/.test(valores.documento)){
                     errores.documento = 'Documento incorrecto, solo puedes escribir números';
                   }
-                  let docuemnt = toString(valores.documento);
-                  if(docuemnt.length <= 0 || docuemnt.length > 15){
+                  if(valores.documento.length <= 0 || valores.documento.length > 15){
                     errores.documento = 'Documento invalido, intente con otro';
                   }      
 
@@ -145,8 +125,6 @@ export default function FormEdit(props){
                   return errores;
                 }}
                 onSubmit={(valores, {resetForm}) => {
-                  console.log(valores.fechaNacimiento);
-                    resetForm();
                     updateUserApi(valores, token).then(response => {
                         if(response.status !== 500){
                           getAssignRolApi(valores.role, valores.documento, valores.token).then(responseRol => {

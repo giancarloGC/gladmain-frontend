@@ -77,9 +77,9 @@ export default function LayoutAdmin(props){
                         </div>
                     </Link>
                     
-                    <Link to="/" className={linkSelected.controls ? "selected" : ""}>
+                    <Link to="#" className={linkSelected.controls ? "selected" : ""}>
                         <div className="option">
-                        <FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" />
+                        <FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" onClick={() => setOpenMenu(!openMenu)}/>
                         <NavDropdown title="Controles" id="nav-dropdown" className="subtitlesMenu"
                             style={{"font-size": "24px", "font-weight": 100, "color": "#ffff"}}
                         >
