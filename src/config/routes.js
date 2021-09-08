@@ -188,7 +188,7 @@ const routes = [
                 path: "/admin/addInfantIncome",
                 exact: true,
                 component: AddInfantIncome,
-            }  
+            }, 
             {
                 path: "/admin/editInfantIncome",
                 exact: true,
