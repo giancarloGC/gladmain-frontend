@@ -1,12 +1,12 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import AddControlF from "../../components/Control/ControlFollow/AddControlF";
+import EditControlF from "../../components/Control/ControlFollow/EditControlF";
 
 export default function AddControlFollow(){
     return(
         <Container>
-             <h1 className="text-center">Añadir Seguimiento </h1>
-            <AddControlF />
+             <h1 className="text-center">Editar Seguimiento </h1>
+            <EditControlF />
         </Container>
     )
 }

@@ -19,6 +19,10 @@ import AllUserControl from "../pages/ControlHome/AllUserControl";
 import AddControlVac from "../pages/ControlVac/AddControlVac";
 import AddControlFollow from "../pages/ControlFollow/AddControlFollow";
 import AddInfantIncome from "../pages/ControlFollow/AddInfantIncome";
+import EditControlFollow from "../pages/ControlFollow/EditControlFollow";
+import EditInfantIncome from "../pages/ControlFollow/EditInfantIncome";
+import AddControlRemission from "../pages/ControlFollow/AddControlRemission";
+import EditControlRemission from "../pages/ControlFollow/EditControlRemission";
 
 import StatisticPesoTalla from "../pages/ControlNutri/StatisticNutri";
 import StatisticTallaEdad from "../pages/ControlNutri/StatisticTallaEdad";
@@ -176,10 +180,31 @@ const routes = [
                 component: AddControlFollow,
             },
             {
+                path: "/admin/editControlFollow",
+                exact: true,
+                component: EditControlFollow,
+            },
+            {
                 path: "/admin/addInfantIncome",
                 exact: true,
                 component: AddInfantIncome,
             }  
+            {
+                path: "/admin/editInfantIncome",
+                exact: true,
+                component: EditInfantIncome,
+            }, 
+            {
+                path: "/admin/addControlRemission",
+                exact: true,
+                component: AddControlRemission,
+            },
+            {
+                path: "/admin/editControlRemission",
+                exact: true,
+                component: EditControlRemission,
+            }, 
+                       
         ]
     }   
 ];

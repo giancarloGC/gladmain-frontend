@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
-import "./Switch.scss";
+import "./AddInfantInc.scss";
 import AddIncomeCommit from "./AddIncomeCommit/AddIncomeCommit";
 import AddIncomeCommit2 from "./AddIncomeCommit/AddIncomeCommit2";
 import AddIncomeCommit3 from "./AddIncomeCommit/AddIncomeCommit3";
@@ -12,7 +12,7 @@ import AddIncomeCommit7 from "./AddIncomeCommit/AddIncomeCommit7";
 import AddIncomeCommit8 from "./AddIncomeCommit/AddIncomeCommit8";
 import AddIncomeCommit9 from "./AddIncomeCommit/AddIncomeCommit9";
 
-export default function AddInfantInc(){
+export default function EditInfantInc(){
   const [showCommit, setShowCommit] = useState(false);
   const [dataCommit, setDataCommit] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
   const [ saveData, setSaveData ] = useState(false);
@@ -108,31 +108,31 @@ export default function AddInfantInc(){
                 
                 validate={(valores) => {
                   let errores = {};
-
+                  
                   if(!valores.nombrePatologia){
                     errores.nombrePatologia = 'No se permiten campos vacíos'
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.nombrePatologia)){
-                    errores.nombrePatologia = 'Solo puedes escribir letras';
+                    errores.nombrePatologia = 'Nombre incorrecto, solo puedes escribir letras';
                   }
                   if(!valores.nombreMedFormulada){
                     errores.nombreMedFormulada = 'No se permiten campos vacíos'
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.nombreMedFormulada)){
-                    errores.nombreMedFormulada = 'Ssolo puedes escribir letras';
+                    errores.nombreMedFormulada = 'Nombre incorrecto, solo puedes escribir letras';
                   }
                   if(!valores.eapb){
                     errores.eapb = 'No se permiten campos vacíos'
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.eapb)){
-                    errores.eapb = 'Solo puedes escribir letras';
+                    errores.eapb = 'Nombre incorrecto, solo puedes escribir letras';
                   }
                   if(!valores.ips){
                     errores.ips = 'No se permiten campos vacíos'
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.ips)){
-                    errores.ips = 'Solo puedes escribir letras';
+                    errores.ips = 'Nombre incorrecto, solo puedes escribir letras';
                   }
                   if(!valores.causa){
                     errores.causa = 'No se permiten campos vacíos'
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.causa)){
-                    errores.causa = 'Solo puedes escribir letras';
+                    errores.causa = 'Nombre incorrecto, solo puedes escribir letras';
                   }
                 }}
 
