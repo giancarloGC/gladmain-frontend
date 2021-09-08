@@ -4,7 +4,7 @@ import { Line } from "react-chartjs-2";
 import ImageBackground from "../../assets/img/graphicsPrueba.png";
 //import { getContVaccApi } from "../../api/vaccination";
 
-export default function StatisticImcEdad(){
+export default function StatisticImcEdad2a5(){
 const [ sizeImage, setSizeImage] = useState("150");
 
 const image = new Image();
@@ -30,10 +30,10 @@ const plugin = {
 
 
 const data = {
-    labels: [ 0, 0.03, " ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "1 año", " ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "2 años" ],
+    labels: [ "2 años", 2, 4, 6, 8, 10, "3 años", 2, 4, 6, 8, 10, "4 años", 2, 4, 6, 8, 10, "5 años" ],
     datasets: [{
         label: '- 2',
-        data: [ 10.8, 12.6, 13.7, 14.3, 14.5, 14.6, 14.7, 14.7, 14.6, 14.6, 14.5, 14.4, 14.4, 14.3, 14.3, 14.1, 14, 14, 13.9, 13.8, 13.8, 13.7, 13.7, 13.6, 13.5 ],
+        data: [ 13.8, 13.7, 13.6, 13.5, 13.5, 13.4, 13.3, 13.3, 13.2, 13.2, 13.1, 13.1, 13, 13, 13, 12.9, 12.9 ],
         fill: false,
         borderColor: '#4884FC',
         tension: 0.1,
@@ -68,13 +68,20 @@ const data = {
         borderColor: '#4884FC',
         tension: 0.1,
       }*/
+      {
+        label: '+ 3',
+        data: [ 20.6, 20.5, 20.4, 20.3, 20.1, 20, 19.9, 19.9, 19.9, 19.9, 19.9, 19.9, 19.9, 19.9, 19.9, 20, 20.1, 20.2, 20.3 ],
+        fill: false,
+        borderColor: '#4884FC',
+        tension: 0.1,
+      }
     ]
   };
     return(
         <Container>
              <h1 className="text-center">Estadística </h1>
              <h2 className="text-center">IMC para la Edad Niños </h2>
-             <Form.Label column sm="4" style={{"font-size": "12px !important" }}>Puntuación Z (0 a 2 años)</Form.Label>
+             <Form.Label column sm="4" style={{"font-size": "12px !important" }}>Puntuación Z (2 a 5 años)</Form.Label>
              <div style={{"max-width": "800px", "background-image": "url('../../assets/img/graphicsPrueba.png')"}}>
              <Line 
                 data={data}

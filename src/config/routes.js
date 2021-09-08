@@ -27,8 +27,11 @@ import StatisticImcEdad from "../pages/ControlNutri/StatisticImcEdad";
 import StatisticPesoTalla2a5 from "../pages/ControlNutri/StatisticPesoTalla2a5";
 import StatisticTallaEdad2a5 from "../pages/ControlNutri/StatisticTallaEdad2a5";
 import StatisticPesoEdad2a5 from "../pages/ControlNutri/StatisticPesoEdad2a5";
+import StatisticImcEdad2a5 from "../pages/ControlNutri/StatisticImcEdad2a5";
+import StatisticTallaEdad5a17 from "../pages/ControlNutri/StatisticTallaEdad5a17";
 
 import NotFound404 from "../pages/NotFound404";
+import StatisticNutri from "../pages/ControlNutri/StatisticNutri";
 
 
 const routes = [
@@ -105,7 +108,7 @@ const routes = [
             {
                 path: "/admin/statisticPesoTalla",
                 exact: true,
-                component: StatisticPesoTalla,                
+                component: StatisticNutri,                
             },   
             {
                 path: "/admin/statisticTallaEdad",
@@ -138,6 +141,16 @@ const routes = [
                 component: StatisticPesoEdad2a5,                
             },
             {
+                path: "/admin/statisticImcEdad2a5",
+                exact: true,
+                component: StatisticImcEdad2a5,          
+            },
+            {
+                path: "/admin/statisticTallaEdad5a17",
+                exact: true,
+                component: StatisticTallaEdad5a17,                
+            },
+            {
                 path: "/admin/listControlNutri",
                 exact: true,
                 component: ListControlNutri,
@@ -167,7 +180,6 @@ const routes = [
                 exact: true,
                 component: AddInfantIncome,
             }  
-                       
         ]
     }   
 ];

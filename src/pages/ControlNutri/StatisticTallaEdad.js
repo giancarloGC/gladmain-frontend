@@ -3,7 +3,7 @@ import { Container, Form } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
 import ListControlN from "../../components/Control/ControlNutri/ListControlN";
 import ImageBackground from "../../assets/img/graphicsPrueba.png";
-//import { getContVaccApi } from "../../api/vaccination";
+import "./StatisticNutri.scss";
 
 export default function StatisticTallaEdad(){
 const [ sizeImage, setSizeImage] = useState("150");
@@ -31,7 +31,7 @@ const plugin = {
 
 
 const data = {
-    labels: [ 0," ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "1 año", " ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "2 años" ],
+    labels: [ "Nacimiento"," ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "1 año", " ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "2 años" ],
     datasets: [{
         label: '- 2',
         data: [45, 50, 53.8, 56.7, 59, 61, 62.9, 64.2, 65.6, 66.9, 68, 69.2, 70.3, 71.5, 72.6, 73.7, 74.7, 75.6, 76.5, 77.3, 78.2, 79, 79.9, 80.5, 81.2],
@@ -76,17 +76,21 @@ const data = {
         <Container>
              <h1 className="text-center">Estadística </h1>
              <h2 className="text-center">Talla para la Edad Niños </h2>
+             <center>
              <Form.Label column sm="4" style={{"font-size": "12px !important" }}>Puntuación Z (0 a 2 años)</Form.Label>
+             </center>
+             <div className="containerGraphic"> 
+                  <p className="ejey">Longitud(cm)</p>
              <div style={{"max-width": "800px", "background-image": "url('../../assets/img/graphicsPrueba.png')"}}>
              <Line 
                 data={data}
-
                 height={500}
                 width={800}
                 options={{pointStyle: "line"}}
-
              />
              </div>
+             </div>
+             <p className="ejex">Edad (en meses y años cumplidos)</p> 
         </Container>
     )
 }

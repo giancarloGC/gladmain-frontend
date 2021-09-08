@@ -4,9 +4,11 @@ import { Line } from "react-chartjs-2";
 import ListControlN from "../../components/Control/ControlNutri/ListControlN";
 import ImageBackground from "../../assets/img/graphicsPrueba.png";
 //import { getContVaccApi } from "../../api/vaccination";
+import "./StatisticNutri.scss";
 
 export default function StatisticNutri(){
 const [ sizeImage, setSizeImage] = useState("750");
+const [ sexo, setSexo ] = useState("boy");
 
 const image = new Image();
 image.src = ImageBackground;
@@ -37,7 +39,7 @@ const data = {
         label: '- 3',
         data: [1.8, 2.5, 3.5, 4.6, 5.7, 6.6, 7.5, 8.2, 9.1, 10, 10.9, 11.9, 13, 14],
         fill: false,
-        borderColor: '#4884FC',
+        borderColor: sexo !== "female" ? '#4884FC' : '#E13561',
         tension: 0.1,
       },
       {
@@ -52,21 +54,21 @@ const data = {
         label: '- 1',
         data: [2.3, 3, 4.1, 5.4, 6.7, 7.7, 8.8, 9.6, 10.6, 11.8, 12.8, 13.9, 15.3, 16.7],
         fill: false,
-        borderColor: '#8EB2FA',
+        borderColor: '#D8E5FD',
         tension: 0.1
       },
       {
         label: '0',
         data: [2.4, 3.2, 4.5, 5.9, 7.2, 8.5, 9.5, 10.4, 11.5, 12.6, 13.8, 15, 16.5, 18.1],
         fill: false,
-        borderColor: '#D8E5FD',
+        borderColor: '#8EB2FA',
         tension: 0.1
       },
       {
         label: '+ 1',
         data: [2.6, 3.6, 4.9, 6.5, 7.8, 9.1, 10.2, 11.3, 12.5, 13.6, 15, 16.5, 18, 20],
         fill: false,
-        borderColor: '#8EB2FA',
+        borderColor: '#D8E5FD',
         tension: 0.1
       },
       {
@@ -90,17 +92,21 @@ const data = {
         <Container>
              <h1 className="text-center">Estadística </h1>
              <h2 className="text-center">Peso para la Talla Niños </h2>
-             <Form.Label column sm="4" style={{"font-size": "12px !important" }}>Puntuación Z (0 a 2 años)</Form.Label>
-             <div style={{"max-width": "800px", "background-image": "url('../../assets/img/graphicsPrueba.png')"}}>
-             <Line 
-                data={data}
-
-                height={500}
-                width={800}
-                options={{pointStyle: "line"}}
-
-             />
-             </div>
+             <center>
+             <Form.Label column sm="12" style={{"font-size": "12px !important" }}>Puntuación Z (0 a 2 años)</Form.Label>
+             </center>
+                <div className="containerGraphic"> 
+                  <p className="ejey">Peso(kg)</p>
+                <div style={{"max-width": "800px", "text-align":"center"}} >
+                  <Line 
+                      data={data}
+                      height={500}
+                      width={800}
+                      options={{pointStyle: "line"}}
+                  />
+                </div>
+                </div>
+                <p className="ejex">Longitud(cm)</p>
         </Container>
     )
 }

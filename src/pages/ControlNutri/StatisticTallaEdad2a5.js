@@ -3,7 +3,7 @@ import { Container, Form } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
 import ListControlN from "../../components/Control/ControlNutri/ListControlN";
 import ImageBackground from "../../assets/img/graphicsPrueba.png";
-//import { getContVaccApi } from "../../api/vaccination";
+import "./StatisticNutri.scss";
 
 export default function StatisticTallaEdad2a5(){
 const [ sizeImage, setSizeImage] = useState("150");
@@ -31,7 +31,7 @@ const plugin = {
 
 
 const data = {
-    labels: [ 0, 2, 4, 6, 8, 10, "3 años", 2, 4, 6, 8, 10, "4 años", 2, 4, 6, 8, 10, "5 años" ],
+    labels: [ "2 años", 2, 4, 6, 8, 10, "3 años", 2, 4, 6, 8, 10, "4 años", 2, 4, 6, 8, 10, "5 años" ],
     datasets: [{
         label: '- 2',
         data: [ 81, 82.5, 83.9, 85, 86.2, 87.5, 88.8, 89.9, 91, 92, 93, 94, 95, 96, 97, 98, 99, 99.9, 100.9 ],
@@ -74,7 +74,11 @@ const data = {
         <Container>
              <h1 className="text-center">Estadística </h1>
              <h2 className="text-center">Talla para la Edad Niños </h2>
+             <center>
              <Form.Label column sm="4" style={{"font-size": "12px !important" }}>Puntuación Z (2 a 5 años)</Form.Label>
+             </center>
+             <div className="containerGraphic"> 
+                  <p className="ejey">Talla (cm)</p>
              <div style={{"max-width": "800px", "background-image": "url('../../assets/img/graphicsPrueba.png')"}}>
              <Line 
                 data={data}
@@ -85,6 +89,8 @@ const data = {
 
              />
              </div>
+             </div>
+             <p className="ejex">Edad (en meses y años cumplidos)</p> 
         </Container>
     )
 }

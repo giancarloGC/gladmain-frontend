@@ -3,7 +3,7 @@ import { Container, Form } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
 import ListControlN from "../../components/Control/ControlNutri/ListControlN";
 import ImageBackground from "../../assets/img/graphicsPrueba.png";
-//import { getContVaccApi } from "../../api/vaccination";
+import "./StatisticNutri.scss";
 
 export default function StatisticPesoTalla2a5(){
 const [ sizeImage, setSizeImage] = useState("750");
@@ -52,21 +52,21 @@ const data = {
         label: '- 1',
         data: [ 6.9, 7.9, 8.9, 9.8, 10.8, 11.9, 13, 14.2, 15.5, 17, 18.6, 20.4 ],
         fill: false,
-        borderColor: '#8EB2FA',
+        borderColor: '#D8E5FD',
         tension: 0.1
       },
       {
         label: '0',
         data: [ 7.5, 8.5, 9.6, 10.6, 11.6, 12.9, 14, 15.4, 16.9, 18.5, 20.4, 22.4 ],
         fill: false,
-        borderColor: '#D8E5FD',
+        borderColor: '#8EB2FA',
         tension: 0.1
       },
       {
         label: '+ 1',
         data: [ 8.1, 9.4, 10.5, 11.5, 12.6, 14, 15.3, 16.7, 18.4, 20.3, 22.4, 24.5 ],
         fill: false,
-        borderColor: '#8EB2FA',
+        borderColor: '#D8E5FD',
         tension: 0.1
       },
       {
@@ -90,7 +90,11 @@ const data = {
         <Container>
              <h1 className="text-center">Estadística </h1>
              <h2 className="text-center">Peso para la Talla Niños </h2>
+             <center>
              <Form.Label column sm="4" style={{"font-size": "12px !important" }}>Puntuación Z (2 a 5 años)</Form.Label>
+             </center>
+             <div className="containerGraphic"> 
+                  <p className="ejey">Peso(kg)</p>
              <div style={{"max-width": "800px", "background-image": "url('../../assets/img/graphicsPrueba.png')"}}>
              <Line 
                 data={data}
@@ -101,6 +105,8 @@ const data = {
 
              />
              </div>
+             </div>
+             <p className="ejex">Talla(cm)</p>
         </Container>
     )
 }
