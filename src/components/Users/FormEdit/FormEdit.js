@@ -3,7 +3,7 @@ import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "re
 import { Formik, Field, ErrorMessage } from "formik";
 import { updateUserApi } from "../../../api/user";
 import { TOKEN } from "../../../utils/constans";
-import { getRolesApi, getAssignRolApi } from "../../../api/rol";
+import { getRolesApi, getAssignRolApi, consultarRolesUsuarioApi, getRemoveRolApi } from "../../../api/rol";
 import "./FormEdit.scss";
 
 export default function FormEdit(props){   
@@ -14,17 +14,42 @@ export default function FormEdit(props){
     const [ rolesApi, setRolesApi ] = useState([]);
     const [ userLoaded, setUserLoaded ] = useState(user);
     const [ componentLoaded, setComponentLoaded ] = useState(false); 
+    const [ rolesRegistred, setRolesRegistred ] = useState([]);
+    const [ rolesSelected, setRolesSelected ] = useState([]);
+  
+  const [ loaded, setLoaded] = useState(false);
+
+
     var loading = true;
-  console.log(user);
+
     useEffect(() => {
-      getRolesApi().then(response => {
-        setRolesApi(response);
-        setUserLoaded(user);
-        setComponentLoaded(true); 
-      })
+      (async () => {
+        const responseRoles = await getRolesApi();
+        const responseRolesSelected = await consultarRolesUsuarioApi(user.documento, token);
+          setRolesApi(responseRoles);
+          setUserLoaded(user);
+          setComponentLoaded(true); 
+        
+          setRolesSelected(responseRolesSelected);
+          setRolesRegistred(responseRolesSelected);
+          setLoaded(true);
+      })();
     }, []);
 
-
+    const handleCheck = (e, item) => {
+      let role = {
+          idRol: item.idRol,
+          documento: user.documento
+      }
+      if(e.target.checked){
+        setRolesSelected([...rolesSelected, role]);
+      }else{
+          const result = rolesSelected.filter((priv) => {
+              return priv.idRol != item.idRol;
+          });
+          setRolesSelected(result);
+      }
+  }
 
     const dateFormat = (date) => {
       if(date){
@@ -32,10 +57,85 @@ export default function FormEdit(props){
       return dateFormated[0];
       }
     }
+    
+    const checkRole = (item) => {
+      const result = rolesSelected.filter(role => role.idRol === item.idRol);
+      let checked = false;
+      if(result.length > 0){
+        return    <Form.Check inline type="checkbox" label={item.nombre} defaultChecked={true} onChange={(e) => handleCheck(e, item)}/>
+      }else{
+        return    <Form.Check inline type="checkbox" label={item.nombre} defaultChecked={false} onChange={(e) => handleCheck(e, item)}/>
+      }
+  }
+
+    const removeRoles = async (item) => {
+      let successs = false;
+      const responseRemove = await getRemoveRolApi(item.idRol, user.documento, token);
+          console.log(responseRemove);
+          if(responseRemove === true){
+            console.log("Si entro");
+            successs = true;
+          }else{
+            console.log("pailenchus");
+            successs = false;
+          }
+
+    
+      return successs;
+    }
+
+
+    const asignRoles = async (item) => {
+      let successs = false;
+
+      const responseRemove = await getAssignRolApi(item.idRol, user.documento, token);
+          console.log(responseRemove);
+          if(responseRemove === true){
+            console.log("Si entro");
+            successs = true;
+          }else{
+            console.log("pauilas");
+            successs = false;
+          }     
+      return successs;
+    }    
+
+    const updateRoles = async () => {
+      let actualizationSuccess = false;
+      actualizationSuccess = await rolesRegistred.map((item, index) => {
+        removeRoles(item);
+      });
+
+
+      actualizationSuccess = await rolesSelected.map((item, index) => {
+        asignRoles(item);
+      });
+
+      await resultUpdate(actualizationSuccess);
+    }
+
+    const resultUpdate = async (actualizationSuccess) => {
+
+      if(actualizationSuccess){
+        console.log("entro");
+        setTextFormSend({
+          variant: "success", heading: "¡Excelente, actualización exitosa!",
+          message: `El usuario fue actualizado correctamente`
+        });
+        setShow(true);
+      }else{
+        console.log("no entro");
+        setTextFormSend({
+          variant: "danger", heading: "¡Opss, ocurrió un error!",
+          message: "Revisaremos lo ocurrido, inténtalo nuevamente"
+      });
+      setShow(true);
+      }
+    }
 
     return(
         <Container>
-            {!componentLoaded ? (
+            {!loaded ? (
                 <Row className="justify-content-md-center text-center">
                     <Col md={1} className="justify-content-center">
                     <Spinner animation="border" >
@@ -112,10 +212,6 @@ export default function FormEdit(props){
                     errores.correoElectronico = 'Email incorrecto, intente con otro';
                   }
 
-                  if(!valores.role){
-                    errores.role = 'Asegurese de selecionar un rol';
-                  }
-
                   if (!valores.clave){
                     errores.clave = 'Por favor, ingresa una contraseña'
                   }else if(valores.clave.length < 8){
@@ -125,31 +221,43 @@ export default function FormEdit(props){
                   return errores;
                 }}
                 onSubmit={(valores, {resetForm}) => {
-                    updateUserApi(valores, token).then(response => {
-                        if(response.status !== 500){
-                          getAssignRolApi(valores.role, valores.documento, valores.token).then(responseRol => {
-                              if(responseRol === true){
-                                  setTextFormSend({
-                                    variant: "success", heading: "¡Excelente, registro exitoso!",
-                                    message: `El usuario ${valores.name} fue almacenado correctamente`
-                                  });
-                                  setShow(true);
-                            }else{
-                                  setTextFormSend({
-                                    variant: "danger", heading: "¡Opss, ocurrió un error!",
-                                    message: "Revisaremos lo ocurrido, inténtalo nuevamente"
-                                });
-                                setShow(true);
-                            }
-                          });
+                  if(rolesSelected.length === 0){
+                        setTextFormSend({
+                            variant: "danger", heading: "¡Opss, No has seleccionado funciones!",
+                            message: `Debes seleccionar al menos una función para el rol`
+                        });
+                        setShow(true);
+                        setTimeout(() => {
+                            setShow(false);
+                        }, 3000);
+                    }else{
+                      const data = {
+                        documento: parseInt(valores.documento),
+                        tipoDocumento: valores.tipoDocumento,
+                        nombre: valores.nombre,
+                        sexo: valores.sexo,
+                        fechaNacimiento: valores.fechaNacimiento,
+                        celular: parseInt(valores.celular),
+                        edad: parseInt(valores.edad),
+                        municipio: valores.municipio,
+                        direccion: valores.direccion,
+                        correoElectronico: valores.correoElectronico,
+                        clave: valores.clave,
+                        token: token
+                      }
+                      updateUserApi(data).then(response => {
+                        if(response === true){
+                          updateRoles();
                         }else{
+                          console.log("no agrego a ese perro");
                             setTextFormSend({
                                 variant: "danger", heading: "¡Opss, ocurrió un error!",
                                 message: "Revisaremos lo ocurrido, inténtalo nuevamente"
                             });
                             setShow(true);
                         }
-                  });
+                      });
+                    }
                   setTimeout(() => {
                     setShow(false);
                   }, 5000);
@@ -352,7 +460,7 @@ export default function FormEdit(props){
 
                       </Form.Group>
 
-
+                      {/*}
                       <Form.Group as={Row} className="mb-4">
                       <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Rol</Form.Label>
                       <Col sm="10">
@@ -373,7 +481,14 @@ export default function FormEdit(props){
                           <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                       </Col>
-                      </Form.Group>
+                              </Form.Group>*/}
+
+                        <fieldset>
+                            <legend>Asignar roles al usuario</legend>
+                                {rolesApi.map((item, index) => (
+                                    checkRole(item)
+                                ))}
+                        </fieldset>
 
                         <div className="d-grid gap-2">
                             <Button variant="primary" type="submit" size="lg">

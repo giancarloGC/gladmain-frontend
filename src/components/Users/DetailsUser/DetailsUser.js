@@ -9,7 +9,7 @@ export default function DetailsUser(){
             <Card style={{ width: '600px' }} className="shadow">
   <Card.Img variant="top" src={ImageMen} style={{"max-width": "200px"}} roundedCircle/>
   <Card.Body>
-    <Card.Title>Giancarlo Gómez</Card.Title>
+    <Card.Title>Jollaaa</Card.Title>
     <Card.Text style={{"color": "#134B8B"}}>
     Some quick example text to build on the card title and make up the bulk of
       the card's content.

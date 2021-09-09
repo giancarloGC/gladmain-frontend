@@ -11,13 +11,18 @@ import { TOKEN } from "../../utils/constans";
 export default function ListRol(){
     const token = localStorage.getItem(TOKEN);
     const [ rolesApi, setRolesApi ] = useState([]);
+    const [ latestRol, setLatestRol ] = useState(0);
     const [ loading, setLoading ] = useState(true);
     useEffect(() => {
         (async () => {
             const response = await getRolesApi();
             setLoading(false);
             setRolesApi(response);
-        })();
+            let rolesDesc = response.sort(function (a, b){
+                return (b.idRol - a.idRol)
+            });
+            setLatestRol(rolesDesc[0].idRol);
+        })();       
     }, []);
 
     const confirmDeleteRol = (idRol) => {
@@ -57,9 +62,8 @@ export default function ListRol(){
 
     return(
         <Container className="justify-content-center">
-            <h1 className="text-center">Listado de roles   <FontAwesomeIcon icon={faPlus} size="lg" color="#2D61A4"
-                    onClick={() => window.location.replace("/admin/addRol")}
-                />
+            <h1 className="text-center">Listado de roles   <Link to={`/admin/addRol/${latestRol}`}><FontAwesomeIcon icon={faPlus} size="lg" color="#2D61A4"
+                /></Link>
             </h1>
 
             {loading && (

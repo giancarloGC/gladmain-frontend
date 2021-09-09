@@ -48,11 +48,12 @@ export function deleteContVaccApi(id){
             .catch(err => {return err});
 }
 
-export function getContVaccApi(data){
-    const url = `/api/control_vacunacion/LISTAR_CONTROLES_VACUNACION/${data}`;
+export function getContVaccApi(documento, token){
+    const url = `/api/control_vacunacion/LISTAR_CONTROLES_VACUNACION/${documento}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET"
     };

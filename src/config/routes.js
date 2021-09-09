@@ -23,7 +23,7 @@ import EditControlFollow from "../pages/ControlFollow/EditControlFollow";
 import EditInfantIncome from "../pages/ControlFollow/EditInfantIncome";
 import AddControlRemission from "../pages/ControlFollow/AddControlRemission";
 import EditControlRemission from "../pages/ControlFollow/EditControlRemission";
-import AddNewCommit from "../pages/ControlFollow/AddNewCommit";
+
 
 import StatisticPesoTalla from "../pages/ControlNutri/StatisticNutri";
 import StatisticTallaEdad from "../pages/ControlNutri/StatisticTallaEdad";
@@ -66,7 +66,7 @@ const routes = [
                 component: ListRol,
             },
             {
-                path: "/admin/addRol",
+                path: "/admin/addRol/:latestRol",
                 exact: true,
                 component: AddRol,
             },
@@ -205,11 +205,6 @@ const routes = [
                 exact: true,
                 component: EditControlRemission,
             }, 
-            {
-                path: "/admin/addNewCommit",
-                exact: true,
-                component: AddNewCommit,
-            },
                        
         ]
     }   

@@ -19,12 +19,12 @@ export function insertUserApi(data){
             .catch(err => {return err});
 }
 
-export function updateUserApi(data, token){
+export function updateUserApi(data){
     const url = `/api/usuario/ACTUALIZAR_USUARIO`;
     const params = {
         headers: {
             "Content-Type": "application/json",
-            "Authorization": token
+            "Authorization": data.token
 
         },
         method: "POST",

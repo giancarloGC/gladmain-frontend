@@ -10,7 +10,7 @@ export default function AllUserControl(){
     const { role } = useParams();
     return(
         <Container>
-            <h1 className="text-center">{role === "madresGestantes" ? "Listado de madres" : "Listado de Infantes"} </h1>
+            <h1 className="text-center">{role === "madresGestantes" ? "Listado de Madres" : "Listado de Infantes"} </h1>
            <AllUserC role={role}/>
         </Container>
     )
