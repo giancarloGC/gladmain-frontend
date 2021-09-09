@@ -221,7 +221,7 @@ const routes = [
                 component: EditCommitment,
             }, 
             {
-                path: "/admin/ListFollowUpChecks",
+                path: "/admin/ListFollowUpChecks/:documento",
                 exact: true,
                 component: ListFollowUpChecks,
             }, 

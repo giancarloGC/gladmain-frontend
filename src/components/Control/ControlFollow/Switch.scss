@@ -160,10 +160,6 @@ input:checked:focus + .switch-left + .switch-right {
 $font: "Inter", sans-serif;
 $white: #fff;
 $orange: #fd650d;
-html {
-  background-color: #1a1a1a;
-  overflow: hidden;
-}
 
 .middle {
   width: 100%;
@@ -199,9 +195,9 @@ html {
     position: relative;
     font-family: $font;
     font-weight: 100;
-    /*&:active {
+    &:active {
       transform: translateY(5px);
-    }*/
+    }
     span {
       position: absolute;
       transform: translate(0,17px);
@@ -223,7 +219,7 @@ html {
       }
     }
   }
-   /* Made by */
+   Made by 
   p {
     color: $white;
     font-family: $font;
