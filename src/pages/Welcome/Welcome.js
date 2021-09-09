@@ -7,6 +7,7 @@ import animationMission from './../../assets/animations/17374-mission-1.json';
 import animationVision from './../../assets/animations/17490-vision-text-blob.json';
 
 import Logo from "./../../assets/img/logocomfaoriente.png";
+import index from "./../../assets/img/index.png";
 
 import GalleryHome from "../../components/GalleryHome/GalleryHome";
 import Gallery from "../../components/Gallery/Gallery";

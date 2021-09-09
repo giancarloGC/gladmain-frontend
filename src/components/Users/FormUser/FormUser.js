@@ -80,7 +80,6 @@ export default function FormUser(){
                   }
 
                   const dateCurrently = new Date();
-
                   if(!valores.fechaNacimiento){
                     errores.fechaNacimiento = 'Asegurese de selecionar una fecha';
                   }else if(dateCurrently <= valores.fechaNacimiento){

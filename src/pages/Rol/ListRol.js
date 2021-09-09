@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Route, Switch, Redirect, Link} from "react-rout
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import swal from 'sweetalert';
-
+import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { getRolesApi, deleteRolApi } from "../../api/rol";
 import { TOKEN } from "../../utils/constans";
 
@@ -62,8 +62,10 @@ export default function ListRol(){
 
     return(
         <Container className="justify-content-center">
-            <h1 className="text-center">Listado de roles   <Link to={`/admin/addRol/${latestRol}`}><FontAwesomeIcon icon={faPlus} size="lg" color="#2D61A4"
-                /></Link>
+            <h1 className="text-center">Listado de roles <FontAwesomeIcon icon={faPlus} size="lg" color="#2D61A4"
+                    data-tip data-for = "boton1" onClick={() => window.location.replace("/admin/addRol")}
+                />
+                <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Agregar Nuevo Rol </ReactTooltip>
             </h1>
 
             {loading && (
