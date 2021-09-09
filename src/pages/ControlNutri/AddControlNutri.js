@@ -3,21 +3,19 @@ import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "re
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faListAlt } from '@fortawesome/free-solid-svg-icons';
 import ReactTooltip from 'react-tooltip';
-import {BrowserRouter as Link} from "react-router-dom";
+import {BrowserRouter as Link, useParams} from "react-router-dom";
 import { getUserByIdApi } from "../../api/user";
 import { TOKEN } from "../../utils/constans";
 import AddControlN from "../../components/Control/ControlNutri/AddControlN";
 
 
 export default function AddControlNutri(){ 
-    //const { documento } = useParams();
-    const documento = 1093779295;
-    const [user, setUser] = useState({});
+    const { documento } = useParams();
+    const [userControl, setUser] = useState({});
     const token = localStorage.getItem(TOKEN);
     const [ componentLoaded, setComponentLoaded ] = useState(false); 
     const [ userLoaded, setUserLoaded ] = useState({});
     var loading = true;
-    console.log(user);
 
       useEffect(() => {
         loading = false;
@@ -26,7 +24,7 @@ export default function AddControlNutri(){
         })
         if(!loading){
           setComponentLoaded(true); 
-        setUserLoaded(user);
+        setUserLoaded(userControl);
         }
       }, []);
 
@@ -48,7 +46,7 @@ export default function AddControlNutri(){
             </Row>
           )}
           {componentLoaded && (
-              <AddControlN userControl={user} />
+              <AddControlN userControl={userControl} />
           )}
         </Container>
     )

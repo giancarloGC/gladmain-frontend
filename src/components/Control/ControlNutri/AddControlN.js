@@ -2,8 +2,6 @@ import React, { useState, useEffect, useReducer } from "react";
 import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner } from "react-bootstrap";
 import { Formik } from "formik";
 import { TOKEN } from "../../../utils/constans";
-import { getUserByIdApi } from "../../../api/user";
-import { insertControlApi } from "../../../api/controls";
 import  AuthContext  from "../../../hooks/useAuth";
 
 
@@ -16,7 +14,7 @@ export default function AddControlN(props){
     const [ textFormSend, setTextFormSend ] = useState({});
     const documentoLogin = user.sub.split('-');
     const rolUser = "madre";
-
+ 
     const dateFormat = (date) => {
       if(date){
       let dateFormated = date.split('T');
@@ -126,7 +124,6 @@ export default function AddControlN(props){
                     estadoNutricional: valores.estadoNutricional,
                     edad: userControl.edad,
                   };
-                  console.log(formData);
                   /*resetForm();
                   valores.token = token;
                   insertUserApi(valores).then(response => {

@@ -111,7 +111,7 @@ const routes = [
                 component: ListVac,
             },
             {
-                path: "/admin/graphics/:edad/:sexo",
+                path: "/admin/graphics/:edad/:sexo/:documento",
                 exact: true,
                 component: StatisticHome,                
             }, 

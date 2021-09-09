@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Form } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
@@ -19,6 +19,7 @@ import "./StatisticHome.scss";
 export default function StatisticHome(){
     const {edad} = useParams();
     const {sexo} = useParams();
+    const {documento} = useParams();
     const [ optionsGraphics, setOptionsGraphics] = useState({ check1: true, check2: false, check3: false, check4: false });
 
     const handleCheck = (e, item) => {
@@ -40,12 +41,12 @@ export default function StatisticHome(){
 
     return(
         <Container>
-            <h1 className="text-center">Patrones de Crecimiento Infantil de la OMS<FontAwesomeIcon icon={faUserPlus} size="lg" color="#2D61A4"
-                 style = {{marginLeft:10}} data-tip data-for = "boton1" onClick={() => window.location.replace("/admin/addControlFollow")}
-            />
-            <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Agregar Seguimiento </ReactTooltip>
-            </h1>
-            
+            <h1 className="text-center">Patrones de Crecimiento Infantil de la OMS
+                <Link to={`/admin/addControlNutri/${documento}`} >
+                    <FontAwesomeIcon icon={faUserPlus} size="lg" color="#2D61A4" style = {{marginLeft:10}} data-tip data-for = "boton1" />
+                    <ReactTooltip id="boton1" place="bottom" type="dark" effect="float">Agregar Control Nutricional</ReactTooltip>
+                </Link>
+           </h1>
             <center className="select">
                 {edad <= 24 && (
                     <Form.Check type="checkbox" inline label="Peso para la Talla" checked={optionsGraphics.check1} onChange={(e) => handleCheck(e, "check1")}/>
