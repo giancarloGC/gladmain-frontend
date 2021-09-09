@@ -11,13 +11,18 @@ import { TOKEN } from "../../utils/constans";
 export default function ListRol(){
     const token = localStorage.getItem(TOKEN);
     const [ rolesApi, setRolesApi ] = useState([]);
+    const [ latestRol, setLatestRol ] = useState(0);
     const [ loading, setLoading ] = useState(true);
     useEffect(() => {
         (async () => {
             const response = await getRolesApi();
             setLoading(false);
             setRolesApi(response);
-        })();
+            let rolesDesc = response.sort(function (a, b){
+                return (b.idRol - a.idRol)
+            });
+            setLatestRol(rolesDesc[0].idRol);
+        })();       
     }, []);
 
     const confirmDeleteRol = (idRol) => {

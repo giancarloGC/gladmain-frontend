@@ -18,10 +18,11 @@ export function getRolesApi(){
 }
 
 
-export function insertRolApi({name, token, privilegios}){
+export function insertRolApi({latestRol, name, token, privilegios}){
+    var newId = parseInt(latestRol) + 1;
     const data = {
         rol: {
-            idRol: 0,
+            idRol: newId,
             nombre: name
         },
         privilegios: privilegios
@@ -93,8 +94,9 @@ export function deleteRolApi(id, token){
 }
 
 export function getAssignRolApi(idRol, documento, token){
+    const newId = parseInt(idRol);
     const doc = parseInt(documento);
-    const url = `/api/rol/ASIGNAR_ROL/${parseInt(idRol)}/${doc}`;
+    const url = `/api/rol/ASIGNAR_ROL/${newId}/${doc}`;
     
     const params = {
         headers: {
@@ -111,11 +113,12 @@ export function getAssignRolApi(idRol, documento, token){
             
 }
 
-export function getRemoveRolApi(id, data){
-    const url = `${urlBackend}rol/RETIRAR_ROL/${id}/${data}`;
+export function getRemoveRolApi(id, data, token){
+    const url = `/api/rol/RETIRAR_ROL/${id}/${data}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET"
     };
@@ -124,4 +127,21 @@ export function getRemoveRolApi(id, data){
             .then(response => {return response.json()})
             .then(result => {return result})
             .catch(err => {return err});
+}
+
+export function consultarRolesUsuarioApi(documento, token){
+    const url = `/api/rol/CONSULTAR_ROLES_USUARIO/${documento}`;
+    
+    const params = {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": token
+        },
+        method: "GET"
+    };
+
+    return fetch(url, params)
+            .then(response => {return response.json()})
+            .then(result => {return result})
+            .catch(err => {return err});  
 }

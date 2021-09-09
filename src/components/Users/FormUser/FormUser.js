@@ -10,12 +10,28 @@ export default function FormUser(){
     const token = localStorage.getItem(TOKEN);
     const [show, setShow] = useState(false);
     const [ rolesApi, setRolesApi ] = useState([]);
+    const [ rolesSelected, setRolesSelected ] = useState([]);
 
     useEffect(() => {
       getRolesApi().then(response => {
         setRolesApi(response);
       })
     }, []);
+
+    const handleCheck = (e, item) => {
+      let role = {
+          idRol: item.idRol,
+          nombre: item.nombre
+      }
+      if(e.target.checked){
+        setRolesSelected([...rolesSelected, role]);
+      }else{
+          const result = rolesSelected.filter((priv) => {
+              return priv.idRol != item.idRol && priv.nombre != item.nombre;
+          });
+          setRolesSelected(result);
+      }
+  }
 
     return(
         <Container>
@@ -35,7 +51,6 @@ export default function FormUser(){
                     municipio: '',
                     direccion: '',
                     correoElectronico: '',
-                    role: '',
                     clave: '',
                     confirmClave: '',
                     edadAños: ''
@@ -107,10 +122,6 @@ export default function FormUser(){
                     errores.correoElectronico = 'Email incorrecto, intente con otro';
                   }
 
-                  if(!valores.role){
-                    errores.role = 'Asegurese de selecionar un rol';
-                  }
-
                   if (!valores.clave){
                     errores.clave = 'Por favor, ingresa una contraseña'
                   }else if(valores.clave.length < 8){
@@ -124,6 +135,16 @@ export default function FormUser(){
                   return errores;
                 }}
                 onSubmit={(valores, {resetForm}) => {
+                  if(rolesSelected.length === 0){
+                    setTextFormSend({
+                        variant: "danger", heading: "¡Opss, No has seleccionado roles!",
+                        message: `Debes seleccionar al menos un  rol para el usuario`
+                    });
+                    setShow(true);
+                    setTimeout(() => {
+                        setShow(false);
+                    }, 3000);
+                }else{
                   const dateCurrently = new Date();
                   console.log(dateCurrently);
                     console.log(valores);
@@ -134,7 +155,7 @@ export default function FormUser(){
 
                     valores.token = token;
                     const data = {
-                      documento: valores.documento,
+                      documento: parseInt(valores.documento),
                       tipoDocumento: valores.tipoDocumento,
                       nombre: valores.nombre,
                       sexo: valores.sexo,
@@ -149,23 +170,33 @@ export default function FormUser(){
                     }
                 
                     insertUserApi(data).then(response => {
-                      console.log(response);
                       if(response === true){
-                          getAssignRolApi(valores.role, valores.documento, valores.token).then(responseRol => {
-                              if(responseRol === true){
-                                  setTextFormSend({
-                                    variant: "success", heading: "¡Excelente, registro exitoso!",
-                                    message: `El usuario ${valores.name} fue almacenado correctamente`
-                                  });
-                                  setShow(true);
-                            }else{
-                                  setTextFormSend({
-                                    variant: "danger", heading: "¡Opss, ocurrió un error!",
-                                    message: "Revisaremos lo ocurrido, inténtalo nuevamente"
-                                });
-                                setShow(true);
-                            }
+                          let successs = false;
+                          successs = rolesSelected.map((item, index) => {
+                            return getAssignRolApi(item.idRol, valores.documento, valores.token).then(responseRol => {
+                              console.log(responseRol);
+                              if(responseRol === true){ 
+                                return successs = true;
+                              }else{
+                                return successs = false;
+                              }
+                            });
+                          })
+                          if(successs){
+                            console.log("entro");
+                            setTextFormSend({
+                              variant: "success", heading: "¡Excelente, registro exitoso!",
+                              message: `El usuario ${valores.name} fue almacenado correctamente`
+                            });
+                            setShow(true);
+                          }else{
+                            console.log("no entro");
+                            setTextFormSend({
+                              variant: "danger", heading: "¡Opss, ocurrió un error!",
+                              message: "Revisaremos lo ocurrido, inténtalo nuevamente"
                           });
+                          setShow(true);
+                          }
                         }else{
                             setTextFormSend({
                                 variant: "danger", heading: "¡Opss, ocurrió un error!",
@@ -174,6 +205,7 @@ export default function FormUser(){
                             setShow(true);
                         }
                   });
+                  }
                   setTimeout(() => {
                     setShow(false);
                   }, 5000);
@@ -238,8 +270,8 @@ export default function FormUser(){
                                     isValid={!errors.sexo && touched.sexo} isInvalid={!!errors.sexo && touched.sexo}
                             >
                             <option disabled selected>Selecciona el sexo</option>
-                            <option value="femenino">Femenino</option>
-                            <option value="masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="Masculino">Masculino</option>
 
                             </Form.Select>
                             <Form.Control.Feedback type="invalid">
@@ -380,7 +412,7 @@ export default function FormUser(){
                       </Col>
                       </Form.Group>  
 
-                      <Form.Group as={Row} className="mb-3">
+                      {/*<Form.Group as={Row} className="mb-3">
                         <InputGroup hasValidation>
                             <Form.Select size="lg" name="role" onChange={handleChange} onBlur={handleBlur}
                                     isValid={!errors.role && touched.role} isInvalid={!!errors.role && touched.role}
@@ -397,7 +429,16 @@ export default function FormUser(){
                                       </Form.Control.Feedback>
                           <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                       </InputGroup>
-                      </Form.Group>
+                              </Form.Group>*/}
+
+
+                      <fieldset>
+                            <legend>Asignar roles al usuario</legend>
+                                {rolesApi.map((item, index) => (
+                                        <Form.Check inline type="checkbox" label={item.nombre} onChange={(e) => handleCheck(e, item)}/>
+                                    
+                                ))}
+                        </fieldset>
 
                         <div className="d-grid gap-2 mb-3 mt-4">
                             <Button variant="primary" type="submit" size="lg">

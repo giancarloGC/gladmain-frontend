@@ -5,7 +5,6 @@ import { Formik, Field, ErrorMessage } from "formik";
 import { getUserByIdApi } from "../../../api/user";
 
 export default function DetailsUser(){
-
   const [user, setUser] = useState({});
   const [ loaded, setLoaded ] = useState(false);
   /*useEffect(() => {

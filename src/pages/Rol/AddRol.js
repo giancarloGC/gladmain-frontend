@@ -4,8 +4,10 @@ import { Formik, Field, ErrorMessage } from "formik";
 import { insertRolApi } from "../../api/rol";
 import { TOKEN } from "../../utils/constans";
 import { getPrivilegiosApi } from "../../api/consultar_privilegios";
+import { useParams } from "react-router-dom";
 
 export default function AddRol(){
+    const { latestRol } = useParams();
     const [ textFormSend, setTextFormSend ] = useState({});
     const token = localStorage.getItem(TOKEN);
     const [show, setShow] = useState(false);
@@ -69,11 +71,13 @@ export default function AddRol(){
                             setShow(false);
                         }, 3000);
                     }else{
-                        resetForm();
                         valores.token = token;
                         valores.privilegios = privilegiosSelected;
+                        valores.latestRol = latestRol;
+                        console.log(valores);
+                        
                         insertRolApi(valores).then(response => {
-                            if(response.status === 500 && response.message === "NO EXISTE UN ROL CON ESTE ID"){
+                            if(response === true){
                                 setTextFormSend({
                                     variant: "success", heading: "¡Excelente, registro exitoso!",
                                     message: `El rol ${valores.name} fue almacenado correctamente`

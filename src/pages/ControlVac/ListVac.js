@@ -5,8 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import {BrowserRouter as Router, Route, Switch, Redirect, Link} from "react-router-dom";
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
+import { useParams } from "react-router-dom";
 
 export default function ListVac(){
+    const { documento } = useParams();
     return(
         <Container>
             <h1 className="text-center">Controles Vacunas 
@@ -15,7 +17,7 @@ export default function ListVac(){
                     <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Añadir Nuevo Control </ReactTooltip>
                 </Link>
             </h1>
-            <ListV />
+            <ListV documento={documento} />
         </Container>
     )
 }
