@@ -88,7 +88,7 @@ const routes = [
                 component: AddUser,
             },  
             {
-                path: "/admin/user",
+                path: "/admin/user/:documento",
                 exact: true,
                 component: User,
             },   
