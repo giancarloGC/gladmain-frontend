@@ -23,21 +23,19 @@ import EditControlFollow from "../pages/ControlFollow/EditControlFollow";
 import EditInfantIncome from "../pages/ControlFollow/EditInfantIncome";
 import AddControlRemission from "../pages/ControlFollow/AddControlRemission";
 import EditControlRemission from "../pages/ControlFollow/EditControlRemission";
-import AddNewCommit from "../pages/ControlFollow/AddNewCommit";
 
-import StatisticPesoTalla from "../pages/ControlNutri/StatisticNutri";
-import StatisticTallaEdad from "../pages/ControlNutri/StatisticTallaEdad";
-import StatisticPesoEdad from "../pages/ControlNutri/StatisticPesoEdad";
-import StatisticImcEdad from "../pages/ControlNutri/StatisticImcEdad";
-import StatisticPesoTalla2a5 from "../pages/ControlNutri/StatisticPesoTalla2a5";
-import StatisticTallaEdad2a5 from "../pages/ControlNutri/StatisticTallaEdad2a5";
-import StatisticPesoEdad2a5 from "../pages/ControlNutri/StatisticPesoEdad2a5";
-import StatisticImcEdad2a5 from "../pages/ControlNutri/StatisticImcEdad2a5";
-import StatisticTallaEdad5a17 from "../pages/ControlNutri/StatisticTallaEdad5a17";
+import StatisticNutri from "../components/Graphics/StatisticNutri";
+import StatisticTallaEdad from "../components/Graphics/StatisticTallaEdad";
+import StatisticPesoEdad from "../components/Graphics/StatisticPesoEdad";
+import StatisticImcEdad from "../components/Graphics/StatisticImcEdad";
+import StatisticPesoTalla2a5 from "../components/Graphics/StatisticPesoTalla2a5";
+import StatisticTallaEdad2a5 from "../components/Graphics/StatisticTallaEdad2a5";
+import StatisticPesoEdad2a5 from "../components/Graphics/StatisticPesoEdad2a5";
+import StatisticImcEdad2a5 from "../components/Graphics/StatisticImcEdad2a5";
+import StatisticTallaEdad5a17 from "../components/Graphics/StatisticTallaEdad5a17";
+import StatisticHome from "../pages/ControlNutri/StatisticHome";
 
 import NotFound404 from "../pages/NotFound404";
-import StatisticNutri from "../pages/ControlNutri/StatisticNutri";
-
 
 const routes = [
     {
@@ -110,6 +108,11 @@ const routes = [
                 exact: true,
                 component: ListVac,
             },
+            {
+                path: "/admin/graphics/:edad/:sexo",
+                exact: true,
+                component: StatisticHome,                
+            }, 
             {
                 path: "/admin/statisticPesoTalla",
                 exact: true,
@@ -204,13 +207,7 @@ const routes = [
                 path: "/admin/editControlRemission",
                 exact: true,
                 component: EditControlRemission,
-            }, 
-            {
-                path: "/admin/addNewCommit",
-                exact: true,
-                component: AddNewCommit,
-            },
-                       
+            },         
         ]
     }   
 ];

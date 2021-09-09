@@ -4,7 +4,8 @@ import { Line } from "react-chartjs-2";
 import ImageBackground from "../../assets/img/graphicsPrueba.png";
 //import { getContVaccApi } from "../../api/vaccination";
 
-export default function StatisticImcEdad2a5(){
+export default function StatisticImcEdad2a5(props){
+const { sexo } = props;
 const [ sizeImage, setSizeImage] = useState("150");
 
 const image = new Image();
@@ -35,7 +36,7 @@ const data = {
         label: '- 2',
         data: [ 13.8, 13.7, 13.6, 13.5, 13.5, 13.4, 13.3, 13.3, 13.2, 13.2, 13.1, 13.1, 13, 13, 13, 12.9, 12.9 ],
         fill: false,
-        borderColor: '#4884FC',
+        borderColor: sexo !== "Femenino" ? '#4884FC' : '#FC39E5',
         tension: 0.1,
         borderDash: [10,5]
       },
@@ -79,8 +80,11 @@ const data = {
   };
     return(
         <Container>
-             <h1 className="text-center">Estadística </h1>
-             <h2 className="text-center">IMC para la Edad Niños </h2>
+            {sexo === "Masculino" ?
+                <h2 className="text-center">IMC para la Edad Niños </h2>
+              : 
+              <h2 className="text-center">IMC para la Edad Niñas </h2>
+            }
              <Form.Label column sm="4" style={{"font-size": "12px !important" }}>Puntuación Z (2 a 5 años)</Form.Label>
              <div style={{"max-width": "800px", "background-image": "url('../../assets/img/graphicsPrueba.png')"}}>
              <Line 

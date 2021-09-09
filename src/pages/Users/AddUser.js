@@ -7,8 +7,7 @@ import FormUser from "../../components/Users/FormUser/FormUser";
 export default function AddUser(){ 
     return(
         <Container>
-            <h1 className="text-center">Formulario de añadir usuario<FontAwesomeIcon icon={faUserPlus} size="lg" color="#2D61A4"/>
-            </h1>
+            <h1 className="text-center">Añadir usuario</h1>
             <FormUser />
         </Container>
     )

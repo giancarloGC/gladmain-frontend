@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Col, Row, Spinner } from "react-bootstrap";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link} from "react-router-dom";
 import swal from 'sweetalert';
-
+import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhoneAlt, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
@@ -93,7 +93,7 @@ export default function AllUsers(){
                 <div className="card">
                 <div className="content">
                     <div className="imgBx">
-                        {item.edad > 18 ? 
+                        {item.edad > 216 ? 
                             <img src={item.sexo === "Femenino" ? ImageWomen : ImageMen} alt="img" />
                         :
                             <img src={item.sexo === "Femenino" ? ImageNina : ImageNino} alt="img" />
@@ -102,8 +102,9 @@ export default function AllUsers(){
                     <div className="contentBx">
                         <h3>{item.nombre}<br/> 
                             <span>CC {item.documento}</span> <br />
-                            <span><FontAwesomeIcon icon={faPhoneAlt} size="lg" color="#2D61A4"
-                            /> {item.celular}
+                            <span><FontAwesomeIcon icon={faPhoneAlt} size="lg" color="#2D61A4" 
+                            /> 
+                            {item.celular}
                             </span>
                         </h3>
                     </div>
@@ -111,20 +112,20 @@ export default function AllUsers(){
                 <div className="sci">
                     <div className="liB">
                         <Link className="enlace" to="/admin/user">
-                        <FontAwesomeIcon icon={faEye} size="lg" color="#2D61A4"
-                        />
+                        <FontAwesomeIcon icon={faEye} size="lg" color="#2D61A4" data-tip data-for = "boton1"
+                        /> <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Ver </ReactTooltip>
                         </Link>
                     </div>
                     <div className="liB">
                     <Link className="enlace" to={`/admin/editUser/${item.documento}`}>
-                        <FontAwesomeIcon icon={faPencilAlt} size="lg" color="#2D61A4"
-                        />
+                        <FontAwesomeIcon icon={faPencilAlt} size="lg" color="#2D61A4" data-tip data-for = "boton2"
+                        /> <ReactTooltip id="boton2" place="bottom" type="dark" effect="float"> Editar </ReactTooltip>
                         </Link>
                     </div>
                     <div className="liB">
                     <a className="enlace" onClick={() => confirmDeleteUser(item.documento)}>
-                        <FontAwesomeIcon icon={faTrash} size="lg" color="#2D61A4"
-                        />
+                        <FontAwesomeIcon icon={faTrash} size="lg" color="#2D61A4" data-tip data-for = "boton3"
+                        /> <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Eliminar </ReactTooltip>
                         </a>
                     </div>
                 </div>

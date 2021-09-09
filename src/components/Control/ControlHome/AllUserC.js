@@ -51,7 +51,7 @@ export default function AllUserC ({role}){
                                 <div className="card">
                                     <div className="content">
                                         <div className="imgBx">
-                                            {item.edad > 18 ? 
+                                            {item.edad > 216 ? 
                                                 <img src={item.sexo === "Femenino" ? ImageWomen : ImageMen} alt="img" />
                                             :
                                                 <img src={item.sexo === "Femenino" ? ImageNina : ImageNino} alt="img" />
@@ -68,7 +68,7 @@ export default function AllUserC ({role}){
                                     </div>
                                     <div className="sci">
                                         <div className="liB">
-                                            <Link className="enlace"  to="/">
+                                            <Link className="enlace"  to={`/admin/graphics/${item.edad}/${item.sexo}`}>
                                                <FontAwesomeIcon icon={faNutritionix} size="lg" color="#2D61A4"
                                                data-tip data-for = "boton1"/>
                                                <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Nutrición </ReactTooltip>

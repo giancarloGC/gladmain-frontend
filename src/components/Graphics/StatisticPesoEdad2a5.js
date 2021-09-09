@@ -5,12 +5,12 @@ import ListControlN from "../../components/Control/ControlNutri/ListControlN";
 import ImageBackground from "../../assets/img/graphicsPrueba.png";
 import "./StatisticNutri.scss";
 
-export default function StatisticTallaEdad(){
-const [ sizeImage, setSizeImage] = useState("150");
-
-const image = new Image();
-image.src = ImageBackground;
-image.width = sizeImage;
+export default function StatisticPesoEdad2a5(props){
+  const { sexo } = props;
+  const [ sizeImage, setSizeImage] = useState("150");
+  const image = new Image();
+  image.src = ImageBackground;
+  image.width = sizeImage;
 
 
 const plugin = {
@@ -31,56 +31,57 @@ const plugin = {
 
 
 const data = {
-    labels: [ "Nacimiento"," ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "1 año", " ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "2 años" ],
+    labels: [ "2 años", 2, 4, 6, 8, 10, "3 años", 2, 4, 6, 8, 10, "4 años", 2, 4, 6, 8, 10, "5 años" ],
     datasets: [{
         label: '- 2',
-        data: [45, 50, 53.8, 56.7, 59, 61, 62.9, 64.2, 65.6, 66.9, 68, 69.2, 70.3, 71.5, 72.6, 73.7, 74.7, 75.6, 76.5, 77.3, 78.2, 79, 79.9, 80.5, 81.2],
+        data: [ 9.7, 10, 10.3, 10.6, 10.9, 11.1, 11.4, 11.7, 11.9, 12.1, 12.3, 12.5, 12.7, 13, 13.2, 13.4, 13.6, 13.8, 14 ],
         fill: false,
-        borderColor: '#4884FC',
+        borderColor: sexo !== "Femenino" ? '#4884FC' : '#FC39E5',
         tension: 0.1,
         borderDash: [10,5]
       },
-      
       {
         label: '- 1',
-        data: [ 47, 52, 55.8, 58.8, 61.1, 63.1, 64.9, 66.4, 67.9, 69.2, 70.5, 71.8, 72.9, 74, 75.1, 76.2, 77.2, 78.2, 79.1, 80.1, 81.1, 82, 82.9, 83.7, 84.5 ],
+        data: [ 10.9, 11.2, 11.5, 11.8, 12.1, 12.4, 12.7, 13, 13.3, 13.6, 13.9, 14.2, 14.5, 14.8, 15.1, 15.4, 15.7, 15.9, 16.1 ],
         fill: false,
-        borderColor: '#D8E5FD',
+        borderColor: sexo !== "Femenino" ? '#8EB2FA' : '#FFCAFA',
         tension: 0.1,
       },
-
       {
         label: '0',
-        data: [ 49, 54, 57.5, 60.5, 63.1, 65.1, 67, 68.5, 70, 71.4, 72.8, 74, 75.2, 76.4, 77.6, 78.8, 80, 81, 82, 83, 84, 85, 85.9, 86.8, 87.6 ],
+        data: [ 12.3, 12.6, 12.9, 13.2, 13.6, 13.9, 14.3, 14.7, 15.1, 15.4, 15.7, 16, 16.3, 16.6, 16.9, 17.3, 17.7, 18.1, 18.4 ],
         fill: false,
-        borderColor: '#8EB2FA',
+        borderColor: sexo !== "Femenino" ? '#4884FC' : '#FC39E5',
         tension: 0.1,
       },
       {
         label: '+ 1',
-        data: [ 51, 56, 60, 63, 65.3, 67.4, 69.1, 70.8, 72.3, 73.8, 75, 76.3, 77.7, 79, 80.1, 81.3, 82.5, 83.7, 84.9, 86, 87, 88, 89, 89.8, 90.6 ],
+        data: [ 13.6, 14.1, 14.6, 15, 15.4, 15.8, 16.2, 16.6, 17, 17.4, 17.8, 18.2, 18.6, 19, 19.4, 19.8, 20.2, 20.6, 21 ],
         fill: false,
-        borderColor: '#4884FC',
+        borderColor: sexo !== "Femenino" ? '#4884FC' : '#FC39E5',
         tension: 0.1,
       },
       {
         label: '+ 2',
-        data: [ 53, 58, 62, 65, 67.3, 69.4, 71.2, 72.9, 74.5, 76, 77.4, 78.8, 80.1, 81.5, 82.8, 84, 85.1, 86.2, 87.4, 88.6, 89.7, 90.8, 91.9, 93, 94 ],
+        data: [ 15.4, 15.8, 16.3, 16.8, 17.3, 17.8, 18.3, 18.8, 19.3, 19.8, 20.2, 20.7, 21.1, 21.6, 22.1, 22.6, 23.1, 23.6, 24.1 ],
         fill: false,
-        borderColor: '#4884FC',
+        borderColor: sexo !== "Femenino" ? '#4884FC' : '#FC39E5',
         tension: 0.1,
       }
     ]
   };
     return(
         <Container>
-             <h1 className="text-center">Estadística </h1>
-             <h2 className="text-center">Talla para la Edad Niños </h2>
+             {sexo === "Masculino" ?
+                <h2 className="text-center">Peso para la Edad Niños </h2>
+              : 
+              <h2 className="text-center">Peso para la Edad Niñas </h2>
+             }
              <center>
-             <Form.Label column sm="4" style={{"font-size": "12px !important" }}>Puntuación Z (0 a 2 años)</Form.Label>
+             <Form.Label column sm="4" style={{"font-size": "12px !important" }}>Puntuación Z (2 a 5 años)</Form.Label>
              </center>
              <div className="containerGraphic"> 
-                  <p className="ejey">Longitud(cm)</p>
+                  <p className="ejey">Peso (kg)</p>
              <div style={{"max-width": "800px", "background-image": "url('../../assets/img/graphicsPrueba.png')"}}>
              <Line 
                 data={data}
