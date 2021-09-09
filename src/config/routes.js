@@ -23,7 +23,9 @@ import EditControlFollow from "../pages/ControlFollow/EditControlFollow";
 import EditInfantIncome from "../pages/ControlFollow/EditInfantIncome";
 import AddControlRemission from "../pages/ControlFollow/AddControlRemission";
 import EditControlRemission from "../pages/ControlFollow/EditControlRemission";
-
+import AddCommitment from "../pages/ControlFollow/AddCommitment";
+import EditCommitment from "../pages/ControlFollow/EditCommitment";
+import ListFollowUpChecks from "../pages/ControlFollow/ListFollowUpChecks";
 import StatisticNutri from "../components/Graphics/StatisticNutri";
 import StatisticTallaEdad from "../components/Graphics/StatisticTallaEdad";
 import StatisticPesoEdad from "../components/Graphics/StatisticPesoEdad";
@@ -84,7 +86,7 @@ const routes = [
                 component: AddUser,
             },  
             {
-                path: "/admin/user",
+                path: "/admin/user/:documento",
                 exact: true,
                 component: User,
             },   
@@ -207,7 +209,22 @@ const routes = [
                 path: "/admin/editControlRemission",
                 exact: true,
                 component: EditControlRemission,
-            },         
+            },     
+            {
+                path: "/admin/addCommitment",
+                exact: true,
+                component: AddCommitment,
+            }, 
+            {
+                path: "/admin/editCommitment",
+                exact: true,
+                component: EditCommitment,
+            }, 
+            {
+                path: "/admin/ListFollowUpChecks",
+                exact: true,
+                component: ListFollowUpChecks,
+            }, 
         ]
     }   
 ];
