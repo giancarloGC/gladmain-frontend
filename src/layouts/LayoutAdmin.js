@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import {BrowserRouter as Router, Route, Switch, Redirect, Link} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faUserTie, faUsers, faLaptopMedical, faHome } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faUserTie, faUsers, faLaptopMedical, faHome, faUserEdit, faPowerOff} from '@fortawesome/free-solid-svg-icons';
 import Logo from "./../assets/img/logocomfaoriente.png";
 import AvatarDefault from './../assets/img/avatar-default.jpg'
 import { Nav, Image, NavDropdown, Container, Row, Spinner, Col } from "react-bootstrap";
@@ -12,6 +12,7 @@ import { TOKEN } from "../utils/constans";
 
 import useAuth from '../hooks/useAuth';
 
+
 export default function LayoutAdmin(props){
     const { routes } = props;
     const [ openMenu, setOpenMenu ] = useState(false);
@@ -20,6 +21,11 @@ export default function LayoutAdmin(props){
     const [ infoUser, setInfoUser ] = useState({});
     const [ loading, setLoading] = useState(false);
     let componentMounted = false;
+
+    const signOff=() => {
+        localStorage.removeItem(TOKEN);
+        window.location.replace("/");
+    };
     
     useEffect(() => {
         if(!user && !isLoading){
@@ -44,10 +50,6 @@ export default function LayoutAdmin(props){
 
         }
     }
-         /*   
-        */
-        
-
 
     }, [user]);
         if(user && !isLoading){
@@ -62,6 +64,19 @@ export default function LayoutAdmin(props){
                         <Nav className="justify-content-end align-items-center navlayout" activeKey="/home">
                     <Nav.Item>
                       <Nav.Link href="/home">{infoUser.nombre}</Nav.Link>
+                        <div className="option" id="/home">
+                            {/*<FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" onClick={() => setOpenMenu(!openMenu)}/>*/}
+                            <NavDropdown title={infoUser.nombre} id="nav-dropdown" className="subtitlesMenu"
+                                style={{"font-size": "24px", "font-weight": 150, "color": "#D4D1D1"}}
+                            >
+                            <NavDropdown.Item><Link to="/admin/editUser/:documento">
+                                <FontAwesomeIcon icon={faUserEdit} className="icon" size="1x" fill="currentColor"/>
+                                <h5>Editar Perfil</h5></Link></NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <FontAwesomeIcon icon={faPowerOff} className="icon" size="1x"fill="currentColor"/>
+                            <NavDropdown.Item><Link to={signOff}><h5>Cerrar Sesión</h5></Link></NavDropdown.Item>
+                            </NavDropdown>
+                        </div>
                     </Nav.Item>
                     <Nav.Item>
                       <Nav.Link eventKey="disabled">
