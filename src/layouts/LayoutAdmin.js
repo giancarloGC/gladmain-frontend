@@ -76,7 +76,7 @@ export default function LayoutAdmin(props){
                             <NavDropdown title={infoUser.nombre} id="nav-dropdown" className="subtitlesMenu"
                                 style={{"font-size": "24px", "font-weight": 150, "color": "#D4D1D1"}}
                             >
-                            <NavDropdown.Item><Link to={`/admin/editUser/${infoUser.documento}`}>
+                            <NavDropdown.Item><Link to={`/admin/EditProfileUser/${infoUser.documento}`}>
                                 <FontAwesomeIcon icon={faUserEdit} className="icon" size="1x" fill="currentColor"/>
                                 <h5>Editar Perfil</h5></Link></NavDropdown.Item>
                                 

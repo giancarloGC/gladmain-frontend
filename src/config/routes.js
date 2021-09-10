@@ -38,6 +38,7 @@ import StatisticTallaEdad5a17 from "../components/Graphics/StatisticTallaEdad5a1
 import StatisticHome from "../pages/ControlNutri/StatisticHome";
 import StatisticImcEdad5a17 from "../components/Graphics/StatisticImcEdad5a17";
 import StatisticMadreGestante from "../components/Graphics/StatisticMadreGestante";
+import EditProfileUser from "../pages/Users/EditProfileUser";
 
 import NotFound404 from "../pages/NotFound404";
 
@@ -236,7 +237,13 @@ const routes = [
                 path: "/admin/ListFollowUpChecks/:documento",
                 exact: true,
                 component: ListFollowUpChecks,
-            }, 
+            },
+            {
+                path: "/admin/EditProfileUser/:documento",
+                exact: true,
+                component: EditProfileUser,
+            },   
+            
         ]
     }   
 ];
