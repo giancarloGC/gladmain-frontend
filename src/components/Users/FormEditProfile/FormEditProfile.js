@@ -27,16 +27,6 @@ export default function FormEditProfile(props){
     
     return(
         <Container>
-            {!loaded ? (
-                <Row className="justify-content-md-center text-center">
-                    <Col md={1} className="justify-content-center">
-                    <Spinner animation="border" >
-                    </Spinner> 
-                    </Col>
-                </Row>
-            )
-            :
-            (
             <Row style={{backgroundColor: '#f1f1f1'}}>
                 <Col sm={1}></Col>
                 <Col sm={10}> 
@@ -128,13 +118,19 @@ export default function FormEditProfile(props){
                         token: token
                       }
                       updateUserApi(data).then(response => {
-                          console.log("no agrego a ese perro");
+                        if(response === true){
+                          setTextFormSend({
+                            variant: "success", heading: "¡Excelente, actualización exitosa!",
+                            message: `Sus datos fueron actualizados correctamente`
+                          });
+                          setShow(true);
+                        }else{
                             setTextFormSend({
                                 variant: "danger", heading: "¡Opss, ocurrió un error!",
                                 message: "Revisaremos lo ocurrido, inténtalo nuevamente"
                             });
                             setShow(true);
-                        //}
+                        }
                       });
                     //}
                   setTimeout(() => {
@@ -362,7 +358,6 @@ export default function FormEditProfile(props){
                 </Col>
                 <Col sm={1}></Col>
             </Row>
-            )}
         </Container>
     )
 }

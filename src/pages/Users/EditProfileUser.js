@@ -15,6 +15,7 @@ export default function EditProfileUser(){
     const [ loaded, setLoaded ] = useState(false);
     useEffect(() => {
         getUserByIdApi(documento, token).then(response => {
+            console.log("entroooo");
             setUser(response);
             setLoaded(true);
         })
@@ -22,7 +23,7 @@ export default function EditProfileUser(){
 
     return(
         <Container>
-            <h1 className="text-center">Formulario de editar usuario<FontAwesomeIcon icon={faUserEdit} size="lg" color="#2D61A4"/>
+            <h1 className="text-center">Formulario de editar perfíl<FontAwesomeIcon icon={faUserEdit} size="lg" color="#2D61A4"/>
             </h1>
             {loaded ? (
                 <FormEditProfile user={user}/>
