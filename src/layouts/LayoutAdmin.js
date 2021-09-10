@@ -19,44 +19,51 @@ export default function LayoutAdmin(props){
     const [ linkSelected, setLinkSelected ] = useState({roles: true, users: false, controls: false});
     const { user, isLoading } = useAuth();
     const [ infoUser, setInfoUser ] = useState({});
-    const [ loading, setLoading] = useState(false);
+    const [ loading, setLoading] = useState("");
     let componentMounted = false;
 
-    const signOff=() => {
-        localStorage.removeItem(TOKEN);
-        window.location.replace("/");
-    };
-    
     useEffect(() => {
-        if(!user && !isLoading){
-            console.log("entro");
-            return (
-                <>
-                    <Route path="/" component={Welcome} exact={true}/>
-                    <Redirect to="/" />
-                </>
-            )
-        }
         componentMounted = true;
         if(componentMounted){
-            if(user){
-            const token = localStorage.getItem(TOKEN);
-            let document = user.sub.split("-");
-            getUserByIdApi(document[0], token).then(response => {
-                setInfoUser(response);
-            })
-            
-            setLoading(true);
+                if(user && !isLoading){
+                    console.log("siiiiiiiiii");
+                    tal();
+                    setLoading("true");
+                }
 
-        }
+                if(!user && !isLoading){
+                    //setLoading(true);FFFFFFFD
+                    console.log("retorno"); 
+                    setLoading("notFound");
+                    //window.location.replace("/");
+                    /*return (
+                        <>
+                            <Route path="/" component={Welcome} exact={true}/>
+                            <Redirect to="/" />
+                        </>
+                    )*/
+                }
+    
     }
 
     }, [user]);
+
+    const tal = async () => {
+        const token = localStorage.getItem(TOKEN);
+        let document = user.sub.split("-");
+        const response = await getUserByIdApi(document[0], token);
+            setInfoUser(response);
+    }
+
+    const signOff = () => {
+        localStorage.removeItem(TOKEN);
+        window.location.replace("/");
+    };
     console.log(user);
-        if(user && !isLoading){
-            return(
-                <>
-                {loading ? (
+
+    return (
+        <>
+                {user && (
                     <div className={openMenu ? "body body_move" : "body"}>
                     <header className="headers">
                         <div className="icon__menu">
@@ -139,9 +146,9 @@ export default function LayoutAdmin(props){
                     </main>
                 
                         </div>
-                ) 
-                : 
-                (
+                )}
+                
+                {isLoading === true &&(
                     <Container>
                         <Row className="justify-content-md-center text-center">
                             <Col md={1} className="justify-content-center">
@@ -152,11 +159,13 @@ export default function LayoutAdmin(props){
                     </Container>      
                 )
                 }
-                </>
-            );
-        }
 
-        return null; //<Redirect to="/"/>;
+                {!user && !isLoading && (
+                    <Redirect to="/" />
+                )}
+                </>
+    )
+
 }
 
 function LoadRoutes({routes}){
