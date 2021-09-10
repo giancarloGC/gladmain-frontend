@@ -52,6 +52,7 @@ export default function LayoutAdmin(props){
     }
 
     }, [user]);
+    console.log(user);
         if(user && !isLoading){
             return(
                 <>
@@ -63,18 +64,18 @@ export default function LayoutAdmin(props){
                         </div>
                         <Nav className="justify-content-end align-items-center navlayout" activeKey="/home">
                     <Nav.Item>
-                      <Nav.Link href="/home">{infoUser.nombre}</Nav.Link>
                         <div className="option" id="/home">
                             {/*<FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" onClick={() => setOpenMenu(!openMenu)}/>*/}
                             <NavDropdown title={infoUser.nombre} id="nav-dropdown" className="subtitlesMenu"
                                 style={{"font-size": "24px", "font-weight": 150, "color": "#D4D1D1"}}
                             >
-                            <NavDropdown.Item><Link to="/admin/editUser/:documento">
+                            <NavDropdown.Item><Link to={`/admin/editUser/${infoUser.documento}`}>
                                 <FontAwesomeIcon icon={faUserEdit} className="icon" size="1x" fill="currentColor"/>
                                 <h5>Editar Perfil</h5></Link></NavDropdown.Item>
+                                
                             <NavDropdown.Divider />
                             <FontAwesomeIcon icon={faPowerOff} className="icon" size="1x"fill="currentColor"/>
-                            <NavDropdown.Item><Link to={signOff}><h5>Cerrar Sesión</h5></Link></NavDropdown.Item>
+                            <NavDropdown.Item><h5 onClick={() => signOff()}>Cerrar Sesión </h5></NavDropdown.Item>
                             </NavDropdown>
                         </div>
                     </Nav.Item>
