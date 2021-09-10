@@ -12,6 +12,7 @@ import { TOKEN } from "../utils/constans";
 
 import useAuth from '../hooks/useAuth';
 
+
 export default function LayoutAdmin(props){
     const { routes } = props;
     const [ openMenu, setOpenMenu ] = useState(false);
@@ -20,6 +21,11 @@ export default function LayoutAdmin(props){
     const [ infoUser, setInfoUser ] = useState({});
     const [ loading, setLoading] = useState(false);
     let componentMounted = false;
+
+    const signOff=() => {
+        localStorage.removeItem(TOKEN);
+        window.location.replace("/");
+    };
     
     useEffect(() => {
         if(!user && !isLoading){
@@ -59,16 +65,16 @@ export default function LayoutAdmin(props){
                     <Nav.Item>
                       <Nav.Link href="/home">{infoUser.nombre}</Nav.Link>
                         <div className="option" id="/home">
-                            <FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" onClick={() => setOpenMenu(!openMenu)}/>
+                            {/*<FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" onClick={() => setOpenMenu(!openMenu)}/>*/}
                             <NavDropdown title={infoUser.nombre} id="nav-dropdown" className="subtitlesMenu"
-                                style={{"font-size": "24px", "font-weight": 100, "color": "#D4D1D1"}}
+                                style={{"font-size": "24px", "font-weight": 150, "color": "#D4D1D1"}}
                             >
                             <NavDropdown.Item><Link to="/admin/editUser/:documento">
-                                <FontAwesomeIcon icon={faUserEdit} className="icon" size="2x"/>
+                                <FontAwesomeIcon icon={faUserEdit} className="icon" size="1x" fill="currentColor"/>
                                 <h5>Editar Perfil</h5></Link></NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <FontAwesomeIcon icon={faPowerOff} className="icon" size="2x"/>
-                            <NavDropdown.Item><Link to="/"><h5>Cerrar Sesión</h5></Link></NavDropdown.Item>
+                            <FontAwesomeIcon icon={faPowerOff} className="icon" size="1x"fill="currentColor"/>
+                            <NavDropdown.Item><Link to={signOff}><h5>Cerrar Sesión</h5></Link></NavDropdown.Item>
                             </NavDropdown>
                         </div>
                     </Nav.Item>
