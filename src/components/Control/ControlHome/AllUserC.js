@@ -12,7 +12,7 @@ import ImageNina from "./../../../assets/img/nina.png";
 import ImageMen from "./../../../assets/img/men.png";
 import ImageWomen from "./../../../assets/img/women.png";
 
-import { getUserApi } from "../../../api/user";
+import { listUsersByRol, getUserApi } from "../../../api/user";
 import { TOKEN } from "../../../utils/constans";
 
 import "../../../components/Control/ControlHome/AllUserC.scss";
@@ -24,11 +24,12 @@ export default function AllUserC ({role}){
     
     useEffect(() => {
         (async () => {
-            const response = await getUserApi(token);
-            setLoading(false);
+            const response = await listUsersByRol(role, token);
+            console.log(response);
             setUsersApi(response);
+            setLoading(false);
         })();
-    }, []);
+    }, [role]);
 
 
     return(
@@ -42,20 +43,20 @@ export default function AllUserC ({role}){
                 </Row>
             )}
 
-    
+            {!loading && (
             <div className="containerGListUsers">
                 <div className="sectionDiv">
                     <div className="containerP">
-                        {usersApi && (
+                        {usersApi.length > 0 && (
                             usersApi.map((item, index) => (
-                                role === "madresGestantes" ? item.edad > 18 && item.sexo === "Femenino" && (
+                                role === "MADRE_GESTANTE" ? item.edad >= 200 && item.sexo === "FEMENINO" && (
                                 <div className="card">
                                     <div className="content">
                                         <div className="imgBx">
-                                            {item.edad > 216 ? 
-                                                <img src={item.sexo === "Femenino" ? ImageWomen : ImageMen} alt="img" />
+                                            {item.edad >= 200 ? 
+                                                <img src={item.sexo === "FEMENINO" ? ImageWomen : ImageMen} alt="img" />
                                             :
-                                                <img src={item.sexo === "Femenino" ? ImageNina : ImageNino} alt="img" />
+                                                <img src={item.sexo === "FEMENINO" ? ImageNina : ImageNino} alt="img" />
                                             }
                                         </div>
                                         <div className="contentBx">
@@ -76,7 +77,7 @@ export default function AllUserC ({role}){
                                             </Link>
                                         </div>
 
-                                        {role === "madresGestantes" || (
+                                        {role === "MADRE_GESTANTE" || (
                                         <div className="liB">
                                             <Link className="enlace" to={`/admin/listControlCyD/${item.documento}`}>
                                                 <FontAwesomeIcon icon={faChartLine} size="lg" color="#2D61A4"
@@ -103,29 +104,29 @@ export default function AllUserC ({role}){
                                 </div>
                                 )
                                 :
-                                    item.edad < 18 && 
+                                    item.edad < 200 && 
                                 (
                                     <div className="card">
                                         <div className="content">
                                             <div className="imgBx">
-                                                {item.edad > 18 ? 
-                                                    <img src={item.sexo === "Femenino" ? ImageWomen : ImageMen} alt="img" />
+                                                {item.edad >= 200 ? 
+                                                    <img src={item.sexo === "FEMENINO" ? ImageWomen : ImageMen} alt="img" />
                                                 :
-                                                    <img src={item.sexo === "Femenino" ? ImageNina : ImageNino} alt="img" />
+                                                    <img src={item.sexo === "FEMENINO" ? ImageNina : ImageNino} alt="img" />
                                                 }
                                             </div>
                                             <div className="contentBx">
                                                 <h3>{item.nombre}<br/> 
                                                     <span>CC {item.documento}</span> <br />
                                                     <span><FontAwesomeIcon icon={faPhoneAlt} size="lg" color="#2D61A4"
-                                                    /> jola
+                                                    /> {item.celular}
                                                     </span>
                                                 </h3>
                                             </div>
                                         </div>
                                         <div className="sci">
                                             <div className="liB">
-                                                <Link className="enlace"  to="/">
+                                            <Link className="enlace"  to={`/admin/graphics/${item.edad}/${item.sexo}/${item.documento}`}>
                                                    <FontAwesomeIcon icon={faNutritionix} size="lg" color="#2D61A4"
                                                    data-tip data-for = "boton1"/>
                                                    <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Nutrición </ReactTooltip>
@@ -160,6 +161,7 @@ export default function AllUserC ({role}){
                     </div>
                 </div>
             </div>
+            )}
         </>
     )
 }

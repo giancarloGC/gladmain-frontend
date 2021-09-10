@@ -226,6 +226,7 @@ export default function FormUser(){
                             <option disabled selected>Selecciona el tipo de documento</option>
                             <option value="CC">Cédula de ciudadanía</option>
                             <option value="RC">Registro civil</option>
+                            <option value="TI">Tarjeta de identidad</option>
                             <option value="CE">Cédula de extranjería</option>
 
                             </Form.Select>
@@ -270,8 +271,8 @@ export default function FormUser(){
                                     isValid={!errors.sexo && touched.sexo} isInvalid={!!errors.sexo && touched.sexo}
                             >
                             <option disabled selected>Selecciona el sexo</option>
-                            <option value="Femenino">Femenino</option>
-                            <option value="Masculino">Masculino</option>
+                            <option value="FEMENINO">FEMENINO</option>
+                            <option value="MASCULINO">MASCULINO</option>
 
                             </Form.Select>
                             <Form.Control.Feedback type="invalid">

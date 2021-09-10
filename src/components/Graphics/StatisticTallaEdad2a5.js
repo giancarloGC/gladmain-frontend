@@ -36,7 +36,7 @@ const data = {
         label: '- 2',
         data: [ 81, 82.5, 83.9, 85, 86.2, 87.5, 88.8, 89.9, 91, 92, 93, 94, 95, 96, 97, 98, 99, 99.9, 100.9 ],
         fill: false,
-        borderColor: sexo !== "Femenino" ? '#4884FC' : '#FC39E5',
+        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
         tension: 0.1,
         borderDash: [10,5]
       },
@@ -44,35 +44,35 @@ const data = {
         label: '- 1',
         data: [ 84, 85.8, 87.2, 88.7, 90, 91.1, 92.3, 93.5, 94.8, 96, 97, 98, 99.1, 100.1, 101.1, 102.1, 103.1, 104.2, 105.2 ],
         fill: false,
-        borderColor: sexo !== "Femenino" ? '#D8E5FD' : '#FFCAFA',
+        borderColor: sexo !== "FEMENINO" ? '#D8E5FD' : '#FFCAFA',
         tension: 0.1,
       },
       {
         label: '0',
         data: [ 87, 88.9, 90.4, 92, 93.4, 94.9, 96.2, 97.5, 98.8, 100, 101, 102, 103.1, 104.3, 105.5, 106.7, 107.9, 109, 110 ],
         fill: false,
-        borderColor: sexo !== "Femenino" ? '#8EB2FA' : '#FFA8F6',
+        borderColor: sexo !== "FEMENINO" ? '#8EB2FA' : '#FFA8F6',
         tension: 0.1,
       },
       {
         label: '+ 1',
         data: [ 90.1, 92, 93.8, 95.4, 97, 98.4, 99.9, 101.1, 102.4, 103.8, 105, 106.3, 107.5, 108.8, 110.1, 111.2, 112.3, 113.5, 114.7 ],
         fill: false,
-        borderColor: sexo !== "Femenino" ? '#4884FC' : '#FC39E5',
+        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
         tension: 0.1,
       },
       {
         label: '+ 2',
         data: [ 93.2, 95, 97, 98.9, 100.4, 102, 103.4, 105, 106.4, 107.9, 109.2, 110.5, 111.9, 113.2, 114.5, 115.7, 116.9, 118, 119 ],
         fill: false,
-        borderColor: sexo !== "Femenino" ? '#4884FC' : '#FC39E5',
+        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
         tension: 0.1,
       }
     ]
   };
     return(
         <Container>
-             {sexo === "Masculino" ?
+             {sexo === "MASCULINO" ?
                 <h2 className="text-center">Talla para la Edad Niños </h2>
               : 
               <h2 className="text-center">Talla para la Edad Niñas </h2>

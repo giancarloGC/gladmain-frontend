@@ -18,7 +18,7 @@ export default function FormEdit(props){
     const [ rolesSelected, setRolesSelected ] = useState([]);
   
   const [ loaded, setLoaded] = useState(false);
-
+  console.log(user);
 
     var loading = true;
 
@@ -279,6 +279,7 @@ export default function FormEdit(props){
                             <option disabled>Selecciona el tipo de documento</option>
                             <option value="CC">Cédula de ciudadanía</option>
                             <option value="RC">Registro civil</option>
+                            <option value="TI">Tarjeta de identidad</option>
                             <option value="CE">Cédula de extranjería</option>
 
                             </Form.Select>
@@ -327,8 +328,8 @@ export default function FormEdit(props){
                                   defaultValue={user.sexo} isValid={!errors.sexo && touched.sexo} isInvalid={!!errors.sexo && touched.sexo}
                               >
                               <option disabled>Selecciona el sexo</option>
-                              <option value="femenino">Femenino</option>
-                              <option value="masculino">Masculino</option>
+                              <option value="FEMENINO">FEMENINO</option>
+                              <option value="MASCULINO">MASCULINO</option>
 
                               </Form.Select>
                               <Form.Control.Feedback type="invalid">

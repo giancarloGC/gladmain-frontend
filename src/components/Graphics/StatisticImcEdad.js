@@ -4,14 +4,14 @@ import { Line } from "react-chartjs-2";
 import ImageBackground from "../../assets/img/graphicsPrueba.png";
 //import { getContVaccApi } from "../../api/vaccination";
 
+import "./StatisticNutri.scss"; 
+
 export default function StatisticImcEdad(props){
 const { sexo } = props;
 const [ sizeImage, setSizeImage] = useState("150");
-
 const image = new Image();
 image.src = ImageBackground;
 image.width = sizeImage;
-
 
 const plugin = {
   id: 'custom_canvas_background_image',
@@ -29,66 +29,82 @@ const plugin = {
   }
 };
 
-
 const data = {
-    labels: [ 0, 0.03, " ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "1 año", " ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "2 años" ],
+    labels: [ "Nacimiento", " ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "1 año", " ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "2 años" ],
     datasets: [{
         label: '- 2',
-        data: [ 10.8, 12.6, 13.7, 14.3, 14.5, 14.6, 14.7, 14.7, 14.6, 14.6, 14.5, 14.4, 14.4, 14.3, 14.3, 14.1, 14, 14, 13.9, 13.8, 13.8, 13.7, 13.7, 13.6, 13.5 ],
+        data: [ 10.8, 12.39, 13.48,14.19,14.55,14.7,14.75,14.75,14.72,14.65,14.6,14.5,14.38,14.3,14.2,14.1,14.02,13.95,
+                13.88,13.8,13.75,13.7,13.65,13.6,13.55,13.8, 13.8, 13.7, 13.7, 13.6, 13.5 ],
         fill: false,
-        borderColor: sexo !== "Femenino" ? '#4884FC' : '#FC39E5',
+        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
         tension: 0.1,
-        borderDash: [10,5]
       },
-      /*{
+      {
         label: '- 1',
-        data: [ 47, 52, 55.8, 58.8, 61.1, 63.1, 64.9, 66.4, 67.9, 69.2, 70.5, 71.8, 72.9, 74, 75.1, 76.2, 77.2, 78.2, 79.1, 80.1, 81.1, 82, 82.9, 83.7, 84.5 ],
+        data: [12,13.6,14.92,15.55,15.8,15.9,16,16,15.9,15.85,15.75,15.65,15.5,15.4,15.32,15.2,15.1,15,14.92,14.85,
+               14.8,14.75,14.68,14.6,14.5 ],
         fill: false,
-        borderColor: '#D8E5FD',
+        borderColor: sexo !== "FEMENINO" ? '#D8E5FD' : '#FFCAFA',
         tension: 0.1,
       },
 
       {
         label: '0',
-        data: [ 49, 54, 57.5, 60.5, 63.1, 65.1, 67, 68.5, 70, 71.4, 72.8, 74, 75.2, 76.4, 77.6, 78.8, 80, 81, 82, 83, 84, 85, 85.9, 86.8, 87.6 ],
+        data: [ 13,15,16.3,16.91,17.17,17.3,17.4,17.4,17.3,17.19,17.11,16.95,16.81,16.65,16.55,16.48,16.38,16.26,
+               16.14,16.07,16,15.95,15.9,15.85,15.8],
         fill: false,
-        borderColor: '#8EB2FA',
+        borderColor:sexo !== "FEMENINO" ? '#8EB2FA' : '#FFA8F6',
         tension: 0.1,
       },
       {
         label: '+ 1',
-        data: [ 51, 56, 60, 63, 65.3, 67.4, 69.1, 70.8, 72.3, 73.8, 75, 76.3, 77.7, 79, 80.1, 81.3, 82.5, 83.7, 84.9, 86, 87, 88, 89, 89.8, 90.6 ],
+        data: [ 14.5,16.35,17.76,18.38,18.65,18.85,18.9,18.85,18.75,18.65,18.5,18.38,18.2,18.06,17.95,17.85,
+                17.75,17.62,17.5,17.42,17.32,17.2,17.13,17.05,17 ],
         fill: false,
-        borderColor: '#4884FC',
+        borderColor: sexo !== "FEMENINO" ? '#D8E5FD' : '#FC39E5',
         tension: 0.1,
       },
       {
         label: '+ 2',
-        data: [ 53, 58, 62, 65, 67.3, 69.4, 71.2, 72.9, 74.5, 76, 77.4, 78.8, 80.1, 81.5, 82.8, 84, 85.1, 86.2, 87.4, 88.6, 89.7, 90.8, 91.9, 93, 94 ],
+        data: [ 16,17.8,19.38,19.98,20.3,20.45,20.5,20.45,20.4,20.25,20.1,20,19.8,19.65,19.5,19.4,19.25,19.15,
+                19,18.9,18.8,18.72,18.65,18.55,18.5 ],
         fill: false,
-        borderColor: '#4884FC',
+        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
         tension: 0.1,
-      }*/
+        borderDash: [10,5]
+      },
+      {
+        label: '+ 3',
+        data: [ 18.5,19.78,21.02,21.77,22.1,22.25,22.32,22.33,22.25,22.1,21.95,21.8,21.65,21.5,21.35,21.15,21,20.89,20.79,
+                20.67,20.57,20.5,20.42,20.33,20.2 ],
+        fill: false,
+        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+        tension: 0.1,
+      }
     ]
   };
     return(
         <Container>
-             {sexo === "Masculino" ?
+             {sexo === "MASCULINO" ?
                 <h2 className="text-center">IMC para la Edad Niños </h2>
               : 
               <h2 className="text-center">IMC para la Edad Niñas </h2>
              }
+             <center>
              <Form.Label column sm="4" style={{"font-size": "12px !important" }}>Puntuación Z (0 a 2 años)</Form.Label>
-             <div style={{"max-width": "800px", "background-image": "url('../../assets/img/graphicsPrueba.png')"}}>
-             <Line 
-                data={data}
-
-                height={500}
-                width={800}
-                options={{pointStyle: "line"}}
-
-             />
-             </div>
+             </center>
+             <div className="containerGraphic"> 
+                  <p className="ejey">IMC(kg/m^2)</p>
+                <div style={{"max-width": "800px", "text-align":"center"}} >
+                  <Line 
+                      data={data}
+                      height={500}
+                      width={800}
+                      options={{pointStyle: "line"}}
+                  />
+                </div>
+                </div>
+                <p className="ejex">Edad (en meses y años cumplidos)</p>
         </Container>
     )
 }

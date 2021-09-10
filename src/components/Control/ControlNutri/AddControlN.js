@@ -219,8 +219,8 @@ export default function AddControlN(props){
                                 value={userControl.sexo} isValid={!errors.sexo && touched.sexo} isInvalid={!!errors.sexo && touched.sexo}
                               >
                               <option disabled>Selecciona el sexo</option>
-                              <option value="femenino">Femenino</option>
-                              <option value="masculino">Masculino</option>
+                              <option value="FEMENINO">FEMENINO</option>
+                              <option value="MASCULINO">MASCULINO</option>
 
                               </Form.Select>
                               <Form.Control.Feedback type="invalid">

@@ -13,13 +13,13 @@ import StatisticTallaEdad2a5 from "../../components/Graphics/StatisticTallaEdad2
 import StatisticPesoEdad2a5 from "../../components/Graphics/StatisticPesoEdad2a5";
 import StatisticImcEdad2a5 from "../../components/Graphics/StatisticImcEdad2a5";
 import StatisticTallaEdad5a17 from "../../components/Graphics/StatisticTallaEdad5a17";
+import StatisticImcEdad5a17 from "../../components/Graphics/StatisticImcEdad5a17";
+import StatisticMadreGestante from "../../components/Graphics/StatisticMadreGestante";
 
 import "./StatisticHome.scss";
 
 export default function StatisticHome(){
-    const {edad} = useParams();
-    const {sexo} = useParams();
-    const {documento} = useParams();
+    const { edad, sexo, documento } = useParams();
     const [ optionsGraphics, setOptionsGraphics] = useState({ check1: true, check2: false, check3: false, check4: false });
 
     const handleCheck = (e, item) => {
@@ -48,26 +48,24 @@ export default function StatisticHome(){
                 </Link>
            </h1>
             <center className="select">
-                {edad <= 24 && (
+            {edad >= 60 && edad <=204 || (
                     <Form.Check type="checkbox" inline label="Peso para la Talla" checked={optionsGraphics.check1} onChange={(e) => handleCheck(e, "check1")}/>
-                )}
-        
+                )}    
                 <Form.Check type="checkbox" inline label="Talla para la Edad" checked={optionsGraphics.check2} onChange={(e) => handleCheck(e, "check2")}/>
-                
-                {edad <= 24 && (
-                    <>
-                <Form.Check type="checkbox" inline label="Peso para la Edad" checked={optionsGraphics.check3} onChange={(e) => handleCheck(e, "check3")}/>
-                <Form.Check type="checkbox" inline label="IMC para la Edad" checked={optionsGraphics.check4} onChange={(e) => handleCheck(e, "check4")}/>
-                    </>
+                                    
+                {edad >= 60 && edad <=204 || (
+                    <Form.Check type="checkbox" inline label="Peso para la Edad" checked={optionsGraphics.check3} onChange={(e) => handleCheck(e, "check3")}/>
                 )}
+                <Form.Check type="checkbox" inline label="IMC para la Edad" checked={optionsGraphics.check4} onChange={(e) => handleCheck(e, "check4")}/>
+
             </center>
             
             {optionsGraphics.check1 && (
                 <>
-                    {edad <= 24 && (
+                    {edad < 24 && (
                         <StatisticNutri sexo={sexo}/>
                     )}
-                    {edad > 24 && edad <= 60 && (
+                    {edad >= 24 && edad < 60 && (
                         <StatisticPesoTalla2a5 sexo={sexo}/>
                     )}
                 </>
@@ -75,34 +73,37 @@ export default function StatisticHome(){
             }
             {optionsGraphics.check2 &&
                 <>
-                    {edad <= 24 && (
+                    {edad < 24 && (
                         <StatisticTallaEdad sexo={sexo}/>
                     )}
-                    {edad > 24 && edad <= 60 && (
+                    {edad >= 24 && edad < 60 && (
                         <StatisticTallaEdad2a5 sexo={sexo}/>
                     )}
-                    {edad > 60 && edad <= 204 && (
+                    {edad >= 60 && edad < 204 && (
                         <StatisticTallaEdad5a17 sexo={sexo}/>
                     )}
                 </>
             }
             {optionsGraphics.check3 &&
                 <>
-                    {edad <= 24 && (
+                    {edad < 24 && (
                         <StatisticPesoEdad sexo={sexo}/>
                     )}
-                    {edad > 24 && edad <= 60 && (
+                    {edad >= 24 && edad < 60 && (
                         <StatisticPesoEdad2a5 sexo={sexo}/>
                     )}
                 </>
             }
             {optionsGraphics.check4 &&
                 <>
-                    {edad <= 24 && (
+                    {edad < 24 && (
                         <StatisticImcEdad sexo={sexo}/>
                     )}
-                    {edad > 24 && edad <= 60 && (
+                    {edad >= 24 && edad < 60 && (
                         <StatisticImcEdad2a5 sexo={sexo}/>
+                    )}
+                    {edad >= 60 && edad < 240 && (
+                        <StatisticImcEdad5a17 sexo={sexo}/>
                     )}
                 </>
             }
