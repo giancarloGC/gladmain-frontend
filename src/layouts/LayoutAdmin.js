@@ -109,9 +109,9 @@ export default function LayoutAdmin(props){
                                 <NavDropdown title="Controles" id="nav-dropdown" className="subtitlesMenu"
                                     style={{"font-size": "24px", "font-weight": 100, "color": "#ffff"}}
                                 >
-                <NavDropdown.Item><Link to="/admin/listUserControl/infantes"><h5>Infantes</h5></Link></NavDropdown.Item>
+                <NavDropdown.Item><Link to="/admin/listUserControl/INFANTE"><h5>Infantes</h5></Link></NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item><Link to="/admin/listUserControl/madresGestantes"><h5>Madres gestantes</h5></Link></NavDropdown.Item>
+                <NavDropdown.Item><Link to="/admin/listUserControl/MADRE_GESTANTE"><h5>Madres gestantes</h5></Link></NavDropdown.Item>
               </NavDropdown>
                                 </div>
                             </Link>
@@ -140,7 +140,7 @@ export default function LayoutAdmin(props){
             );
         }
 
-        return null;
+        return null; //<Redirect to="/"/>;
 }
 
 function LoadRoutes({routes}){

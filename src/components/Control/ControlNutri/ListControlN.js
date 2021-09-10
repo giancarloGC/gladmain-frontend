@@ -2,8 +2,9 @@
 import { Container, ListGroup, Col, Row, Button, Form, InputGroup, Spinner } from "react-bootstrap";
 import { faPrint } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import jsPDF from 'jspdf'
 
-export default function ListControlN(){
+export default function npmListControlN(){
     /* const [ vacApi, setVacApi ] = useState([]);
      const [ loading, setLoading ] = useState(true);
      useEffect(() => {
@@ -13,6 +14,11 @@ export default function ListControlN(){
              setRolesApi(response);
          })();
      }, []);*/
+
+     const pdfGenerate = () => {
+        var doc=new jsPDF('landscape','px', 'a4', 'false');
+        doc.save('a.pdf')
+     }
  
      return(
          <Container>
@@ -66,6 +72,7 @@ export default function ListControlN(){
                                 />
                             </svg>
                             </a > 
+                            <Button onClick={() => pdfGenerate()}>Generar PDF</Button>
                          </p>                     
                      </Col>
                  </Row>

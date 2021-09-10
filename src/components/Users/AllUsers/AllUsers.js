@@ -94,9 +94,9 @@ export default function AllUsers(){
                 <div className="content">
                     <div className="imgBx">
                         {item.edad > 216 ? 
-                            <img src={item.sexo === "Femenino" ? ImageWomen : ImageMen} alt="img" />
+                            <img src={item.sexo === "FEMENINO" ? ImageWomen : ImageMen} alt="img" />
                         :
-                            <img src={item.sexo === "Femenino" ? ImageNina : ImageNino} alt="img" />
+                            <img src={item.sexo === "FEMENINO" ? ImageNina : ImageNino} alt="img" />
                     }
                     </div>
                     <div className="contentBx">

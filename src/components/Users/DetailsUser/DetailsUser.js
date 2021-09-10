@@ -134,7 +134,7 @@ export default function DetailsUser(){
             <ListGroup className="list-group-flush">
             <ListGroupItem>Cedula de Ciudadania</ListGroupItem>
               <ListGroupItem>10923452378</ListGroupItem>
-              <ListGroupItem>Masculino</ListGroupItem>
+              <ListGroupItem>MASCULINO</ListGroupItem>
               <ListGroupItem>14/septiembre/1996</ListGroupItem>
               <ListGroupItem>24</ListGroupItem>
               <ListGroupItem>324 567 4567</ListGroupItem>

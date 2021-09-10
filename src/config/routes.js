@@ -36,6 +36,8 @@ import StatisticPesoEdad2a5 from "../components/Graphics/StatisticPesoEdad2a5";
 import StatisticImcEdad2a5 from "../components/Graphics/StatisticImcEdad2a5";
 import StatisticTallaEdad5a17 from "../components/Graphics/StatisticTallaEdad5a17";
 import StatisticHome from "../pages/ControlNutri/StatisticHome";
+import StatisticImcEdad5a17 from "../components/Graphics/StatisticImcEdad5a17";
+import StatisticMadreGestante from "../components/Graphics/StatisticMadreGestante";
 
 import NotFound404 from "../pages/NotFound404";
 
@@ -159,6 +161,16 @@ const routes = [
                 path: "/admin/statisticTallaEdad5a17",
                 exact: true,
                 component: StatisticTallaEdad5a17,                
+            },
+            {
+                path: "/admin/statisticImcEdad5a17",
+                exact: true,
+                component: StatisticImcEdad5a17,          
+            },
+            {
+                path: "/admin/statisticMadreGestante",
+                exact: true,
+                component: StatisticMadreGestante,          
             },
             {
                 path: "/admin/listControlNutri",
