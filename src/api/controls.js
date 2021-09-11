@@ -64,12 +64,13 @@ export function getControlByIdApi(id){
             .catch(err => {return err});
 }
 
-//PREGUNTAR A DANNY
-export function getControlNutriApi(data){
-    const url = `${urlBackend}control/LISTAR_CONTROLES_NUTRICIONALES/${data}`;
+//Se trae los que en la BD esten como null en la comuna fecha_prox_cont y null en fecha_ulti_cont
+export function getControlNutriApi(documento, token){
+    const url = `/api/control/LISTAR_CONTROLES_NUTRICIONALES/${documento}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET"
     };

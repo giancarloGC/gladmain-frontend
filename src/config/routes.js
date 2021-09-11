@@ -174,7 +174,7 @@ const routes = [
                 component: StatisticMadreGestante,          
             },
             {
-                path: "/admin/listControlNutri",
+                path: "/admin/listControlNutri/:documento",
                 exact: true,
                 component: ListControlNutri,
             }, 
