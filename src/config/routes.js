@@ -99,7 +99,7 @@ const routes = [
                 component: EditUser,
             },   
             {
-                path: "/admin/addControlNutri",
+                path: "/admin/addControlNutri/:documento",
                 exact: true,
                 component: AddControlNutri,
             },     

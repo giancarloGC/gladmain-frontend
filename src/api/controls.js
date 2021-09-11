@@ -1,12 +1,12 @@
 import { urlBackend } from "./config";
 
 
-export function insertControlApi(data){
+export function insertControlApi(data, token){
     const url = `/api/control/REGISTRAR_CONTROL/false`;
     const params = {
         headers: {
             "Content-Type": "application/json",
-            "Authorization": data.token
+            "Authorization": token
         },
         method: "POST",
         body: JSON.stringify(data)
