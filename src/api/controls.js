@@ -1,12 +1,12 @@
 import { urlBackend } from "./config";
 
 
-export function insertControlApi(data){
+export function insertControlApi(data, token){
     const url = `/api/control/REGISTRAR_CONTROL/false`;
     const params = {
         headers: {
             "Content-Type": "application/json",
-            "Authorization": data.token
+            "Authorization": token
         },
         method: "POST",
         body: JSON.stringify(data)
@@ -64,12 +64,13 @@ export function getControlByIdApi(id){
             .catch(err => {return err});
 }
 
-//PREGUNTAR A DANNY
-export function getControlNutriApi(data){
-    const url = `${urlBackend}control/LISTAR_CONTROLES_NUTRICIONALES/${data}`;
+//Se trae los que en la BD esten como null en la comuna fecha_prox_cont y null en fecha_ulti_cont
+export function getControlNutriApi(documento, token){
+    const url = `/api/control/LISTAR_CONTROLES_NUTRICIONALES/${documento}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET"
     };

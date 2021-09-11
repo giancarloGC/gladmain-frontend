@@ -4,7 +4,8 @@ import { faPrint } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import jsPDF from 'jspdf'
 
-export default function npmListControlN(){
+export default function ListControlN(props){
+    const { listControls } = props;
     /* const [ vacApi, setVacApi ] = useState([]);
      const [ loading, setLoading ] = useState(true);
      useEffect(() => {
@@ -19,6 +20,13 @@ export default function npmListControlN(){
         var doc=new jsPDF('landscape','px', 'a4', 'false');
         doc.save('a.pdf')
      }
+
+     const dateFormat = (date) => {
+        if(date){
+        let dateFormated = date.split('T');
+        return dateFormated[0];
+        }
+      }
  
      return(
          <Container>
@@ -28,7 +36,7 @@ export default function npmListControlN(){
                  <Col md={6}>
                     <InputGroup hasValidation>
                         <Form.Control type="search" placeholder="Buscar Usuario" size="lg" id="busqueda" name="busqueda" />
-                        <Button class="btn btn-outline-success" type="submit">Buscar</Button>
+                        <Button className="btn btn-outline-success" type="submit">Buscar</Button>
                     </InputGroup>
                  </Col>
                  <Col md={3}>
@@ -36,23 +44,24 @@ export default function npmListControlN(){
              </Row>
 
              <ListGroup >
+                 {listControls.map((item, index) => (
                 <ListGroup.Item className="shadow border mt-2 mb-3">
                 <Container>
                 <Row >
                     <Col md={2} className="row justify-content-center align-self-center">
-                        <p style={{"color": "#2D61A4", "font-size": 27}}><b>Fecha </b> <br/></p>
+                        <p style={{"color": "#2D61A4", "font-size": 27}}><b>Fecha </b> <br/> {dateFormat(item.fechaControl)}</p>
                     </Col>
                     <Col md={2} className="row justify-content-center align-self-center">
-                        <p style={{"color": "#2D61A4", "font-size": 27}}><b>Peso </b> <br/></p>
+                        <p style={{"color": "#2D61A4", "font-size": 27}}><b>Peso </b> <br/> {item.peso}</p>
                     </Col>
                     <Col md={2} className="row justify-content-center align-self-center">
-                        <p style={{"color": "#2D61A4", "font-size": 27}}><b>Talla </b> <br/></p>
+                        <p style={{"color": "#2D61A4", "font-size": 27}}><b>Talla </b> <br/>{item.talla}</p>
                     </Col>
                     <Col md={2} className="row justify-content-center align-self-center">
-                        <p style={{"color": "#2D61A4", "font-size": 27}}><b>IMC</b> <br/></p>
+                        <p style={{"color": "#2D61A4", "font-size": 27}}><b>IMC</b> <br/>{item.imc}</p>
                     </Col>
                     <Col md={2} className="row justify-content-center align-self-center">
-                        <p style={{"color": "#2D61A4", "font-size": 27}}><b>Estado Nutricional</b> <br/></p>
+                        <p style={{"color": "#2D61A4", "font-size": 27}}><b>Estado Nutricional</b> <br/>{item.estadoNutricional}</p>
                     </Col>
                     <Col md={3} className="align-self-center justify-content-around">
                          <p style={{"color": "#2D61A4", "font-size": 27}}><b> Acciones </b> <br/>
@@ -78,6 +87,8 @@ export default function npmListControlN(){
                  </Row>
                  </Container>
              </ListGroup.Item>
+                 ))}
+
              </ListGroup>
          </Container>
      )

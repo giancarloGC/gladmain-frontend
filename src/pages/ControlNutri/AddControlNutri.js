@@ -3,10 +3,11 @@ import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "re
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faListAlt } from '@fortawesome/free-solid-svg-icons';
 import ReactTooltip from 'react-tooltip';
-import {BrowserRouter as Link, useParams} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import { getUserByIdApi } from "../../api/user";
 import { TOKEN } from "../../utils/constans";
 import AddControlN from "../../components/Control/ControlNutri/AddControlN";
+
 
 
 export default function AddControlNutri(){ 
@@ -22,7 +23,7 @@ export default function AddControlNutri(){
         getUserByIdApi(documento, token).then(response => {
             setUser(response);
         })
-        if(!loading){
+        if(!loading){ 
           setComponentLoaded(true); 
         setUserLoaded(userControl);
         }
@@ -31,7 +32,7 @@ export default function AddControlNutri(){
     return(
         <Container>
             <h1 className="text-center">Añadir Control Nutricional
-                <Link to="/admin/listControlNutri" >
+                <Link to={`/admin/listControlNutri/${documento}`} >
                     <FontAwesomeIcon icon={faListAlt} size="lg" color="#2D61A4"
                     data-tip data-for = "boton1" style = {{marginLeft:10}}/>
                     <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Mis Controles </ReactTooltip>
