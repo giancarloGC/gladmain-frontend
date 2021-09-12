@@ -4,7 +4,15 @@ import { Formik } from "formik";
 import { TOKEN } from "../../../utils/constans";
 import  AuthContext  from "../../../hooks/useAuth";
 
+import DangerAnimation from "../../../assets/animations/control/warning2.json";
+import WarningAnimation from "../../../assets/animations/control/warning.json";
+import SuccessAnimation from "../../../assets/animations/control/successNew.json";
+
+import Lottie from 'react-lottie';
+import { Line } from "react-chartjs-2";
 import { insertControlApi } from "../../../api/controls";
+import { labels, lineasGraphics } from "./LabelsAndLineas";
+import "./GraphicAddNutri.scss";
 
 export default function AddControlN(props){
     const { userControl } = props;
@@ -14,17 +22,11 @@ export default function AddControlN(props){
     const [show, setShow] = useState(false);
     const [ textFormSend, setTextFormSend ] = useState({});
     const documentoLogin = user.sub.split('-');
-    const [ stateNutrition, setStateNutrition ] = useState();
+    const [ stateNutrition, setStateNutrition ] = useState({ color: "", text: "", animation: null});
+    const [ imc, setImc ] = useState(0);
+    const [ graphicValues, setGraphicValues] = useState({ x: 0, y: 0, r: 10});
     const rolUser = "madre";
-    let lineasGraphics = {
-      lineMenosTres: [1.8, 2.5, 3.5, 4.6, 5.7, 6.6, 7.5, 8.2, 9.1, 10, 10.9, 11.9, 13, 14],
-      lineMenosDos: [2.1, 2.8, 3.8, 5.1, 6.2, 7.2, 8, 8.9, 9.8, 10.8, 11.8, 12.8, 14, 15.4 ],
-      lineMenosUno: [2.3, 3, 4.1, 5.4, 6.7, 7.7, 8.8, 9.6, 10.6, 11.8, 12.8, 13.9, 15.3, 16.7],
-      lineCero: [2.4, 3.2, 4.5, 5.9, 7.2, 8.5, 9.5, 10.4, 11.5, 12.6, 13.8, 15, 16.5, 18.1],
-      lineMasUno: [2.6, 3.6, 4.9, 6.5, 7.8, 9.1, 10.2, 11.3, 12.5, 13.6, 15, 16.5, 18, 20],
-      lineMasDos: [3, 3.9, 5.5, 7, 8.5, 10, 11.1, 12.3, 13.5, 15, 16.3, 17.9, 19.6, 22],
-      lineMasTres: [3.3, 4.4, 5.9, 7.7, 9.5, 10.9, 12.4, 13.5, 14.8, 16.4, 17.9, 19.5, 21.6, 24]
-    };
+    //hay 66 posiciones
 
     useEffect(() => {
       calculateStateNutrition(20);
@@ -48,20 +50,120 @@ export default function AddControlN(props){
     }
 
     const calculateIMC = (kg, metros) => {
-      const imc = kg / (metros * metros);
-      return imc;
+      const imca = kg / (metros * metros);
+      let imcC = parseInt(imca);
+      setImc(imcC);
     }
 
-    const calculateStateNutrition = (peso) => {
-      //lineMenosTres;
+    const calculateStateNutrition = (talla, peso) => {
+      //Mirar en que indice esta la talla dijitada para el eje x
+      const indexToFind = (element) => element > talla -1;
+      let indexEjex = labels.findIndex(indexToFind);
+
+      //Recorrer cada linea para saber si el numero es mayor o menor a cada linea
+      let valueXlineMasTres = lineasGraphics.lineMasTres[indexEjex];
+      let valueXlineMasDos = lineasGraphics.lineMasDos[indexEjex];
+      let valueXlineMasUno = lineasGraphics.lineMasUno[indexEjex];
+      let valueXlineMenosUno = lineasGraphics.lineMenosUno[indexEjex];
+      let valueXlineMenosDos = lineasGraphics.lineMenosDos[indexEjex];
+      let valueXLineMenosTres = lineasGraphics.lineMenosTres[indexEjex];
+
+
+
+      if(peso > valueXlineMasTres){
+        setStateNutrition({ color: "danger", text: "Obesidad", animation: DangerAnimation});
+        console.log("es mayor a +3   ");
+      }else if(peso > valueXlineMasDos && peso <= valueXlineMasTres){
+        setStateNutrition({ color: "danger", text: "Sobrepeso", animation: DangerAnimation});
+        console.log("es > a la +2 y < a +3 ");
+      }else if(peso > valueXlineMasUno && peso <= valueXlineMasDos){
+        console.log("es > a la +1 y < a +2 ");
+        setStateNutrition({ color: "warning", text: "Riesgo de Sobrepeso", animation: WarningAnimation});
+      }else if(peso >= valueXlineMenosUno && peso <= valueXlineMasUno){
+        console.log("es > a la -1 y < a +1 ");
+        setStateNutrition({ color: "success", text: "Peso Adecuado para la Talla", animation: SuccessAnimation});
+      }else if(peso >= valueXlineMenosDos && peso < valueXlineMenosUno){
+        console.log("es > a la -2 y < a -1 ");
+        setStateNutrition({ color: "warning", text: "Riesgo de Desnutrición Aguda", animation: WarningAnimation});
+      }else if(peso < valueXlineMenosDos && peso >= valueXLineMenosTres){
+        console.log("es < 2 y > a la -3 ");
+        setStateNutrition({ color: "danger", text: "Desnutrición Aguda Moderada", animation: DangerAnimation});
+      }else if(peso < valueXLineMenosTres){
+        console.log("es < a la -3 ");
+        setStateNutrition({ color: "danger", text: "Desnutrición Aguda Severa", animation: DangerAnimation});
+      }
     }
+
+    const data = {
+ 
+      labels: labels,
+      datasets: [{
+          label: '- 3',
+          data: lineasGraphics.lineMenosTres,
+          fill: false,
+          borderColor: userControl.sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+          tension: 0.1,
+        },
+        {
+          label: '- 2',
+          data: lineasGraphics.lineMenosDos,
+          fill: false,
+          borderColor: userControl.sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+          tension: 0.1,
+          borderDash: [10,5]
+        },
+        {
+          label: '- 1',
+          data: lineasGraphics.lineMenosUno,
+          fill: false,
+          borderColor: userControl.sexo !== "FEMENINO" ? '#D8E5FD' : '#FFCAFA',
+          tension: 0.1
+        },
+        {
+          label: '0',
+          data: lineasGraphics.lineCero,
+          fill: false,
+          borderColor: userControl.sexo !== "FEMENINO" ? '#8EB2FA' : '#FFA8F6',
+          tension: 0.1
+        },
+        {
+          label: '+ 1',
+          data: lineasGraphics.lineMasUno,
+          fill: false,
+          borderColor: userControl.sexo !== "FEMENINO" ? '#D8E5FD' : '#FFCAFA',
+          tension: 0.1
+        },
+        {
+          label: '+ 2',
+          data: lineasGraphics.lineMasDos,
+          fill: false,
+          borderColor: userControl.sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+          tension: 0.1,
+          borderDash: [10,5]
+        },
+        {
+          label: '+ 3',
+          data: lineasGraphics.lineMasTres,
+          fill: false,
+          borderColor: userControl.sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+          tension: 0.1
+        },
+        {
+          label: 'Nuevo Control',
+          data: [graphicValues],
+          borderColor: userControl.sexo !== "FEMENINO" ? '#4884FC' : '#A80B42',
+          backgroundColor: userControl.sexo !== "FEMENINO" ? '#5746D4' : 'rgba(212, 70, 130, 0.52)',//#D44682',
+          type: "bubble",
+          pointStyle: "bubble",        
+        },
+      ]
+    };
 
 
     return(
         <Container>
             <Row>
-                <Col sm={3}></Col>
-                <Col sm={6}> 
+
               <Formik
                 initialValues={{ 
                     fechaControl: '',
@@ -110,18 +212,32 @@ export default function AddControlN(props){
                     errores.fechaControl = 'Asegurese de selecionar una fecha';
                   }else if(dateCurrently2 <= valores.fechaControl){
                     errores.fechaControl = 'Seleccione una fecha valida';
-                  }
+                  }*/
                   if(!valores.peso){
                     errores.peso = 'Por favor, ingresa solo números';
-                  }else if(!/^([0-9])*$/.test(valores.peso)){
+                  }else if(!/^([0-9-.])*$/.test(valores.peso)){
                     errores.peso = 'Solo puedes escribir números';
                   }
                   if(!valores.talla){
                     errores.talla = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9])*$/.test(valores.talla)){
                     errores.talla = 'Solo puedes escribir números';
+                  }else if(valores.talla < 45){
+                    errores.talla = 'La talla debe ser mayor a 45 cm';
+                  }else if(valores.talla > 110){
+                    errores.talla = 'La talla debe ser menor ó igual a 110 cm';
                   }
-                  if(!valores.imc){
+
+                  if(valores.peso && valores.talla >= 45 && valores.talla <= 110){
+                    let tallaM = convertCmToM(valores.talla);
+                    calculateIMC(valores.peso, tallaM);
+                    calculateStateNutrition(valores.talla, valores.peso);
+                    setGraphicValues({x: valores.talla, y: valores.peso , r: 15});
+                  }else{
+                    setImc(0);
+                    setGraphicValues({x: 0, y: 0, r: 15});
+                  }
+                  /*if(!valores.imc){
                     errores.imc = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9])*$/.test(valores.imc)){
                     errores.imc = 'Solo puedes escribir números';
@@ -197,7 +313,11 @@ export default function AddControlN(props){
                             </p>
                         </Alert>
                     )}
+                <Row>
+                  <Col sm={3}></Col>
+                  <Col sm={6}> 
                     <Form.Group as={Row} className="mb-3">
+
                         <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Número documento</Form.Label>
                         <Col sm="8">
                             <InputGroup hasValidation>
@@ -297,11 +417,13 @@ export default function AddControlN(props){
                         </Col>
                         </Form.Group> 
 
-                        <Form.Group as={Row} className="mb-3">
+                        <Row>
+                          <Col md={6}>
+                          <Form.Group as={Row} className="mb-3">
                         <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Peso</Form.Label>
                         <Col sm="8">
                           <InputGroup hasValidation>
-                              <Form.Control type="number" placeholder="Dígita aquí el peso" size="lg" id="peso" name="peso" 
+                              <Form.Control type="number" placeholder="Peso en Kg" size="lg" id="peso" name="peso" 
                                value={values.peso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.peso && touched.peso}
                                isValid={!errors.peso && touched.peso}
                               />
@@ -312,12 +434,16 @@ export default function AddControlN(props){
                           </InputGroup>
                         </Col>
                         </Form.Group>
+                          </Col>
 
-                        <Form.Group as={Row} className="mb-3">
+
+                          <Col md={6}>
+                      
+                          <Form.Group as={Row} className="mb-3">
                         <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Talla</Form.Label>
                         <Col sm="8">
                           <InputGroup hasValidation>
-                              <Form.Control type="number" placeholder="Escribe la talla sin punto ni coma" size="lg" id="talla" name="talla" 
+                              <Form.Control type="number" placeholder="Talla en cm" size="lg" id="talla" name="talla" 
                                value={values.talla} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.talla && touched.talla}
                               isValid={!errors.talla && touched.talla}
                               />
@@ -327,39 +453,64 @@ export default function AddControlN(props){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
-                        </Form.Group>
+                        </Form.Group>      
+                          </Col>
+                        </Row>
 
-                        <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>IMC calculado</Form.Label>
-                        <Col sm="8">
-                          <InputGroup hasValidation>
-                              <Form.Control type="text" placeholder="Valor de IMC" size="lg" id="imc" name="imc" 
-                               value={values.imc} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.imc && touched.imc}
-                               isValid={!errors.imc && touched.imc} disabled
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.imc}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                        </Col>
-                        </Form.Group> 
+                  </Col>
+                  <Col sm={3}></Col>
 
-                        <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Estado nutricional</Form.Label>
-                        <Col sm="8">
-                          <InputGroup hasValidation>
-                              <Form.Control type="text" placeholder="Estado nutricional calculado" size="lg" id="estadoNutricional" name="estadoNutricional" 
-                               value={values.estadoNutricional} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.estadoNutricional && touched.estadoNutricional}
-                              isValid={!errors.estadoNutricional && touched.estadoNutricional} disabled
+                  
+                </Row>
+
+                {imc !== 0 && (
+                <Row className="mt-3">
+                  <Col md={8}>
+                  <center>
+             <Form.Label column sm="12" style={{"font-size": "12px !important" }}>Puntuación Z (0 a 2 años)</Form.Label>
+             </center>
+                <div >
+                  <Line 
+                      data={data}
+                      height={350}
+                      width={600}
+                      options={{
+                        pointStyle: "line",
+                        responsive: true,
+                        scales: {
+                          x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: 45,
+                          }
+                        }
+                      }}
+                  />
+                </div>
+                <p className="ejex">Longitud(cm)</p>
+                  </Col>
+
+
+                  <Col md={4} className="mt-5">
+                            <Form.Group as={Row}>
+                                <Alert variant="secondary">
+                                  <Alert.Heading className="text-center">IMC Calculado: {imc}</Alert.Heading>
+                                </Alert>
+                            </Form.Group> 
+
+                            <Form.Group as={Row}>
+                            <Alert variant={stateNutrition.color}>
+                              <Alert.Heading className="text-center">Estado nutricional: {stateNutrition.text} </Alert.Heading>
+                              <Lottie height={80} width={80}
+                                  options={{ loop: true, autoplay: true, animationData: stateNutrition.animation, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
                               />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.estadoNutricional}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                        </Col>
-                        </Form.Group> 
+                            </Alert>
+                            </Form.Group> 
+                  </Col>
+                </Row>
+
+              )}
+
 
                         {rolUser === "madre" && ( 
                           <p>Campo de mamita TENSION</p>
@@ -370,14 +521,11 @@ export default function AddControlN(props){
                                 Añadir Control
                             </Button>
                         </div>
-
+                
                     </Form>
                             );
                         }}
                       </Formik> 
-
-                </Col>
-                <Col sm={3}></Col>
             </Row>
         </Container>
     )
