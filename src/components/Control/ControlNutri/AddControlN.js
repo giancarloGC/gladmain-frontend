@@ -198,7 +198,7 @@ export default function AddControlN(props){
                         </Alert>
                     )}
                     <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Número documento</Form.Label>
+                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Número documento</Form.Label>
                         <Col sm="8">
                             <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="Dígita aquí el documento" size="lg" id="documento" name="documento" 
@@ -214,7 +214,7 @@ export default function AddControlN(props){
                         </Form.Group>
 
                         <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Nombre</Form.Label>
+                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Nombre</Form.Label>
                         <Col sm="8">
                         <InputGroup hasValidation>
                             <Form.Control type="text" placeholder="Dígita aquí el nombre" size="lg" id="nombre" name="nombre" 
@@ -230,7 +230,7 @@ export default function AddControlN(props){
                         </Form.Group>
                       
                         <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Fecha nacimiento</Form.Label>
+                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Fecha nacimiento</Form.Label>
                         <Col sm="8">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaNacimiento" name="fechaNacimiento" 
@@ -246,7 +246,7 @@ export default function AddControlN(props){
                         </Form.Group> 
 
                         <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Sexo</Form.Label>
+                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Sexo</Form.Label>
                         <Col sm="8">
                           <InputGroup hasValidation>
                           <Form.Select size="lg" name="sexo" onChange={handleChange} onBlur={handleBlur}
@@ -266,7 +266,7 @@ export default function AddControlN(props){
                         </Form.Group>
 
                         <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Edad</Form.Label>
+                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Edad</Form.Label>
                         <Col sm="8">
                           <InputGroup hasValidation>
                               <Form.Control type="number" placeholder="Dígita aquí la edad" size="lg" id="edad" name="edad" 
@@ -282,7 +282,7 @@ export default function AddControlN(props){
                         </Form.Group>
 
                         <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Fecha control</Form.Label>
+                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Fecha control</Form.Label>
                         <Col sm="8">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaControl" name="fechaControl" 
@@ -298,7 +298,7 @@ export default function AddControlN(props){
                         </Form.Group> 
 
                         <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Peso</Form.Label>
+                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Peso</Form.Label>
                         <Col sm="8">
                           <InputGroup hasValidation>
                               <Form.Control type="number" placeholder="Dígita aquí el peso" size="lg" id="peso" name="peso" 
@@ -314,7 +314,7 @@ export default function AddControlN(props){
                         </Form.Group>
 
                         <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Talla</Form.Label>
+                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Talla</Form.Label>
                         <Col sm="8">
                           <InputGroup hasValidation>
                               <Form.Control type="number" placeholder="Escribe la talla sin punto ni coma" size="lg" id="talla" name="talla" 
@@ -330,7 +330,7 @@ export default function AddControlN(props){
                         </Form.Group>
 
                         <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>IMC calculado</Form.Label>
+                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>IMC calculado</Form.Label>
                         <Col sm="8">
                           <InputGroup hasValidation>
                               <Form.Control type="text" placeholder="Valor de IMC" size="lg" id="imc" name="imc" 
@@ -346,7 +346,7 @@ export default function AddControlN(props){
                         </Form.Group> 
 
                         <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Estado nutricional</Form.Label>
+                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Estado nutricional</Form.Label>
                         <Col sm="8">
                           <InputGroup hasValidation>
                               <Form.Control type="text" placeholder="Estado nutricional calculado" size="lg" id="estadoNutricional" name="estadoNutricional" 

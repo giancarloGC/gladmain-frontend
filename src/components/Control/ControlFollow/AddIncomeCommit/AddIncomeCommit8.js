@@ -64,7 +64,7 @@ export default function AddIncomeCommit(props) {
 <Form onSubmit={handleSubmit}>
 
     <Form.Group as={Row} className="mb-1">
-        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Fecha Compromiso </Form.Label>
+        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Fecha Compromiso </Form.Label>
         <Col sm="4"> </Col>
         <Col sm="4">
         <InputGroup hasValidation>
@@ -82,7 +82,7 @@ export default function AddIncomeCommit(props) {
 
 
     <Form.Group as={Row} className="mb-2">
-        <Form.Label column sm="12" style={{"font-size": "12px !important"}}>Nombre Compromiso</Form.Label>
+        <Form.Label column sm="12" style={{"fontSize": "12px !important"}}>Nombre Compromiso</Form.Label>
         <Col md={12}>
             <InputGroup hasValidation>
                     <Form.Control type="text" placeholder="Nombre Item de Ingreso que no cumple" size="lg" id="name" name="name" 
@@ -98,7 +98,7 @@ export default function AddIncomeCommit(props) {
     </Form.Group>
 
     <Form.Group as={Row} className="mb-3">
-        <Form.Label column sm="12" style={{"font-size": "12px !important"}}>Descripción</Form.Label>
+        <Form.Label column sm="12" style={{"fontSize": "12px !important"}}>Descripción</Form.Label>
         <Col md={12}>
             <InputGroup hasValidation>
                     <Form.Control type="text" placeholder="Descripción del Compromiso" size="lg" id="description" name="description" 
@@ -114,7 +114,7 @@ export default function AddIncomeCommit(props) {
     </Form.Group>
 
     <Form.Group as={Row} className="mb-3">
-        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Fecha Cumplimiento</Form.Label>
+        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Fecha Cumplimiento</Form.Label>
         <Col sm="4"> </Col>
         <Col sm="4">
         <InputGroup hasValidation>

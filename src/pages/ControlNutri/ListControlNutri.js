@@ -25,12 +25,13 @@ export default function ListControlNutri(){
         });
     }, []);
 
+    
     return(
         <Container>
              <h1 className="text-center">Controles Nutricionales de {infoUser ? infoUser.nombre : "Anonimo"} </h1>
              {listControls.length === 0 && (
                 <>
-                <p style={{"color": "#2D61A4", "font-size": 27}}>No se encontraron registros</p>
+                <p style={{"color": "#2D61A4", "fontSize": 27}}>No se encontraron registros</p>
                 <Lottie height={400} width={670}
                     options={{ loop: true, autoplay: true, animationData: NotResults, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
                 />

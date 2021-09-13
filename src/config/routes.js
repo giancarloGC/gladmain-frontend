@@ -17,6 +17,7 @@ import AddControlCyD from "../pages/ControlCyD/AddControlCyD";
 import ListControlCyD from "../pages/ControlCyD/ListControlCyD";
 import AllUserControl from "../pages/ControlHome/AllUserControl";
 import AddControlVac from "../pages/ControlVac/AddControlVac";
+import EditControlVac from "../pages/ControlVac/EditControlVac";
 import AddControlFollow from "../pages/ControlFollow/AddControlFollow";
 import AddInfantIncome from "../pages/ControlFollow/AddInfantIncome";
 import EditControlFollow from "../pages/ControlFollow/EditControlFollow";
@@ -69,7 +70,7 @@ const routes = [
                 component: ListRol,
             },
             {
-                path: "/admin/addRol/:latestRol",
+                path: "/admin/addRol",
                 exact: true,
                 component: AddRol,
             },
@@ -112,6 +113,11 @@ const routes = [
                 path: "/admin/listVaccines/:documento",
                 exact: true,
                 component: ListVac,
+            },
+            {
+                path: "/admin/editControlVac/:id/:documento",
+                exact: true,
+                component: EditControlVac,
             },
             {
                 path: "/admin/graphics/:edad/:sexo/:documento",
@@ -189,12 +195,12 @@ const routes = [
                 component: AllUserControl,
             },
             {
-                path: "/admin/addControlVac",
+                path: "/admin/addControlVac/:documento",
                 exact: true,
                 component: AddControlVac,
             },
             {
-                path: "/admin/addControlFollow",
+                path: "/admin/addControlFollow/:documento",
                 exact: true,
                 component: AddControlFollow,
             },

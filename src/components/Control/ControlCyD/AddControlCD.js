@@ -104,7 +104,7 @@ export default function AddControlCD(){
                     <Form onSubmit={handleSubmit}>
 
                     <Form.Group as={Row} className="mb-3 mt-5">
-                        <Form.Label column md={2} style={{"font-size": "12px !important"}} >Número documento</Form.Label>
+                        <Form.Label column md={2} style={{"fontSize": "12px !important"}} >Número documento</Form.Label>
                         <Col md={4}>
                             <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="Dígita el documento" size="lg" id="documento" name="documento" style={{marginLeft:10}}
@@ -118,7 +118,7 @@ export default function AddControlCD(){
                         </InputGroup>
                         </Col>
 
-                        <Form.Label column md={2} style={{"font-size": "12px !important"}}>Nombre</Form.Label>
+                        <Form.Label column md={2} style={{"fontSize": "12px !important"}}>Nombre</Form.Label>
                         <Col md={4}>
                         <InputGroup hasValidation>
                             <Form.Control type="text" placeholder="Dígita aquí el nombre" size="lg" id="nombre" name="nombre" 
@@ -134,7 +134,7 @@ export default function AddControlCD(){
                         </Form.Group>
 
                         <Form.Group as={Row} className="mb-3 mt-4">
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Fecha nacimiento</Form.Label>
+                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Fecha nacimiento</Form.Label>
                         <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaNacimiento" name="fechaNacimiento" 
@@ -148,7 +148,7 @@ export default function AddControlCD(){
                           </InputGroup>
                         </Col>
 
-                        <Form.Label column sm="1" style={{"font-size": "12px !important"}}>Sexo</Form.Label>
+                        <Form.Label column sm="1" style={{"fontSize": "12px !important"}}>Sexo</Form.Label>
                         <Col sm="2">
                           <InputGroup hasValidation>
                           <Form.Select size="lg" name="sexo" onChange={handleChange} onBlur={handleBlur}
@@ -166,7 +166,7 @@ export default function AddControlCD(){
                           </InputGroup>
                           </Col>
 
-                          <Form.Label column sm="1" style={{"font-size": "12px !important"}}>Edad</Form.Label>
+                          <Form.Label column sm="1" style={{"fontSize": "12px !important"}}>Edad</Form.Label>
                         <Col sm="2">
                           <InputGroup hasValidation>
                               <Form.Control type="number" placeholder="Edad en meses" size="lg" id="edad" name="edad" 
@@ -182,7 +182,7 @@ export default function AddControlCD(){
                         </Form.Group> 
 
                         <Form.Group as={Row} className="mb-3 mt-4">
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Fecha control</Form.Label>
+                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Fecha control</Form.Label>
                         <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaControl" name="fechaControl" 
@@ -196,7 +196,7 @@ export default function AddControlCD(){
                           </InputGroup>
                         </Col>
 
-                        <Form.Label column sm="1" style={{"font-size": "12px !important"}}>Peso</Form.Label>
+                        <Form.Label column sm="1" style={{"fontSize": "12px !important"}}>Peso</Form.Label>
                         <Col sm="2">
                           <InputGroup hasValidation>
                               <Form.Control type="number" placeholder="Peso en (Kg)" size="lg" id="peso" name="peso" 
@@ -210,7 +210,7 @@ export default function AddControlCD(){
                           </InputGroup>
                         </Col>
 
-                        <Form.Label column sm="1" style={{"font-size": "12px !important"}}>Talla</Form.Label>
+                        <Form.Label column sm="1" style={{"fontSize": "12px !important"}}>Talla</Form.Label>
                         <Col sm="2">
                           <InputGroup hasValidation>
                               <Form.Control type="number" placeholder="Talla en (m)" size="lg" id="talla" name="talla" 
@@ -226,7 +226,7 @@ export default function AddControlCD(){
                         </Form.Group> 
 
                         <Form.Group as={Row} className="mb-3 mt-4">
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>IMC calculado</Form.Label>
+                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>IMC calculado</Form.Label>
                         <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="text" placeholder="Valor de IMC" size="lg" id="imc" name="imc" 
@@ -240,7 +240,7 @@ export default function AddControlCD(){
                           </InputGroup>
                         </Col>
 
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Estado nutricional</Form.Label>
+                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Estado nutricional</Form.Label>
                         <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="text" placeholder="Estado nutricional calculado" size="lg" id="estadoNutricional" name="estadoNutricional" 

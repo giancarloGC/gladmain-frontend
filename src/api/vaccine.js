@@ -1,13 +1,14 @@
 import { urlBackend } from "./config";
 
-//preguntar los dos metodos a Danny
-export function deleteVacApi(id,id2){
-    const url = `${urlBackend}control_vacunacion/ELIMINAR_VACUNA_CONTROL/${id}/${id2}`;
+//Se elimina primero las vacunas y luego se puede eliminar el control
+export function deleteVacApi(idControl,idVaccine, token){
+    const url = `/api/control_vacunacion/ELIMINAR_VACUNA_CONTROL/${idControl}/${idVaccine}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
-        method: "DELETE"
+        method: "GET"
     };
 
     return fetch(url, params)
@@ -16,14 +17,15 @@ export function deleteVacApi(id,id2){
             .catch(err => {return err});
 }
 
-export function getVacByAgeApi(data){
-    const url = `${urlBackend}control_vacunacion/LISTAR_VACUNAS_EDAD`;
+export function getVacByAgeApi(edad, token){
+    let edadparse = parseInt(edad);
+    const url = `/api/control_vacunacion/LISTAR_VACUNAS_EDAD/${edadparse}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET",
-        body: JSON.stringify(data)
     };
 
     return fetch(url, params)

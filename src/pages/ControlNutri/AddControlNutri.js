@@ -18,7 +18,7 @@ export default function AddControlNutri(){
     const [ userLoaded, setUserLoaded ] = useState({});
     var loading = true;
 
-      useEffect(() => {
+        useEffect(() => {
         loading = false;
         getUserByIdApi(documento, token).then(response => {
             setUser(response);

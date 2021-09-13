@@ -74,7 +74,7 @@ export default function LayoutAdmin(props){
                         <div className="option" id="/home">
                             {/*<FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" onClick={() => setOpenMenu(!openMenu)}/>*/}
                             <NavDropdown title={infoUser.nombre} id="nav-dropdown" className="subtitlesMenu"
-                                style={{"font-size": "24px", "font-weight": 150, "color": "#D4D1D1"}}
+                                style={{"fontSize": "24px", "fontWeight": 150, "color": "#D4D1D1"}}
                             >
                             <NavDropdown.Item><Link to={`/admin/EditProfileUser/${infoUser.documento}`}>
                             <h5><FontAwesomeIcon icon={faUserEdit} className="icon" size="1x" fill="currentColor"/>  Editar Perfil</h5></Link></NavDropdown.Item>
@@ -128,7 +128,7 @@ export default function LayoutAdmin(props){
                                 <div className="option">
                                 <FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" onClick={() => setOpenMenu(!openMenu)}/>
                                 <NavDropdown title="Controles" id="nav-dropdown" className="subtitlesMenu"
-                                    style={{"font-size": "24px", "font-weight": 100, "color": "#ffff"}}
+                                    style={{"fontSize": "24px", "fontWeight": 100, "color": "#ffff"}}
                                 >
                 <NavDropdown.Item><Link to="/admin/listUserControl/INFANTE"><h5>Infantes</h5></Link></NavDropdown.Item>
                 <NavDropdown.Divider />

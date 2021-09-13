@@ -33,11 +33,12 @@ export function updateInfantIncomeApi(data){
             .catch(err => {return err});
 }
 
-export function getInfantIncomeApi(data){
-    const url = `${urlBackend}control_seguimiento/LISTAR_INGRESOS_INFANTE/${data}`;
+export function getInfantIncomeApi(documento, token){
+    const url = `${urlBackend}control_seguimiento/LISTAR_INGRESOS_INFANTE/${documento}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET"
     };

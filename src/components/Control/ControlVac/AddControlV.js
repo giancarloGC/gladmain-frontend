@@ -1,38 +1,66 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-bootstrap";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
+import { TOKEN } from "../../../utils/constans";
+import  AuthContext  from "../../../hooks/useAuth";
 
+import { insertContVaccApi } from "../../../api/vaccination";
 
-export default function AddControlV(){
+export default function AddControlV(props){
+  const { userControl, listVac } = props;
+  const { user } = AuthContext();
+  const token = localStorage.getItem(TOKEN);
+  const [ userApi, setUserByIdApi ] = useState({});
+  const [show, setShow] = useState(false);
+  const [ textFormSend, setTextFormSend ] = useState({});
+  const [ vaccinesSelected, setVaccinesSelected ] = useState([]);
+  
+  const dateFormat = (date) => {
+    if(date){
+    let dateFormated = date.split('T');
+
+    return dateFormated[0];
+    }
+  }
+
+  const handleCheck = (e, item) => {
+    let vaccines = {
+        id: item.id,
+        meses: item.meses,
+        nombre: item.nombre,
+    }
+    if(e.target.checked){
+      setVaccinesSelected([...vaccinesSelected, vaccines]);
+    }else{
+        const result = vaccinesSelected.filter((vacc) => {
+            return vacc.id != item.id && vacc.meses != item.meses && vacc.nombre != item.nombre;
+        });
+        setVaccinesSelected(result);
+    }
+}
+
 
     return(
         <Container>
-            <Row style={{backgroundColor: '#f1f1f1'}}>
-                <Col sm={3}></Col>
-                <Col sm={6}> 
+            <Row style={{backgroundColor: '#f1f1f1'}} >
+              <Col sm={2}> </Col> 
+                <Col sm={8} >
+
                 <Formik
+                initialValues={userControl}
                 initialValues={{ 
                     fechaNacimiento: '',
+                    edadVac: '',
                     edad: '',
                     fechaAplicacion: '',
+                    vacunas:'',
                 }}
                 
                 validate={(valores) => {
                   let errores = {};
-
-                  const dateCurrently = new Date();
-                  if(!valores.fechaNacimiento){
-                    errores.fechaNacimiento = 'Asegurese de selecionar una fecha';
-                  }else if(dateCurrently <= valores.fechaNacimiento){
-                    errores.fechaNacimiento = 'Seleccione una fecha valida';
-                  }
-                  if(!valores.edad){
-                    errores.edad = 'Por favor, ingresa números';
-                  }else if(!/^([0-9])*$/.test(valores.edad)){
-                    errores.edad = 'Edad incorrecta, solo puedes escribir números';
-                  }else if(valores.edad <= 0 || valores.edad > 90){
-                    errores.edad = 'Edad invalida, intente con otra';
-                  }      
+                  if(valores.edadVac){
+                    errores.edadVac = 'Asegurese de selecionar una opción';
+                  };
                   const dateCurrently2 = new Date();
                   if(!valores.fechaAplicacion){
                     errores.fechaAplicacion = 'Asegurese de selecionar una fecha';
@@ -44,15 +72,48 @@ export default function AddControlV(){
                 }}
 
                 onSubmit={(valores, {resetForm}) => {
-                  /*  resetForm();
+                  var edadGestacional = null;
+                  resetForm();
                     valores.token = token;
-                    insertUserApi(valores).then(response => {
-                        console.log(repsonse);
-                  });*/
+                  valores.vacunas = vaccinesSelected;
+                  const formData = {
+                    idUsuario: userControl.documento,
+                    fechaAplicacion: valores.fechaAplicacion,
+                    dosis: 1,
+                    edadGestacional: null,
+                    vigente: true,
+                    vacunas: valores.vacunas,
+                }
+                
 
-
-
-
+                console.log(formData);
+                  valores.token = token;
+                    if ((valores.vacunas).length === 0) {
+                      setTextFormSend({
+                        variant: "danger", heading: "¡Opss, ocurrió un error!",
+                        message: "Recuerda seleccionar las vacunas que se aplicó el usuario"
+                    });
+                    setShow(true);
+                  }else{
+                    insertContVaccApi(formData, token).then(response => {
+                      if(response === true && (valores.vacunas).length!=0){
+                          setTextFormSend({
+                            variant: "success", heading: "¡Excelente, registro exitoso!",
+                            message: `El control de vacunas fue almacenado correctamente`
+                          });
+                          setShow(true);
+                      }else{
+                          setTextFormSend({
+                            variant: "danger", heading: "¡Opss, ocurrió un error!",
+                            message: "Revisaremos lo ocurrido, inténtalo nuevamente"
+                        });
+                        setShow(true);
+                        }
+                   });
+                  }
+                setTimeout(() => {
+                  setShow(false);
+                }, 6000);
                 }}
                 >
                 {props => {
@@ -61,14 +122,21 @@ export default function AddControlV(){
                     } = props;
                     return (   
                     <Form onSubmit={handleSubmit}>
-
-                        <Form.Group as={Row} className="mb-3 mt-4">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Fecha nacimiento</Form.Label>
-                        <Col sm="8">
+                      {show && (
+                        <Alert variant={textFormSend.variant} onClose={() => setShow(false)} dismissible className="mt-5">
+                            <Alert.Heading>{textFormSend.heading}</Alert.Heading>
+                            <p style={{"color": textFormSend.variant === "success" ? "#2DA45C" : "#A42D55", "fontSize": 18}}>
+                            {textFormSend.message}
+                            </p>
+                        </Alert>
+                    )}
+                        <Form.Group as={Row} className="mb-3 mt-3">
+                        <Form.Label column sm="3" style={{"fontSize": "12px !important"}}>Fecha nacimiento</Form.Label>
+                        <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaNacimiento" name="fechaNacimiento" 
-                                 value={values.fechaNacimiento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaNacimiento && touched.fechaNacimiento}
-                                 isValid={!errors.fechaNacimiento && touched.fechaNacimiento}
+                                 defaultValue={dateFormat(userControl.fechaNacimiento)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaNacimiento && touched.fechaNacimiento}
+                                 isValid={!errors.fechaNacimiento && touched.fechaNacimiento} disabled
                               />
                               <Form.Control.Feedback type="invalid">
                                   {errors.fechaNacimiento}
@@ -76,15 +144,13 @@ export default function AddControlV(){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
-                        </Form.Group> 
 
-                        <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Edad</Form.Label>
-                        <Col sm="8">
+                        <Form.Label column sm="3" style={{"fontSize": "12px !important"}}>Edad Usuario</Form.Label>
+                        <Col sm="2">
                           <InputGroup hasValidation>
                               <Form.Control type="number" placeholder="Dígita aquí la edad" size="lg" id="edad" name="edad" 
-                               value={values.edad} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
-                               isValid={!errors.edad && touched.edad}
+                               value={userControl.edad} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
+                               isValid={!errors.edad && touched.edad} disabled
                               />
                               <Form.Control.Feedback type="invalid">
                                   {errors.edad}
@@ -92,11 +158,11 @@ export default function AddControlV(){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
-                        </Form.Group>
+                        </Form.Group> 
 
                         <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Fecha Aplicacion</Form.Label>
-                        <Col sm="8">
+                        <Form.Label column sm="3" style={{"fontSize": "12px !important"}}>Fecha Aplicacion</Form.Label>
+                        <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaAplicacion" name="fechaAplicacion" 
                                  value={values.fechaAplicacion} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaAplicacion && touched.fechaAplicacion}
@@ -108,24 +174,48 @@ export default function AddControlV(){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
-                        </Form.Group> 
 
+                        <Form.Label column sm="3" style={{"fontSize": "12px !important"}}>Edad Vacuna</Form.Label>
+                        <Col sm="2">
+                        <InputGroup hasValidation>
+                        <Form.Select size="lg" name="Edad Vacuna" onChange={handleChange} onBlur={handleBlur}
+                                defaultValue={values.edadVac} isValid={!errors.edadVac && touched.edadVac} isInvalid={!!errors.edadVac && touched.edadVac}
+                            >
+                            <option disabled>Selecciona la edad</option>
+                            <option value="2_M">2 Meses</option>
+                            <option value="4_M">4 Meses</option>
+                            <option value="6_M">6 Meses</option>
+                            <option value="7_M">7 Meses</option>
+                            <option value="12_M">12 Meses</option>
+                            <option value="18_M">18 Meses</option>
+                            <option value="5_Años">5 años</option>
+
+                            </Form.Select>
+                            <Form.Control.Feedback type="invalid">
+                                        {errors.edadVac}
+                                        </Form.Control.Feedback>
+                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                            </InputGroup>
+                        </Col>
+                        </Form.Group>
+                       
                         <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Vacunas:</Form.Label>
+                          {listVac.length === 0 ? (
+                              <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>No hay vacunas para esta edad</Form.Label>
+                          ) 
+                        :
+                          (
                             <>
-                                <InputGroup className="mb-3">
-                                    <InputGroup.Checkbox aria-label="Checkbox for following text input" />
-                                    <Form.Control placeholder="Tetano" aria-label="Text input with checkbox" />
-                                </InputGroup>
-                                <InputGroup className="mb-3">
-                                    <InputGroup.Checkbox aria-label="Checkbox for following text input" />
-                                    <Form.Control placeholder="Sarampion" aria-label="Text input with checkbox" />
-                                </InputGroup>
-                                <InputGroup className="mb-3">
-                                    <InputGroup.Checkbox aria-label="Checkbox for following text input" />
-                                    <Form.Control placeholder="Rubeola" aria-label="Text input with checkbox" />
-                                </InputGroup>
+                            <Form.Label column sm="4" style={{"fontSize": "12px !important"}} className="justify-content-left">Vacunas:</Form.Label>
+                            <InputGroup className="mb-3">
+                              {listVac.map((item, index) => (
+                                  <Form.Check type="checkbox" label={item.nombre} key={item.id} onChange={(e) => handleCheck(e, item)}/>
+                                 
+                              ))}
+                              </InputGroup>
                             </>
+                          )}
+
                         </Form.Group> 
 
                         <div className="d-grid gap-2 mb-4">
@@ -138,9 +228,8 @@ export default function AddControlV(){
                             );
                         }}
                       </Formik> 
-
                 </Col>
-                <Col sm={3}></Col>
+                <Col sm={2}></Col>
             </Row>
         </Container>
     )
