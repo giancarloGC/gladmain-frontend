@@ -6,7 +6,6 @@ import Logo from "./../assets/img/logocomfaoriente.png";
 import AvatarDefault from './../assets/img/avatar-default.jpg'
 import { Nav, Image, NavDropdown, Container, Row, Spinner, Col } from "react-bootstrap";
 import "./LayoutAdmin.scss";
-import Welcome from "../pages/Welcome/Welcome";
 import { getUserByIdApi } from "../api/user";
 import { TOKEN } from "../utils/constans";
 
@@ -26,14 +25,12 @@ export default function LayoutAdmin(props){
         componentMounted = true;
         if(componentMounted){
                 if(user && !isLoading){
-                    console.log("siiiiiiiiii");
                     tal();
                     setLoading("true");
                 }
 
                 if(!user && !isLoading){
                     //setLoading(true);FFFFFFFD
-                    console.log("retorno"); 
                     setLoading("notFound");
                     //window.location.replace("/");
                     /*return (
@@ -59,7 +56,6 @@ export default function LayoutAdmin(props){
         localStorage.removeItem(TOKEN);
         window.location.replace("/");
     };
-    console.log(user);
 
     return (
         <>

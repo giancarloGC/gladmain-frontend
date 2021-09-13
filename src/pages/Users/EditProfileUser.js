@@ -15,7 +15,6 @@ export default function EditProfileUser(){
     const [ loaded, setLoaded ] = useState(false);
     useEffect(() => {
         getUserByIdApi(documento, token).then(response => {
-            console.log("entroooo");
             setUser(response);
             setLoaded(true);
         })

@@ -14,6 +14,7 @@ import ListVac from "../pages/ControlVac/ListVac";
 import ListControlNutri from "../pages/ControlNutri/ListControlNutri";
 import AddControlNutri from "../pages/ControlNutri/AddControlNutri";
 import AddControlCyD from "../pages/ControlCyD/AddControlCyD";
+import EditControlCD from "../pages/ControlCyD/EditControlCD";
 import ListControlCyD from "../pages/ControlCyD/ListControlCyD";
 import AllUserControl from "../pages/ControlHome/AllUserControl";
 import AddControlVac from "../pages/ControlVac/AddControlVac";
@@ -72,7 +73,7 @@ const routes = [
                 component: ListRol,
             },
             {
-                path: "/admin/addRol",
+                path: "/admin/addRol/",
                 exact: true,
                 component: AddRol,
             },
@@ -107,9 +108,14 @@ const routes = [
                 component: AddControlNutri,
             },     
             {
-                path: "/admin/addControlCyD",
+                path: "/admin/addControlCyD/:documento",
                 exact: true,
                 component: AddControlCyD,
+            },   
+            {
+                path: "/admin/editControlCyD/:id/:documento",
+                exact: true,
+                component: EditControlCD,
             },   
             {
                 path: "/admin/listVaccines/:documento",
