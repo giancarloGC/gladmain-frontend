@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import {BrowserRouter as Router, Route, Switch, Redirect, Link} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faUserTie, faUsers, faLaptopMedical, faHome, faUserEdit, faPowerOff} from '@fortawesome/free-solid-svg-icons';
+import { faBars, faUserTie, faUsers, faLaptopMedical, faHome, faUserEdit, faPowerOff, faCalculator} from '@fortawesome/free-solid-svg-icons';
 import Logo from "./../assets/img/logocomfaoriente.png";
 import AvatarDefault from './../assets/img/avatar-default.jpg'
 import { Nav, Image, NavDropdown, Container, Row, Spinner, Col } from "react-bootstrap";
@@ -134,6 +134,16 @@ export default function LayoutAdmin(props){
                 <NavDropdown.Divider />
                 <NavDropdown.Item><Link to="/admin/listUserControl/MADRE_GESTANTE"><h5>Madres gestantes</h5></Link></NavDropdown.Item>
               </NavDropdown>
+                                </div>
+                            </Link>
+
+                                            
+                            <Link to="/admin/calculator" className={linkSelected.users ? "selected" : ""}                             onClick={() => setLinkSelected({roles: false, users: true, controls: false})}
+                                    onClick={() => setLinkSelected({roles: false, users: true, controls: false})}
+                            >
+                                <div className="option">
+                                <FontAwesomeIcon icon={faCalculator} className="icon" size="2x"/>
+                                    <h4 className="subtitlesMenu" >Calcular nutrición</h4>
                                 </div>
                             </Link>
                         </div>

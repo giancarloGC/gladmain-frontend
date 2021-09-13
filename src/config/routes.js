@@ -40,6 +40,8 @@ import StatisticHome from "../pages/ControlNutri/StatisticHome";
 import StatisticImcEdad5a17 from "../components/Graphics/StatisticImcEdad5a17";
 import StatisticMadreGestante from "../components/Graphics/StatisticMadreGestante";
 import EditProfileUser from "../pages/Users/EditProfileUser";
+import IndexCalculator from "../pages/Calculator/IndexCalculator";
+import calculateStateNutrition from "../pages/Calculator/CalculateStateNutrition";
 
 import NotFound404 from "../pages/NotFound404";
 
@@ -249,6 +251,16 @@ const routes = [
                 exact: true,
                 component: EditProfileUser,
             },   
+            {
+                path: "/admin/calculator",
+                exact: true,
+                component: IndexCalculator
+            },
+            {
+                path: "/admin/calculatorState/:edad/:sexo",
+                exact: true,
+                component: calculateStateNutrition
+            }
             
         ]
     }   
