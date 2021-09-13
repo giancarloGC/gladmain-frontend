@@ -69,8 +69,6 @@ export default function AllUsers(){
             }
         })
     }
-   
-
     
 
     return(
@@ -111,7 +109,7 @@ export default function AllUsers(){
                 </div>
                 <div className="sci">
                     <div className="liB">
-                        <Link className="enlace" to="/admin/user">
+                        <Link className="enlace" to={`/admin/user/${item.documento}`}>
                         <FontAwesomeIcon icon={faEye} size="lg" color="#2D61A4" data-tip data-for = "boton1"
                         /> <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Ver </ReactTooltip>
                         </Link>

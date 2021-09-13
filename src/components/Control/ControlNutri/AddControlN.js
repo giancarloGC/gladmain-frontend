@@ -292,7 +292,7 @@ export default function AddControlN(props){
                         });
                           /*setTextFormSend({
                             variant: "success", heading: "¡Excelente, registro exitoso!",
-                            message: `El control ${valores.name} fue almacenado correctamente`
+                            message: `El control fue almacenado correctamente`
                           });
                           setShow(true);*/
                       }else{

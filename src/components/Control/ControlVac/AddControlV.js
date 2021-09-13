@@ -3,6 +3,7 @@ import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "re
 import { Formik, Field, ErrorMessage } from "formik";
 import { TOKEN } from "../../../utils/constans";
 import  AuthContext  from "../../../hooks/useAuth";
+import moment from 'moment';
 
 import { insertContVaccApi } from "../../../api/vaccination";
 
@@ -14,6 +15,10 @@ export default function AddControlV(props){
   const [show, setShow] = useState(false);
   const [ textFormSend, setTextFormSend ] = useState({});
   const [ vaccinesSelected, setVaccinesSelected ] = useState([]);
+
+  let dateFechaNaci = moment(userControl.fechaNacimiento);
+    let dateCurrent = moment();
+    userControl.edad = dateCurrent.diff(dateFechaNaci, 'months');
   
   const dateFormat = (date) => {
     if(date){
@@ -22,7 +27,7 @@ export default function AddControlV(props){
     return dateFormated[0];
     }
   }
-
+  
   const handleCheck = (e, item) => {
     let vaccines = {
         id: item.id,
@@ -43,8 +48,8 @@ export default function AddControlV(props){
     return(
         <Container>
             <Row style={{backgroundColor: '#f1f1f1'}} >
-              <Col sm={2}> </Col> 
-                <Col sm={8} >
+              <Col sm={1}> </Col> 
+                <Col sm={10} >
 
                 <Formik
                 initialValues={userControl}
@@ -58,16 +63,32 @@ export default function AddControlV(props){
                 
                 validate={(valores) => {
                   let errores = {};
+
                   if(valores.edadVac){
                     errores.edadVac = 'Asegurese de selecionar una opción';
-                  };
+                  }else if(valores.edadVac === "2_M"){
+                    userControl.edad = 2;
+                  }else if(valores.edadVac === "4_M"){
+                    userControl.edad = 4;
+                  }else if(valores.edadVac === "6_M"){
+                    userControl.edad = 6;
+                  }else if(valores.edadVac === "7_M"){
+                    userControl.edad = 7;
+                  }else if(!valores.edadVac === "12_M"){
+                    listVac.meses = 12
+                  }else if(!valores.edadVac === "18_M"){
+                    listVac.meses = 18
+                  }else if(!valores.edadVac === "60_M"){
+                    listVac.meses = 60
+                  }
+
                   const dateCurrently2 = new Date();
                   if(!valores.fechaAplicacion){
                     errores.fechaAplicacion = 'Asegurese de selecionar una fecha';
                   }else if(dateCurrently2 <= valores.fechaAplicacion){
                     errores.fechaAplicacion = 'Seleccione una fecha valida';
                   }
-                  
+
                   return errores;
                 }}
 
@@ -144,12 +165,14 @@ export default function AddControlV(props){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
+                        
+                        <Col sm="1"></Col>
 
-                        <Form.Label column sm="3" style={{"fontSize": "12px !important"}}>Edad Usuario</Form.Label>
+                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Edad Usuario</Form.Label>
                         <Col sm="2">
-                          <InputGroup hasValidation>
-                              <Form.Control type="number" placeholder="Dígita aquí la edad" size="lg" id="edad" name="edad" 
-                               value={userControl.edad} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
+                        <InputGroup hasValidation>
+                              <Form.Control type="text" placeholder="Dígita aquí la edad" size="lg" id="edad" name="edad" 
+                               value={`${userControl.edad} meses`} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
                                isValid={!errors.edad && touched.edad} disabled
                               />
                               <Form.Control.Feedback type="invalid">
@@ -159,7 +182,7 @@ export default function AddControlV(props){
                           </InputGroup>
                         </Col>
                         </Form.Group> 
-
+                       
                         <Form.Group as={Row} className="mb-3">
                         <Form.Label column sm="3" style={{"fontSize": "12px !important"}}>Fecha Aplicacion</Form.Label>
                         <Col sm="4">
@@ -174,8 +197,10 @@ export default function AddControlV(props){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
+                        
+                        <Col sm="1"></Col>
 
-                        <Form.Label column sm="3" style={{"fontSize": "12px !important"}}>Edad Vacuna</Form.Label>
+                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Edad Vacuna</Form.Label>
                         <Col sm="2">
                         <InputGroup hasValidation>
                         <Form.Select size="lg" name="Edad Vacuna" onChange={handleChange} onBlur={handleBlur}
@@ -183,12 +208,12 @@ export default function AddControlV(props){
                             >
                             <option disabled>Selecciona la edad</option>
                             <option value="2_M">2 Meses</option>
-                            <option value="4_M">4 Meses</option>
-                            <option value="6_M">6 Meses</option>
-                            <option value="7_M">7 Meses</option>
-                            <option value="12_M">12 Meses</option>
-                            <option value="18_M">18 Meses</option>
-                            <option value="5_Años">5 años</option>
+                            {userControl.edad >= 4 && (<option value="4_M">4 Meses</option>)}
+                            {userControl.edad >= 6 && (<option value="6_M">6 Meses</option>)}
+                            {userControl.edad >= 7 && (<option value="7_M">7 Meses</option>)}
+                            {userControl.edad >= 12 && (<option value="12_M">12 Meses</option>)}
+                            {userControl.edad >= 18 && (<option value="18_M">18 Meses</option>)}
+                            {userControl.edad >= 60 && (<option value="60_M">5 años</option>)}
 
                             </Form.Select>
                             <Form.Control.Feedback type="invalid">
@@ -209,8 +234,7 @@ export default function AddControlV(props){
                             <Form.Label column sm="4" style={{"fontSize": "12px !important"}} className="justify-content-left">Vacunas:</Form.Label>
                             <InputGroup className="mb-3">
                               {listVac.map((item, index) => (
-                                  <Form.Check type="checkbox" label={item.nombre} key={item.id} onChange={(e) => handleCheck(e, item)}/>
-                                 
+                              <Form.Check type="checkbox" label={item.nombre} key={item.id} onChange={(e) => handleCheck(e, item)}/>
                               ))}
                               </InputGroup>
                             </>
@@ -229,7 +253,7 @@ export default function AddControlV(props){
                         }}
                       </Formik> 
                 </Col>
-                <Col sm={2}></Col>
+                <Col sm={1}></Col>
             </Row>
         </Container>
     )

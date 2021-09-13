@@ -73,7 +73,7 @@ const routes = [
                 component: ListRol,
             },
             {
-                path: "/admin/addRol/",
+                path: "/admin/addRol/:latestRol",
                 exact: true,
                 component: AddRol,
             },
