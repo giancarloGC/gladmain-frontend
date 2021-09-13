@@ -249,7 +249,6 @@ export default function FormEdit(props){
                         if(response === true){
                           updateRoles();
                         }else{
-                          console.log("no agrego a ese perro");
                             setTextFormSend({
                                 variant: "danger", heading: "¡Opss, ocurrió un error!",
                                 message: "Revisaremos lo ocurrido, inténtalo nuevamente"

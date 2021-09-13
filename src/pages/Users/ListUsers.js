@@ -6,7 +6,6 @@ import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import AllUsers from "../../components/Users/AllUsers/AllUsers";
 
-
 export default function ListUsers(){ 
     return(
         <Container>

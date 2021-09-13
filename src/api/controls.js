@@ -19,12 +19,13 @@ export function insertControlApi(data, token){
 }
 
 export function updateControlApi(data){
-    const url = `${urlBackend}control/ACTUALIZAR_CONTROL`;
+    const url = `/api/control/ACTUALIZAR_CONTROL`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": data.token
         },
-        method: "PUT",
+        method: "POST",
         body: JSON.stringify(data)
     };
 
@@ -34,13 +35,14 @@ export function updateControlApi(data){
             .catch(err => {return err});
 }
 
-export function deleteControlApi(id){
-    const url = `${urlBackend}control/ELIMINAR_CONTROL/${id}`;
+export function deleteControlApi(id, token){
+    const url = `/api/control/ELIMINAR_CONTROL/${id}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
-        method: "DELETE"
+        method: "GET"
     };
 
     return fetch(url, params)
@@ -49,11 +51,12 @@ export function deleteControlApi(id){
             .catch(err => {return err});
 }
 
-export function getControlByIdApi(id){
-    const url = `${urlBackend}control/CONSULTAR_CONTROL/${id}`;
+export function getControlByIdApi(id, token){
+    const url = `/api/control/CONSULTAR_CONTROL/${id}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET"
     };
@@ -82,11 +85,12 @@ export function getControlNutriApi(documento, token){
 }
 
 //PREGUNTAR A DANNY
-export function getControlCyDApi(data){
-    const url = `${urlBackend}control/LISTAR_CONTROLES_CYD/${data}`;
+export function getControlCyDApi(documento, token){
+    const url = `/api/control/LISTAR_CONTROLES_CYD/${documento}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET"
     };
@@ -98,11 +102,12 @@ export function getControlCyDApi(data){
 }
 
 //PREGUNTAR A DANNY
-export function getLatestCyDApi(data){
-    const url = `${urlBackend}control/ULTIMO_CONTROL_CYD/${data}`;
+export function getLatestCyDApi(documento, token){
+    const url = `/api/control/ULTIMO_CONTROL_CYD/${documento}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET"
     };

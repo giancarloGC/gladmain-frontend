@@ -6,21 +6,8 @@ import jsPDF from 'jspdf'
 
 export default function ListControlN(props){
     const { listControls } = props;
-    /* const [ vacApi, setVacApi ] = useState([]);
-     const [ loading, setLoading ] = useState(true);
-     useEffect(() => {
-         (async () => {
-             const response = await getContVaccApi();
-             setLoading(false);
-             setRolesApi(response);
-         })();
-     }, []);*/
 
-     const pdfGenerate = () => {
-        var doc=new jsPDF('landscape','px', 'a4', 'false');
-        doc.save('a.pdf')
-     }
-
+    
      const dateFormat = (date) => {
         if(date){
         let dateFormated = date.split('T');
@@ -81,7 +68,6 @@ export default function ListControlN(props){
                                 />
                             </svg>
                             </a > 
-                            <Button onClick={() => pdfGenerate()}>Generar PDF</Button>
                          </p>                     
                      </Col>
                  </Row>

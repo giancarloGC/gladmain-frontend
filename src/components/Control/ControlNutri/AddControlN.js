@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useReducer } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Container, Row, Col, Button, Form, InputGroup, Alert } from "react-bootstrap";
 import { Formik } from "formik";
 import { TOKEN } from "../../../utils/constans";
 import  AuthContext  from "../../../hooks/useAuth";
@@ -10,11 +10,9 @@ export default function AddControlN(props){
     const { userControl } = props;
     const { user } = AuthContext();
     const token = localStorage.getItem(TOKEN);
-    const [ userApi, setUserByIdApi ] = useState({});
     const [show, setShow] = useState(false);
     const [ textFormSend, setTextFormSend ] = useState({});
     const documentoLogin = user.sub.split('-');
-    const [ stateNutrition, setStateNutrition ] = useState();
     const rolUser = "madre";
     let lineasGraphics = {
       lineMenosTres: [1.8, 2.5, 3.5, 4.6, 5.7, 6.6, 7.5, 8.2, 9.1, 10, 10.9, 11.9, 13, 14],

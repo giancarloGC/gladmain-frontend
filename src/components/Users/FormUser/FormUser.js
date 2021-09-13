@@ -134,6 +134,7 @@ export default function FormUser(){
 
                   return errores;
                 }}
+
                 onSubmit={(valores, {resetForm}) => {
                   if(rolesSelected.length === 0){
                     setTextFormSend({
@@ -146,12 +147,10 @@ export default function FormUser(){
                     }, 3000);
                 }else{
                   const dateCurrently = new Date();
-                  console.log(dateCurrently);
-                    console.log(valores);
+
                     if(valores.meses !== 'meses'){
-                      valores.edad = valores.meses / 12;
+                      valores.edad = valores.edad * 12;
                     };
-                    console.log(valores);
 
                     valores.token = token;
                     const data = {
