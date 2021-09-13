@@ -94,7 +94,7 @@ export default function AllUserC ({role}){
                                             </Link>
                                         </div>
                                         <div className="liB">
-                                            <Link className="enlace" to="/">
+                                            <Link className="enlace" to={`/admin/ListFollowUpChecks/${item.documento}`}>
                                                 <FontAwesomeIcon icon={faFileMedicalAlt} size="lg" color="#2D61A4"
                                                 data-tip data-for = "boton4"/>
                                                 <ReactTooltip id="boton4" place="bottom" type="dark" effect="float"> Seguimiento </ReactTooltip>
@@ -147,7 +147,7 @@ export default function AllUserC ({role}){
                                                 </Link>
                                             </div>
                                             <div className="liB">
-                                                <Link className="enlace" to="/">
+                                                <Link className="enlace" to={`/admin/ListFollowUpChecks/${item.documento}`}>
                                                     <FontAwesomeIcon icon={faFileMedicalAlt} size="lg" color="#2D61A4"
                                                     data-tip data-for = "boton4"/>
                                                     <ReactTooltip id="boton4" place="bottom" type="dark" effect="float"> Seguimiento </ReactTooltip>

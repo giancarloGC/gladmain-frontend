@@ -1,46 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert } from "react-bootstrap";
-import { Formik } from "formik";
-import { TOKEN } from "../../../utils/constans";
-import  AuthContext  from "../../../hooks/useAuth";
-import swal from 'sweetalert';
+import React, { useState, useEffect, useReducer } from "react";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner } from "react-bootstrap";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
-import DangerAnimation from "../../../assets/animations/control/warning2.json";
-import WarningAnimation from "../../../assets/animations/control/warning.json";
-import SuccessAnimation from "../../../assets/animations/control/successNew.json";
+import { Formik } from "formik";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalculator, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import DangerAnimation from "../../assets/animations/control/warning2.json";
+import WarningAnimation from "../../assets/animations/control/warning.json";
+import SuccessAnimation from "../../assets/animations/control/successNew.json";
 
 import Lottie from 'react-lottie';
 import { Line } from "react-chartjs-2";
-import { insertControlApi } from "../../../api/controls";
-import { labels, lineasGraphics } from "./LabelsAndLineas";
-import "./GraphicAddNutri.scss";
-import moment from 'moment';
-import { faAddressCard }  from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { labels, lineasGraphics } from "./../../components/Control/ControlNutri/LabelsAndLineas";
+import { labels2_5, lineasGraphics2_5 } from "./../../components/Control/ControlNutri/LabelsAndLineas2-5";
+import "./../../components/Control/ControlNutri/GraphicAddNutri.scss";
 
-export default function AddControlN(props){
-    const { userControl } = props;
-    const { user } = AuthContext();
-    const token = localStorage.getItem(TOKEN);
+export default function CalculateStateNutrition(){
     const [show, setShow] = useState(false);
+    const { edad, sexo } = useParams();
+
     const [ textFormSend, setTextFormSend ] = useState({});
-    const documentoLogin = user.sub.split('-');
     const [ stateNutrition, setStateNutrition ] = useState({ color: "", text: "", animation: null});
     const [ imc, setImc ] = useState(0);
+    const [ showButtonAdd, setShowButtonAdd ] = useState(false);
     const [ graphicValues, setGraphicValues] = useState({ x: 0, y: 0, r: 10});
-    const rolUser = "madre";
-    const [ goRedirect, setGoRedirect ] = useState(false);
-
-    let dateFechaNaci = moment(userControl.fechaNacimiento);
-    let dateCurrent = moment();
-    userControl.edad = dateCurrent.diff(dateFechaNaci, 'months');
- 
-    const dateFormat = (date) => {
-      if(date){
-      let dateFormated = date.split('T');
-      return dateFormated[0];
-      }
-    }
 
     const convertKgToG = (kg) => {
       let resultado = kg * 1000;
@@ -61,37 +43,44 @@ export default function AddControlN(props){
     const calculateStateNutrition = (talla, peso) => {
       //Mirar en que indice esta la talla dijitada para el eje x
       const indexToFind = (element) => element > talla -1;
-      let indexEjex = labels.findIndex(indexToFind);
+      let indexEjex = edad > 0 && edad <= 24 ? labels.findIndex(indexToFind) : labels2_5.findIndex(indexToFind);
 
       //Recorrer cada linea para saber si el numero es mayor o menor a cada linea
-      let valueXlineMasTres = lineasGraphics.lineMasTres[indexEjex];
-      let valueXlineMasDos = lineasGraphics.lineMasDos[indexEjex];
-      let valueXlineMasUno = lineasGraphics.lineMasUno[indexEjex];
-      let valueXlineMenosUno = lineasGraphics.lineMenosUno[indexEjex];
-      let valueXlineMenosDos = lineasGraphics.lineMenosDos[indexEjex];
-      let valueXLineMenosTres = lineasGraphics.lineMenosTres[indexEjex];
+      let valueXlineMasTres = edad > 0 && edad <= 24 ? lineasGraphics.lineMasTres[indexEjex] : lineasGraphics2_5.lineMasTres[indexEjex];
+      let valueXlineMasDos = edad > 0 && edad <= 24 ? lineasGraphics.lineMasDos[indexEjex] : lineasGraphics2_5.lineMasDos[indexEjex];
+      let valueXlineMasUno = edad > 0 && edad <= 24 ? lineasGraphics.lineMasUno[indexEjex] : lineasGraphics2_5.lineMasUno[indexEjex];
+      let valueXlineMenosUno = edad > 0 && edad <= 24 ? lineasGraphics.lineMenosUno[indexEjex] : lineasGraphics2_5.lineMenosUno[indexEjex];
+      let valueXlineMenosDos = edad > 0 && edad <= 24 ? lineasGraphics.lineMenosDos[indexEjex] : lineasGraphics2_5.lineMenosDos[indexEjex];
+      let valueXLineMenosTres = edad > 0 && edad <= 24 ? lineasGraphics.lineMenosTres[indexEjex] : lineasGraphics2_5.lineMenosTres[indexEjex];
 
 
 
       if(peso > valueXlineMasTres){
+        setShowButtonAdd(false);
         setStateNutrition({ color: "danger", text: "Obesidad", animation: DangerAnimation});
         console.log("es mayor a +3   ");
       }else if(peso > valueXlineMasDos && peso <= valueXlineMasTres){
+        setShowButtonAdd(false);
         setStateNutrition({ color: "danger", text: "Sobrepeso", animation: DangerAnimation});
         console.log("es > a la +2 y < a +3 ");
       }else if(peso > valueXlineMasUno && peso <= valueXlineMasDos){
         console.log("es > a la +1 y < a +2 ");
+        setShowButtonAdd(false);
         setStateNutrition({ color: "warning", text: "Riesgo de Sobrepeso", animation: WarningAnimation});
       }else if(peso >= valueXlineMenosUno && peso <= valueXlineMasUno){
+        setShowButtonAdd(false);
         console.log("es > a la -1 y < a +1 ");
         setStateNutrition({ color: "success", text: "Peso Adecuado para la Talla", animation: SuccessAnimation});
       }else if(peso >= valueXlineMenosDos && peso < valueXlineMenosUno){
+        setShowButtonAdd(true);
         console.log("es > a la -2 y < a -1 ");
         setStateNutrition({ color: "warning", text: "Riesgo de Desnutrición Aguda", animation: WarningAnimation});
       }else if(peso < valueXlineMenosDos && peso >= valueXLineMenosTres){
+        setShowButtonAdd(true);
         console.log("es < 2 y > a la -3 ");
         setStateNutrition({ color: "danger", text: "Desnutrición Aguda Moderada", animation: DangerAnimation});
       }else if(peso < valueXLineMenosTres){
+        setShowButtonAdd(true);
         console.log("es < a la -3 ");
         setStateNutrition({ color: "danger", text: "Desnutrición Aguda Severa", animation: DangerAnimation});
       }
@@ -99,63 +88,63 @@ export default function AddControlN(props){
 
     const data = {
  
-      labels: labels,
+      labels: edad > 0 && edad <= 24 ? labels : labels2_5,
       datasets: [{
           label: '- 3',
-          data: lineasGraphics.lineMenosTres,
+          data: edad > 0 && edad <= 24 ? lineasGraphics.lineMenosTres : lineasGraphics2_5.lineMenosTres,
           fill: false,
-          borderColor: userControl.sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+          borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
           tension: 0.1,
         },
         {
           label: '- 2',
-          data: lineasGraphics.lineMenosDos,
+          data: edad > 0 && edad <= 24 ? lineasGraphics.lineMenosDos : lineasGraphics2_5.lineMenosDos,
           fill: false,
-          borderColor: userControl.sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+          borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
           tension: 0.1,
           borderDash: [10,5]
         },
         {
           label: '- 1',
-          data: lineasGraphics.lineMenosUno,
+          data: edad > 0 && edad <= 24 ? lineasGraphics.lineMenosUno : lineasGraphics2_5.lineMenosUno,
           fill: false,
-          borderColor: userControl.sexo !== "FEMENINO" ? '#D8E5FD' : '#FFCAFA',
+          borderColor: sexo !== "FEMENINO" ? '#D8E5FD' : '#FFCAFA',
           tension: 0.1
         },
         {
           label: '0',
-          data: lineasGraphics.lineCero,
+          data: edad > 0 && edad <= 24 ? lineasGraphics.lineCero : lineasGraphics2_5.lineCero,
           fill: false,
-          borderColor: userControl.sexo !== "FEMENINO" ? '#8EB2FA' : '#FFA8F6',
+          borderColor: sexo !== "FEMENINO" ? '#8EB2FA' : '#FFA8F6',
           tension: 0.1
         },
         {
           label: '+ 1',
-          data: lineasGraphics.lineMasUno,
+          data: edad > 0 && edad <= 24 ? lineasGraphics.lineMasUno : lineasGraphics2_5.lineMasUno,
           fill: false,
-          borderColor: userControl.sexo !== "FEMENINO" ? '#D8E5FD' : '#FFCAFA',
+          borderColor: sexo !== "FEMENINO" ? '#D8E5FD' : '#FFCAFA',
           tension: 0.1
         },
         {
           label: '+ 2',
-          data: lineasGraphics.lineMasDos,
+          data: edad > 0 && edad <= 24 ? lineasGraphics.lineMasDos : lineasGraphics2_5.lineMasDos,
           fill: false,
-          borderColor: userControl.sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+          borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
           tension: 0.1,
           borderDash: [10,5]
         },
         {
           label: '+ 3',
-          data: lineasGraphics.lineMasTres,
+          data: edad > 0 && edad <= 24 ? lineasGraphics.lineMasTres : lineasGraphics2_5.lineMasTres,
           fill: false,
-          borderColor: userControl.sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+          borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
           tension: 0.1
         },
         {
           label: 'Nuevo Control',
-          data: [graphicValues],
-          borderColor: userControl.sexo !== "FEMENINO" ? '#4884FC' : '#A80B42',
-          backgroundColor: userControl.sexo !== "FEMENINO" ? '#5746D4' : 'rgba(212, 70, 130, 0.52)',//#D44682',
+          data: graphicValues.x && [graphicValues],
+          borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#A80B42',
+          backgroundColor: sexo !== "FEMENINO" ? '#5746D4' : 'rgba(212, 70, 130, 0.52)',//#D44682',
           type: "bubble",
           pointStyle: "bubble",        
         },
@@ -165,10 +154,9 @@ export default function AddControlN(props){
 
     return(
         <Container>
+            <h1 className="text-center">Calcular estado nutricional <FontAwesomeIcon data-tip data-for="boton1" icon={faCalculator} size="lg" color="#2D61A4" /> </h1>
             <Row>
-              {goRedirect && (
-                   <Redirect to={`/admin/graphics/${userControl.edad}/${userControl.sexo}/${userControl.documento}`} />
-              )}
+
               <Formik
                 initialValues={{ 
                     peso: '',
@@ -221,18 +209,23 @@ export default function AddControlN(props){
                     errores.peso = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9-.])*$/.test(valores.peso)){
                     errores.peso = 'Solo puedes escribir números';
+                  }else if(valores.peso < 0){
+                    errores.peso = 'Peso invalido';
                   }
+
                   if(!valores.talla){
                     errores.talla = 'Por favor, ingresa solo números';
-                  }else if(!/^([0-9])*$/.test(valores.talla)){
+                  }else if(!/^([0-9-.])*$/.test(valores.talla)){
                     errores.talla = 'Solo puedes escribir números';
                   }else if(valores.talla < 45){
                     errores.talla = 'La talla debe ser mayor a 45 cm';
-                  }else if(valores.talla > 110){
-                    errores.talla = 'La talla debe ser menor ó igual a 110 cm';
+                  }else if(valores.talla > 120){
+                    errores.talla = 'La talla debe ser menor ó igual a 120 cm';
+                  }else if(valores.talla < 0){
+                    errores.peso = 'Talla invalida';
                   }
 
-                  if(valores.peso && valores.talla >= 45 && valores.talla <= 110){
+                  if(valores.peso > 0 && valores.talla >= 45 && valores.talla <= 120){
                     let tallaM = convertCmToM(valores.talla);
                     calculateIMC(valores.peso, tallaM);
                     calculateStateNutrition(valores.talla, valores.peso);
@@ -262,16 +255,16 @@ export default function AddControlN(props){
                     edadGestacional = valores.edadGestacional;
                   }*/
 
-                  var documertParse = parseInt( documentoLogin[0]);
-                  const formData = {
+                  //var documertParse = parseInt( documentoLogin[0]);
+                  /*const formData = {
                     idUsuario: userControl.documento,
                     idUsuarioNutricionista: documertParse,
-                    fechaControl: moment().format("YYYY-MM-DD"),
+                    fechaControl: valores.fechaControl,
                     peso: valores.peso,
                     talla: valores.talla,
 
-                    imc: imc,
-                    estadoNutricional: stateNutrition.text,
+                    imc: 54,
+                    estadoNutricional: "tagoldo",
 
                     tension: null,
                     edadGestacional: null,
@@ -282,33 +275,22 @@ export default function AddControlN(props){
                 }
 
                   console.log(formData);
-                  insertControlApi(formData, token, true).then(response => {
+                  valores.token = token;
+                  insertControlApi(formData, token).then(response => {
                       if(response === true){
-                        swal({
-                          title: `¡El control fue almacenado correctamente!`,
-                          icon: 'success'
-                        }).then((value) => {
-                          setGoRedirect(true);
-                        });
-                          /*setTextFormSend({
+                          setTextFormSend({
                             variant: "success", heading: "¡Excelente, registro exitoso!",
                             message: `El control ${valores.name} fue almacenado correctamente`
                           });
-                          setShow(true);*/
+                          setShow(true);
                       }else{
-                        swal({
-                          title: `¡Opss, ocurrió un error!`,
-                          icon: 'danger'
-                        }).then((value) => {
-                          setGoRedirect(true);
-                        });
-                          /*setTextFormSend({
+                          setTextFormSend({
                               variant: "danger", heading: "¡Opss, ocurrió un error!",
                               message: "Revisaremos lo ocurrido, inténtalo nuevamente"
                           });
-                          setShow(true);*/
+                          setShow(true);
                       }
-                });
+                });*/
                 setTimeout(() => {
                   setShow(false);
                 }, 5000);
@@ -331,106 +313,6 @@ export default function AddControlN(props){
                 <Row>
                   <Col sm={3}></Col>
                   <Col sm={6}> 
-                    <Form.Group as={Row} className="mb-3">
-
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Número documento</Form.Label>
-                        <Col sm="8">
-                            <InputGroup hasValidation>
-                            <Form.Control type="number" placeholder="Dígita aquí el documento" size="lg" id="documento" name="documento" 
-                               value={userControl.documento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.documento && touched.documento}
-                               isValid={!errors.documento && touched.documento} disabled
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.documento}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                        </Col>
-                        </Form.Group>
-
-                        <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Nombre</Form.Label>
-                        <Col sm="8">
-                        <InputGroup hasValidation>
-                            <Form.Control type="text" placeholder="Dígita aquí el nombre" size="lg" id="nombre" name="nombre" 
-                               value={userControl.nombre} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombre && touched.nombre}
-                               isValid={!errors.nombre && touched.nombre} disabled
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.nombre}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                        </Col>
-                        </Form.Group>
-                      
-                        <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Fecha nacimiento</Form.Label>
-                        <Col sm="8">
-                          <InputGroup hasValidation>
-                              <Form.Control type="date" size="lg" id="fechaNacimiento" name="fechaNacimiento" 
-                                 Value={dateFormat(userControl.fechaNacimiento)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaNacimiento && touched.fechaNacimiento}
-                                 isValid={!errors.fechaNacimiento && touched.fechaNacimiento} disabled
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.fechaNacimiento}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                        </Col>
-                        </Form.Group> 
-
-                        <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Sexo</Form.Label>
-                        <Col sm="8">
-                          <InputGroup hasValidation>
-                          <Form.Select size="lg" name="sexo" onChange={handleChange} onBlur={handleBlur}
-                                value={userControl.sexo} isValid={!errors.sexo && touched.sexo} isInvalid={!!errors.sexo && touched.sexo} disabled
-                              >
-                              <option disabled>Selecciona el sexo</option>
-                              <option value="FEMENINO">FEMENINO</option>
-                              <option value="MASCULINO">MASCULINO</option>
-
-                              </Form.Select>
-                              <Form.Control.Feedback type="invalid">
-                                          {errors.sexo}
-                                          </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                          </Col>
-                        </Form.Group>
-
-                        <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Edad</Form.Label>
-                        <Col sm="8">
-                          <InputGroup hasValidation>
-                              <Form.Control type="text" placeholder="Dígita aquí la edad" size="lg" id="edad" name="edad" 
-                               value={`${userControl.edad} meses`} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
-                               isValid={!errors.edad && touched.edad} disabled
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.edad}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                        </Col>
-                        </Form.Group>
-
-                        <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Fecha control</Form.Label>
-                        <Col sm="8">
-                          <InputGroup hasValidation>
-                              <Form.Control type="date" size="lg" id="fechaControl" name="fechaControl" 
-                                 value={moment().format("YYYY-MM-DD")} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaControl && touched.fechaControl}
-                                 isValid={!errors.fechaControl && touched.fechaControl} disabled
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.fechaControl}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                        </Col>
-                        </Form.Group> 
 
                         <Row>
                           <Col md={6}>
@@ -438,7 +320,7 @@ export default function AddControlN(props){
                         <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Peso</Form.Label>
                         <Col sm="8">
                           <InputGroup hasValidation>
-                              <Form.Control type="text" placeholder="Peso en Kg" size="lg" id="peso" name="peso" 
+                              <Form.Control type="number" placeholder="Peso en Kg" size="lg" id="peso" name="peso" 
                                value={values.peso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.peso && touched.peso}
                                isValid={!errors.peso && touched.peso}
                               />
@@ -458,7 +340,7 @@ export default function AddControlN(props){
                         <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Talla</Form.Label>
                         <Col sm="8">
                           <InputGroup hasValidation>
-                              <Form.Control type="text" placeholder="Talla en cm" size="lg" id="talla" name="talla" 
+                              <Form.Control type="number" placeholder="Talla en cm" size="lg" id="talla" name="talla" 
                                value={values.talla} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.talla && touched.talla}
                               isValid={!errors.talla && touched.talla}
                               />
@@ -482,7 +364,7 @@ export default function AddControlN(props){
                 <Row className="mt-3">
                   <Col md={8}>
                   <center>
-             <Form.Label column sm="12" style={{"font-size": "12px !important" }}>Puntuación Z (0 a 2 años)</Form.Label>
+             <Form.Label column sm="12" style={{"font-size": "12px !important" }}>Puntuación Z ({edad > 0 && edad <= 24 ? "0 a 2 años" : "2 a 5 años"})</Form.Label>
              </center>
                 <div >
                   <Line 
@@ -496,7 +378,7 @@ export default function AddControlN(props){
                           x: {
                             type: 'linear',
                             position: 'bottom',
-                            min: 45,
+                            min: edad > 0 && edad <= 24 ? 45 : 65 //45 = 0-2 años    65 = 2-5 años
                           }
                         }
                       }}
@@ -507,6 +389,15 @@ export default function AddControlN(props){
 
 
                   <Col md={4} className="mt-5">
+                  {showButtonAdd && (
+                  <div className="d-grid gap-2">
+                            <Button variant="warning" type="submit" size="lg" className="text-white mb-3">
+                              <Link to="/admin/addUser">
+                                Añadir nuevo usuario <FontAwesomeIcon data-tip data-for="boton1" icon={faUserPlus} size="lg" color="#FFF" /> 
+                              </Link>
+                            </Button>
+                        </div>
+                  )}
                             <Form.Group as={Row}>
                                 <Alert variant="secondary">
                                   <Alert.Heading className="text-center">IMC Calculado: {imc}</Alert.Heading>
@@ -521,21 +412,12 @@ export default function AddControlN(props){
                               />
                             </Alert>
                             </Form.Group> 
-
-                            <div className="d-grid gap-2">
-                            <Button variant="primary" type="submit" size="lg">
-                                Añadir control   <FontAwesomeIcon data-tip data-for="boton1" icon={faAddressCard} size="lg" color="#FFF" />
-                            </Button>
-                        </div>
                   </Col>
                 </Row>
 
-              )}
+              )}   
 
 
-                        {rolUser === "madre" && ( 
-                          <p>Campo de mamita TENSION</p>
-                        )}   
                 
                     </Form>
                             );
