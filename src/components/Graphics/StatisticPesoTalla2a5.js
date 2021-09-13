@@ -4,14 +4,38 @@ import { Line } from "react-chartjs-2";
 import ListControlN from "../../components/Control/ControlNutri/ListControlN";
 import ImageBackground from "../../assets/img/graphicsPrueba.png";
 import "./StatisticNutri.scss";
+import moment from 'moment';
 
 export default function StatisticPesoTalla2a5(props){
-  const { sexo } = props;
+  const { sexo, listControls } = props;
   const [ sizeImage, setSizeImage] = useState("750");
   const image = new Image();
   image.src = ImageBackground;
   image.width = sizeImage;
 
+  const generateCoordenadas = () => {
+    let coordenadas = [];
+    let lineasArray = lineas();
+  
+    listControls.map((item, index) => {
+      var coor = {
+        label: `Control ${item.id} - ${moment(item.fechaControl).format("DD-MM-YYYY")}`,
+        data: [{
+          y: item.peso,
+          x: item.talla,
+          r: 15
+        }],
+        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#A80B42',
+        backgroundColor: sexo !== "FEMENINO" ? '#5746D4' : 'rgba(212, 70, 130, 0.52)',//#D44682',
+        type: "bubble",
+        pointStyle: "bubble", 
+      }
+      coordenadas.push(coor);
+    });
+  
+    const allCoordenadas = [...lineasArray, ...coordenadas];
+    return allCoordenadas;
+  } 
 
 const plugin = {
   id: 'custom_canvas_background_image',
@@ -33,7 +57,45 @@ const plugin = {
 const data = {
  
     labels: [ 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120 ],
-    datasets: [{
+    datasets: generateCoordenadas()
+  };
+    return(
+        <Container>
+             {sexo === "MASCULINO" ?
+                <h2 className="text-center">Peso para la Talla Niños </h2>
+              : 
+              <h2 className="text-center">Peso para la Talla Niñas </h2>
+             }
+             <center>
+             <Form.Label column sm="4" style={{"font-size": "12px !important" }}>Puntuación Z (2 a 5 años)</Form.Label>
+             </center>
+             <div className="containerGraphic"> 
+                  <p className="ejey">Peso(kg)</p>
+             <div style={{"max-width": "800px", "background-image": "url('../../assets/img/graphicsPrueba.png')"}}>
+             <Line 
+                data={data}
+                height={500}
+                width={800}
+                options={{
+                  pointStyle: "line",
+                  responsive: true,
+                  scales: {
+                    x: {
+                      type: 'linear',
+                      position: 'bottom',
+                      min: 65,
+                    }
+                  }
+                }}
+             />
+             </div>
+             </div>
+             <p className="ejex">Talla(cm)</p>
+        </Container>
+    )
+
+    function lineas(){
+      return [{
         label: '- 3',
         data: [ 5.9, 6.8, 7.5, 8.4, 9.2, 10.2, 11.1, 12, 13.2, 14.4, 15.6, 17.1 ],
         fill: false,
@@ -85,31 +147,5 @@ const data = {
         tension: 0.1
       }
     ]
-  };
-    return(
-        <Container>
-             {sexo === "MASCULINO" ?
-                <h2 className="text-center">Peso para la Talla Niños </h2>
-              : 
-              <h2 className="text-center">Peso para la Talla Niñas </h2>
-             }
-             <center>
-             <Form.Label column sm="4" style={{"font-size": "12px !important" }}>Puntuación Z (2 a 5 años)</Form.Label>
-             </center>
-             <div className="containerGraphic"> 
-                  <p className="ejey">Peso(kg)</p>
-             <div style={{"max-width": "800px", "background-image": "url('../../assets/img/graphicsPrueba.png')"}}>
-             <Line 
-                data={data}
-
-                height={500}
-                width={800}
-                options={{pointStyle: "line"}}
-
-             />
-             </div>
-             </div>
-             <p className="ejex">Talla(cm)</p>
-        </Container>
-    )
+    }
 }

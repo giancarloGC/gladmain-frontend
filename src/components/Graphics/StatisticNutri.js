@@ -3,13 +3,39 @@ import { Container, Form } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
 import ListControlN from "../../components/Control/ControlNutri/ListControlN";
 import ImageBackground from "../../assets/img/graphicsPrueba.png";
-
+import { lineasGraphics } from "../Control/ControlNutri/LabelsAndLineas";
+import moment from 'moment';
 
 import "./StatisticNutri.scss";
 
 export default function StatisticNutri(props){
-const { sexo } = props;
-let lineasGraphics = {
+const { sexo, listControls } = props;
+
+const generateCoordenadas = () => {
+  let coordenadas = [];
+  let lineasArray = lineas();
+
+  listControls.map((item, index) => {
+    var coor = {
+      label: `Control ${item.id} - ${moment(item.fechaControl).format("DD-MM-YYYY")}`,
+      data: [{
+        y: item.peso,
+        x: item.talla,
+        r: 15
+      }],
+      borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#A80B42',
+      backgroundColor: sexo !== "FEMENINO" ? '#5746D4' : 'rgba(212, 70, 130, 0.52)',//#D44682',
+      type: "bubble",
+      pointStyle: "bubble", 
+    }
+    coordenadas.push(coor);
+  });
+
+  const allCoordenadas = [...lineasArray, ...coordenadas];
+  return allCoordenadas;
+} 
+
+//let lineasGraphics = {
   /*lineMenosTres: [1.8, 2.5, 3.5, 4.6, 5.7, 6.6, 7.5, 8.2, 9.1, 10, 10.9, 11.9, 13, 14],
   lineMenosDos: [2.1, 2.8, 3.8, 5.1, 6.2, 7.2, 8, 8.9, 9.8, 10.8, 11.8, 12.8, 14, 15.4 ],
   lineMenosUno: [2.3, 3, 4.1, 5.4, 6.7, 7.7, 8.8, 9.6, 10.6, 11.8, 12.8, 13.9, 15.3, 16.7],
@@ -17,7 +43,7 @@ let lineasGraphics = {
   lineMasUno: [2.6, 3.6, 4.9, 6.5, 7.8, 9.1, 10.2, 11.3, 12.5, 13.6, 15, 16.5, 18, 20],
   lineMasDos: [3, 3.9, 5.5, 7, 8.5, 10, 11.1, 12.3, 13.5, 15, 16.3, 17.9, 19.6, 22],
   lineMasTres: [3.3, 4.4, 5.9, 7.7, 9.5, 10.9, 12.4, 13.5, 14.8, 16.4, 17.9, 19.5, 21.6, 24]*/
-
+/*
   lineMenosTres: [
     1.8, 2, 2.1, 2.25, 2.4, 2.5, 2.6, 2.8, 3.1, 3.35, 3.5,
     3.75, 3.90, 4, 4.2, 4.45, 4.6, 4.9, 5.1, 5.35, 5.5, 
@@ -81,29 +107,7 @@ let lineasGraphics = {
     17.85, 18.2, 18.5, 18.9, 19.2, 19.5, 20, 20.4, 20.8, 21.2, 
     21.6, 22, 22.5, 23, 23.5, 24
   ]
-};
-
-const [ sizeImage, setSizeImage] = useState("750");
-const image = new Image();
-image.src = ImageBackground;
-image.width = sizeImage;
-
-
-const plugin = {
-  id: 'custom_canvas_background_image',
-  beforeDraw: (chart) => {
-    if (image.complete) {
-      const ctx = chart.ctx;
-      const {top, left, width, height} = chart.chartArea;
-      const x = left + width / 2 - image.width / 2;
-      const y = top + height / 2 - image.height / 2;
-      setSizeImage(`${width}px`);
-      ctx.drawImage(image, x, y);
-    } else {
-      image.onload = () => chart.draw();
-    }
-  }
-};
+};*/
 
 
 const data = {
@@ -118,7 +122,7 @@ const data = {
       95, 96, 97, 98, 99, 100, 101, 102, 103, 104,
       105, 106, 107, 108, 109, 110
     ],
-    datasets: [{
+    datasets: generateCoordenadas() /*[{
         label: '- 3',
         data: lineasGraphics.lineMenosTres,
         fill: false,
@@ -171,12 +175,13 @@ const data = {
       },
       {
         label: '- 22',
-        data: [{ x: 45, y: 19.5}, {x: 103, y: 15.4}],
+        data: generateCoordenadas(),
         borderColor: '#4884FC',
         type: "bubble",
         pointStyle: "bubble",        
       },
-    ]
+
+    ]*/
   };
     return(
         <Container>
@@ -205,7 +210,6 @@ const data = {
                             min: 45,
                           }
                         }
-                        
                       }}
                   />
                 </div>
@@ -213,4 +217,68 @@ const data = {
                 <p className="ejex">Longitud(cm)</p>
         </Container>
     )
+
+
+    function lineas(){
+      return   [{
+        label: '- 3',
+        data: lineasGraphics.lineMenosTres,
+        fill: false,
+        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+        tension: 0.1,
+      },
+      {
+        label: '- 2',
+        data: lineasGraphics.lineMenosDos,
+        fill: false,
+        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+        tension: 0.1,
+        borderDash: [10,5]
+      },
+      {
+        label: '- 1',
+        data: lineasGraphics.lineMenosUno,
+        fill: false,
+        borderColor: sexo !== "FEMENINO" ? '#D8E5FD' : '#FFCAFA',
+        tension: 0.1
+      },
+      {
+        label: '0',
+        data: lineasGraphics.lineCero,
+        fill: false,
+        borderColor: sexo !== "FEMENINO" ? '#8EB2FA' : '#FFA8F6',
+        tension: 0.1
+      },
+      {
+        label: '+ 1',
+        data: lineasGraphics.lineMasUno,
+        fill: false,
+        borderColor: sexo !== "FEMENINO" ? '#D8E5FD' : '#FFCAFA',
+        tension: 0.1
+      },
+      {
+        label: '+ 2',
+        data: lineasGraphics.lineMasDos,
+        fill: false,
+        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+        tension: 0.1,
+        borderDash: [10,5]
+      },
+      {
+        label: '+ 3',
+        data: lineasGraphics.lineMasTres,
+        fill: false,
+        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+        tension: 0.1
+      },
+      /*{
+        label: '- 22',
+        data: generateCoordenadas(),
+        borderColor: '#4884FC',
+        type: "bubble",
+        pointStyle: "bubble",        
+      },*/
+      
+    ]
+    }
 }

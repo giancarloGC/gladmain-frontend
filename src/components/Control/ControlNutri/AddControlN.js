@@ -4,7 +4,7 @@ import { Formik } from "formik";
 import { TOKEN } from "../../../utils/constans";
 import  AuthContext  from "../../../hooks/useAuth";
 import swal from 'sweetalert';
-
+import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import DangerAnimation from "../../../assets/animations/control/warning2.json";
 import WarningAnimation from "../../../assets/animations/control/warning.json";
 import SuccessAnimation from "../../../assets/animations/control/successNew.json";
@@ -30,6 +30,7 @@ export default function AddControlN(props){
     const [ imc, setImc ] = useState(0);
     const [ graphicValues, setGraphicValues] = useState({ x: 0, y: 0, r: 10});
     const rolUser = "madre";
+    const [ goRedirect, setGoRedirect ] = useState(false);
 
     let dateFechaNaci = moment(userControl.fechaNacimiento);
     let dateCurrent = moment();
@@ -166,7 +167,9 @@ export default function AddControlN(props){
     return(
         <Container>
             <Row>
-
+              {goRedirect && (
+                   <Redirect to={`/admin/graphics/${userControl.edad}/${userControl.sexo}/${userControl.documento}`} />
+              )}
               <Formik
                 initialValues={{ 
                     peso: '',
@@ -285,6 +288,8 @@ export default function AddControlN(props){
                         swal({
                           title: `¡El control fue almacenado correctamente!`,
                           icon: 'success'
+                        }).then((value) => {
+                          setGoRedirect(true);
                         });
                           /*setTextFormSend({
                             variant: "success", heading: "¡Excelente, registro exitoso!",
@@ -295,6 +300,8 @@ export default function AddControlN(props){
                         swal({
                           title: `¡Opss, ocurrió un error!`,
                           icon: 'danger'
+                        }).then((value) => {
+                          setGoRedirect(true);
                         });
                           /*setTextFormSend({
                               variant: "danger", heading: "¡Opss, ocurrió un error!",
