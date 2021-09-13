@@ -3,6 +3,7 @@ import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner } from "r
 import { Formik } from "formik";
 import { TOKEN } from "../../../utils/constans";
 import  AuthContext  from "../../../hooks/useAuth";
+import swal from 'sweetalert';
 
 import DangerAnimation from "../../../assets/animations/control/warning2.json";
 import WarningAnimation from "../../../assets/animations/control/warning.json";
@@ -14,6 +15,8 @@ import { insertControlApi } from "../../../api/controls";
 import { labels, lineasGraphics } from "./LabelsAndLineas";
 import "./GraphicAddNutri.scss";
 import moment from 'moment';
+import { faAddressCard }  from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function AddControlN(props){
     const { userControl } = props;
@@ -166,7 +169,6 @@ export default function AddControlN(props){
 
               <Formik
                 initialValues={{ 
-                    fechaControl: '',
                     peso: '',
                     talla: '',
                     imc: '',
@@ -262,12 +264,12 @@ export default function AddControlN(props){
                   const formData = {
                     idUsuario: userControl.documento,
                     idUsuarioNutricionista: documertParse,
-                    fechaControl: valores.fechaControl,
+                    fechaControl: moment().format("YYYY-MM-DD"),
                     peso: valores.peso,
                     talla: valores.talla,
 
-                    imc: 54,
-                    estadoNutricional: "tagoldo",
+                    imc: imc,
+                    estadoNutricional: stateNutrition.text,
 
                     tension: null,
                     edadGestacional: null,
@@ -278,20 +280,27 @@ export default function AddControlN(props){
                 }
 
                   console.log(formData);
-                  valores.token = token;
-                  insertControlApi(formData, token).then(response => {
+                  insertControlApi(formData, token, true).then(response => {
                       if(response === true){
-                          setTextFormSend({
+                        swal({
+                          title: `¡El control fue almacenado correctamente!`,
+                          icon: 'success'
+                        });
+                          /*setTextFormSend({
                             variant: "success", heading: "¡Excelente, registro exitoso!",
                             message: `El control ${valores.name} fue almacenado correctamente`
                           });
-                          setShow(true);
+                          setShow(true);*/
                       }else{
-                          setTextFormSend({
+                        swal({
+                          title: `¡Opss, ocurrió un error!`,
+                          icon: 'danger'
+                        });
+                          /*setTextFormSend({
                               variant: "danger", heading: "¡Opss, ocurrió un error!",
                               message: "Revisaremos lo ocurrido, inténtalo nuevamente"
                           });
-                          setShow(true);
+                          setShow(true);*/
                       }
                 });
                 setTimeout(() => {
@@ -406,8 +415,8 @@ export default function AddControlN(props){
                         <Col sm="8">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaControl" name="fechaControl" 
-                                 value={values.fechaControl} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaControl && touched.fechaControl}
-                                 isValid={!errors.fechaControl && touched.fechaControl}
+                                 value={moment().format("YYYY-MM-DD")} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaControl && touched.fechaControl}
+                                 isValid={!errors.fechaControl && touched.fechaControl} disabled
                               />
                               <Form.Control.Feedback type="invalid">
                                   {errors.fechaControl}
@@ -423,7 +432,7 @@ export default function AddControlN(props){
                         <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Peso</Form.Label>
                         <Col sm="8">
                           <InputGroup hasValidation>
-                              <Form.Control type="number" placeholder="Peso en Kg" size="lg" id="peso" name="peso" 
+                              <Form.Control type="text" placeholder="Peso en Kg" size="lg" id="peso" name="peso" 
                                value={values.peso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.peso && touched.peso}
                                isValid={!errors.peso && touched.peso}
                               />
@@ -443,7 +452,7 @@ export default function AddControlN(props){
                         <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Talla</Form.Label>
                         <Col sm="8">
                           <InputGroup hasValidation>
-                              <Form.Control type="number" placeholder="Talla en cm" size="lg" id="talla" name="talla" 
+                              <Form.Control type="text" placeholder="Talla en cm" size="lg" id="talla" name="talla" 
                                value={values.talla} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.talla && touched.talla}
                               isValid={!errors.talla && touched.talla}
                               />
@@ -506,6 +515,12 @@ export default function AddControlN(props){
                               />
                             </Alert>
                             </Form.Group> 
+
+                            <div className="d-grid gap-2">
+                            <Button variant="primary" type="submit" size="lg">
+                                Añadir control   <FontAwesomeIcon data-tip data-for="boton1" icon={faAddressCard} size="lg" color="#FFF" />
+                            </Button>
+                        </div>
                   </Col>
                 </Row>
 
@@ -515,12 +530,6 @@ export default function AddControlN(props){
                         {rolUser === "madre" && ( 
                           <p>Campo de mamita TENSION</p>
                         )}   
-
-                        <div className="d-grid gap-2">
-                            <Button variant="primary" type="submit" size="lg">
-                                Añadir Control
-                            </Button>
-                        </div>
                 
                     </Form>
                             );

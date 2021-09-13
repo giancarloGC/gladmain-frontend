@@ -16,11 +16,17 @@ import StatisticTallaEdad5a17 from "../../components/Graphics/StatisticTallaEdad
 import StatisticImcEdad5a17 from "../../components/Graphics/StatisticImcEdad5a17";
 import StatisticMadreGestante from "../../components/Graphics/StatisticMadreGestante";
 
+//import { }
+
 import "./StatisticHome.scss";
 
 export default function StatisticHome(){
     const { edad, sexo, documento } = useParams();
     const [ optionsGraphics, setOptionsGraphics] = useState({ check1: true, check2: false, check3: false, check4: false });
+
+    useEffect(() => {
+
+    }, []);
 
     const handleCheck = (e, item) => {
         console.log(e);
