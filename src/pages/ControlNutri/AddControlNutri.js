@@ -22,6 +22,7 @@ export default function AddControlNutri(){
         loading = false;
         getUserByIdApi(documento, token).then(response => {
             setUser(response);
+            setComponentLoaded(true); 
         })
         if(!loading){ 
           setComponentLoaded(true); 
@@ -38,15 +39,15 @@ export default function AddControlNutri(){
                     <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Mis Controles </ReactTooltip>
                 </Link>
             </h1>
-            {componentLoaded || (
+            {!componentLoaded ? (
             <Row className="justify-content-md-center text-center">
               <Col md={1} className="justify-content-center">
               <Spinner animation="border" >
               </Spinner> 
               </Col>
             </Row>
-          )}
-          {componentLoaded && (
+          )
+ : (
               <AddControlN userControl={userControl} />
           )}
         </Container>
