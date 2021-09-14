@@ -4,36 +4,96 @@ import { Line } from "react-chartjs-2";
 import ListControlN from "../../components/Control/ControlNutri/ListControlN";
 import ImageBackground from "../../assets/img/graphicsPrueba.png";
 import "./StatisticNutri.scss";
+import moment from "moment";
 
 export default function StatisticTallaEdad5a17(props){
-  const { sexo } = props;
-  const [ sizeImage, setSizeImage] = useState("150");
-  const image = new Image();
-  image.src = ImageBackground;
-  image.width = sizeImage;
+  const { sexo, listControls } = props;
+  console.log(listControls);
 
-
-const plugin = {
-  id: 'custom_canvas_background_image',
-  beforeDraw: (chart) => {
-    if (image.complete) {
-      const ctx = chart.ctx;
-      const {top, left, width, height} = chart.chartArea;
-      const x = left + width / 2 - image.width / 2;
-      const y = top + height / 2 - image.height / 2;
-      setSizeImage(`${width}px`);
-      ctx.drawImage(image, x, y);
-    } else {
-      image.onload = () => chart.draw();
-    }
-  }
-};
+  const generateCoordenadas = () => {
+    let coordenadas = [];
+    let lineasArray = lineas();
+  
+    listControls.map((item, index) => {
+      var coor = {
+        label: `Control ${item.id} - ${moment(item.fechaControl).format("DD-MM-YYYY")}`,
+        data: [{
+          y: item.talla,
+          x: item.meses,
+          r: 15
+        }],
+        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#A80B42',
+        backgroundColor: sexo !== "FEMENINO" ? '#5746D4' : 'rgba(212, 70, 130, 0.52)',//#D44682',
+        type: "bubble",
+        pointStyle: "bubble", 
+      }
+      coordenadas.push(coor);
+    });
+  
+    const allCoordenadas = [...lineasArray, ...coordenadas];
+    return allCoordenadas;
+  } 
 
 
 const data = {
-    labels: [ "", 3, 6, 9,"", 3, 6, 9,"" , 3, 6, 9,"" , 3, 6, 9, "", 3, 6, 9, "", 3, 6, 9, "", 3, 6, 9,"", 
+    /*labels: [ "", 3, 6, 9,"", 3, 6, 9,"" , 3, 6, 9,"" , 3, 6, 9, "", 3, 6, 9, "", 3, 6, 9, "", 3, 6, 9,"", 
               3, 6, 9, "", 3, 6, 9, "", 3, 6, 9, "", 3, 6, 9, "", 3, 6, 9, "", 3, 6, 9, "", 3, 6, 9,"" ],
-    datasets: [{
+    */
+   labels: [60, 
+      63, 66, 69, 72,
+      75, 78, 81, 84, 
+      87, 90, 93, 96, 
+      99, 102, 105, 108,
+      111, 114, 117, 120, 
+      123, 126, 129, 132, 
+      135, 138, 141, 144, 
+      147, 150, 153, 156, 
+      159, 162, 165, 168, 
+      171, 174, 177, 180, 
+      183, 186, 189, 192, 
+      195, 198, 201, 204, 
+      207, 210, 213, 216, 
+      219, 222, 225, 228 ], //57
+    datasets: generateCoordenadas()
+  };
+    return(
+        <Container>
+             {sexo === "MASCULINO" ?
+                <h2 className="text-center">Talla para la Edad Niños </h2>
+              : 
+              <h2 className="text-center">Talla para la Edad Niñas </h2>
+             }
+             <center>
+             <Form.Label column sm="4" style={{"font-size": "12px !important" }}>Puntuación Z (5 a 17 años)</Form.Label>
+             </center>
+             <div className="containerGraphic"> 
+                  <p className="ejey">Estatura (cm)</p>
+             <div style={{"max-width": "800px", "background-image": "url('../../assets/img/graphicsPrueba.png')"}}>
+             <Line 
+                data={data}
+                height={500}
+                width={800}
+                options={{
+                  pointStyle: "line",
+                  responsive: true,
+                  scales: {
+                    x: {
+                      type: 'linear',
+                      position: 'bottom',
+                      min: 60,
+                      max: 228,
+                    }
+                  }
+                }}
+              />
+             </div>
+             </div>
+             <p className="ejex">Edad (en meses y años cumplidos)</p> 
+        </Container>
+    )
+
+    function lineas(){
+      return  [{
         label: '- 2',
         data: [101,102.5,103.5,104.8,106,107.5,109,110.3,111.5,112.8,114,115.3,116.5,117.5,118.5,119.7,120.7,121.7,122.8,
                124,125,126,127,128.3,129.5,130.5,131.5,133,134.5,136,137.5,139,141,143,145,146.5,148,149.5,151,152.5,154,
@@ -80,30 +140,5 @@ const data = {
         tension: 0.1,
       }
     ]
-  };
-    return(
-        <Container>
-             {sexo === "MASCULINO" ?
-                <h2 className="text-center">Talla para la Edad Niños </h2>
-              : 
-              <h2 className="text-center">Talla para la Edad Niñas </h2>
-             }
-             <center>
-             <Form.Label column sm="4" style={{"font-size": "12px !important" }}>Puntuación Z (5 a 17 años)</Form.Label>
-             </center>
-             <div className="containerGraphic"> 
-                  <p className="ejey">Estatura (cm)</p>
-             <div style={{"max-width": "800px", "background-image": "url('../../assets/img/graphicsPrueba.png')"}}>
-             <Line 
-                data={data}
-                height={500}
-                width={800}
-                options={{pointStyle: "line"}}
-             />
-             </div>
-             </div>
-             <div className="valores">5 6 7 8 9 10 11 12 13 14 15 16 17 18 19</div>
-             <p className="ejex">Edad (en meses y años cumplidos)</p> 
-        </Container>
-    )
+    }
 }
