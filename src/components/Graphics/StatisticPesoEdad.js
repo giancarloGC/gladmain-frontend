@@ -4,35 +4,81 @@ import { Line } from "react-chartjs-2";
 import ListControlN from "../../components/Control/ControlNutri/ListControlN";
 import ImageBackground from "../../assets/img/graphicsPrueba.png";
 import "./StatisticNutri.scss";
+import moment from "moment";
 
 export default function StatisticPesoEdad(props){
-  const { sexo } = props;
-  const [ sizeImage, setSizeImage] = useState("150");
-  const image = new Image();
-  image.src = ImageBackground;
-  image.width = sizeImage;
-
-
-const plugin = {
-  id: 'custom_canvas_background_image',
-  beforeDraw: (chart) => {
-    if (image.complete) {
-      const ctx = chart.ctx;
-      const {top, left, width, height} = chart.chartArea;
-      const x = left + width / 2 - image.width / 2;
-      const y = top + height / 2 - image.height / 2;
-      setSizeImage(`${width}px`);
-      ctx.drawImage(image, x, y);
-    } else {
-      image.onload = () => chart.draw();
-    }
-  }
-};
-
+  const { sexo,  listControls } = props;
+  const generateCoordenadas = () => {
+    let coordenadas = [];
+    let lineasArray = lineas();
+  
+    listControls.map((item, index) => {
+      var coor = {
+        label: `Control ${item.id} - ${moment(item.fechaControl).format("DD-MM-YYYY")}`,
+        data: [{
+          y: item.peso,
+          x: item.meses,
+          r: 15
+        }],
+        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#A80B42',
+        backgroundColor: sexo !== "FEMENINO" ? '#5746D4' : 'rgba(212, 70, 130, 0.52)',//#D44682',
+        type: "bubble",
+        pointStyle: "bubble", 
+      }
+      coordenadas.push(coor);
+    });
+  
+    const allCoordenadas = [...lineasArray, ...coordenadas];
+    return allCoordenadas;
+  } 
 
 const data = {
-    labels: [ "Nacimiento", " ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "1 año", " ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "2 años" ],
-    datasets: [{
+    //labels: [ "Nacimiento", " ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "1 año", " ", 2, " ", 4, " ", 6, " ", 8, " ", 10, " ", "2 años" ],
+    labels: [ 0, 
+      1, 2, 3, 4, 5, 6, 7 , 8, 9, 10, 11, 12,
+      13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24
+    ],
+    datasets: generateCoordenadas()
+  };
+    return(
+        <Container>
+             {sexo === "MASCULINO" ?
+                <h2 className="text-center">Peso para la Edad Niños </h2>
+              : 
+              <h2 className="text-center">Peso para la Edad Niñas </h2>
+             }
+             <center>
+             <Form.Label column sm="4" style={{"font-size": "12px !important" }}>Puntuación Z (0 a 2 años)</Form.Label>
+             </center>
+             <div className="containerGraphic"> 
+                  <p className="ejey">Peso (kg)</p>
+             <div style={{"max-width": "800px", "background-image": "url('../../assets/img/graphicsPrueba.png')"}}>
+             <Line 
+                data={data}
+
+                height={500}
+                width={800}
+                options={{
+                  pointStyle: "line",
+                  responsive: true,
+                  scales: {
+                    x: {
+                      type: 'linear',
+                      position: 'bottom',
+                      min: 0,
+                      max: 24,
+                    }
+                  }
+                }}
+             />
+             </div>
+             </div>
+             <p className="ejex">Edad (en meses y años cumplidos)</p> 
+        </Container>
+    )
+
+    function lineas(){
+      return [{
         label: '- 2',
         data: [ 2.4, 3.4, 4.4, 5, 5.6, 6, 6.4, 6.7, 7, 7.2, 7.4, 7.6, 7.8, 8, 8.1, 8.3, 8.4, 8.6, 8.7, 8.9, 9.1, 9.2, 9.4, 9.5, 9.6 ],
         fill: false,
@@ -71,31 +117,5 @@ const data = {
         tension: 0.1,
       }
     ]
-  };
-    return(
-        <Container>
-             {sexo === "MASCULINO" ?
-                <h2 className="text-center">Peso para la Edad Niños </h2>
-              : 
-              <h2 className="text-center">Peso para la Edad Niñas </h2>
-             }
-             <center>
-             <Form.Label column sm="4" style={{"fontSize": "12px !important" }}>Puntuación Z (0 a 2 años)</Form.Label>
-             </center>
-             <div className="containerGraphic"> 
-                  <p className="ejey">Peso (kg)</p>
-             <div style={{"max-width": "800px", "background-image": "url('../../assets/img/graphicsPrueba.png')"}}>
-             <Line 
-                data={data}
-
-                height={500}
-                width={800}
-                options={{pointStyle: "line"}}
-
-             />
-             </div>
-             </div>
-             <p className="ejex">Edad (en meses y años cumplidos)</p> 
-        </Container>
-    )
+    }
 }

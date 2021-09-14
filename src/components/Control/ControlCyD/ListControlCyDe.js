@@ -4,8 +4,6 @@ import {BrowserRouter as Router, Route, Switch, Redirect, Link} from "react-rout
 import swal from 'sweetalert';
 import { faPrint } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Formik, Field, ErrorMessage } from "formik";
-import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { TOKEN } from "../../../utils/constans";
