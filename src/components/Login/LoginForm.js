@@ -26,15 +26,15 @@ export default function LoginForm(props) {
     })();
   }, []);
     return(
-      <Modal show={showLogin} size="xl"  onHide={() => setShowLogin(false)}  centered aria-labelledby="example-custom-modal-styling-title">
+      <Modal show={showLogin} size="lg"  onHide={() => setShowLogin(false)}  centered aria-labelledby="example-custom-modal-styling-title">
         <Modal.Header closeButton>
           <Modal.Title id="example-custom-modal-styling-title"> Inicio de Sesión</Modal.Title>
         </Modal.Header>
         <Modal.Body className="show-grid">
-        <Container className="p-5">
+        <Container >
             <Row>
                 <Col sm={2} md={6} className="text-center">
-                <h1 className="mb-5">Iniciar sesión</h1>
+                <h1 className="mb-3">Iniciar sesión</h1>
 
                 <Formik
                 initialValues={{ document: '', password: "", role: "" }}
@@ -121,7 +121,7 @@ export default function LoginForm(props) {
     </Col>
   </Form.Group>
 
-  <Form.Group as={Row} className="mb-3">
+  <Form.Group as={Row} className="mb-5">
   <Form.Label column sm="4">
       Rol
     </Form.Label>
