@@ -105,7 +105,7 @@ export default function StatisticHome(){
                     <StatisticPesoEdad  listControls={listControls} sexo={sexo}/>
                 )}
                 {edad >= 24 && edad < 60 && (
-                    <StatisticPesoEdad2a5 sexo={sexo}/>
+                    <StatisticPesoEdad2a5 listControls={listControls} sexo={sexo}/>
                 )}
             </>
         }
@@ -115,7 +115,7 @@ export default function StatisticHome(){
                     <StatisticImcEdad listControls={listControls} sexo={sexo}/>
                 )}
                 {edad >= 24 && edad < 60 && (
-                    <StatisticImcEdad2a5 sexo={sexo}/>
+                    <StatisticImcEdad2a5 listControls={listControls} sexo={sexo}/>
                 )}
                 {edad >= 60 && edad < 240 && (
                     <StatisticImcEdad5a17 listControls={listControls} sexo={sexo}/>

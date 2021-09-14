@@ -2,36 +2,86 @@ import React, { useState, useEffect} from "react";
 import { Container, Form } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
 import ImageBackground from "../../assets/img/graphicsPrueba.png";
+import moment from "moment";
 
 import "./StatisticNutri.scss";
 
 export default function StatisticImcEdad2a5(props){
-const { sexo } = props;
+const { sexo, listControls } = props;
 const [ sizeImage, setSizeImage] = useState("150");
 const image = new Image();
 image.src = ImageBackground;
 image.width = sizeImage;
 
-const plugin = {
-  id: 'custom_canvas_background_image',
-  beforeDraw: (chart) => {
-    if (image.complete) {
-      const ctx = chart.ctx;
-      const {top, left, width, height} = chart.chartArea;
-      const x = left + width / 2 - image.width / 2;
-      const y = top + height / 2 - image.height / 2;
-      setSizeImage(`${width}px`);
-      ctx.drawImage(image, x, y);
-    } else {
-      image.onload = () => chart.draw();
-    }
-  }
-};
-
+  const generateCoordenadas = () => {
+    let coordenadas = [];
+    let lineasArray = lineas();
+  
+    listControls.map((item, index) => {
+      var coor = {
+        label: `Control ${item.id} - ${moment(item.fechaControl).format("DD-MM-YYYY")}`,
+        data: [{
+          y: item.imc,
+          x: item.meses,
+          r: 15
+        }],
+        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#A80B42',
+        backgroundColor: sexo !== "FEMENINO" ? '#5746D4' : 'rgba(212, 70, 130, 0.52)',//#D44682',
+        type: "bubble",
+        pointStyle: "bubble", 
+      }
+      coordenadas.push(coor);
+    });
+  
+    const allCoordenadas = [...lineasArray, ...coordenadas];
+    return allCoordenadas;
+  } 
 
 const data = {
-  labels: [ "2 años", 2, 4, 6, 8, 10, "3 años", 2, 4, 6, 8, 10, "4 años", 2, 4, 6, 8, 10, "5 años" ],
-  datasets: [{
+  labels: [ 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60 ],
+  datasets: generateCoordenadas()
+};
+
+    return(
+        <Container>
+            {sexo === "MASCULINO" ?
+                <h2 className="text-center">IMC para la Edad Niños </h2>
+              : 
+              <h2 className="text-center">IMC para la Edad Niñas </h2>
+            }
+             <center>
+             <Form.Label column sm="4" style={{"fontSize": "12px !important" }}>Puntuación Z (2 a 5 años)</Form.Label>
+            </center>
+             <div className="containerGraphic"> 
+                  <p className="ejey">IMC(kg/m^2)</p>
+                <div style={{"max-width": "800px", "text-align":"center"}} >
+                  <Line 
+                      data={data}
+                      height={500}
+                      width={800}
+                      options={{
+                        pointStyle: "line",
+                        responsive: true,
+                        scales: {
+                          x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: 24,
+                            max: 60
+                          }
+                        }
+                      }}
+                  />
+                </div>
+                </div>
+                <p className="ejex">Edad (en meses y años cumplidos)</p>
+        </Container>
+    )
+
+
+    function lineas(){
+    return[
+    {
       label: '- 2',
       data: [ 13.8,13.75,13.67,13.58,13.5,13.42,13.35,13.3,13.25,13.2,13.15,13.1,13.05,13.03,13,12.96,12.94,12.9,12.89 ],
       fill: false,
@@ -74,30 +124,7 @@ const data = {
       borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
       tension: 0.1,
     }
-  ]
-};
-    return(
-        <Container>
-            {sexo === "MASCULINO" ?
-                <h2 className="text-center">IMC para la Edad Niños </h2>
-              : 
-              <h2 className="text-center">IMC para la Edad Niñas </h2>
-            }
-             <center>
-             <Form.Label column sm="4" style={{"fontSize": "12px !important" }}>Puntuación Z (2 a 5 años)</Form.Label>
-            </center>
-             <div className="containerGraphic"> 
-                  <p className="ejey">IMC(kg/m^2)</p>
-                <div style={{"max-width": "800px", "text-align":"center"}} >
-                  <Line 
-                      data={data}
-                      height={500}
-                      width={800}
-                      options={{pointStyle: "line"}}
-                  />
-                </div>
-                </div>
-                <p className="ejex">Edad (en meses y años cumplidos)</p>
-        </Container>
-    )
+  ];
+}
+
 }
