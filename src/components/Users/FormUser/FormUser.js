@@ -4,6 +4,9 @@ import { Formik, Field, ErrorMessage } from "formik";
 import { insertUserApi } from "../../../api/user";
 import { TOKEN } from "../../../utils/constans";
 import { getRolesApi, getAssignRolApi } from "../../../api/rol";
+import swal from 'sweetalert';
+import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
+import moment from 'moment';
 
 export default function FormUser(){
     const [ textFormSend, setTextFormSend ] = useState({});
@@ -11,12 +14,18 @@ export default function FormUser(){
     const [show, setShow] = useState(false);
     const [ rolesApi, setRolesApi ] = useState([]);
     const [ rolesSelected, setRolesSelected ] = useState([]);
+    const [ edadFinaly, setEdadFinaly ] = useState(null);
+    const [ goRedirect, setGoRedirect ] = useState(false);
+
 
     useEffect(() => {
       getRolesApi().then(response => {
         setRolesApi(response);
       })
     }, []);
+
+    let fechaNacimiento;
+    let dateCurrent = moment();
 
     const handleCheck = (e, item) => {
       let role = {
@@ -36,6 +45,9 @@ export default function FormUser(){
     return(
         <Container>
             <Row style={{backgroundColor: '#f1f1f1'}}>
+            {goRedirect && (
+                   <Redirect to={`/admin/users`} />
+              )}
                 <Col sm={2}></Col>
                 <Col sm={8} background="background-color:#A42D55"> 
                 <Formik
@@ -79,11 +91,17 @@ export default function FormUser(){
                     errores.sexo = 'Asegurese de selecionar una opción';
                   }
 
-                  const dateCurrently = new Date();
+                  const dateCurrently = moment();
                   if(!valores.fechaNacimiento){
                     errores.fechaNacimiento = 'Asegurese de selecionar una fecha';
-                  }else if(dateCurrently <= valores.fechaNacimiento){
-                    errores.fechaNacimiento = 'Seleccione una fecha valida';
+                  }else{
+                    let nacimiento = moment(valores.fechaNacimiento);
+                    if(nacimiento.diff(dateCurrently, 'hours') > 0){
+                        errores.fechaNacimiento = 'Seleccione una fecha valida';
+                    }else{
+                      let mesesEdad = dateCurrently.diff(nacimiento, 'months');
+                      setEdadFinaly(mesesEdad);
+                    }
                   }
 
                   if(!valores.celular){
@@ -91,18 +109,6 @@ export default function FormUser(){
                   }else if(!/^([0-9])*$/.test(valores.celular)){
                     errores.celular = 'Teléfono incorrecto, solo puedes escribir números';
                   }  
-
-                  if(!valores.edad){
-                    errores.edad = 'Por favor, ingresa números';
-                  }else if(!/^([0-9])*$/.test(valores.edad)){
-                    errores.edad = 'Edad incorrecta, solo puedes escribir números';
-                  }else if(valores.edad <= 0 || valores.edad > 90){
-                    errores.edad = 'Edad invalida, intente con otra';
-                  }       
-
-                  if(!valores.meses){
-                    errores.meses = 'Asegurese de selecionar una opción';
-                  }
 
                   if(!valores.municipio){
                     errores.municipio = 'No se permiten campos vacíos'
@@ -112,9 +118,10 @@ export default function FormUser(){
 
                   if(!valores.direccion){
                     errores.direccion = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.direccion)){
-                    errores.direccion = 'Municipio incorrecto, solo puedes escribir letras';
                   }
+                  /*else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.direccion)){
+                    errores.direccion = 'Municipio incorrecto, solo puedes escribir letras';
+                  }*/
 
                   if(!valores.correoElectronico){
                     errores.correoElectronico = 'Por favor, ingresa números'
@@ -137,9 +144,8 @@ export default function FormUser(){
 
                 onSubmit={(valores, {resetForm}) => {
                   if(rolesSelected.length === 0){
-                    setTextFormSend({
-                        variant: "danger", heading: "¡Opss, No has seleccionado roles!",
-                        message: `Debes seleccionar al menos un  rol para el usuario`
+                    swal("¡Opss, No has seleccionado roles!, Debes seleccionar al menos un  rol para el usuario", {
+                      icon: "error",
                     });
                     setShow(true);
                     setTimeout(() => {
@@ -160,13 +166,14 @@ export default function FormUser(){
                       sexo: valores.sexo,
                       fechaNacimiento: valores.fechaNacimiento,
                       celular: valores.celular,
-                      edad: valores.edad,
+                      edad: edadFinaly,
                       municipio: valores.municipio,
                       direccion: valores.direccion,
                       correoElectronico: valores.correoElectronico,
                       clave: valores.clave,
                       token: token
                     }
+                    console.log(data);
                 
                     insertUserApi(data).then(response => {
                       if(response === true){
@@ -183,24 +190,25 @@ export default function FormUser(){
                           })
                           if(successs){
                             console.log("entro");
-                            setTextFormSend({
-                              variant: "success", heading: "¡Excelente, registro exitoso!",
-                              message: `El usuario ${valores.name} fue almacenado correctamente`
+                            swal("¡Excelente, registro exitoso!, El usuario fue almacenado correctamente", {
+                              icon: "success",
+                            }).then((value) => {
+                              setGoRedirect(true);
                             });
-                            setShow(true);
+                            //setShow(true);
                           }else{
                             console.log("no entro");
-                            setTextFormSend({
-                              variant: "danger", heading: "¡Opss, ocurrió un error!",
-                              message: "Revisaremos lo ocurrido, inténtalo nuevamente"
-                          });
-                          setShow(true);
+                            swal("Opss! Ocurrió un error!", {
+                              icon: "error",
+                            }).then((value) => {
+                              setGoRedirect(true);
+                            });
+                          //setShow(true);
                           }
                         }else{
-                            setTextFormSend({
-                                variant: "danger", heading: "¡Opss, ocurrió un error!",
-                                message: "Revisaremos lo ocurrido, inténtalo nuevamente"
-                            });
+                          swal("Opss! Ocurrió un error al almacenar el usuario!", {
+                            icon: "error",
+                          });
                             setShow(true);
                         }
                   });
@@ -312,34 +320,17 @@ export default function FormUser(){
 
 
                         <Form.Group as={Row} className="mb-3 mt-3">
-                        <Col md={2}>
+                        <Col md={6}>
                         <InputGroup hasValidation>
-                            <Form.Control type="number" placeholder="edad " size="lg" id="edad" name="edad" 
-                            value={values.edad} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
-                            isValid={!errors.edad && touched.edad}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.edad}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                        </Col>
-
-                        <Col md={4}>
-                        <InputGroup hasValidation>
-                        <Form.Select size="lg" name="meses" onChange={handleChange} onBlur={handleBlur}
-                                    isValid={!errors.meses && touched.meses} isInvalid={!!errors.meses && touched.meses}
-                            >
-                            <option disabled selected>Seleccionar opción</option>
-                            <option value="meses">meses</option>
-                            <option value="años">años</option>
-
-                            </Form.Select>
-                            <Form.Control.Feedback type="invalid">
-                                        {errors.meses}
-                                        </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
+                              <Form.Control type="text" placeholder="Dígita aquí la edad" size="lg" id="edad" name="edad" 
+                               value={edadFinaly ? `${edadFinaly} meses` : values.edad} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
+                               isValid={!errors.edad && touched.edad} disabled
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                  {errors.edad}
+                              </Form.Control.Feedback>
+                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          </InputGroup>
                         </Col>
 
                         <Col md={6}>

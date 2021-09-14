@@ -3,7 +3,7 @@ import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-boots
 import { Formik, Field, ErrorMessage } from "formik";
 import { TOKEN } from "../../../utils/constans";
 import  AuthContext  from "../../../hooks/useAuth";
-
+import swal from 'sweetalert';
 import { updateContVaccApi } from "../../../api/vaccination";
 
 export default function EditControlV(props){
@@ -83,24 +83,21 @@ export default function EditControlV(props){
               console.log(formData);
               valores.token = token;
                 /*if ((valores.vacunas).length === 0) {
-                  setTextFormSend({
-                    variant: "danger", heading: "¡Opss, ocurrió un error!",
-                    message: "Recuerda seleccionar las vacunas que se aplicó el usuario"
-                });
+                  swal("Opss! Ocurrió un error!, Recuerda seleccionar las vacunas que se aplicó el usuario", {
+                          icon: "error",
+                  });
                 setShow(true);
               }else{*/
                 updateContVaccApi(formData, token).then(response => {
                   if(response === true && (valores.vacunas).length!=0){
-                      setTextFormSend({
-                        variant: "success", heading: "¡Excelente, registro exitoso!",
-                        message: `El control de vacunas fue almacenado correctamente`
-                      });
+                    swal("¡Excelente, registro exitoso!, El control de vacunas fue acualizado correctamente", {
+                      icon: "success",
+                    });
                       setShow(true);
                   }else{
-                      setTextFormSend({
-                        variant: "danger", heading: "¡Opss, ocurrió un error!",
-                        message: "Revisaremos lo ocurrido, inténtalo nuevamente"
-                    });
+                    swal("Opss! Ocurrió un error!", {
+                      icon: "error",
+                  });
                     setShow(true);
                     }
                });

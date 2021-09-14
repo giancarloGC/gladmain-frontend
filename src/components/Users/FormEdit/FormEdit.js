@@ -5,6 +5,7 @@ import { updateUserApi } from "../../../api/user";
 import { TOKEN } from "../../../utils/constans";
 import { getRolesApi, getAssignRolApi, consultarRolesUsuarioApi, getRemoveRolApi } from "../../../api/rol";
 import "./FormEdit.scss";
+import swal from 'sweetalert';
 
 export default function FormEdit(props){   
     const { user } = props;
@@ -118,17 +119,15 @@ export default function FormEdit(props){
 
       if(actualizationSuccess){
         console.log("entro");
-        setTextFormSend({
-          variant: "success", heading: "¡Excelente, actualización exitosa!",
-          message: `El usuario fue actualizado correctamente`
+        swal("¡Excelente, actualización exitosa!, El usuario fue actualizado correctamente", {
+          icon: "success",
         });
         setShow(true);
       }else{
         console.log("no entro");
-        setTextFormSend({
-          variant: "danger", heading: "¡Opss, ocurrió un error!",
-          message: "Revisaremos lo ocurrido, inténtalo nuevamente"
-      });
+        swal("Opss! Ocurrió un error al actualizar el usuario!", {
+          icon: "error",
+        });
       setShow(true);
       }
     }
@@ -222,10 +221,9 @@ export default function FormEdit(props){
                 }}
                 onSubmit={(valores, {resetForm}) => {
                   if(rolesSelected.length === 0){
-                        setTextFormSend({
-                            variant: "danger", heading: "¡Opss, No has seleccionado funciones!",
-                            message: `Debes seleccionar al menos una función para el rol`
-                        });
+                    swal("¡Opss, No has seleccionado funciones!, Debes seleccionar al menos una función para el usuario", {
+                      icon: "error",
+                    });
                         setShow(true);
                         setTimeout(() => {
                             setShow(false);
@@ -249,10 +247,9 @@ export default function FormEdit(props){
                         if(response === true){
                           updateRoles();
                         }else{
-                            setTextFormSend({
-                                variant: "danger", heading: "¡Opss, ocurrió un error!",
-                                message: "Revisaremos lo ocurrido, inténtalo nuevamente"
-                            });
+                          swal("Opss! Ocurrió un error!", {
+                            icon: "error",
+                          });
                             setShow(true);
                         }
                       });
@@ -319,27 +316,6 @@ export default function FormEdit(props){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
-
-
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Sexo</Form.Label>
-                        <Col sm="4">
-                          <InputGroup hasValidation>
-                          <Form.Select size="lg" name="sexo" onChange={handleChange} onBlur={handleBlur}
-                                  defaultValue={user.sexo} isValid={!errors.sexo && touched.sexo} isInvalid={!!errors.sexo && touched.sexo}
-                              >
-                              <option disabled>Selecciona el sexo</option>
-                              <option value="FEMENINO">FEMENINO</option>
-                              <option value="MASCULINO">MASCULINO</option>
-
-                              </Form.Select>
-                              <Form.Control.Feedback type="invalid">
-                                          {errors.sexo}
-                                          </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                          </Col>
-
-
 
                         <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Sexo</Form.Label>
                         <Col sm="4">

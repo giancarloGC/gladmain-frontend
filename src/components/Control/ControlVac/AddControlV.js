@@ -4,7 +4,7 @@ import { Formik, Field, ErrorMessage } from "formik";
 import { TOKEN } from "../../../utils/constans";
 import  AuthContext  from "../../../hooks/useAuth";
 import moment from 'moment';
-
+import swal from 'sweetalert';
 import { insertContVaccApi } from "../../../api/vaccination";
 
 export default function AddControlV(props){
@@ -110,24 +110,21 @@ export default function AddControlV(props){
                 console.log(formData);
                   valores.token = token;
                     if ((valores.vacunas).length === 0) {
-                      setTextFormSend({
-                        variant: "danger", heading: "¡Opss, ocurrió un error!",
-                        message: "Recuerda seleccionar las vacunas que se aplicó el usuario"
+                      swal("¡Opss, ocurrió un error!, Recuerda seleccionar las vacunas que se aplicó el usuario", {
+                        icon: "error",
                     });
                     setShow(true);
                   }else{
                     insertContVaccApi(formData, token).then(response => {
                       if(response === true && (valores.vacunas).length!=0){
-                          setTextFormSend({
-                            variant: "success", heading: "¡Excelente, registro exitoso!",
-                            message: `El control de vacunas fue almacenado correctamente`
-                          });
+                        swal("¡Excelente, registro exitoso!, El control de vacunas fue almacenado correctamente", {
+                          icon: "success",
+                      });
                           setShow(true);
                       }else{
-                          setTextFormSend({
-                            variant: "danger", heading: "¡Opss, ocurrió un error!",
-                            message: "Revisaremos lo ocurrido, inténtalo nuevamente"
-                        });
+                        swal("Opss! Ocurrió un error!", {
+                          icon: "error",
+                      });
                         setShow(true);
                         }
                    });

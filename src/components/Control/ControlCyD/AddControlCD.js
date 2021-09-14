@@ -5,6 +5,7 @@ import  AuthContext  from "../../../hooks/useAuth";
 import { TOKEN } from "../../../utils/constans";
 import { insertControlApi } from "../../../api/controls";
 import { updateUserApi } from "../../../api/user";
+import swal from 'sweetalert';
 
 export default function AddControlCD(props){
   const { userControl } = props;
@@ -23,17 +24,15 @@ export default function AddControlCD(props){
     }
     if(result.user === true && result.control === true){
       console.log("entro");
-      setTextFormSend({
-        variant: "success", heading: "¡Excelente, registro exitoso!",
-        message: `El control fue almacenado correctamente`
+      swal("¡Excelente, registro exitoso!, El control fue almacenado correctamente", {
+        icon: "success",
       });
       setShow(true);
   }else{
     console.log("rarisimo");
-      setTextFormSend({
-          variant: "danger", heading: "¡Opss, ocurrió un error!",
-          message: "Revisaremos lo ocurrido, inténtalo nuevamente"
-      });
+    swal("Opss! Ocurrió un error!", {
+      icon: "error",
+  });
       setShow(true);
   }
   setTimeout(() => {

@@ -3,12 +3,11 @@ import { Container, Row, Col, Button, Form, InputGroup, Alert } from "react-boot
 import { Formik } from "formik";
 import { TOKEN } from "../../../utils/constans";
 import  AuthContext  from "../../../hooks/useAuth";
-import swal from 'sweetalert';
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import DangerAnimation from "../../../assets/animations/control/warning2.json";
 import WarningAnimation from "../../../assets/animations/control/warning.json";
 import SuccessAnimation from "../../../assets/animations/control/successNew.json";
-
+import swal from 'sweetalert';
 import Lottie from 'react-lottie';
 import { Line } from "react-chartjs-2";
 import { insertControlApi } from "../../../api/controls";

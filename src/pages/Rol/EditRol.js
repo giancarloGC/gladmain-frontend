@@ -5,7 +5,7 @@ import { getRolByIdApi, updateRolApi } from "../../api/rol";
 import { TOKEN } from "../../utils/constans";
 import { getPrivilegiosApi } from "../../api/consultar_privilegios";
 import { useParams } from "react-router-dom";
-
+import swal from 'sweetalert';
 
 export default function EditRol(){
     const { idRol } = useParams();
@@ -65,19 +65,18 @@ export default function EditRol(){
                 initialValues={ name }
                 validate={(valores) => {
                   let errores = {};
-                  if(!valores.name){
+                  /*if(!valores.name){
                     errores.name = 'No se permiten campos vacíos'
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.name)){
                     errores.name = 'Nombre incorrecto, solo puedes escribir letras';
-                  }
+                  }*/
 
                   return errores;
                 }}
                 onSubmit={(valores, {resetForm}) => {
                     if(infoRol.privilegios.length === 0){
-                        setTextFormSend({
-                            variant: "danger", heading: "¡Opss, No has seleccionado funciones!",
-                            message: `Debes seleccionar al menos una función para el rol`
+                        swal("¡Opss, No has seleccionado funciones, Debes seleccionar al menos una función para el rol!", {
+                            icon: "error",
                         });
                         setShow(true);
                         setTimeout(() => {
@@ -88,15 +87,16 @@ export default function EditRol(){
                         resetForm();
                         updateRolApi(infoRol, token).then(response => {
                             if(response === true){
-                                setTextFormSend({
-                                    variant: "success", heading: "¡Excelente, registro exitoso!",
-                                    message: `El rol ${valores.name} fue almacenado correctamente`
-                                });
+                                swal("¡Excelente, registro exitoso!, El rol fue actualizado correctamente", {
+                                    icon: "success",
+                                })
+                                .then((value) => {
+                                    window.location.replace("/admin/roles");
+                                }); 
                                 setShow(true);
                             }else{
-                                setTextFormSend({
-                                    variant: "danger", heading: "¡Opss, ocurrió un error!",
-                                    message: "Revisaremos lo ocurrido, inténtalo nuevamente"
+                                swal("Opss! Ocurrió un error al editar el rol!", {
+                                    icon: "error",
                                 });
                                 setShow(true);
                             }

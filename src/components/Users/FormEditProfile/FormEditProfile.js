@@ -4,6 +4,7 @@ import { Formik, Field, ErrorMessage } from "formik";
 import { updateUserApi } from "../../../api/user";
 import { TOKEN } from "../../../utils/constans";
 import "../FormEdit/FormEdit.scss";
+import swal from 'sweetalert';
 
 export default function FormEditProfile(props){   
     const { user } = props;
@@ -119,16 +120,14 @@ export default function FormEditProfile(props){
                       }
                       updateUserApi(data).then(response => {
                         if(response === true){
-                          setTextFormSend({
-                            variant: "success", heading: "¡Excelente, actualización exitosa!",
-                            message: `Sus datos fueron actualizados correctamente`
+                          swal("¡Excelente, actualización exitosa!, Sus datos fueron actualizados correctamente", {
+                            icon: "success",
                           });
                           setShow(true);
                         }else{
-                            setTextFormSend({
-                                variant: "danger", heading: "¡Opss, ocurrió un error!",
-                                message: "Revisaremos lo ocurrido, inténtalo nuevamente"
-                            });
+                          swal("Opss! Ocurrió un error!", {
+                            icon: "error",
+                          });
                             setShow(true);
                         }
                       });

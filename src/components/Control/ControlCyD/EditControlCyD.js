@@ -4,6 +4,7 @@ import { Formik, Field, ErrorMessage } from "formik";
 import  AuthContext  from "../../../hooks/useAuth";
 import { TOKEN } from "../../../utils/constans";
 import { updateControlApi } from "../../../api/controls";
+import swal from 'sweetalert';
 
 export default function EditControlCyD(props){
   const { userControl, control } = props;
@@ -118,16 +119,14 @@ export default function EditControlCyD(props){
               formData.token = token;
               updateControlApi(formData).then(response => {
                 if(response === true){
-                  setTextFormSend({
-                    variant: "success", heading: "¡Excelente, registro exitoso!",
-                    message: `El control ${valores.name} fue almacenado correctamente`
-                  });
+                  swal("¡Excelente, registro exitoso!, El control fue almacenado correctamente", {
+                    icon: "success",
+                });
                   setShow(true);
                 }else{
-                  setTextFormSend({
-                      variant: "danger", heading: "¡Opss, ocurrió un error!",
-                      message: "Revisaremos lo ocurrido, inténtalo nuevamente"
-                  });
+                  swal("Opss! Ocurrió un error!", {
+                    icon: "error",
+                });
                   setShow(true);
                 }
               });
