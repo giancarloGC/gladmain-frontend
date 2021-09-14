@@ -4,6 +4,7 @@ import { Formik, Field, ErrorMessage } from "formik";
 import { getUserByIdApi } from "../../../api/user";
 import { TOKEN } from "../../../utils/constans";
 import { useParams } from "react-router-dom";
+import moment from 'moment';
 
 import ImageMen from "./../../../assets/img/men.png";
 import ImageWomen from "./../../../assets/img/women.png";
@@ -21,6 +22,10 @@ export default function DetailsUser(){
     let newDate = date.split("T");
    return newDate[0];
 };
+
+let dateFechaNaci = moment(user.fechaNacimiento);
+    let dateCurrent = moment();
+    user.edad = dateCurrent.diff(dateFechaNaci, 'months');
   
   useEffect(() => {
     getUserByIdApi(documento, token).then(response => {
@@ -166,7 +171,7 @@ export default function DetailsUser(){
             <ListGroupItem>{user.documento}</ListGroupItem>
               <ListGroupItem>{user.sexo}</ListGroupItem>
               <ListGroupItem>{formatedDate(user.fechaNacimiento)}</ListGroupItem>
-              <ListGroupItem>{user.edad}</ListGroupItem>
+              <ListGroupItem>{`${user.edad} meses`}</ListGroupItem>
               <ListGroupItem>{user.celular}</ListGroupItem>
               <ListGroupItem>{user.municipio}</ListGroupItem>
               <ListGroupItem>{user.direccion}</ListGroupItem>

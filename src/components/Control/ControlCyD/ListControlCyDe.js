@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button, Form, InputGroup, ListGroup} from "react-bootstrap";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link} from "react-router-dom";
 import swal from 'sweetalert';
 import { faPrint } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Formik, Field, ErrorMessage } from "formik";
-import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import { useParams } from "react-router-dom";
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { TOKEN } from "../../../utils/constans";

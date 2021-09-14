@@ -5,6 +5,7 @@ import  AuthContext  from "../../../hooks/useAuth";
 import { TOKEN } from "../../../utils/constans";
 import { insertControlApi } from "../../../api/controls";
 import { updateUserApi } from "../../../api/user";
+import moment from 'moment';
 
 export default function AddControlCD(props){
   const { userControl } = props;
@@ -13,6 +14,10 @@ export default function AddControlCD(props){
   const documentoLogin = user.sub.split('-');
   const [ textFormSend, setTextFormSend ] = useState({});
   const [show, setShow] = useState(false);
+
+  let dateFechaNaci = moment(userControl.fechaNacimiento);
+  let dateCurrent = moment();
+  userControl.edad = dateCurrent.diff(dateFechaNaci, 'months');
 
   const updateAndInsert = async (dataUser, formData) => {
     const responseUser = await updateAgeUser(dataUser);
@@ -269,12 +274,12 @@ export default function AddControlCD(props){
                           </InputGroup>
                           </Col>
 
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Edad en meses</Form.Label>
-                        <Col sm="2">
-                          <InputGroup hasValidation>
-                              <Form.Control type="number" placeholder="Edad" size="lg" id="edad" name="edad" 
-                               defaultValue={userControl.edad} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
-                               isValid={!errors.edad && touched.edad}
+                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Edad </Form.Label>
+                        <Col sm="4">
+                        <InputGroup hasValidation>
+                              <Form.Control type="text" placeholder="Dígita aquí la edad" size="lg" id="edad" name="edad" 
+                              value={`${userControl.edad} meses`} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
+                               isValid={!errors.edad && touched.edad} disabled
                               />
                               <Form.Control.Feedback type="invalid">
                                   {errors.edad}
@@ -282,23 +287,7 @@ export default function AddControlCD(props){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
-
-                        <Col md={2}>
-                        <InputGroup hasValidation>
-                        <Form.Select size="lg" name="meses" onChange={handleChange} onBlur={handleBlur} id="meses"
-                                    isValid={!errors.meses && touched.meses} isInvalid={!!errors.meses && touched.meses}
-                            >
-                            <option disabled selected>Seleccionar opción</option>
-                            <option value="meses">meses</option>
-                            <option value="anos">años</option>
-
-                            </Form.Select>
-                            <Form.Control.Feedback type="invalid">
-                                        {errors.meses}
-                                        </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                        </Col>
+                       
 
                         <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Peso (kg)</Form.Label>
                         <Col sm="4">

@@ -3,6 +3,7 @@ import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-boots
 import { Formik, Field, ErrorMessage } from "formik";
 import { TOKEN } from "../../../utils/constans";
 import  AuthContext  from "../../../hooks/useAuth";
+import moment from 'moment';
 
 import { updateContVaccApi } from "../../../api/vaccination";
 
@@ -15,6 +16,10 @@ export default function EditControlV(props){
     const [show, setShow] = useState(false);
     const [ textFormSend, setTextFormSend ] = useState({});
     const [ vaccinesSelected, setVaccinesSelected ] = useState([]);
+
+    let dateFechaNaci = moment(userControl.fechaNacimiento);
+    let dateCurrent = moment();
+    userControl.edad = dateCurrent.diff(dateFechaNaci, 'months');
   
     const dateFormat = (date) => {
       if(date){
@@ -143,10 +148,10 @@ export default function EditControlV(props){
                         <Form.Group as={Row} className="mb-3">
                         <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Edad</Form.Label>
                         <Col sm="8">
-                          <InputGroup hasValidation>
-                              <Form.Control type="number" placeholder="Dígita aquí la edad" size="lg" id="edad" name="edad" 
-                               value={userControl.edad} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
-                               isValid={!errors.edad && touched.edad}
+                        <InputGroup hasValidation>
+                              <Form.Control type="text" placeholder="Dígita aquí la edad" size="lg" id="edad" name="edad" 
+                               value={`${userControl.edad} meses`} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
+                               isValid={!errors.edad && touched.edad} disabled
                               />
                               <Form.Control.Feedback type="invalid">
                                   {errors.edad}
