@@ -2,37 +2,96 @@ import React, { useState, useEffect} from "react";
 import { Container, Form } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
 import ImageBackground from "../../assets/img/graphicsPrueba.png";
+import moment from 'moment';
 
 export default function StatisticImcEdad5a17(props){
-const { sexo } = props;
+const { sexo, listControls } = props;
 const [ sizeImage, setSizeImage] = useState("150");
 
 const image = new Image();
 image.src = ImageBackground;
 image.width = sizeImage;
 
+const generateCoordenadas = () => {
+  let coordenadas = [];
+  let lineasArray = lineas();
 
-const plugin = {
-  id: 'custom_canvas_background_image',
-  beforeDraw: (chart) => {
-    if (image.complete) {
-      const ctx = chart.ctx;
-      const {top, left, width, height} = chart.chartArea;
-      const x = left + width / 2 - image.width / 2;
-      const y = top + height / 2 - image.height / 2;
-      setSizeImage(`${width}px`);
-      ctx.drawImage(image, x, y);
-    } else {
-      image.onload = () => chart.draw();
+  listControls.map((item, index) => {
+    var coor = {
+      label: `Control ${item.id} - ${moment(item.fechaControl).format("DD-MM-YYYY")}`,
+      data: [{
+        y: item.imc,
+        x: item.meses,
+        r: 15
+      }],
+      borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#A80B42',
+      backgroundColor: sexo !== "FEMENINO" ? '#5746D4' : 'rgba(212, 70, 130, 0.52)',//#D44682',
+      type: "bubble",
+      pointStyle: "bubble", 
     }
-  }
-};
+    coordenadas.push(coor);
+  });
 
+  const allCoordenadas = [...lineasArray, ...coordenadas];
+  return allCoordenadas;
+} 
 
 const data = {
-    labels: [ "", 3, 6, 9,"", 3, 6, 9,"" , 3, 6, 9,"" , 3, 6, 9, "", 3, 6, 9, "", 3, 6, 9, "", 3, 6, 9,"", 
-              3, 6, 9, "", 3, 6, 9, "", 3, 6, 9, "", 3, 6, 9, "", 3, 6, 9, "", 3, 6, 9, "", 3, 6, 9,"" ],
-    datasets: [{
+    labels: [ 60, 
+      63, 66, 69, 72,
+      75, 78, 81, 84, 
+      87, 90, 93, 96, 
+      99, 102, 105, 108,
+      111, 114, 117, 120, 
+      123, 126, 129, 132, 
+      135, 138, 141, 144, 
+      147, 150, 153, 156, 
+      159, 162, 165, 168, 
+      171, 174, 177, 180, 
+      183, 186, 189, 192, 
+      195, 198, 201, 204, 
+      207, 210, 213, 216, 
+      219, 222, 225, 228 ],
+    datasets: generateCoordenadas()
+  
+  };
+    return(
+        <Container>
+            {sexo === "MASCULINO" ?
+              <h2 className="text-center">IMC para la Edad Niños </h2>
+              : 
+              <h2 className="text-center">IMC para la Edad Niñas </h2>
+            }
+            <center>
+             <Form.Label column sm="4" style={{"fontSize": "12px !important" }}>Puntuación Z (5 a 17 años)</Form.Label>
+            </center>
+             <div className="containerGraphic"> 
+                  <p className="ejey">IMC(kg/m^2)</p>
+                <div style={{"max-width": "800px", "text-align":"center"}} >
+                  <Line 
+                      data={data}
+                      height={500}
+                      width={800}
+                      options={{
+                        pointStyle: "line",
+                        responsive: true,
+                        scales: {
+                          x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: 60,
+                            max: 228
+                          }
+                        }
+                      }}
+                  />
+                </div>
+                </div>
+                <p className="ejex">Edad (en meses y años cumplidos)</p>
+        </Container>
+    )
+    function lineas(){
+      return [{
         label: '- 2',
         data: [ 13,13,13,13,13.05,13.1,13.15,13.2,13.24,13.27,13.3,13.35,13.4,13.43,13.46,13.48,13.51,13.55,
                 13.6,13.65,13.71,13.79,13.87,13.92,14.02,14.1,14.23,14.35,14.45,14.55,14.69,14.85,14.98,15.1,15.25,
@@ -80,30 +139,6 @@ const data = {
         borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
         tension: 0.1,
       }
-    ]
-  };
-    return(
-        <Container>
-            {sexo === "MASCULINO" ?
-              <h2 className="text-center">IMC para la Edad Niños </h2>
-              : 
-              <h2 className="text-center">IMC para la Edad Niñas </h2>
-            }
-            <center>
-             <Form.Label column sm="4" style={{"fontSize": "12px !important" }}>Puntuación Z (5 a 17 años)</Form.Label>
-            </center>
-             <div className="containerGraphic"> 
-                  <p className="ejey">IMC(kg/m^2)</p>
-                <div style={{"max-width": "800px", "text-align":"center"}} >
-                  <Line 
-                      data={data}
-                      height={500}
-                      width={800}
-                      options={{pointStyle: "line"}}
-                  />
-                </div>
-                </div>
-                <p className="ejex">Edad (en meses y años cumplidos)</p>
-        </Container>
-    )
+      ]
+    }
 }

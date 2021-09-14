@@ -112,13 +112,13 @@ export default function StatisticHome(){
         {optionsGraphics.check4 &&
             <>
                 {edad < 24 && (
-                    <StatisticImcEdad sexo={sexo}/>
+                    <StatisticImcEdad listControls={listControls} sexo={sexo}/>
                 )}
                 {edad >= 24 && edad < 60 && (
                     <StatisticImcEdad2a5 sexo={sexo}/>
                 )}
                 {edad >= 60 && edad < 240 && (
-                    <StatisticImcEdad5a17 sexo={sexo}/>
+                    <StatisticImcEdad5a17 listControls={listControls} sexo={sexo}/>
                 )}
             </>
         }
