@@ -25,7 +25,7 @@ import "./StatisticHome.scss";
 export default function StatisticHome(){
     const { edad, sexo, documento } = useParams();
     const token = localStorage.getItem(TOKEN);
-    const [ optionsGraphics, setOptionsGraphics] = useState({ check1: true, check2: false, check3: false, check4: false });
+    const [ optionsGraphics, setOptionsGraphics] = useState({ check1: edad < 60 ? true : false, check2: edad > 60 ? true : false, check3: false, check4: false });
     const [ listControls, setListControls ] = useState([]);
 
     useEffect(() => {
@@ -52,16 +52,18 @@ export default function StatisticHome(){
 
     return(
         <>
-            {listControls.length > 0 ? (
             <Container>
             <h1 className="text-center">Patrones de Crecimiento Infantil de la OMS
             <Link to={`/admin/addControlNutri/${documento}`} >
                 <FontAwesomeIcon icon={faUserPlus} size="lg" color="#2D61A4" style = {{marginLeft:10}} data-tip data-for = "boton1" />
                 <ReactTooltip id="boton1" place="bottom" type="dark" effect="float">Agregar Control Nutricional</ReactTooltip>
             </Link>
-       </h1>
+            </h1>
+        {listControls.length > 0 ? (
+        <>
+
         <center className="select">
-        {edad >= 60 && edad <=204 || (
+            {edad >= 60 && edad <=204 || (
                 <Form.Check type="checkbox" inline label="Peso para la Talla" checked={optionsGraphics.check1} onChange={(e) => handleCheck(e, "check1")}/>
             )}    
             <Form.Check type="checkbox" inline label="Talla para la Edad" checked={optionsGraphics.check2} onChange={(e) => handleCheck(e, "check2")}/>
@@ -73,7 +75,7 @@ export default function StatisticHome(){
 
         </center>
         
-        {optionsGraphics.check1 && (
+        {optionsGraphics.check1 && 
             <>
                 {edad < 24 && (
                     <StatisticNutri listControls={listControls} sexo={sexo}/>
@@ -82,7 +84,7 @@ export default function StatisticHome(){
                     <StatisticPesoTalla2a5 listControls={listControls} sexo={sexo}/>
                 )}
             </>
-        )
+        
         }
         {optionsGraphics.check2 &&
             <>
@@ -90,17 +92,17 @@ export default function StatisticHome(){
                     <StatisticTallaEdad listControls={listControls} sexo={sexo}/>
                 )}
                 {edad >= 24 && edad < 60 && (
-                    <StatisticTallaEdad2a5 sexo={sexo}/>
+                    <StatisticTallaEdad2a5 listControls={listControls} sexo={sexo}/>
                 )}
                 {edad >= 60 && edad < 204 && (
-                    <StatisticTallaEdad5a17 sexo={sexo}/>
+                    <StatisticTallaEdad5a17 listControls={listControls} sexo={sexo}/>
                 )}
             </>
         }
         {optionsGraphics.check3 &&
             <>
                 {edad < 24 && (
-                    <StatisticPesoEdad sexo={sexo}/>
+                    <StatisticPesoEdad  listControls={listControls} sexo={sexo}/>
                 )}
                 {edad >= 24 && edad < 60 && (
                     <StatisticPesoEdad2a5 sexo={sexo}/>
@@ -120,18 +122,21 @@ export default function StatisticHome(){
                 )}
             </>
         }
+        
+        </>
+        )
+        :
+        (
+            <>
+            <p style={{"color": "#2D61A4", "font-size": 27}}>No se encontraron registros</p>
+            <Lottie height={400} width={670}
+                options={{ loop: true, autoplay: true, animationData: NotResults, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+            />
+            </>
+        )
+        }
     </Container>
     )
-            :
-            (
-                <>
-                <p style={{"color": "#2D61A4", "font-size": 27}}>No se encontraron registros</p>
-                <Lottie height={400} width={670}
-                    options={{ loop: true, autoplay: true, animationData: NotResults, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
-                />
-                </>
-            )
-            }
         </>
         
     )
