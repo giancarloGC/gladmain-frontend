@@ -1,21 +1,52 @@
 import React, {useState, useEffect} from 'react';
-import { Container, Button, Form, InputGroup, Card, ListGroup, ListGroupItem, Col, Row } from "react-bootstrap";
-import ImageMen from "../../../assets/img/men.png";
+import { Container, Button, Form, InputGroup, Card, ListGroup, ListGroupItem, Col, Row, Spinner } from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
 import { getUserByIdApi } from "../../../api/user";
+import { TOKEN } from "../../../utils/constans";
+import { useParams } from "react-router-dom";
+import moment from 'moment';
+
+import ImageMen from "./../../../assets/img/men.png";
+import ImageWomen from "./../../../assets/img/women.png";
+import ImageNino from "./../../../assets/img/nino.png";
+import ImageNina from "./../../../assets/img/nina.png";
 
 export default function DetailsUser(){
+  const { documento } = useParams();
+  const token = localStorage.getItem(TOKEN);
   const [user, setUser] = useState({});
   const [ loaded, setLoaded ] = useState(false);
-  /*useEffect(() => {
+  const [ userLoaded, setUserLoaded ] = useState(false);
+
+  const formatedDate = (date) => {
+    let newDate = date.split("T");
+   return newDate[0];
+};
+
+let dateFechaNaci = moment(user.fechaNacimiento);
+    let dateCurrent = moment();
+    user.edad = dateCurrent.diff(dateFechaNaci, 'months');
+  
+  useEffect(() => {
     getUserByIdApi(documento, token).then(response => {
         setUser(response);
+        setUserLoaded(true);
         setLoaded(true);
     })
-  }, []);*/
+  }, []);
 
   return(
     <Container>
+        {!userLoaded ? (
+          <Row className="justify-content-md-center text-center">
+              <Col md={1} className="justify-content-center">
+              <Spinner animation="border" >
+              </Spinner> 
+              </Col>
+          </Row>
+        )
+        :
+        (
         <Row >
         <Col sm={2}></Col>
         <Col sm={1} ></Col>
@@ -104,22 +135,26 @@ export default function DetailsUser(){
                             handleChange, handleBlur, handleSubmit, handleReset
                     } = props;
            return(
-
+            
             <Form onSubmit={handleSubmit}>
+            
             <Card style={{ width: '600px' }} >
-            <Card.Img variant="top" src={ImageMen} style={{"max-width": "200px"}} roundedCircle className="row justify-content-center align-self-center mt-3"/>
+            {user.edad > 216 ? 
+                            <Card.Img variant="top" src={user.sexo === "FEMENINO" ? ImageWomen : ImageMen} style={{"max-width": "200px"}} roundedCircle className="row justify-content-center align-self-center mt-3"/>
+                        :
+                        <Card.Img variant="top" src={user.sexo === "FEMENINO" ? ImageNina : ImageNino} style={{"max-width": "200px"}} roundedCircle className="row justify-content-center align-self-center mt-3"/>
+                            
+                    }            
+
             <Card.Body>
-            <Card.Title className="text-center">Harold Moreno</Card.Title>
-              <Card.Text style={{"color": "#134B8B"}}>
-               Administrador
-              </Card.Text>
+            <Card.Title className="text-center"> {user.nombre}</Card.Title>
             </Card.Body>
             </Card>
 
             <Row>
             <Col md={6}>
             <ListGroup className="list-group-flush ">
-              <ListGroupItem>Tipo Documento:</ListGroupItem>
+              <ListGroupItem>{user.tipoDocumento}:</ListGroupItem>
               <ListGroupItem>Documento:</ListGroupItem>
               <ListGroupItem>Sexo:</ListGroupItem>
               <ListGroupItem>Fecha de Nacimiento:</ListGroupItem>
@@ -133,29 +168,25 @@ export default function DetailsUser(){
             <Col md={6}>
             <ListGroup className="list-group-flush">
             <ListGroupItem>Cedula de Ciudadania</ListGroupItem>
-              <ListGroupItem>10923452378</ListGroupItem>
-              <ListGroupItem>MASCULINO</ListGroupItem>
-              <ListGroupItem>14/septiembre/1996</ListGroupItem>
-              <ListGroupItem>24</ListGroupItem>
-              <ListGroupItem>324 567 4567</ListGroupItem>
-              <ListGroupItem>Cúcuta</ListGroupItem>
-              <ListGroupItem>Av. 0 # 0 - 0 Bario jdhb</ListGroupItem>
-              <ListGroupItem>hsms.2020@mail.com</ListGroupItem>
+            <ListGroupItem>{user.documento}</ListGroupItem>
+              <ListGroupItem>{user.sexo}</ListGroupItem>
+              <ListGroupItem>{formatedDate(user.fechaNacimiento)}</ListGroupItem>
+              <ListGroupItem>{`${user.edad} meses`}</ListGroupItem>
+              <ListGroupItem>{user.celular}</ListGroupItem>
+              <ListGroupItem>{user.municipio}</ListGroupItem>
+              <ListGroupItem>{user.direccion}</ListGroupItem>
+              <ListGroupItem>{user.correoElectronico}</ListGroupItem>
             </ListGroup>
             </Col>
             </Row>
-            <Card.Body>
-              <Card.Link href="#">Card Link</Card.Link>
-              <Card.Link href="#">Another Link</Card.Link>
-            </Card.Body>
-                  
             </Form>
-            );
+              );
           }}
             </Formik> 
             </Col>
             <Col sm={3}></Col>
         </Row>
+        )}
         </Container>
     )
     

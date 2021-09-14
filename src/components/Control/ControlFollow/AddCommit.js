@@ -75,7 +75,7 @@ export default function AddCommit(){
                     return (   
                     <Form onSubmit={handleSubmit}>
                     <Form.Group as={Row} className="mb-1 mt-3">
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>No. Seguimiento</Form.Label>
+                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>No. Seguimiento</Form.Label>
                         <Col sm="2">
                             <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="01" size="lg" id="idSeguimientoSalud" name="idSeguimientoSalud" 
@@ -91,7 +91,7 @@ export default function AddCommit(){
 
                         <Col sm="3"> </Col>
 
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Fecha Compromiso </Form.Label>
+                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Fecha Compromiso </Form.Label>
                         <Col sm="3">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaCompromiso" name="fechaCompromiso" 
@@ -125,7 +125,7 @@ export default function AddCommit(){
                     </Form.Group>
 
                     <Form.Group as={Row} className="mb-3 mt-3">
-                    <Form.Label column sm="0" style={{"font-size": "12px !important"}} className="row justify-content-center">Nombre Compromiso</Form.Label>
+                    <Form.Label column sm="0" style={{"fontSize": "12px !important"}} className="row justify-content-center">Nombre Compromiso</Form.Label>
                     <Col sm={1}></Col>
                     <Col sm={10}>
                         <InputGroup hasValidation>
@@ -143,7 +143,7 @@ export default function AddCommit(){
                      </Form.Group>
 
                      <Form.Group as={Row} className="mb-3 mt-3">
-                    <Form.Label column sm="0" style={{"font-size": "12px !important"}}  className="row justify-content-center">Nuevo Compromiso</Form.Label>
+                    <Form.Label column sm="0" style={{"fontSize": "12px !important"}}  className="row justify-content-center">Nuevo Compromiso</Form.Label>
                     <Col sm={1}></Col>
                     <Col sm={10}>
                         <InputGroup hasValidation>
@@ -161,7 +161,7 @@ export default function AddCommit(){
                     </Form.Group>
 
                     <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Fecha Cumplimiento </Form.Label>
+                    <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Fecha Cumplimiento </Form.Label>
                         <Col sm="3">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaCumplimiento" name="fechaCumplimiento" 
@@ -177,7 +177,7 @@ export default function AddCommit(){
 
                         <Col sm={1}></Col>
 
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Nombre Aux. Enfermero(a) </Form.Label>
+                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Nombre Aux. Enfermero(a) </Form.Label>
                         <Col md={4}>
                         <InputGroup hasValidation>
                         <Form.Control type="text" placeholder="nombre Auxiliar enfermero(a)" size="lg" id="nombreAuxiliarEnfermeria" name="nombreAuxiliarEnfermeria" 

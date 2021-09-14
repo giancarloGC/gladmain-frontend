@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "react-bootstrap";
-import AddControlV from "../../components/Control/ControlVac/AddControlV";
+import EditControlV from "../../components/Control/ControlVac/EditControlV";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import { getUserByIdApi } from "../../api/user";
 import { getVacByAgeApi } from "../../api/vaccine";
-import { getContVaccApi } from "../../api/vaccination";
+import { getContVaccByIdApi } from "../../api/vaccination";
+
 
 import { TOKEN } from "../../utils/constans";
 
 export default function AddControlVac(){
-    const { documento } = useParams();
+    const { documento, id } = useParams();
+    const [infoControl, setInfoControl] = useState({});
+    const [listControls, setListControls] = useState([]);
     const [userControl, setUser] = useState({});
     const token = localStorage.getItem(TOKEN);
-    const [ componentLoaded, setComponentLoaded ] = useState(false); 
     const [ userLoaded, setUserLoaded ] = useState({});
+    const [ componentLoaded, setComponentLoaded ] = useState(false);   
     const [ listVac, setListVac ] = useState([]);
-    const [ listControls, setListControls ] = useState([]);
     var loading = true;
 
 
@@ -28,32 +30,32 @@ export default function AddControlVac(){
                 setListVac(responseAGE);
             })
         });
-        getContVaccApi(documento, token).then(response => {
-          console.log(response);
-          setListControls(response);
-          
-      });
-        setComponentLoaded(true); 
+        getContVaccByIdApi(id, token).then(responseControl => {
+           setInfoControl(responseControl);
+           setComponentLoaded(true); 
+        });
+        //setComponentLoaded(true); 
         setUserLoaded(userControl);
-        setComponentLoaded(true); 
         }
       }, []);
 
     return(
         <Container>
-            <h1 className="text-center">Añadir Control de Vacunación</h1>
-            {componentLoaded || (
+            <h1 className="text-center">Editar Control de Vacunación</h1>
+        {!componentLoaded ? (
             <Row className="justify-content-md-center text-center">
               <Col md={1} className="justify-content-center">
               <Spinner animation="border" >
               </Spinner> 
               </Col>
             </Row>
-          )}
-          {componentLoaded && (
-              <AddControlV userControl={userControl} listVac={listVac}/>
-          )}
-
+          )
+        :
+        (
+            <EditControlV userControl={userControl} infoControl={infoControl} listVac={listVac}/>
+        )
+        }
         </Container>
     )
+    
 }

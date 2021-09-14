@@ -91,7 +91,7 @@ const data = {
               <h2 className="text-center">IMC para la Edad Niñas </h2>
              }
              <center>
-             <Form.Label column sm="4" style={{"font-size": "12px !important" }}>Puntuación Z (0 a 2 años)</Form.Label>
+             <Form.Label column sm="4" style={{"fontSize": "12px !important" }}>Puntuación Z (0 a 2 años)</Form.Label>
              </center>
              <div className="containerGraphic"> 
                   <p className="ejey">IMC(kg/m^2)</p>

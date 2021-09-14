@@ -1,11 +1,12 @@
 import { urlBackend } from "./config";
 
 
-export function insertContVaccApi(data){
-    const url = `${urlBackend}control_vacunacion/REGISTRAR_CONTROL_VACUNACION`;
+export function insertContVaccApi(data, token){
+    const url = `/api/control_vacunacion/REGISTRAR_CONTROL_VACUNACION`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "POST",
         body: JSON.stringify(data)
@@ -17,13 +18,14 @@ export function insertContVaccApi(data){
             .catch(err => {return err});
 }
 
-export function updateContVaccApi(data){
-    const url = `${urlBackend}control_vacunacion/ACTUALIZAR_CONTROL_VACUNACION`;
+export function updateContVaccApi(data, token){
+    const url = `/api/control_vacunacion/ACTUALIZAR_CONTROL_VACUNACION`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
-        method: "PUT",
+        method: "POST",
         body: JSON.stringify(data)
     };
 
@@ -33,13 +35,14 @@ export function updateContVaccApi(data){
             .catch(err => {return err});
 }
 
-export function deleteContVaccApi(id){
-    const url = `${urlBackend}control_vacunacion/ELIMINAR_CONTROL_VACUNACION/${id}`;
+export function deleteContVaccApi(idControl, token){
+    const url = `/api/control_vacunacion/ELIMINAR_CONTROL_VACUNACION/${idControl}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
-        method: "DELETE"
+        method: "GET"
     };
 
     return fetch(url, params)
@@ -66,11 +69,12 @@ export function getContVaccApi(documento, token){
     .catch(err => {return err});
 }
 
-export function getContVaccByIdApi(id){
-    const url = `${urlBackend}control_vacunacion/CONSULTAR_CONTROL_VACUNACION/${id}`;
+export function getContVaccByIdApi(id, token){
+    const url = `/api/control_vacunacion/CONSULTAR_CONTROL_VACUNACION/${id}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET"
     };

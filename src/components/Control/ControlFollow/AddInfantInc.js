@@ -153,7 +153,7 @@ export default function AddInfantInc(){
                     <Form onSubmit={handleSubmit}>
                         
                     <Form.Group as={Row} className="mb-3 mt-3">
-                        <Form.Label column sm="3" style={{"font-size": "8px !important"}}>No. Seguimiento</Form.Label>
+                        <Form.Label column sm="3" style={{"fontSize": "8px !important"}}>No. Seguimiento</Form.Label>
                           <Col sm="2" >
                             <InputGroup hasValidation>
                             <Form.Control
@@ -170,7 +170,7 @@ export default function AddInfantInc(){
                     </Form.Group>
 
                     <Form.Group as={Row} className="mb-3 mt-5">
-                       <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Cuenta con afiliación al SGSSS</Form.Label>
+                       <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Cuenta con afiliación al SGSSS</Form.Label>
                         <Col sm="2" class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="lg" name="afiliacionSgsss">
@@ -185,7 +185,7 @@ export default function AddInfantInc(){
                         </InputGroup>
                         </Col>
 
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Cuenta con valoración y controles en salud oral</Form.Label>
+                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Cuenta con valoración y controles en salud oral</Form.Label>
                         <Col sm="2" class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="lg" name="saludOral">
@@ -202,7 +202,7 @@ export default function AddInfantInc(){
                     </Form.Group>
 
                     <Form.Group as={Row} className="mb-3">
-                       <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Conoce la red de salud o a quien acudir en caso de urgencia</Form.Label>
+                       <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Conoce la red de salud o a quien acudir en caso de urgencia</Form.Label>
                         <Col sm="2" class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="lg" name="conoceUrgencias">
@@ -217,7 +217,7 @@ export default function AddInfantInc(){
                         </InputGroup>
                         </Col>
                         
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Identifican signos de alarmas de enfermedades prevalentes de la primera infancia (que ponen en peligro de muerte a niños y niñas)</Form.Label>
+                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Identifican signos de alarmas de enfermedades prevalentes de la primera infancia (que ponen en peligro de muerte a niños y niñas)</Form.Label>
                         <Col sm="2" class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="lg" name="alarmaPreventiva">
@@ -235,7 +235,7 @@ export default function AddInfantInc(){
 
                     
                     <Form.Group as={Row} className="mb-3 mt-5">
-                       <Form.Label column sm="4" style={{"font-size": "12px !important"}}>En niñas y menores de un mes se realizó validación médica</Form.Label>
+                       <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>En niñas y menores de un mes se realizó validación médica</Form.Label>
                         <Col sm="2" class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="lg" name="valoracionMedica">
@@ -250,7 +250,7 @@ export default function AddInfantInc(){
                         </InputGroup>
                         </Col>
 
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Las niñas y niños cuentan con controles de Crecimiento y Desarrollo</Form.Label>
+                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Las niñas y niños cuentan con controles de Crecimiento y Desarrollo</Form.Label>
                         <Col sm="2" class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="lg" name="controlCyD">
@@ -267,7 +267,7 @@ export default function AddInfantInc(){
                     </Form.Group>
 
                     <Form.Group as={Row} className="mb-3 mt-5">
-                       <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Presenta una patología asociada identificada por el SGSSS</Form.Label>
+                       <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Presenta una patología asociada identificada por el SGSSS</Form.Label>
                         <Col sm="2" class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="lg" name="patologiaIdentificadaSgsss">
@@ -282,7 +282,7 @@ export default function AddInfantInc(){
                         </InputGroup>
                         </Col>
 
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Recibe medicamentos formulados por el SGSSS para alguna patología</Form.Label>
+                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Recibe medicamentos formulados por el SGSSS para alguna patología</Form.Label>
                         <Col sm="2">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="lg" name="recibeMedFormulada">
@@ -299,7 +299,7 @@ export default function AddInfantInc(){
                     </Form.Group>
 
                     <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm="2" style={{"font-size": "12px !important"}}>¿Cuál?</Form.Label>
+                    <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>¿Cuál?</Form.Label>
                     <Col sm="10" class="mid">
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre Patología" size="lg" id="nombrePatologia" name="nombrePatologia" 
@@ -315,7 +315,7 @@ export default function AddInfantInc(){
                     </Form.Group>
                 
                     <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm="2" style={{"font-size": "12px !important"}}>¿Cuál?</Form.Label>
+                    <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>¿Cuál?</Form.Label>
                     <Col sm="10">
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre Medicamento Formulado" size="lg" id="nombreMedFormulada" name="nombreMedFormulada" 
@@ -331,7 +331,7 @@ export default function AddInfantInc(){
                     </Form.Group>
 
                     <Form.Group as={Row} className="mb-3">
-                     <Form.Label column sm="2" style={{"font-size": "12px !important"}}>EAPB</Form.Label>
+                     <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>EAPB</Form.Label>
                       <Col sm="4">
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre EAPB" size="lg" id="eapb" name="eapb" 
@@ -346,7 +346,7 @@ export default function AddInfantInc(){
                         </Col>
 
                         
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>IPS</Form.Label>
+                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>IPS</Form.Label>
                         <Col sm="4">
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre IPS" size="lg" id="ips" name="ips" 
@@ -364,7 +364,7 @@ export default function AddInfantInc(){
 
                     <Form.Group as={Row} className="mb-3 mt-5">
                     <Col sm="3"> </Col>
-                       <Form.Label column sm="4" style={{"font-size": "12px !important"}}> <center>El usuario fue remitido a SGSSS </center></Form.Label>
+                       <Form.Label column sm="4" style={{"fontSize": "12px !important"}}> <center>El usuario fue remitido a SGSSS </center></Form.Label>
                         <Col sm="2">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="lg" name="usuarioRemitido">
@@ -382,7 +382,7 @@ export default function AddInfantInc(){
                     </Form.Group>
 
                     <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm="2" style={{"font-size": "12px !important"}}>¿Por qué?</Form.Label>
+                    <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>¿Por qué?</Form.Label>
                     <Col sm="10">
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Escriba la causa" size="lg" id="causa" name="causa" 

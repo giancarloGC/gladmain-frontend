@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useReducer } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Container, Row, Col, Button, Form, InputGroup, Alert } from "react-bootstrap";
 import { Formik } from "formik";
 import { TOKEN } from "../../../utils/constans";
 import  AuthContext  from "../../../hooks/useAuth";
@@ -22,7 +22,6 @@ export default function AddControlN(props){
     const { userControl } = props;
     const { user } = AuthContext();
     const token = localStorage.getItem(TOKEN);
-    const [ userApi, setUserByIdApi ] = useState({});
     const [show, setShow] = useState(false);
     const [ textFormSend, setTextFormSend ] = useState({});
     const documentoLogin = user.sub.split('-');
@@ -293,7 +292,7 @@ export default function AddControlN(props){
                         });
                           /*setTextFormSend({
                             variant: "success", heading: "¡Excelente, registro exitoso!",
-                            message: `El control ${valores.name} fue almacenado correctamente`
+                            message: `El control fue almacenado correctamente`
                           });
                           setShow(true);*/
                       }else{
@@ -350,7 +349,7 @@ export default function AddControlN(props){
                         </Form.Group>
 
                         <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Nombre</Form.Label>
+                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Nombre</Form.Label>
                         <Col sm="8">
                         <InputGroup hasValidation>
                             <Form.Control type="text" placeholder="Dígita aquí el nombre" size="lg" id="nombre" name="nombre" 
@@ -366,7 +365,7 @@ export default function AddControlN(props){
                         </Form.Group>
                       
                         <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Fecha nacimiento</Form.Label>
+                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Fecha nacimiento</Form.Label>
                         <Col sm="8">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaNacimiento" name="fechaNacimiento" 
@@ -382,7 +381,7 @@ export default function AddControlN(props){
                         </Form.Group> 
 
                         <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Sexo</Form.Label>
+                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Sexo</Form.Label>
                         <Col sm="8">
                           <InputGroup hasValidation>
                           <Form.Select size="lg" name="sexo" onChange={handleChange} onBlur={handleBlur}
@@ -402,7 +401,7 @@ export default function AddControlN(props){
                         </Form.Group>
 
                         <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Edad</Form.Label>
+                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Edad</Form.Label>
                         <Col sm="8">
                           <InputGroup hasValidation>
                               <Form.Control type="text" placeholder="Dígita aquí la edad" size="lg" id="edad" name="edad" 
@@ -418,7 +417,7 @@ export default function AddControlN(props){
                         </Form.Group>
 
                         <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Fecha control</Form.Label>
+                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Fecha control</Form.Label>
                         <Col sm="8">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaControl" name="fechaControl" 

@@ -137,5 +137,29 @@ const data = {
       },
 
     ]
-    }
+  };
+    return(
+        <Container>
+             {sexo === "MASCULINO" ?
+                <h2 className="text-center">Talla para la Edad Niños </h2>
+              : 
+              <h2 className="text-center">Talla para la Edad Niñas </h2>
+             }
+             <center>
+             <Form.Label column sm="4" style={{"fontSize": "12px !important" }}>Puntuación Z (0 a 2 años)</Form.Label>
+             </center>
+             <div className="containerGraphic"> 
+                  <p className="ejey">Longitud(cm)</p>
+             <div style={{"max-width": "800px", "background-image": "url('../../assets/img/graphicsPrueba.png')"}}>
+             <Line 
+                data={data}
+                height={500}
+                width={800}
+                options={{pointStyle: "line"}}
+             />
+             </div>
+             </div>
+             <p className="ejex">Edad (en meses y años cumplidos)</p> 
+        </Container>
+    )
 }

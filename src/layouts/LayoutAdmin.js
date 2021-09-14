@@ -6,7 +6,6 @@ import Logo from "./../assets/img/logocomfaoriente.png";
 import AvatarDefault from './../assets/img/avatar-default.jpg'
 import { Nav, Image, NavDropdown, Container, Row, Spinner, Col } from "react-bootstrap";
 import "./LayoutAdmin.scss";
-import Welcome from "../pages/Welcome/Welcome";
 import { getUserByIdApi } from "../api/user";
 import { TOKEN } from "../utils/constans";
 
@@ -26,14 +25,12 @@ export default function LayoutAdmin(props){
         componentMounted = true;
         if(componentMounted){
                 if(user && !isLoading){
-                    console.log("siiiiiiiiii");
                     tal();
                     setLoading("true");
                 }
 
                 if(!user && !isLoading){
                     //setLoading(true);FFFFFFFD
-                    console.log("retorno"); 
                     setLoading("notFound");
                     //window.location.replace("/");
                     /*return (
@@ -59,7 +56,6 @@ export default function LayoutAdmin(props){
         localStorage.removeItem(TOKEN);
         window.location.replace("/");
     };
-    console.log(user);
 
     return (
         <>
@@ -74,7 +70,7 @@ export default function LayoutAdmin(props){
                         <div className="option" id="/home">
                             {/*<FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" onClick={() => setOpenMenu(!openMenu)}/>*/}
                             <NavDropdown title={infoUser.nombre} id="nav-dropdown" className="subtitlesMenu"
-                                style={{"font-size": "24px", "font-weight": 150, "color": "#D4D1D1"}}
+                                style={{"fontSize": "24px", "fontWeight": 150, "color": "#D4D1D1"}}
                             >
                             <NavDropdown.Item><Link to={`/admin/EditProfileUser/${infoUser.documento}`}>
                             <h5><FontAwesomeIcon icon={faUserEdit} className="icon" size="1x" fill="currentColor"/>  Editar Perfil</h5></Link></NavDropdown.Item>
@@ -128,7 +124,7 @@ export default function LayoutAdmin(props){
                                 <div className="option">
                                 <FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" onClick={() => setOpenMenu(!openMenu)}/>
                                 <NavDropdown title="Controles" id="nav-dropdown" className="subtitlesMenu"
-                                    style={{"font-size": "24px", "font-weight": 100, "color": "#ffff"}}
+                                    style={{"fontSize": "24px", "fontWeight": 100, "color": "#ffff"}}
                                 >
                 <NavDropdown.Item><Link to="/admin/listUserControl/INFANTE"><h5>Infantes</h5></Link></NavDropdown.Item>
                 <NavDropdown.Divider />

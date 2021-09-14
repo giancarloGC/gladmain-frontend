@@ -5,6 +5,7 @@ import Lottie from 'react-lottie';
 import animationMom from './../../assets/animations/41351-baby-mom-love.json';
 import animationMission from './../../assets/animations/17374-mission-1.json';
 import animationVision from './../../assets/animations/17490-vision-text-blob.json';
+import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 
 import Logo from "./../../assets/img/logocomfaoriente.png";
 import index from "./../../assets/img/index.png";
@@ -98,25 +99,25 @@ export default function Welcome(){
                             <h5 className="titleFooter text-center mx-5">Lorem ipsum dolor sit amet, consectetur adip lorem ipsum, Lorem ipsum dolor sit amet, consectetur adip lorem ipsum</h5>
 
                             <section className="mb-4 mx-5 text-center">
-                                <a className="btn btn-primary btn-floating m-1 btnSocialMedia" href="https://www.facebook.com/UdesCucutaOficial" role="button">
+                                <Link className="btn btn-primary btn-floating m-1 btnSocialMedia" href="https://www.facebook.com/UdesCucutaOficial" role="button">
                                     <FontAwesomeIcon icon={faFacebookF}/>
-                                </a>
+                                </Link>
 
-                                <a className="btn btn-primary btn-floating m-1 btnSocialMedia" href="https://twitter.com/UDESCUCUTA" role="button">
+                                <Link className="btn btn-primary btn-floating m-1 btnSocialMedia" href="https://twitter.com/UDESCUCUTA" role="button">
                                     <FontAwesomeIcon icon={faTwitter}/>
-                                </a>
+                                </Link>
 
-                                <a className="btn btn-primary btn-floating m-1 btnSocialMedia" href="https://www.youtube.com/channel/UCxf67LeWjLY9n4RtNEINDAA" role="button">
+                                <Link className="btn btn-primary btn-floating m-1 btnSocialMedia" href="https://www.youtube.com/channel/UCxf67LeWjLY9n4RtNEINDAA" role="button">
                                     <FontAwesomeIcon icon={faYoutube}/>
-                                </a>
+                                </Link>
 
-                                <a className="btn btn-primary btn-floating m-1 btnSocialMedia" href="https://www.instagram.com/udescampuscucuta/?hl=es" role="button">
+                                <Link className="btn btn-primary btn-floating m-1 btnSocialMedia" href="https://www.instagram.com/udescampuscucuta/?hl=es" role="button">
                                     <FontAwesomeIcon icon={faInstagram}/>
-                                </a>
+                                </Link>
 
-                                <a className="btn btn-primary btn-floating m-1 btnSocialMedia" href="https://www.linkedin.com/school/universidad-de-santander/" role="button">
+                                <Link className="btn btn-primary btn-floating m-1 btnSocialMedia" href="https://www.linkedin.com/school/universidad-de-santander/" role="button">
                                     <FontAwesomeIcon icon={faLinkedinIn}/>
-                                </a>
+                                </Link>
                             </section>
 
                         </Col>
@@ -149,9 +150,9 @@ export default function Welcome(){
                     <Row>
                         <Col className="containerFinaly">
                             <h5 className="titleFinaly text-center py-3">2020 GladMain. All Rights Reserved</h5>
-                            <a id="ast-scroll-top" className="ast-scroll-to-top-right" onClick={() => scrollToTop()}>
+                            <Link id="ast-scroll-top" className="ast-scroll-to-top-right" onClick={() => scrollToTop()}>
                                     <FontAwesomeIcon icon={faChevronUp} size="2x" />
-                            </a>
+                            </Link>
                         </Col>
                     </Row>
                 </Container>

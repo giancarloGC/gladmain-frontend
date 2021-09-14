@@ -147,5 +147,31 @@ const data = {
         tension: 0.1
       }
     ]
-    }
+  };
+    return(
+        <Container>
+             {sexo === "MASCULINO" ?
+                <h2 className="text-center">Peso para la Talla Niños </h2>
+              : 
+              <h2 className="text-center">Peso para la Talla Niñas </h2>
+             }
+             <center>
+             <Form.Label column sm="4" style={{"fontSize": "12px !important" }}>Puntuación Z (2 a 5 años)</Form.Label>
+             </center>
+             <div className="containerGraphic"> 
+                  <p className="ejey">Peso(kg)</p>
+             <div style={{"max-width": "800px", "background-image": "url('../../assets/img/graphicsPrueba.png')"}}>
+             <Line 
+                data={data}
+
+                height={500}
+                width={800}
+                options={{pointStyle: "line"}}
+
+             />
+             </div>
+             </div>
+             <p className="ejex">Talla(cm)</p>
+        </Container>
+    )
 }

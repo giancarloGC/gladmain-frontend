@@ -14,9 +14,11 @@ import ListVac from "../pages/ControlVac/ListVac";
 import ListControlNutri from "../pages/ControlNutri/ListControlNutri";
 import AddControlNutri from "../pages/ControlNutri/AddControlNutri";
 import AddControlCyD from "../pages/ControlCyD/AddControlCyD";
+import EditControlCD from "../pages/ControlCyD/EditControlCD";
 import ListControlCyD from "../pages/ControlCyD/ListControlCyD";
 import AllUserControl from "../pages/ControlHome/AllUserControl";
 import AddControlVac from "../pages/ControlVac/AddControlVac";
+import EditControlVac from "../pages/ControlVac/EditControlVac";
 import AddControlFollow from "../pages/ControlFollow/AddControlFollow";
 import AddInfantIncome from "../pages/ControlFollow/AddInfantIncome";
 import EditControlFollow from "../pages/ControlFollow/EditControlFollow";
@@ -106,14 +108,24 @@ const routes = [
                 component: AddControlNutri,
             },     
             {
-                path: "/admin/addControlCyD",
+                path: "/admin/addControlCyD/:documento",
                 exact: true,
                 component: AddControlCyD,
+            },   
+            {
+                path: "/admin/editControlCyD/:id/:documento",
+                exact: true,
+                component: EditControlCD,
             },   
             {
                 path: "/admin/listVaccines/:documento",
                 exact: true,
                 component: ListVac,
+            },
+            {
+                path: "/admin/editControlVac/:id/:documento",
+                exact: true,
+                component: EditControlVac,
             },
             {
                 path: "/admin/graphics/:edad/:sexo/:documento",
@@ -191,12 +203,12 @@ const routes = [
                 component: AllUserControl,
             },
             {
-                path: "/admin/addControlVac",
+                path: "/admin/addControlVac/:documento",
                 exact: true,
                 component: AddControlVac,
             },
             {
-                path: "/admin/addControlFollow",
+                path: "/admin/addControlFollow/:documento",
                 exact: true,
                 component: AddControlFollow,
             },

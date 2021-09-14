@@ -18,7 +18,7 @@ export default function AddControlNutri(){
     const [ userLoaded, setUserLoaded ] = useState({});
     var loading = true;
 
-      useEffect(() => {
+        useEffect(() => {
         loading = false;
         getUserByIdApi(documento, token).then(response => {
             setUser(response);
@@ -32,13 +32,7 @@ export default function AddControlNutri(){
 
     return(
         <Container>
-            <h1 className="text-center">Añadir Control Nutricional
-                <Link to={`/admin/listControlNutri/${documento}`} >
-                    <FontAwesomeIcon icon={faListAlt} size="lg" color="#2D61A4"
-                    data-tip data-for = "boton1" style = {{marginLeft:10}}/>
-                    <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Mis Controles </ReactTooltip>
-                </Link>
-            </h1>
+            <h1 className="text-center">Añadir Control Nutricional</h1>
             {!componentLoaded ? (
             <Row className="justify-content-md-center text-center">
               <Col md={1} className="justify-content-center">
@@ -51,5 +45,6 @@ export default function AddControlNutri(){
               <AddControlN userControl={userControl} />
           )}
         </Container>
+        
     )
 }

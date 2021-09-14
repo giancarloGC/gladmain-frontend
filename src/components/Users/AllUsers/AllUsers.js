@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Row, Spinner } from "react-bootstrap";
-import {BrowserRouter as Router, Route, Switch, Redirect, Link} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import swal from 'sweetalert';
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -69,8 +69,6 @@ export default function AllUsers(){
             }
         })
     }
-   
-
     
 
     return(
@@ -111,7 +109,7 @@ export default function AllUsers(){
                 </div>
                 <div className="sci">
                     <div className="liB">
-                        <Link className="enlace" to="/admin/user">
+                        <Link className="enlace" to={`/admin/user/${item.documento}`}>
                         <FontAwesomeIcon icon={faEye} size="lg" color="#2D61A4" data-tip data-for = "boton1"
                         /> <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Ver </ReactTooltip>
                         </Link>
@@ -123,10 +121,10 @@ export default function AllUsers(){
                         </Link>
                     </div>
                     <div className="liB">
-                    <a className="enlace" onClick={() => confirmDeleteUser(item.documento)}>
+                    <Link className="enlace" onClick={() => confirmDeleteUser(item.documento)}>
                         <FontAwesomeIcon icon={faTrash} size="lg" color="#2D61A4" data-tip data-for = "boton3"
                         /> <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Eliminar </ReactTooltip>
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>                

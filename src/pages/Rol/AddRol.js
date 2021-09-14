@@ -120,7 +120,7 @@ export default function AddRol(){
                         {show && (
                         <Alert variant={textFormSend.variant} onClose={() => setShow(false)} dismissible className="mt-5">
                             <Alert.Heading>{textFormSend.heading}</Alert.Heading>
-                            <p style={{"color": textFormSend.variant === "success" ? "#2DA45C" : "#A42D55", "font-size": 18}}>
+                            <p style={{"color": textFormSend.variant === "success" ? "#2DA45C" : "#A42D55", "fontSize": 18}}>
                             {textFormSend.message}
                             </p>
                         </Alert>

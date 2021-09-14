@@ -94,7 +94,7 @@ export default function AddControlF(){
                     return (   
                     <Form onSubmit={handleSubmit}>
                     <Form.Group as={Row} className="mb-1 mt-3">
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>No. Seguimiento</Form.Label>
+                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>No. Seguimiento</Form.Label>
                         <Col sm="2">
                             <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="01" size="lg" id="idSeguimiento" name="idSeguimiento" 
@@ -109,7 +109,7 @@ export default function AddControlF(){
                         </Col>
                         <Col sm="4"> </Col>
 
-                        <Form.Label column sm="1" style={{"font-size": "12px !important"}}>Fecha </Form.Label>
+                        <Form.Label column sm="1" style={{"fontSize": "12px !important"}}>Fecha </Form.Label>
                         <Col sm="3">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaSeg" name="fechaSeg" 
@@ -125,11 +125,11 @@ export default function AddControlF(){
                     </Form.Group>
 
                     <center>
-                    <Form.Label column sm="4" style={{"font-size": "12px !important"}} className="align-self-center justify-content-around mb-4"> <u>INFORMACIÓN DEL ACUDIENTE </u> </Form.Label>
+                    <Form.Label column sm="4" style={{"fontSize": "12px !important"}} className="align-self-center justify-content-around mb-4"> <u>INFORMACIÓN DEL ACUDIENTE </u> </Form.Label>
                     </center>
 
                     <Form.Group as={Row} className="mb-3">
-                     <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Tipo de Documento</Form.Label>
+                     <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Tipo de Documento</Form.Label>
                         <Col md={4}>
                         <InputGroup hasValidation>
                             <Form.Select  size="lg" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
@@ -148,7 +148,7 @@ export default function AddControlF(){
                         </InputGroup>
                         </Col>
 
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Número Documento</Form.Label>
+                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Número Documento</Form.Label>
                         <Col md={4}>
                         <InputGroup hasValidation>
                             <Form.Control type="text" placeholder="documento acudiente" size="lg" id="numeroDocAcudiente" name="numeroDocAcudiente" 
@@ -165,7 +165,7 @@ export default function AddControlF(){
 
 
                     <Form.Group as={Row} className="mb-3 mt-3">
-                    <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Nombre</Form.Label>
+                    <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Nombre</Form.Label>
                     <Col md={10}>
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre del Acudiente" size="lg" id="nombreAcudiente" name="nombreAcudiente" 
@@ -181,11 +181,11 @@ export default function AddControlF(){
                     </Form.Group>
 
                     <center>
-                    <Form.Label column sm="4" style={{"font-size": "12px !important"}} className="align-self-center justify-content-around mb-4 mt-3"> <u>INFORMACIÓN DEL USUARIO </u> </Form.Label>
+                    <Form.Label column sm="4" style={{"fontSize": "12px !important"}} className="align-self-center justify-content-around mb-4 mt-3"> <u>INFORMACIÓN DEL USUARIO </u> </Form.Label>
                     </center>
 
                     <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Tipo de Documento</Form.Label>
+                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Tipo de Documento</Form.Label>
                         <Col md={4}>
                         <InputGroup hasValidation>
                             <Form.Select  size="lg" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
@@ -204,7 +204,7 @@ export default function AddControlF(){
                             </InputGroup>
                         </Col>
                        
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Número Documento</Form.Label>
+                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Número Documento</Form.Label>
                             <Col md={4}>
                             <InputGroup hasValidation>
                             <Form.Control  type="text" placeholder="Número documento" size="lg" id="idUsuario" name="idUsuario" 
@@ -220,7 +220,7 @@ export default function AddControlF(){
                     </Form.Group>
 
                     <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Nombre </Form.Label>
+                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Nombre </Form.Label>
                         <Col md={4}>
                         <InputGroup hasValidation>
                         <Form.Control type="text" placeholder="nombre usuario" size="lg" id="nombre" name="nombre" 
@@ -235,7 +235,7 @@ export default function AddControlF(){
                         </Col>
 
                         
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Celular</Form.Label>
+                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Celular</Form.Label>
                         <Col md={4}>
                         <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="Dígita aquí Teléfono" size="lg" id="celular" name="celular" 
@@ -252,7 +252,7 @@ export default function AddControlF(){
 
                    
                     <Form.Group as={Row} className="mb-4">
-                    <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Estado Nutricional</Form.Label>
+                    <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Estado Nutricional</Form.Label>
                     <Col md={10}>
                         <InputGroup hasValidation>
                               <Form.Control type="text" placeholder="Estado nutricional calculado" size="lg" id="estadoNutricional" name="estadoNutricional" 
