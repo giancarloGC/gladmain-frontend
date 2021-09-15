@@ -5,6 +5,7 @@ import  AuthContext  from "../../../hooks/useAuth";
 import { TOKEN } from "../../../utils/constans";
 import { updateControlApi } from "../../../api/controls";
 import swal from 'sweetalert';
+import moment from 'moment';
 
 export default function EditControlCyD(props){
   const { userControl, control } = props;
@@ -77,18 +78,18 @@ export default function EditControlCyD(props){
                 errores.talla = 'Solo puedes escribir números';
               }
 
-              const dateCurrently2 = new Date();
+              const dateCurrently = moment();
               if(!valores.fechaControl){
                 errores.fechaControl = 'Asegurese de selecionar una fecha';
-              }else if(dateCurrently2 <= valores.fechaControl){
-                errores.fechaControl = 'Seleccione una fecha valida';
+              }else{
+                let control = moment(valores.fechaControl);
+                if(control.diff(dateCurrently, 'hours') > 0){
+                    errores.fechaControl = 'Seleccione una fecha valida, no mayor a hoy';
+              }
               }
 
-              const dateCurrently = new Date();
               if(!valores.proximoControl){
                 errores.proximoControl = 'Asegurese de selecionar una fecha';
-              }else if(dateCurrently <= valores.proximoControl){
-                errores.proximoControl = 'Seleccione una fecha valida';
               }
 
               return errores;
@@ -121,7 +122,10 @@ export default function EditControlCyD(props){
                 if(response === true){
                   swal("¡Excelente, registro exitoso!, El control fue almacenado correctamente", {
                     icon: "success",
-                });
+                })
+                .then((value) => {
+                    window.location.replace(`/admin/listControlCyD/${userControl.documento}`);
+                  }); 
                   setShow(true);
                 }else{
                   swal("Opss! Ocurrió un error!", {

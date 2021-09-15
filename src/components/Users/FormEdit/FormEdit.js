@@ -6,6 +6,7 @@ import { TOKEN } from "../../../utils/constans";
 import { getRolesApi, getAssignRolApi, consultarRolesUsuarioApi, getRemoveRolApi } from "../../../api/rol";
 import "./FormEdit.scss";
 import swal from 'sweetalert';
+import moment from 'moment';
 
 export default function FormEdit(props){   
     const { user } = props;
@@ -17,6 +18,7 @@ export default function FormEdit(props){
     const [ componentLoaded, setComponentLoaded ] = useState(false); 
     const [ rolesRegistred, setRolesRegistred ] = useState([]);
     const [ rolesSelected, setRolesSelected ] = useState([]);
+    const [ edadFinaly, setEdadFinaly ] = useState(null);
   
   const [ loaded, setLoaded] = useState(false);
   console.log(user);
@@ -36,6 +38,9 @@ export default function FormEdit(props){
           setLoaded(true);
       })();
     }, []);
+
+    let fechaNacimiento;
+    let dateCurrent = moment();
 
     const handleCheck = (e, item) => {
       let role = {
@@ -85,7 +90,6 @@ export default function FormEdit(props){
       return successs;
     }
 
-
     const asignRoles = async (item) => {
       let successs = false;
 
@@ -121,6 +125,9 @@ export default function FormEdit(props){
         console.log("entro");
         swal("¡Excelente, actualización exitosa!, El usuario fue actualizado correctamente", {
           icon: "success",
+        })
+        .then((value) => {
+          window.location.replace(`/admin/users`);
         });
         setShow(true);
       }else{
@@ -171,12 +178,18 @@ export default function FormEdit(props){
                   if(!valores.sexo){
                     errores.sexo = 'Asegurese de selecionar una opción';
                   }
-                  const dateCurrently = new Date();
 
+                  const dateCurrently = moment();
                   if(!valores.fechaNacimiento){
                     errores.fechaNacimiento = 'Asegurese de selecionar una fecha';
-                  }else if(dateCurrently <= valores.fechaNacimiento){
-                    errores.fechaNacimiento = 'Seleccione una fecha valida';
+                  }else{
+                    let nacimiento = moment(valores.fechaNacimiento);
+                    if(nacimiento.diff(dateCurrently, 'hours') > 0){
+                        errores.fechaNacimiento = 'Seleccione una fecha valida';
+                    }else{
+                      let mesesEdad = dateCurrently.diff(nacimiento, 'months');
+                      setEdadFinaly(mesesEdad);
+                    }
                   }
 
                   if(!valores.celular){
@@ -184,14 +197,6 @@ export default function FormEdit(props){
                   }else if(!/^([0-9])*$/.test(valores.celular)){
                     errores.celular = 'Teléfono incorrecto, solo puedes escribir números';
                   }  
-
-                  if(!valores.edad){
-                    errores.edad = 'Por favor, ingresa números';
-                  }else if(!/^([0-9])*$/.test(valores.edad)){
-                    errores.edad = 'Edad incorrecta, solo puedes escribir números';
-                  }else if(valores.edad <= 0 || valores.edad > 90){
-                    errores.edad = 'Edad invalida, intente con otra';
-                  }       
 
                   if(!valores.municipio){
                     errores.municipio = 'No se permiten campos vacíos'
@@ -201,8 +206,6 @@ export default function FormEdit(props){
 
                   if(!valores.direccion){
                     errores.direccion = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.direccion)){
-                    errores.direccion = 'Municipio incorrecto, solo puedes escribir letras';
                   }
 
                   if(!valores.correoElectronico){
@@ -229,6 +232,13 @@ export default function FormEdit(props){
                             setShow(false);
                         }, 3000);
                     }else{
+
+                      const dateCurrently = new Date();
+
+                      if(valores.meses !== 'meses'){
+                        valores.edad = valores.edad * 12;
+                      };
+
                       const data = {
                         documento: parseInt(valores.documento),
                         tipoDocumento: valores.tipoDocumento,
@@ -236,7 +246,7 @@ export default function FormEdit(props){
                         sexo: valores.sexo,
                         fechaNacimiento: valores.fechaNacimiento,
                         celular: parseInt(valores.celular),
-                        edad: parseInt(valores.edad),
+                        edad: parseInt(edadFinaly),
                         municipio: valores.municipio,
                         direccion: valores.direccion,
                         correoElectronico: valores.correoElectronico,
@@ -370,9 +380,9 @@ export default function FormEdit(props){
                         <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Edad en meses</Form.Label>
                         <Col sm="4">
                           <InputGroup hasValidation>
-                              <Form.Control type="number" placeholder="edad" size="lg" id="edad" name="edad" 
-                              defaultValue={user.edad} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
-                              isValid={!errors.edad && touched.edad}
+                              <Form.Control type="text" placeholder="edad" size="lg" id="edad" name="edad" 
+                              value={edadFinaly ? `${edadFinaly} meses` : values.edad} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
+                              isValid={!errors.edad && touched.edad} disabled
                               />
                               <Form.Control.Feedback type="invalid">
                                   {errors.edad}

@@ -64,6 +64,16 @@ export default function AddControlV(props){
                 validate={(valores) => {
                   let errores = {};
 
+                  const dateCurrently = moment();
+                  if(!valores.fechaAplicacion){
+                    errores.fechaAplicacion = 'Asegurese de selecionar una fecha';
+                  }else{
+                    let vacuna = moment(valores.fechaAplicacion);
+                    if(vacuna.diff(dateCurrently, 'hours') > 0){
+                        errores.fechaAplicacion = 'Seleccione una fecha valida, no mayor a hoy';
+                  }
+                  }
+
                   if(valores.edadVac){
                     errores.edadVac = 'Asegurese de selecionar una opción';
                   }else if(valores.edadVac === "2_M"){

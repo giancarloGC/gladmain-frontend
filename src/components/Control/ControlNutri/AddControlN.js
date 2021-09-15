@@ -289,11 +289,6 @@ export default function AddControlN(props){
                         }).then((value) => {
                           setGoRedirect(true);
                         });
-                          /*setTextFormSend({
-                            variant: "success", heading: "¡Excelente, registro exitoso!",
-                            message: `El control fue almacenado correctamente`
-                          });
-                          setShow(true);*/
                       }else{
                         swal({
                           title: `¡Opss, ocurrió un error!`,
@@ -301,11 +296,6 @@ export default function AddControlN(props){
                         }).then((value) => {
                           setGoRedirect(true);
                         });
-                          /*setTextFormSend({
-                              variant: "danger", heading: "¡Opss, ocurrió un error!",
-                              message: "Revisaremos lo ocurrido, inténtalo nuevamente"
-                          });
-                          setShow(true);*/
                       }
                 });
                 setTimeout(() => {

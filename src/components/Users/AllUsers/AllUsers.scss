@@ -89,21 +89,21 @@
 }
 
 .containerP .card .content .contentBx h3 {
-    color : rgb(119, 68, 68);
+    color : rgb(4, 43, 100) !important;
     text-transform: uppercase;
     letter-spacing: 2px;
-    font-weight: 500;
-    font-size: 18px;
+    font-weight: 800 !important;
+    font-size: 20px;
     text-align: center;
     margin: 20px 0 10px;
     line-height: 1.1em;
     transform: translateZ(30px);
+    font-family: sans-serif;
 }
 
 .containerP .card .content .contentBx h3 span {
-    font-size: 12px;
-    font-weight: 300;
-    text-transform: initial;
+    font-size: 14px !important;
+    font-weight: 500 !important;
 }
 
 .containerP .card .sci {

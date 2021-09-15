@@ -57,7 +57,7 @@ export default function AllUsers(){
                     icon: "success",
                 })
                 .then((value) => {
-                    <Redirect to="/admin/users" />
+                    window.location.replace("/admin/users")
                   });                      
             }else{
                 swal("Opss! Ocurrió un error al eliminar el usuario!", {
@@ -99,9 +99,8 @@ export default function AllUsers(){
                     </div>
                     <div className="contentBx">
                         <h3>{item.nombre}<br/> 
-                            <span>CC {item.documento}</span> <br />
-                            <span><FontAwesomeIcon icon={faPhoneAlt} size="lg" color="#2D61A4" 
-                            /> 
+                            <span> {item.tipoDocumento} : {item.documento}</span> <br />
+                            <span><FontAwesomeIcon icon={faPhoneAlt} size="lg" color="#2D61A4" style={{marginRight:10}}/> 
                             {item.celular}
                             </span>
                         </h3>

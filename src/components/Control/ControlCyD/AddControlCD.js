@@ -31,7 +31,10 @@ export default function AddControlCD(props){
       console.log("entro");
       swal("¡Excelente, registro exitoso!, El control fue almacenado correctamente", {
         icon: "success",
-      });
+      })
+      .then((value) => {
+          window.location.replace(`/admin/listControlCyD/${userControl.documento}`);
+        }); 
       setShow(true);
   }else{
     console.log("rarisimo");
@@ -130,11 +133,19 @@ export default function AddControlCD(props){
                     errores.meses = 'Asegurese de seleccionar una opción';
                   }
 
-                  const dateCurrently2 = new Date();
+                  
+                  if(!valores.proximoControl){
+                    errores.proximoControl = 'Asegurese de selecionar una fecha';
+                  }
+
+                  const dateCurrently = moment();
                   if(!valores.fechaControl){
                     errores.fechaControl = 'Asegurese de selecionar una fecha';
-                  }else if(dateCurrently2 <= valores.fechaControl){
-                    errores.fechaControl = 'Seleccione una fecha valida';
+                  }else{
+                    let control = moment(valores.fechaControl);
+                    if(control.diff(dateCurrently, 'hours') > 0){
+                        errores.fechaControl = 'Seleccione una fecha valida, no mayor a hoy';
+                  }
                   }
 
                   if(!valores.peso){

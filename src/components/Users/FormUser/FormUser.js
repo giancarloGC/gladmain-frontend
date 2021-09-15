@@ -77,6 +77,7 @@ export default function FormUser(){
                   }else if(!/^([0-9])*$/.test(valores.documento)){
                     errores.documento = 'Documento incorrecto, solo puedes escribir números';
                   }
+                  
                   let docuemnt = toString(valores.documento);
                   if(valores.documento.length < 0 || valores.documento.length > 15){
                     errores.documento = 'Documento invalido, intente con otro';
@@ -193,7 +194,7 @@ export default function FormUser(){
                             swal("¡Excelente, registro exitoso!, El usuario fue almacenado correctamente", {
                               icon: "success",
                             }).then((value) => {
-                              setGoRedirect(true);
+                              window.location.replace(`/admin/users`);
                             });
                             //setShow(true);
                           }else{
