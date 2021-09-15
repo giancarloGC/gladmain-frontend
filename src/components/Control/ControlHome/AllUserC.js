@@ -70,7 +70,7 @@ export default function AllUserC ({role}){
                                     </div>
                                     <div className="sci">
                                         <div className="liB">
-                                            <Link className="enlace"  to={`/admin/graphics/${item.edad}/${item.sexo}/${item.documento}`}>
+                                            <Link className="enlace"  to={`/admin/statisticHomeMadre/${item.documento}`}>
                                                <FontAwesomeIcon icon={faNutritionix} size="lg" color="#2D61A4"
                                                data-tip data-for = "boton1"/>
                                                <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Nutrición </ReactTooltip>
@@ -117,10 +117,10 @@ export default function AllUserC ({role}){
                                             </div>
                                             <div className="contentBx">
                                                 <h3>{item.nombre}<br/> 
-                                                    <span>CC {item.documento}</span> <br />
-                                                    <span><FontAwesomeIcon icon={faPhoneAlt} size="lg" color="#2D61A4"
-                                                    /> {item.celular}
-                                                    </span>
+                                                <span> {item.tipoDocumento} : {item.documento}</span> <br />
+                                                <span><FontAwesomeIcon icon={faPhoneAlt} size="lg" color="#2D61A4" style={{marginRight:10}}/> 
+                                                    {item.celular}
+                                                </span>
                                                 </h3>
                                             </div>
                                         </div>
