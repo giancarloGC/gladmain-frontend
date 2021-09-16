@@ -84,9 +84,9 @@ export default function AddInfantInc(){
           <AddIncomeCommit9 showCommit9={showCommit9} setShowCommit9={setShowCommit9} setDataCommit9={setDataCommit9} dataCommit9={dataCommit9} 
             setSaveData9={setSaveData9}
           />
-                <Row style={{backgroundColor: '#f1f1f1'}}>
-              <Col sm={1}> </Col>
-                <Col sm={10} className="mt-2 mb-4"> 
+              <Row >
+              <Col sm={2}> </Col>
+                <Col sm={8} className="mt-2 mb-4" style={{backgroundColor: '#f1f1f1'}}> 
                 <Formik
                 initialValues={{ 
                     idSeguimiento: '',
@@ -152,28 +152,23 @@ export default function AddInfantInc(){
                     return (   
                     <Form onSubmit={handleSubmit}>
                         
-                    <Form.Group as={Row} className="mb-3 mt-3">
-                        <Form.Label column sm="3" style={{"fontSize": "8px !important"}}>No. Seguimiento</Form.Label>
-                          <Col sm="2" >
+                    <Form.Group as={Row} className="mt-2" style={{ "marginLeft":"6px"}}>
+                        <Form.Label column sm="3" >No. Seguimiento</Form.Label>
+                          <Col sm="2">
                             <InputGroup hasValidation>
                             <Form.Control
                             type="number" className="text-center" placeholder="01" size="lg" id="idSeguimiento" name="idSeguimiento" 
-                               value={values.idSeguimiento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.idSeguimiento && touched.idSeguimiento}
-                               isValid={!errors.idSeguimiento && touched.idSeguimiento}
+                               value={values.idSeguimiento} onChange={handleChange} onBlur={handleBlur} disabled
                             />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.idSeguimiento}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                       </Col>
                     </Form.Group>
 
-                    <Form.Group as={Row} className="mb-3 mt-5">
-                       <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Cuenta con afiliación al SGSSS</Form.Label>
-                        <Col sm="2" class="mid">
+                    <Form.Group as={Row} className="mt-1" style={{ "marginLeft":"35px"}}>
+                       <Form.Label column sm="9" className="mt-3">Cuenta con afiliación al SGSSS</Form.Label>
+                        <Col class="mid">
                         <InputGroup hasValidation>
-                          <label class="rocker rocker-small" size="lg" name="afiliacionSgsss">
+                          <label class="rocker rocker-small" size="lg" name="afiliacionSgsss" >
                           <input type="checkbox" checked={showCommit || !saveData ? true : false } onChange={(e) => setShowCommit(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
@@ -184,9 +179,11 @@ export default function AddInfantInc(){
                           <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
                         </InputGroup>
                         </Col>
-
-                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Cuenta con valoración y controles en salud oral</Form.Label>
-                        <Col sm="2" class="mid">
+                        </Form.Group>
+                        
+                        <Form.Group as={Row} style={{ "marginLeft":"35px"}}>
+                        <Form.Label column sm="9" className="mt-3" style={{"fontSize": "small"}}>Cuenta con valoración y controles en salud oral</Form.Label>
+                        <Col  class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="lg" name="saludOral">
                           <input type="checkbox" checked={showCommit2 || !saveData2 ? true : false } onChange={(e) => setShowCommit2(!e.target.checked)}></input>
@@ -201,9 +198,9 @@ export default function AddInfantInc(){
                         </Col>
                     </Form.Group>
 
-                    <Form.Group as={Row} className="mb-3">
-                       <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Conoce la red de salud o a quien acudir en caso de urgencia</Form.Label>
-                        <Col sm="2" class="mid">
+                    <Form.Group as={Row} style={{ "marginLeft":"35px"}}>
+                       <Form.Label column sm="9" style={{"fontSize": "12px !important"}}>Conoce la red de salud o a quien acudir en caso de urgencia</Form.Label>
+                        <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="lg" name="conoceUrgencias">
                           <input type="checkbox" checked={showCommit3 || !saveData3 ? true : false } onChange={(e) => setShowCommit3(!e.target.checked)}></input>
@@ -216,10 +213,12 @@ export default function AddInfantInc(){
                           <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
                         </InputGroup>
                         </Col>
-                        
-                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Identifican signos de alarmas de enfermedades prevalentes de la primera infancia (que ponen en peligro de muerte a niños y niñas)</Form.Label>
-                        <Col sm="2" class="mid">
-                        <InputGroup hasValidation>
+                        </Form.Group>
+
+                        <Form.Group as={Row} style={{ "marginLeft":"35px"}}>
+                        <Form.Label column sm="9" >Identifican signos de alarmas de enfermedades prevalentes de la primera infancia (que ponen en peligro de muerte a niños y niñas)</Form.Label>
+                        <Col class="mid" >
+                        <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="lg" name="alarmaPreventiva">
                           <input type="checkbox" checked={showCommit4 || !saveData4 ? true : false } onChange={(e) => setShowCommit4(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
@@ -234,9 +233,9 @@ export default function AddInfantInc(){
                     </Form.Group>
 
                     
-                    <Form.Group as={Row} className="mb-3 mt-5">
-                       <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>En niñas y menores de un mes se realizó validación médica</Form.Label>
-                        <Col sm="2" class="mid">
+                    <Form.Group as={Row}  style={{ "marginLeft":"35px"}}>
+                       <Form.Label column sm="9" style={{"fontSize": "12px !important"}}>En niñas y menores de un mes se realizó validación médica</Form.Label>
+                        <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="lg" name="valoracionMedica">
                           <input type="checkbox" checked={showCommit5 || !saveData5 ? true : false } onChange={(e) => setShowCommit5(!e.target.checked)}></input>
@@ -249,9 +248,11 @@ export default function AddInfantInc(){
                           <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
                         </InputGroup>
                         </Col>
+                        </Form.Group>
 
-                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Las niñas y niños cuentan con controles de Crecimiento y Desarrollo</Form.Label>
-                        <Col sm="2" class="mid">
+                        <Form.Group as={Row}  style={{ "marginLeft":"35px"}}>
+                        <Form.Label column sm="9" style={{"fontSize": "12px !important"}}>Las niñas y niños cuentan con controles de Crecimiento y Desarrollo</Form.Label>
+                        <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="lg" name="controlCyD">
                           <input type="checkbox" checked={showCommit6 || !saveData6 ? true : false } onChange={(e) => setShowCommit6(!e.target.checked)}></input>
@@ -266,9 +267,9 @@ export default function AddInfantInc(){
                         </Col>
                     </Form.Group>
 
-                    <Form.Group as={Row} className="mb-3 mt-5">
-                       <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Presenta una patología asociada identificada por el SGSSS</Form.Label>
-                        <Col sm="2" class="mid">
+                    <Form.Group as={Row} style={{ "marginLeft":"35px"}}>
+                       <Form.Label column sm="9" style={{"fontSize": "12px !important"}}>Presenta una patología asociada identificada por el SGSSS</Form.Label>
+                        <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="lg" name="patologiaIdentificadaSgsss">
                           <input type="checkbox" checked={showCommit7 || !saveData7 ? true : false } onChange={(e) => setShowCommit7(!e.target.checked)}></input>
@@ -281,9 +282,11 @@ export default function AddInfantInc(){
                           <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
                         </InputGroup>
                         </Col>
+                        </Form.Group>
 
-                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Recibe medicamentos formulados por el SGSSS para alguna patología</Form.Label>
-                        <Col sm="2">
+                        <Form.Group as={Row} style={{ "marginLeft":"35px"}}>
+                        <Form.Label column sm="9" style={{"fontSize": "12px !important"}}>Recibe medicamentos formulados por el SGSSS para alguna patología</Form.Label>
+                        <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="lg" name="recibeMedFormulada">
                           <input type="checkbox" checked={showCommit8 || !saveData8 ? true : false } onChange={(e) => setShowCommit8(!e.target.checked)}></input>
@@ -298,9 +301,9 @@ export default function AddInfantInc(){
                         </Col>
                     </Form.Group>
 
-                    <Form.Group as={Row} className="mb-3">
+                    <Form.Group as={Row} style={{ "marginLeft":"35px"}}>
                     <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>¿Cuál?</Form.Label>
-                    <Col sm="10" class="mid">
+                    <Col sm="9" class="mid">
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre Patología" size="lg" id="nombrePatologia" name="nombrePatologia" 
                                value={values.nombrePatologia} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
@@ -314,9 +317,9 @@ export default function AddInfantInc(){
                     </Col>
                     </Form.Group>
                 
-                    <Form.Group as={Row} className="mb-3">
+                    <Form.Group as={Row} style={{ "marginLeft":"35px"}}>
                     <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>¿Cuál?</Form.Label>
-                    <Col sm="10">
+                    <Col md="9" class="mid" >
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre Medicamento Formulado" size="lg" id="nombreMedFormulada" name="nombreMedFormulada" 
                                value={values.nombreMedFormulada} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
@@ -330,9 +333,9 @@ export default function AddInfantInc(){
                       </Col>
                     </Form.Group>
 
-                    <Form.Group as={Row} className="mb-3">
+                    <Form.Group as={Row} style={{ "marginLeft":"35px"}}>
                      <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>EAPB</Form.Label>
-                      <Col sm="4">
+                     <Col md="4" class="mid" >
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre EAPB" size="lg" id="eapb" name="eapb" 
                                value={values.eapb} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.eapb && touched.eapb}
@@ -345,9 +348,8 @@ export default function AddInfantInc(){
                         </InputGroup>
                         </Col>
 
-                        
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>IPS</Form.Label>
-                        <Col sm="4">
+                        <Form.Label column sm="1" style={{"fontSize": "12px !important"}}>IPS</Form.Label>
+                        <Col sm="4" >
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre IPS" size="lg" id="ips" name="ips" 
                                value={values.ips} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.ips && touched.ips}
@@ -362,10 +364,9 @@ export default function AddInfantInc(){
                     </Form.Group>
 
 
-                    <Form.Group as={Row} className="mb-3 mt-5">
-                    <Col sm="3"> </Col>
-                       <Form.Label column sm="4" style={{"fontSize": "12px !important"}}> <center>El usuario fue remitido a SGSSS </center></Form.Label>
-                        <Col sm="2">
+                    <Form.Group as={Row}  style={{ "marginLeft":"35px"}}>
+                       <Form.Label column sm="9" style={{"fontSize": "8px"}}> El usuario fue remitido a SGSSS </Form.Label>
+                        <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="lg" name="usuarioRemitido">
                           <input type="checkbox" checked={showCommit9 || !saveData9 ? true : false } onChange={(e) => setShowCommit9(!e.target.checked)}></input>
@@ -378,12 +379,11 @@ export default function AddInfantInc(){
                           <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
                         </InputGroup>
                         </Col>
-                        <Col sm="3"> </Col>
                     </Form.Group>
 
-                    <Form.Group as={Row} className="mb-3">
+                    <Form.Group as={Row} className="mb-3" style={{ "marginLeft":"35px"}}>
                     <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>¿Por qué?</Form.Label>
-                    <Col sm="10">
+                    <Col sm="9">
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Escriba la causa" size="lg" id="causa" name="causa" 
                                value={values.causa} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.causa && touched.causa}
@@ -409,7 +409,7 @@ export default function AddInfantInc(){
                         }}
                       </Formik> 
                 </Col>
-                <Col sm={1}> </Col>
+                <Col sm={2}> </Col>
             </Row>
         </Container>
     )

@@ -9,6 +9,10 @@
   padding: 0;
 }
 
+.grandText {
+  font-size: 8px;
+}
+
 .mid {
   display: flex;
   align-items: center;
@@ -18,7 +22,7 @@
 
 /* Switch starts here */
 .rocker {
-  display: inline-block;
+  display:block;
   position: relative;
   /*
   SIZE OF SWITCH
