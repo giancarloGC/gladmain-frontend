@@ -228,7 +228,7 @@ const routes = [
                 component: EditInfantIncome,
             }, 
             {
-                path: "/admin/addControlRemission",
+                path: "/admin/addControlRemission/:idSeg",
                 exact: true,
                 component: AddControlRemission,
             },
@@ -238,7 +238,7 @@ const routes = [
                 component: EditControlRemission,
             },     
             {
-                path: "/admin/addCommitment",
+                path: "/admin/addCommitment/:idSeg",
                 exact: true,
                 component: AddCommitment,
             }, 

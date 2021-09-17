@@ -1,14 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "react-bootstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faListAlt } from '@fortawesome/free-solid-svg-icons';
-import ReactTooltip from 'react-tooltip';
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import { getUserByIdApi } from "../../api/user";
 import { TOKEN } from "../../utils/constans";
 import AddControlN from "../../components/Control/ControlNutri/AddControlN";
-
-
 
 export default function AddControlNutri(){ 
     const { documento } = useParams();
@@ -41,7 +36,7 @@ export default function AddControlNutri(){
               </Col>
             </Row>
           )
- : (
+          : (
               <AddControlN userControl={userControl} />
           )}
         </Container>

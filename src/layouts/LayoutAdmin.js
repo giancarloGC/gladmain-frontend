@@ -94,7 +94,9 @@ export default function LayoutAdmin(props){
                     <div className={openMenu ? "menu__side menu__side_move" : "menu__side"} id="menu_side">
                 
                         <div className="name__page">
-                        <FontAwesomeIcon icon={faHome} className="icon" size="2x" />
+                            <Link to="/admin">
+                                <FontAwesomeIcon icon={faHome} className="icon-home" size="2px"/>
+                            </Link>
                             <img src={Logo} alt="image-logo" style={{"width": "150px"}} />
                         </div>
                 

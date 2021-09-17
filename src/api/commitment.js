@@ -1,10 +1,11 @@
 import { urlBackend } from "./config";
 
-export function insertCompApi(data){
-    const url = `${urlBackend}control_seguimiento/REGISTRAR_COMPROMISO`;
+export function insertCompApi(data, token){
+    const url = `/api/control_seguimiento/REGISTRAR_COMPROMISO`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "POST",
         body: JSON.stringify(data)

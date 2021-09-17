@@ -1,10 +1,11 @@
 import { urlBackend } from "./config";
 
-export function insertSegApi(data){
-    const url = `${urlBackend}control_seguimiento/REGISTRAR_SEGUIMIENTO`;
+export function insertSegApi(data, token){
+    const url = `/api/control_seguimiento/REGISTRAR_SEGUIMIENTO`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "POST",
         body: JSON.stringify(data)
@@ -47,11 +48,12 @@ export function deleteSegApi(id){
             .catch(err => {return err});
 }
 
-export function getSegByIdApi(id){
-    const url = `${urlBackend}control_seguimiento/CONSULTAR_SEGUIMIENTO/${id}`;
+export function getSegByIdApi(id, token){
+    const url = `/api/control_seguimiento/CONSULTAR_SEGUIMIENTO/${id}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET"
     };

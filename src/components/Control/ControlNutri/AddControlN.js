@@ -520,11 +520,10 @@ export default function AddControlN(props){
                 </Row>
 
               )}
-
-
-                        {rolUser === "madre" && ( 
-                          <p>Campo de mamita TENSION</p>
-                        )}   
+              
+              {rolUser === "MADRE_GESTANTE" && ( 
+                <p>Campo de mamita TENSION</p>
+              )}   
                 
                     </Form>
                             );

@@ -1,10 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-bootstrap";
+import React, { useState, useEffect, useReducer } from "react";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner } from "react-bootstrap";
+import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import { Formik, Field, ErrorMessage } from "formik";
+import { TOKEN } from "../../../utils/constans";
+import { insertRemisApi } from "../../../api/remission";
+import swal from 'sweetalert';
+import moment from 'moment';
 import "./Switch.scss";
 
+export default function AddControlR(props){
+  const { controlSeguimiento } = props;
+  const token = localStorage.getItem(TOKEN);
+  const [ checkeds, setCheckeds ] = useState({ atendido: false, hospitalizado: false, fallecido: false });
+  console.log(checkeds);
 
-export default function AddControlF(){
+  const onChangeChecked = (e) => {
+      setCheckeds({...checkeds, [e.target.name]: e.target.checked});
+  }
 
     return(
         <Container>
@@ -12,20 +24,19 @@ export default function AddControlF(){
                 <Col sm={12} className="mt-2 mb-4"> 
                 <Formik
                 initialValues={{ 
-                    
-                    idSeguimiento:"",
-                    fechaRemision: '',
-                    entidadRemitida: '',
-                    atendido: '',
-                    fechaAtencion: '',
-                    motivo: '',
-                    hospitalizado: '',
-                    fechaIngreso: '',
-                    fechaSalida: '',
-                    fallecido: '',
-                    razonFallecimiento: '',
-                    seguimiento: '',
-                    nombreAuxEnfermero: '',
+                  idSeguimiento:"",
+                  fechaRemision: '',
+                  entidadRemitida: '',
+                  atendido: '',
+                  fechaAtencion: '',
+                  motivo: '',
+                  hospitalizado: '',
+                  fechaIngreso: '',
+                  fechaSalida: '',
+                  fallecido: '',
+                  razonFallecimiento: '',
+                  seguimiento: '',
+                  nombreAuxEnfermero: '',
                 }}
                 
                 validate={(valores) => {
@@ -47,6 +58,7 @@ export default function AddControlF(){
                   }else if(dateCurrently2 <= valores.fechaRemision){
                     errores.fechaRemision = 'Seleccione una fecha valida';
                   }
+
                   if(!valores.entidadRemitida){
                     errores.entidadRemitida = 'No se permiten campos vacíos'
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.entidadRemitida)){
@@ -90,11 +102,45 @@ export default function AddControlF(){
                 }}
 
                 onSubmit={(valores, {resetForm}) => {
-                  /*  resetForm();
-                    valores.token = token;
-                    insertUserApi(valores).then(response => {
-                        console.log(repsonse);
-                  });*/
+
+                  const formData={
+                    idSeguimiento: controlSeguimiento.id,
+                    fechaRemision: moment().format("YYYY-MM-DD"),
+                    entidadRemitida: valores.entidadRemitida,
+                    atendido: checkeds.atendido ? 1 : 0,
+                    fechaAtencion: valores.fechaAtencion,
+                    motivo: valores.motivo,
+                    hospitalizado: checkeds.hospitalizado ? 1 : 0,
+                    fechaIngreso: valores.fechaIngreso,
+                    fechaSalida: valores.fechaSalida,
+                    fallecido: checkeds.fallecido ? 1 : 0,
+                    razonFallecimiento: valores.razonFallecimiento,
+                    seguimiento: valores.seguimiento,
+                    nombreAuxEnfermero: valores.nombreAuxEnfermero,
+                  }
+
+                  console.log(formData);
+                  //resetForm();
+                  formData.token = token;
+                  insertRemisApi(formData, token).then(response => {
+                    if(response === true){
+                      swal({
+                        title: `¡La remisión fue almacenada correctamente!`,
+                        icon: 'success'
+                      });
+                      /*.then((value) => {
+                        setGoRedirect(true);
+                      });*/
+                    }else{
+                      swal({
+                        title: `¡Opss, ocurrió un error!`,
+                        icon: 'danger'
+                      });
+                      /*.then((value) => {
+                        setGoRedirect(true);
+                      });*/
+                    }
+                  });
                 }}
                 >
 
@@ -109,7 +155,7 @@ export default function AddControlF(){
                         <Col sm="2">
                             <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="01" size="lg" id="idSeguimiento" name="idSeguimiento" 
-                               value={values.idSeguimiento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.idSeguimiento && touched.idSeguimiento}
+                               value={controlSeguimiento.id} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.idSeguimiento && touched.idSeguimiento}
                                isValid={!errors.idSeguimiento && touched.idSeguimiento}
                             />
                             <Form.Control.Feedback type="invalid">
@@ -124,8 +170,8 @@ export default function AddControlF(){
                         <Col sm="3" className="justify-content-center align-self-center">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaRemision" name="fechaRemision" 
-                                 value={values.fechaRemision} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaRemision && touched.fechaRemision}
-                                 isValid={!errors.fechaRemision && touched.fechaRemision}
+                                 value={moment().format("YYYY-MM-DD")} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaRemision && touched.fechaRemision}
+                                 isValid={!errors.fechaRemision && touched.fechaRemision} disabled
                               />
                               <Form.Control.Feedback type="invalid">
                                   {errors.fechaRemision}
@@ -157,12 +203,26 @@ export default function AddControlF(){
                      <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>¿Fue Atendido?</Form.Label>
                      <Col md={2} class="mid">
                         <InputGroup hasValidation>
-                          <label class="rocker rocker-small" size="lg" name="atendido">
-                          <input type="checkbox"></input>
+                          <label class="rocker rocker-small" size="lg" name="atendido" id="atendido" on>
+                          <input type="checkbox" name="atendido" onChange={e => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>   
                         </InputGroup>
+                        </Col>
+
+                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Fecha en que fue atendido</Form.Label>
+                        <Col sm="3">
+                          <InputGroup hasValidation>
+                              <Form.Control type="date" size="lg" id="fechaAtencion" name="fechaAtencion" 
+                                 value={values.fechaAtencion} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaAtencion && touched.fechaAtencion}
+                                 isValid={!errors.fechaAtencion && touched.fechaAtencion}
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                  {errors.fechaAtencion}
+                              </Form.Control.Feedback>
+                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          </InputGroup>
                         </Col>
                     </Form.Group>
 
@@ -187,8 +247,8 @@ export default function AddControlF(){
                      <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>¿Requirio Hospitalización?</Form.Label>
                      <Col sm="2" class="mid">
                         <InputGroup hasValidation>
-                          <label class="rocker rocker-small" size="lg" name="hospitalizado">
-                          <input type="checkbox"></input>
+                          <label class="rocker rocker-small" size="lg" name="hospitalizado" id="hospitalizado">
+                          <input type="checkbox"  name="hospitalizado" onChange={e => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>   
@@ -216,12 +276,12 @@ export default function AddControlF(){
                         <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Fecha Egreso</Form.Label>
                         <Col sm="3">
                           <InputGroup hasValidation>
-                              <Form.Control type="date" size="lg" id="fechaEgreso" name="fechaEgreso" 
-                                 value={values.fechaEgreso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaEgreso && touched.fechaEgreso}
-                                 isValid={!errors.fechaEgreso && touched.fechaEgreso}
+                              <Form.Control type="date" size="lg" id="fechaSalida" name="fechaSalida" 
+                                 value={values.fechaSalida} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaSalida && touched.fechaSalida}
+                                 isValid={!errors.fechaSalida && touched.fechaSalida}
                               />
                               <Form.Control.Feedback type="invalid">
-                                  {errors.fechaEgreso}
+                                  {errors.fechaSalida}
                               </Form.Control.Feedback>
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
@@ -233,8 +293,8 @@ export default function AddControlF(){
                         <center>¿Falleció durante el proceso de atención en salud?</center></Form.Label>
                         <Col sm="2" class="mid">
                         <InputGroup hasValidation>
-                          <label class="rocker rocker-small" size="lg" name="fallecido">
-                          <input type="checkbox"></input>
+                          <label class="rocker rocker-small" size="lg" name="fallecido" id="fallecido">
+                          <input type="checkbox" name="fallecido" onChange={e => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>  

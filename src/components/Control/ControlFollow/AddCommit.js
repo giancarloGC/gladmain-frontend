@@ -1,9 +1,27 @@
 
-import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-bootstrap";
+import React, { useState, useEffect, useReducer } from "react";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner } from "react-bootstrap";
+import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import { Formik, Field, ErrorMessage } from "formik";
+import { TOKEN } from "../../../utils/constans";
+import { insertCompApi } from "../../../api/commitment";
+import swal from 'sweetalert';
+import moment from 'moment';
+import "./Switch.scss";
 
-export default function AddCommit(){
+export default function AddCommit(props){
+  const { controlSeguimiento } = props;
+  const token = localStorage.getItem(TOKEN);
+  const [ checkeds, setCheckeds ] = useState({ radio1: true, radio: false });
+  console.log(checkeds);
+
+  const onChangeChecked = (e) => {
+    if(e.target.name === "radio1"){
+      setCheckeds({ radio1: true, radio: false });
+    }else{
+      setCheckeds({ radio1: false, radio: true });
+    }
+  }
 
     return(
         <Container>
@@ -12,14 +30,13 @@ export default function AddCommit(){
                 <Col sm={10} className="mt-2 mb-4"> 
                 <Formik
                 initialValues={{ 
-                  id: '',
                   idSeguimientoSalud: '',
                   fechaCompromiso: '',
                   nombre: '',
                   nuevoCompromiso: '',
-                  fechaCumplimiento: null,
+                  fechaCumplimiento: '',
                   nombreAuxiliarEnfermeria: '',
-                  tipo: null
+                  tipo: '',
                 }}
                 
                 validate={(valores) => {
@@ -46,6 +63,11 @@ export default function AddCommit(){
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.nombre)){
                     errores.nombre = 'Nombre incorrecto, solo puedes escribir letras';
                   }
+                  if(!valores.nuevoCompromiso){
+                    errores.nuevoCompromiso = 'No se permiten campos vacíos'
+                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.nuevoCompromiso)){
+                    errores.nuevoCompromiso = 'Nombre incorrecto, solo puedes escribir letras';
+                  }
                   const dateCurrently2 = new Date();
                   if(!valores.fechaCumplimiento){
                     errores.fechaCumplimiento = 'Asegurese de selecionar una fecha';
@@ -60,11 +82,40 @@ export default function AddCommit(){
                 }}
 
                 onSubmit={(valores, {resetForm}) => {
-                  /*  resetForm();
-                    valores.token = token;
-                    insertUserApi(valores).then(response => {
-                        console.log(repsonse);
-                  });*/
+
+                  const formData={
+                    idSeguimientoSalud: controlSeguimiento.id,
+                    fechaCompromiso: moment().format("YYYY-MM-DD"),
+                    nombre: valores.nombre,
+                    nuevoCompromiso: valores.nuevoCompromiso,
+                    fechaCumplimiento: valores.fechaCumplimiento,
+                    nombreAuxiliarEnfermeria: valores.nombreAuxiliarEnfermeria,
+                    tipo: checkeds.radio ? "Compromiso por nuevo factor de riesgo" : "Compromiso cumplido que no se mantuvo",
+                  }
+
+                  console.log(formData);
+                  //resetForm();
+                  formData.token = token;
+                  insertCompApi(formData, token).then(response => {
+                    if(response === true){
+                      swal({
+                        title: `¡El compromiso fue almacenado correctamente!`,
+                        icon: 'success'
+                      });
+                      /*.then((value) => {
+                        setGoRedirect(true);
+                      });*/
+                    }else{
+                      console.log("no resgistro remi");
+                      swal({
+                        title: `¡Opss, ocurrió un error!`,
+                        icon: 'danger'
+                      });
+                      /*.then((value) => {
+                        setGoRedirect(true);
+                      });*/
+                    }
+                  });
                 }}
                 >
 
@@ -79,7 +130,7 @@ export default function AddCommit(){
                         <Col sm="2">
                             <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="01" size="lg" id="idSeguimientoSalud" name="idSeguimientoSalud" 
-                               value={values.idSeguimientoSalud} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.idSeguimientoSalud && touched.idSeguimientoSalud}
+                               value={controlSeguimiento.id} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.idSeguimientoSalud && touched.idSeguimientoSalud}
                                isValid={!errors.idSeguimientoSalud && touched.idSeguimientoSalud}
                             />
                             <Form.Control.Feedback type="invalid">
@@ -95,7 +146,7 @@ export default function AddCommit(){
                         <Col sm="3">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaCompromiso" name="fechaCompromiso" 
-                                 value={values.fechaCompromiso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaCompromiso && touched.fechaCompromiso}
+                                 value={moment().format("YYYY-MM-DD")} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaCompromiso && touched.fechaCompromiso}
                                  isValid={!errors.fechaCompromiso && touched.fechaCompromiso}
                               />
                               <Form.Control.Feedback type="invalid">
@@ -109,15 +160,15 @@ export default function AddCommit(){
                     <Form.Group as={Row} className="mb-1 ">
                     <div class="middle">
                       <label>
-                      <input type="radio" name="radio" checked/>
-                      <div class="front-end box">
+                      <input type="radio" name="radio1" checked={checkeds.radio1} onChange={e => onChangeChecked(e)}/>
+                      <div class="box">
                         <span>Compromiso cumplido que no se mantuvo</span>
                       </div>
                       </label>
 
                       <label>
-                      <input type="radio" name="radio"/>
-                      <div class="back-end box">
+                      <input type="radio" name="radio" checked={checkeds.radio} onChange={e => onChangeChecked(e)} />
+                      <div class="box">
                         <span>Compromiso por nuevo factor de riesgo</span>
                       </div>
                       </label>
