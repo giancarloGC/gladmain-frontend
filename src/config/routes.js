@@ -39,7 +39,7 @@ import StatisticImcEdad2a5 from "../components/Graphics/StatisticImcEdad2a5";
 import StatisticTallaEdad5a17 from "../components/Graphics/StatisticTallaEdad5a17";
 import StatisticHome from "../pages/ControlNutri/StatisticHome";
 import StatisticImcEdad5a17 from "../components/Graphics/StatisticImcEdad5a17";
-import StatisticMadreGestante from "../components/Graphics/StatisticMadreGestante";
+import StatisticHomeMadre from "../pages/ControlNutri/StatisticHomeMadre";
 import EditProfileUser from "../pages/Users/EditProfileUser";
 import IndexCalculator from "../pages/Calculator/IndexCalculator";
 import calculateStateNutrition from "../pages/Calculator/CalculateStateNutrition";
@@ -183,9 +183,9 @@ const routes = [
                 component: StatisticImcEdad5a17,          
             },
             {
-                path: "/admin/statisticMadreGestante",
+                path: "/admin/statisticHomeMadre/:documento",
                 exact: true,
-                component: StatisticMadreGestante,          
+                component: StatisticHomeMadre,          
             },
             {
                 path: "/admin/listControlNutri/:documento",

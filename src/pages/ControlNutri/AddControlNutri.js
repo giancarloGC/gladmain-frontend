@@ -8,8 +8,6 @@ import { getUserByIdApi } from "../../api/user";
 import { TOKEN } from "../../utils/constans";
 import AddControlN from "../../components/Control/ControlNutri/AddControlN";
 
-
-
 export default function AddControlNutri(){ 
     const { documento } = useParams();
     const [userControl, setUser] = useState({});
@@ -44,7 +42,6 @@ export default function AddControlNutri(){
  : (
               <AddControlN userControl={userControl} />
           )}
-        </Container>
-        
+        </Container>        
     )
 }

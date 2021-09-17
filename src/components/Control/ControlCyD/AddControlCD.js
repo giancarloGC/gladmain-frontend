@@ -15,6 +15,7 @@ export default function AddControlCD(props){
   const documentoLogin = user.sub.split('-');
   const [ textFormSend, setTextFormSend ] = useState({});
   const [show, setShow] = useState(false);
+  const [ imc, setImc ] = useState(null);
 
   let dateFechaNaci = moment(userControl.fechaNacimiento);
   let dateCurrent = moment();
@@ -129,11 +130,6 @@ export default function AddControlCD(props){
                     errores.edad = 'Edad invalida, intente con otra';
                   }  
                   
-                  if(!valores.meses){
-                    errores.meses = 'Asegurese de seleccionar una opción';
-                  }
-
-                  
                   if(!valores.proximoControl){
                     errores.proximoControl = 'Asegurese de selecionar una fecha';
                   }
@@ -159,17 +155,17 @@ export default function AddControlCD(props){
                   }else if(!/^([0-9])*$/.test(valores.talla)){
                     errores.talla = 'Solo puedes escribir números';
                   }
+                  if(valores.talla && valores.peso){
+                    let tal = parseInt(calculateIMC(valores.peso, convertCmToM(valores.talla)))
+                    setImc(tal);
+                  }else{
+                    setImc(null);
+                  }
                   
                   return errores;
                 }}
 
                 onSubmit={(valores, {resetForm}) => {
-
-                  if(valores.meses !== 'meses'){
-                    valores.edad = valores.edad * 12;
-                  };
-
-
                   valores.token = token;
                   var documertParse = parseInt( documentoLogin[0]);
                   
@@ -179,7 +175,7 @@ export default function AddControlCD(props){
                     fechaControl: valores.fechaControl,
                     peso: convertKgToG(valores.peso),
                     talla: valores.talla,
-                    imc: parseInt(calculateIMC(valores.peso, convertCmToM(valores.talla))),
+                    imc: imc,
                     estadoNutricional: "",
                     tension: null,
                     edadGestacional: null,
@@ -188,6 +184,7 @@ export default function AddControlCD(props){
                     vigente: false,
                     meses: valores.edad,
                 }
+                console.log(formData);
 
                 const dataUser = {
                     documento: userControl.documento,
@@ -333,7 +330,7 @@ export default function AddControlCD(props){
                         <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control className="mt-2" type="text" placeholder="Valor de IMC" size="lg" id="imc" name="imc" 
-                               value={calculateIMC(values.peso, convertCmToM(values.talla))} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.imc && touched.imc}
+                               value={imc ? imc : ''} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.imc && touched.imc}
                                isValid={!errors.imc && touched.imc} disabled
                               />
                               <Form.Control.Feedback type="invalid">

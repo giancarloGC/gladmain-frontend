@@ -47,11 +47,12 @@ export function deleteSegApi(id){
             .catch(err => {return err});
 }
 
-export function getSegByIdApi(id){
-    const url = `${urlBackend}control_seguimiento/CONSULTAR_SEGUIMIENTO/${id}`;
+export function getSegByIdApi(id, token){
+    const url = `/api/control_seguimiento/CONSULTAR_SEGUIMIENTO/${id}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET"
     };
