@@ -32,20 +32,19 @@
   will change the size of the switch.
   See .rocker-small below as example.
   */
-  font-size: 2em;
+  font-size: 3em;
   font-weight: bold;
   text-align: center;
   text-transform: uppercase;
   color: #888;
   width: 7em;
-  height: 4em;
+  height: 3.7em;
   overflow: hidden;
   border-bottom: 0.5em solid rgb(189, 188, 221);
 }
 
 .rocker-small {
-  font-size: 0.75em; /* Sizes the switch */
-  margin: 1em;
+  font-size: 0.65em; /* Sizes the switch */
 }
 
 .rocker::before {
@@ -208,11 +207,11 @@ $orange: #fd650d;
       left: 0;
       right: 0;
       transition: all 400ms ease;
-      font-size: 1.2em;
+      font-size: 1.5em;
       user-select: none;
       color: $orange;
       &:before {
-        font-size: 1.6em;
+        font-size: 1.8em;
         font-family: FontAwesome;
         display: block;
         transform: translateY(-80px);
