@@ -35,7 +35,7 @@ export default function ListFollowUpChecks(){
 
   const [ optionsLists, setOptionsLists] = useState({ check1: true, check2: false, check3: false});
 
-    const handleCheck = (e, item) => {
+   /* const handleCheck = (e, item) => {
         console.log(e);
         console.log(item);
         if(e.target.checked){
@@ -47,14 +47,16 @@ export default function ListFollowUpChecks(){
               setOptionsLists({check1: false, check2: false, check3: true});
             } 
         }
-    }
+    }*/
 
     return(
         <Container>
             <h1 className="text-center mb-4">Controles de Seguimiento de {infoUser ? infoUser.nombre : "Anonimo"}
-              <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton1" />
-              <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Añadir Nuevo Control </ReactTooltip>
-          
+              <Link to={`/admin/addControlFollow/${documento}`}>
+                    <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton" />
+                    <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Control </ReactTooltip>
+              </Link>
+              
               <FontAwesomeIcon icon={faPrint} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton2" />
               <ReactTooltip id="boton2" place="bottom" type="dark" effect="float"> Imprimir </ReactTooltip>
             </h1>
@@ -66,6 +68,8 @@ export default function ListFollowUpChecks(){
                 />
                 </>
             )}
+             <ListInfantInc  listControls={listControls}/>
+            {/*
             <center>
             <Form.Check type="checkbox" inline label="Controles de Ingreso" checked={optionsLists.check1} onChange={(e) => handleCheck(e, "check1")} className="mb-4"/>
             <Form.Check type="checkbox" inline label="Controles de Remisión" checked={optionsLists.check2} onChange={(e) => handleCheck(e, "check2")} className="mb-4"/>
@@ -81,7 +85,7 @@ export default function ListFollowUpChecks(){
             }
             {optionsLists.check3 &&
                 <ListCommitment />
-            }
+            }*/}
         </Container>
     )
 }

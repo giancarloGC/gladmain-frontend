@@ -10,7 +10,7 @@ import { getUserByIdApi } from "../../api/user";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link} from "react-router-dom";
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faPrint } from '@fortawesome/free-solid-svg-icons';
+import { faMarker, faPrint } from '@fortawesome/free-solid-svg-icons';
 
 export default function ListVac(){
     const { documento } = useParams();
@@ -33,8 +33,8 @@ export default function ListVac(){
         <Container>
              <h1 className="text-center">Control de Vacunas de {infoUser ? infoUser.nombre : "Anonimo"} 
              <Link to={`/admin/addControlVac/${documento}`} >
-                    <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton1" />
-                    <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Añadir Nuevo Control </ReactTooltip>
+                    <FontAwesomeIcon icon={faMarker} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton1" />
+                    <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Editar Control </ReactTooltip>
                 </Link>
                 <Link to="/" >
                     <FontAwesomeIcon icon={faPrint} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton2" />
@@ -51,7 +51,7 @@ export default function ListVac(){
             )}
 
              {listControls.length > 0  && (
-                <ListV listControls={listControls}/>
+                <ListV listControls={listControls} fechaNacimiento={infoUser.fechaNacimiento}/>
              )}
         </Container>
     )

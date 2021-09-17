@@ -41,7 +41,6 @@ export default function AddControlVac(){
 
     return(
         <Container>
-            <h1 className="text-center">Añadir Control de Vacunación</h1>
             {componentLoaded || (
             <Row className="justify-content-md-center text-center">
               <Col md={1} className="justify-content-center">
@@ -51,7 +50,10 @@ export default function AddControlVac(){
             </Row>
           )}
           {componentLoaded && (
-              <AddControlV userControl={userControl} listVac={listVac}/>
+            <>
+              <h1 className="text-center">Actualizar vacunas de {userControl.nombre}</h1>
+              <AddControlV userControl={userControl} listVac={listVac} listControls={listControls}/>
+            </>
           )}
 
         </Container>
