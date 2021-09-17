@@ -20,7 +20,7 @@ export default function LayoutAdmin(props){
     const [ infoUser, setInfoUser ] = useState({});
     const [ loading, setLoading] = useState("");
     let componentMounted = false;
-
+    console.log(user);
     useEffect(() => {
         componentMounted = true;
         if(componentMounted){
@@ -173,6 +173,7 @@ export default function LayoutAdmin(props){
 }
 
 function LoadRoutes({routes}){
+    console.log(routes);
     return (
         <Switch>
             {routes.map((route, index) => (
