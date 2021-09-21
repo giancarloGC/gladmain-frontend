@@ -2,54 +2,39 @@ import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faPrint } from '@fortawesome/free-solid-svg-icons';
-import ListInfantInc from "../../components/Control/ControlFollow/ListInfantInc";
+import ListControlR from "../../components/Control/ControlFollow/ListControlR";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link} from "react-router-dom";
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import {Row, Form} from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { getInfantIncomeApi } from "../../api/infant_income";
+import { getRemisByUserApi } from "../../api/remission";
 import { TOKEN } from "../../utils/constans";
 import Lottie from 'react-lottie';
 import NotResults from "../../assets/animations/notResults.json";
 import { getUserByIdApi } from "../../api/user";
 
 
-export default function ListFollowUpChecks(){
+export default function ListControlRemission(){
 
-  const { documento, idSeg } = useParams();
+  const { documento, idSeguimiento } = useParams();
   const token = localStorage.getItem(TOKEN);
   const [ infoUser, setInfoUser ] = useState(null);
   const [ listControls, setListControls ] = useState([]);
-
+  
   useEffect(() => {
       getUserByIdApi(documento, token).then(responseUser => {
           setInfoUser(responseUser);
       });
-      getInfantIncomeApi(documento, token).then(response => {
+      getRemisByUserApi(documento, token).then(response => {
+          console.log(response);
           setListControls(response);
       });
   }, []);
 
-  const [ optionsLists, setOptionsLists] = useState({ check1: true, check2: false, check3: false});
-
-   /* const handleCheck = (e, item) => {
-        console.log(e);
-        console.log(item);
-        if(e.target.checked){
-            if(item === "check1"){
-              setOptionsLists({check1: true, check2: false, check3: false});
-            } else if(item === "check2"){
-              setOptionsLists({check1: false, check2: true, check3: false});
-            } else{
-              setOptionsLists({check1: false, check2: false, check3: true});
-            } 
-        }
-    }*/
-
     return(
         <Container>
-            <h1 className="text-center mb-4">Controles de Seguimiento de {infoUser ? infoUser.nombre : "Anonimo"}
-              <Link to={`/admin/addControlFollow/${documento}`}>
+            <h1 className="text-center mb-4">Remisiones de {infoUser ? infoUser.nombre : "Anonimo"}
+              <Link to={`/admin/addControlRemission/${documento}`}>
                     <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton" />
                     <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Control </ReactTooltip>
               </Link>
@@ -65,25 +50,8 @@ export default function ListFollowUpChecks(){
                 />
                 </>
             )}
-             <ListInfantInc  listControls={listControls} documento={documento}/>
-
-            {/*
-            <center>
-            <Form.Check type="checkbox" inline label="Controles de Ingreso" checked={optionsLists.check1} onChange={(e) => handleCheck(e, "check1")} className="mb-4"/>
-            <Form.Check type="checkbox" inline label="Controles de Remisión" checked={optionsLists.check2} onChange={(e) => handleCheck(e, "check2")} className="mb-4"/>
-            <Form.Check type="checkbox" inline label="Controles de Compromisos" checked={optionsLists.check3} onChange={(e) => handleCheck(e, "check3")} className="mb-4"s/>
-            </center>
-
-            {listControls.length > 0  && optionsLists.check1 && (
-              <ListInfantInc  listControls={listControls}/>
-            )}
-
-            {optionsLists.check2 &&
-                <ListControlR />
-            }
-            {optionsLists.check3 &&
-                <ListCommitment />
-            }*/}
+             <ListControlR  listControls={listControls} idSeguimiento={idSeguimiento}/>
+                        
         </Container>
     )
 }

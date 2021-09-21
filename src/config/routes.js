@@ -25,6 +25,7 @@ import EditControlFollow from "../pages/ControlFollow/EditControlFollow";
 import EditInfantIncome from "../pages/ControlFollow/EditInfantIncome";
 import AddControlRemission from "../pages/ControlFollow/AddControlRemission";
 import EditControlRemission from "../pages/ControlFollow/EditControlRemission";
+import ListControlRemission from "../pages/ControlFollow/ListControlRemission";
 import AddCommitment from "../pages/ControlFollow/AddCommitment";
 import EditCommitment from "../pages/ControlFollow/EditCommitment";
 import ListFollowUpChecks from "../pages/ControlFollow/ListFollowUpChecks";
@@ -236,7 +237,12 @@ const routes = [
                 path: "/admin/editControlRemission",
                 exact: true,
                 component: EditControlRemission,
-            },     
+            },   
+            {
+                path: "/admin/listControlRemission/:documento/:idSeguimiento",
+                exact: true,
+                component: ListControlRemission,
+            },   
             {
                 path: "/admin/addCommitment/:idSeg",
                 exact: true,

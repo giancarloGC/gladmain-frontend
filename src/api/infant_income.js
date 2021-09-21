@@ -35,7 +35,7 @@ export function updateInfantIncomeApi(data){
 }
 
 export function getInfantIncomeApi(documento, token){
-    const url = `${urlBackend}control_seguimiento/LISTAR_INGRESOS_INFANTE/${documento}`;
+    const url = `/api/control_seguimiento/LISTAR_INGRESOS_INFANTE/${documento}`;
     const params = {
         headers: {
             "Content-Type": "application/json",
