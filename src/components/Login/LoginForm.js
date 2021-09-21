@@ -69,6 +69,7 @@ export default function LoginForm(props) {
                       setTextFormSend("¡Usuario o clave incorrectos, intentelo nuevamente!");
                     }else{
                       setTextFormSend("¡Inicio de sesión exitoso!");
+                      localStorage.removeItem(TOKEN);
                       localStorage.setItem(TOKEN, response.tokenJWT);
                       window.location.replace("/admin");
                     }

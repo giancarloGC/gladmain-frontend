@@ -14,7 +14,7 @@ export default function AddRol(){
     const [show, setShow] = useState(false);
     const [ listPrivilegios, setListPrivilegios ] = useState([]);
     const [ privilegiosSelected, setPrivilegiosSelected ] = useState([]);
-
+    console.log(listPrivilegios);
     useEffect(() => {
         (async () => {
             const responsePrivilegios = await getPrivilegiosApi(token);
@@ -148,7 +148,7 @@ export default function AddRol(){
 
                             <Col md={4}>
                                 {listPrivilegios.map((item, index) => (
-                                    index > 35 && index <= 53 && (
+                                    index > 35 && index <= 54 && (
                                         <Form.Check type="checkbox" label={item.nombre} onChange={(e) => handleCheck(e, item)}/>
                                     )
                                 ))}

@@ -14,6 +14,8 @@ import ImageWomen from "./../../../assets/img/women.png";
 
 import { listUsersByRol, getUserApi } from "../../../api/user";
 import { TOKEN } from "../../../utils/constans";
+import Lottie from 'react-lottie';
+import AnimationAuthorization from "../../../assets/animations/withoutAuthorization.json";
 
 import "../../../components/Control/ControlHome/AllUserC.scss";
 
@@ -21,19 +23,33 @@ export default function AllUserC ({role}){
     const [ loading, setLoading ] = useState(true);
     const [ usersApi, setUsersApi ] = useState([]);
     const token = localStorage.getItem(TOKEN);
+    const [ authorization, setAuthorization ] = useState(true);
     
     useEffect(() => {
         (async () => {
             const response = await listUsersByRol(role, token);
-            console.log(response);
-            setUsersApi(response);
-            setLoading(false);
+            if(response.status === 403){
+                setLoading(false);
+                setAuthorization(false);
+            }else{
+                setUsersApi(response);
+                setLoading(false);
+            }
         })();
     }, [role]);
 
 
     return(
         <>
+            {authorization || (
+                <>
+                    <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                    <Lottie height={400} width={670}
+                        options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                    />
+                </>
+            )}
+
             {loading && (
                 <Row className="justify-content-md-center text-center">
                     <Col md={1} className="justify-content-center">
@@ -70,6 +86,13 @@ export default function AllUserC ({role}){
                                     </div>
                                     <div className="sci">
                                         <div className="liB">
+                                            <Link className="enlace" to={`/admin/ListFollowUpChecks/${item.documento}`}>
+                                                <FontAwesomeIcon icon={faFileMedicalAlt} size="lg" color="#2D61A4"
+                                                data-tip data-for = "boton4"/>
+                                                <ReactTooltip id="boton4" place="bottom" type="dark" effect="float"> Seguimiento </ReactTooltip>
+                                            </Link>
+                                        </div>
+                                        <div className="liB">
                                             <Link className="enlace"  to={`/admin/statisticHomeMadre/${item.documento}`}>
                                                <FontAwesomeIcon icon={faNutritionix} size="lg" color="#2D61A4"
                                                data-tip data-for = "boton1"/>
@@ -91,13 +114,6 @@ export default function AllUserC ({role}){
                                                 <FontAwesomeIcon icon={faSyringe} size="lg" color="#2D61A4"
                                                 data-tip data-for = "boton3"/>
                                                 <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Vacunación </ReactTooltip>
-                                            </Link>
-                                        </div>
-                                        <div className="liB">
-                                            <Link className="enlace" to={`/admin/ListFollowUpChecks/${item.documento}`}>
-                                                <FontAwesomeIcon icon={faFileMedicalAlt} size="lg" color="#2D61A4"
-                                                data-tip data-for = "boton4"/>
-                                                <ReactTooltip id="boton4" place="bottom" type="dark" effect="float"> Seguimiento </ReactTooltip>
                                             </Link>
                                         </div>
                                     </div>
@@ -126,6 +142,13 @@ export default function AllUserC ({role}){
                                         </div>
                                         <div className="sci">
                                             <div className="liB">
+                                                <Link className="enlace" to={`/admin/ListFollowUpChecks/${item.documento}`}>
+                                                    <FontAwesomeIcon icon={faFileMedicalAlt} size="lg" color="#2D61A4"
+                                                    data-tip data-for = "boton4"/>
+                                                    <ReactTooltip id="boton4" place="bottom" type="dark" effect="float"> Seguimiento </ReactTooltip>
+                                                </Link>
+                                            </div>
+                                            <div className="liB">
                                             <Link className="enlace"  to={`/admin/graphics/${item.edad}/${item.sexo}/${item.documento}`}>
                                                    <FontAwesomeIcon icon={faNutritionix} size="lg" color="#2D61A4"
                                                    data-tip data-for = "boton1"/>
@@ -144,13 +167,6 @@ export default function AllUserC ({role}){
                                                     <FontAwesomeIcon icon={faSyringe} size="lg" color="#2D61A4"
                                                     data-tip data-for = "boton3"/>
                                                     <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Vacunación </ReactTooltip>
-                                                </Link>
-                                            </div>
-                                            <div className="liB">
-                                                <Link className="enlace" to={`/admin/ListFollowUpChecks/${item.documento}`}>
-                                                    <FontAwesomeIcon icon={faFileMedicalAlt} size="lg" color="#2D61A4"
-                                                    data-tip data-for = "boton4"/>
-                                                    <ReactTooltip id="boton4" place="bottom" type="dark" effect="float"> Seguimiento </ReactTooltip>
                                                 </Link>
                                             </div>
                                         </div>
