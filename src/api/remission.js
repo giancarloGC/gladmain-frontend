@@ -48,17 +48,15 @@ export function deleteRemisApi(id){
             .catch(err => {return err});
 }
 
-//preguntar a Danny
-export function getRemisByUserApi(data){
-    const url = `${urlBackend}control_seguimiento/LISTAR_REMICIONES`;
+export function getRemisByUserApi(documento, token){
+    const url = `/api/control_seguimiento/LISTAR_REMICIONES/${documento}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET",
-        body: JSON.stringify(data)
     };
-
     return fetch(url, params)
             .then(response => {return response.json()})
             .then(result => {return result})

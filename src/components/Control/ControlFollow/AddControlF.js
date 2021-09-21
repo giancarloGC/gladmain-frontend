@@ -1,9 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-bootstrap";
+import React, { useState, useEffect, useReducer } from "react";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner } from "react-bootstrap";
+import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import { Formik, Field, ErrorMessage } from "formik";
+import  AuthContext  from "../../../hooks/useAuth";
+import { TOKEN } from "../../../utils/constans";
+import { insertSegApi } from "../../../api/follow-up";
+import moment from 'moment';
 
-
-export default function AddControlF(){
+export default function AddControlF(props){
+  const { userControl } = props;
+  const token = localStorage.getItem(TOKEN);
+  const { user } = AuthContext();
+  const documentoLogin = user.sub.split('-');
+  const [ goRedirect, setGoRedirect ] = useState(false);
 
     return(
         <Container>
@@ -12,29 +21,22 @@ export default function AddControlF(){
                 <Col sm={10} className="mt-2 mb-4"> 
                 <Formik
                 initialValues={{ 
-                    
-                    id: '',
-                    fechaSeg:"",
-                    nombre: '',
-                    tipoDocumento: '',
-                    idUsuario: '',
-                    celular: '',
-                    idUsuarioNutricionista: '',
-                    nombreAcudiente: '',
+                    fechaSeg: '',
                     tipoDocAcudiente: '',
                     numeroDocAcudiente: '',
+                    nombreAcudiente: '',
+
+                    tipoDocumento: '',
+                    idUsuario: '',
+                    nombre: '',
+                    celular: '',
                     estadoNutricional: '',
+                    idUsuarioNutricionista: '',
                 }}
                 
                 validate={(valores) => {
                   let errores = {};
 
-                  const dateCurrently2 = new Date();
-                  if(!valores.fechaSeg){
-                    errores.fechaSeg = 'Asegurese de selecionar una fecha';
-                  }else if(dateCurrently2 <= valores.fechaSeg){
-                    errores.fecha = 'Seleccione una fecha valida';
-                  }
                   if(!valores.nombre){
                     errores.nombre = 'No se permiten campos vacíos'
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.nombre)){
@@ -79,11 +81,29 @@ export default function AddControlF(){
                 }}
 
                 onSubmit={(valores, {resetForm}) => {
-                  /*  resetForm();
-                    valores.token = token;
-                    insertUserApi(valores).then(response => {
-                        console.log(repsonse);
-                  });*/
+
+                  var documertParse = parseInt( documentoLogin[0]);
+                  const formData = {
+                    idUsuario: userControl.documento,
+                    idUsuarioNutricionista: documertParse,
+                    nombreAcudiente: valores.nombreAcudiente,
+                    tipoDocAcudiente: valores.tipoDocAcudiente,
+                    numeroDocAcudiente: valores.numeroDocAcudiente,
+                    fecha: moment().format("YYYY-MM-DD")
+                }
+                console.log(formData);
+                //resetForm();
+                  valores.token = token;
+                  insertSegApi(formData, token).then(response => {
+                    console.log(response);
+                    if(response === true){
+                      console.log("registro Seguimiento");
+                      setGoRedirect(true);
+                    }else{
+                      console.log("No registro Seguimiento");
+                      //setGoRedirect(true);
+                    }
+                  });
                 }}
                 >
 
@@ -94,27 +114,12 @@ export default function AddControlF(){
                     return (   
                     <Form onSubmit={handleSubmit}>
                     <Form.Group as={Row} className="mb-1 mt-3">
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>No. Seguimiento</Form.Label>
-                        <Col sm="2">
-                            <InputGroup hasValidation>
-                            <Form.Control type="number" placeholder="01" size="lg" id="idSeguimiento" name="idSeguimiento" 
-                               value={values.idSeguimiento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.idSeguimiento && touched.idSeguimiento}
-                               isValid={!errors.idSeguimiento && touched.idSeguimiento}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.idSeguimiento}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                        </Col>
-                        <Col sm="4"> </Col>
-
                         <Form.Label column sm="1" style={{"fontSize": "12px !important"}}>Fecha </Form.Label>
-                        <Col sm="3">
+                        <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaSeg" name="fechaSeg" 
-                                 value={values.fechaSeg} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaSeg && touched.fechaSeg}
-                                 isValid={!errors.fechaSeg && touched.fechaSeg}
+                                 value={moment().format("YYYY-MM-DD")} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaSeg && touched.fechaSeg}
+                                 isValid={!errors.fechaSeg && touched.fechaSeg} disabled
                               />
                               <Form.Control.Feedback type="invalid">
                                   {errors.fechaSeg}
@@ -132,17 +137,16 @@ export default function AddControlF(){
                      <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Tipo de Documento</Form.Label>
                         <Col md={4}>
                         <InputGroup hasValidation>
-                            <Form.Select  size="lg" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
-                                    isValid={!errors.tipoDocumento && touched.tipoDocumento} isInvalid={!!errors.tipoDocumento && touched.tipoDocumento}
+                            <Form.Select  size="lg" name="tipoDocAcudiente" id="tipoDocAcudiente" onChange={handleChange} onBlur={handleBlur}
+                                isValid={!errors.tipoDocAcudiente && touched.tipoDocAcudiente} isInvalid={!!errors.tipoDocAcudiente && touched.tipoDocAcudiente}
                             >
                             <option disabled selected>Selecciona el tipo de documento</option>
                             <option value="CC">Cédula de ciudadanía</option>
-                            <option value="RC">Registro civil</option>
                             <option value="CE">Cédula de extranjería</option>
 
                             </Form.Select>
                             <Form.Control.Feedback type="invalid">
-                                        {errors.tipoDocumento}
+                                        {errors.tipoDocAcudiente}
                                         </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
@@ -188,28 +192,23 @@ export default function AddControlF(){
                         <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Tipo de Documento</Form.Label>
                         <Col md={4}>
                         <InputGroup hasValidation>
-                            <Form.Select  size="lg" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
-                                    isValid={!errors.tipoDocumento && touched.tipoDocumento} isInvalid={!!errors.tipoDocumento && touched.tipoDocumento}
-                            >
-                            <option disabled selected>Selecciona el tipo de documento</option>
-                            <option value="CC">Cédula de ciudadanía</option>
-                            <option value="RC">Registro civil</option>
-                            <option value="CE">Cédula de extranjería</option>
-
-                            </Form.Select>
+                               <Form.Control type="text" size="lg" id="nombreAcudiente" name="tipoDocumento" 
+                               value={userControl.tipoDocumento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.tipoDocumento && touched.tipoDocumento}
+                               isValid={!errors.tipoDocumento && touched.tipoDocumento} disabled
+                            />
                             <Form.Control.Feedback type="invalid">
-                                        {errors.tipoDocumento}
-                                        </Form.Control.Feedback>
+                                {errors.nombre}
+                            </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                            </InputGroup>
-                        </Col>
+                        </InputGroup>
+                     </Col>
                        
                         <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Número Documento</Form.Label>
                             <Col md={4}>
                             <InputGroup hasValidation>
                             <Form.Control  type="text" placeholder="Número documento" size="lg" id="idUsuario" name="idUsuario" 
-                            value={values.idUsuario} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.documento && touched.idUsuario}
-                            isValid={!errors.idUsuario && touched.idUsuario}
+                            value={userControl.documento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.documento && touched.idUsuario}
+                            isValid={!errors.idUsuario && touched.idUsuario} disabled
                             />
                             <Form.Control.Feedback type="invalid">
                                 {errors.idUsuario}
@@ -224,8 +223,8 @@ export default function AddControlF(){
                         <Col md={4}>
                         <InputGroup hasValidation>
                         <Form.Control type="text" placeholder="nombre usuario" size="lg" id="nombre" name="nombre" 
-                               value={values.nombre} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombre && touched.nombre}
-                               isValid={!errors.nombre && touched.nombre}
+                               value={userControl.nombre} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombre && touched.nombre}
+                               isValid={!errors.nombre && touched.nombre} disabled
                             />
                             <Form.Control.Feedback type="invalid">
                                 {errors.nombre}
@@ -239,8 +238,8 @@ export default function AddControlF(){
                         <Col md={4}>
                         <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="Dígita aquí Teléfono" size="lg" id="celular" name="celular" 
-                            value={values.celular} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.celular && touched.celular}
-                            isValid={!errors.celular && touched.celular}
+                            value={userControl.celular} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.celular && touched.celular}
+                            isValid={!errors.celular && touched.celular} disabled
                             />
                             <Form.Control.Feedback type="invalid">
                                 {errors.celular}
@@ -248,28 +247,14 @@ export default function AddControlF(){
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                         </Col>
-                    </Form.Group>
+                    </Form.Group>           
 
-                   
-                    <Form.Group as={Row} className="mb-4">
-                    <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Estado Nutricional</Form.Label>
-                    <Col md={10}>
-                        <InputGroup hasValidation>
-                              <Form.Control type="text" placeholder="Estado nutricional calculado" size="lg" id="estadoNutricional" name="estadoNutricional" 
-                               value={values.estadoNutricional} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.estadoNutricional && touched.estadoNutricional}
-                              isValid={!errors.estadoNutricional && touched.estadoNutricional}
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.estadoNutricional}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                    </Col>
-                    </Form.Group>                           
-
+                    {goRedirect && (
+                      <Redirect to={`/admin/addInfantIncome`} />
+                    )}            
                         <div className="d-grid gap-2">
-                            <Button variant="primary" type="submit" size="lg">
-                               Guardar
+                            <Button variant="primary" type="submit" size="lg" >
+                               Siguiente
                             </Button>
                         </div>
 

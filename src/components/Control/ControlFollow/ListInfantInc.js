@@ -1,21 +1,41 @@
+import React, { useState } from 'react';
 import { Container, Row, Col, Button, Form, InputGroup, ListGroup} from "react-bootstrap";
-import { faPrint } from '@fortawesome/free-solid-svg-icons';
+import { faPrint, faEye } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, Field, ErrorMessage } from "formik";
 import { faFileMedicalAlt } from '@fortawesome/free-solid-svg-icons';
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
-import { faEye } from '@fortawesome/free-regular-svg-icons';
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
+import {getSegByIdApi} from "../../../api/follow-up";
+import { TOKEN } from "../../../utils/constans";
 
 export default function ListInfantInc(props){
-    const { listControls } = props;
-   
+    const { listControls, documento } = props;
+    const token = localStorage.getItem(TOKEN);
      const dateFormat = (date) => {
         if(date){
         let dateFormated = date.split('T');
         return dateFormated[0];
-        }
+        } 
       }
+      
+
+     const getNombreAcudiente = (id) => {
+        getSegByIdApi(id, token).then(response => {
+            console.log(response);
+
+            return response.nombreAcudiente;
+        })
+     }
+
+     const getFecha = (id) => {
+        getSegByIdApi(id, token).then(response => {
+            console.log(response);
+
+            return dateFormat(response.fecha);
+            
+        })
+     }
  
      return(
          <Container> 
@@ -34,20 +54,25 @@ export default function ListInfantInc(props){
 
            <Col sm={12} style={{backgroundColor: '#f1f1f1'}} >
            <ListGroup className="mt-3 mb-3">
+           {listControls.map((item, index) => (
                 <ListGroup.Item className="shadow border" >
                 
                 <Container>
                 <Row >
-                    <Col md={1} className="align-self-center" >
-                        <p style={{"color": "#2D61A4", "fontSize": 23}}><b>Id</b> <br/></p>
+                    <Col md={3} className="align-self-center" >
+                        <p style={{"color": "#2D61A4", "fontSize": 23}}><b>Nombre Acudiente</b><br/>
+                        {getNombreAcudiente(item.ingreso.idSeguimiento)}
+                        </p>
                     </Col>
                     <Col md={3} className="align-self-center" >
-                        <p style={{"color": "#2D61A4", "fontSize": 23}}><b>Fecha ingreso</b> <br/></p>
+                        <p style={{"color": "#2D61A4", "fontSize": 23}}><b>Fecha ingreso</b><br/>
+                        {getFecha(item.ingreso.idSeguimiento)}
+                        </p>
                     </Col>
-                    <Col md={4} className="align-self-center" >
-                        <p style={{"color": "#2D61A4", "fontSize": 23}}><b>Estado del ingreso</b> <br/></p>
+                    <Col md={3} className="align-self-center" >
+                        <p style={{"color": "#2D61A4", "fontSize": 23}}><b>Estado del ingreso</b> <br/>{item.ingreso.idSeguimiento}</p>
                     </Col>
-                    <Col md={4} className="align-self-right">
+                    <Col md={3} className="align-self-right">
                          <p style={{"color": "#2D61A4", "fontSize": 23}}><b>Acciones</b> <br/>
                         
                             <Link className="enlace" to="#" className="btn btn-primary mx-0">
@@ -68,17 +93,19 @@ export default function ListInfantInc(props){
                                 <ReactTooltip id="boton5" place="bottom" type="dark" effect="float"> Imprimir </ReactTooltip>
                             </Link >
                                 <br></br> 
-                                <Button href="/admin/addControlRemission" style={{"fontSize": 13, "backgroundColor": "#fd650d", "borderColor":"#fd650d", "fontWeight":"bold"}} color="black">
+                                <Button href={`/admin/listControlRemission/${documento}/${item.ingreso.idSeguimiento}`} style={{"fontSize": 13, "backgroundColor": "#fd650d", "borderColor":"#fd650d", "fontWeight":"bold"}} color="black">
                                 Remisiones
                                 </Button>{' '}
-                                <Button href="/admin/addCommitment" style={{"fontSize": 13, "backgroundColor": "#fd650d", "borderColor":"#fd650d", "fontWeight":"bold"}} color="black">
+                                <Link to="/admin/addCommitment" style={{"fontSize": 13, "backgroundColor": "#fd650d", "borderColor":"#fd650d", "fontWeight":"bold"}} color="black">
                                 Compromisos
-                                </Button>{' '}
+                                </Link>{' '}
+
                          </p>                     
                      </Col>
                  </Row>
                  </Container>
              </ListGroup.Item>
+           ))}
              </ListGroup> 
              </Col>      
              </Row> 

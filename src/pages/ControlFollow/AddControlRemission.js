@@ -1,35 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from 'react';
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "react-bootstrap";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
-import { Container } from "react-bootstrap";
-import AddControlR from "../../components/Control/ControlFollow/AddControlR";
-import { getUserByIdApi } from "../../api/user";
 import { getSegByIdApi } from "../../api/follow-up";
-import { insertRemisApi } from "../../api/remission";
 import { TOKEN } from "../../utils/constans";
+import AddControlR from "../../components/Control/ControlFollow/AddControlR";
 
 export default function AddControlRemission(){
-    const { id } = useParams();
+    const { idSeg } = useParams();
+    const [controlSeguimiento, setControl] = useState({});
     const token = localStorage.getItem(TOKEN);
     const [ componentLoaded, setComponentLoaded ] = useState(false); 
-    const [followControl, setFollow] = useState({});
-    const [ followLoaded, setFollowLoaded ] = useState({});
+    const [ controlLoaded, setControlLoaded ] = useState({});
     var loading = true;
 
     useEffect(() => {
         loading = false;
-        getSegByIdApi(id, token).then(response => {
-            setFollow(response);
+        getSegByIdApi(idSeg, token).then(response => {
+            setControl(response);
             setComponentLoaded(true); 
         })
         if(!loading){ 
-          setComponentLoaded(true); 
-          setFollowLoaded(followControl);
+            setComponentLoaded(true); 
+            setControlLoaded(controlSeguimiento);
         }
-      }, []);
+        }, []);
+
     return(
         <Container>
-             <h1 className="text-center">Añadir Remisión </h1>
-            <AddControlR />
+        <h1 className="text-center">Añadir Remisión</h1>
+        {!componentLoaded ? (
+            <Row className="justify-content-md-center text-center">
+            <Col md={1} className="justify-content-center">
+            <Spinner animation="border" >
+            </Spinner> 
+            </Col>
+            </Row>
+        )
+        :
+        (
+            <AddControlR controlSeguimiento={controlSeguimiento}/>
+        )
+        }
         </Container>
     )
 }

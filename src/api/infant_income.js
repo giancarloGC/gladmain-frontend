@@ -1,11 +1,12 @@
 import { urlBackend } from "./config";
 
 
-export function insertInfantIncomeApi(data){
-    const url = `${urlBackend}control_seguimiento/REGISTRAR_INGRESO_INFANTE`;
+export function insertInfantIncomeApi(data, token){
+    const url = `/api/control_seguimiento/REGISTRAR_INGRESO_INFANTE`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "POST",
         body: JSON.stringify(data)
@@ -34,7 +35,7 @@ export function updateInfantIncomeApi(data){
 }
 
 export function getInfantIncomeApi(documento, token){
-    const url = `${urlBackend}control_seguimiento/LISTAR_INGRESOS_INFANTE/${documento}`;
+    const url = `/api/control_seguimiento/LISTAR_INGRESOS_INFANTE/${documento}`;
     const params = {
         headers: {
             "Content-Type": "application/json",

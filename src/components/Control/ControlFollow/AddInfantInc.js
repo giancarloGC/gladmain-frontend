@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
+import { TOKEN } from "../../../utils/constans";
+import { insertInfantIncomeApi } from "../../../api/infant_income";
+import swal from 'sweetalert';
 import "./Switch.scss";
 import AddIncomeCommit from "./AddIncomeCommit/AddIncomeCommit";
 import AddIncomeCommit2 from "./AddIncomeCommit/AddIncomeCommit2";
@@ -12,7 +15,16 @@ import AddIncomeCommit7 from "./AddIncomeCommit/AddIncomeCommit7";
 import AddIncomeCommit8 from "./AddIncomeCommit/AddIncomeCommit8";
 import AddIncomeCommit9 from "./AddIncomeCommit/AddIncomeCommit9";
 
-export default function AddInfantInc(){
+export default function AddInfantInc(props){
+  const { controlSeguimiento } = props;
+  const token = localStorage.getItem(TOKEN);
+  /*const [ checkeds, setCheckeds ] = useState({ atendido: false, hospitalizado: false, fallecido: false });
+  console.log(checkeds);
+
+  const onChangeChecked = (e) => {
+      setCheckeds({...checkeds, [e.target.name]: e.target.checked});
+  }*/
+
   const [showCommit, setShowCommit] = useState(false);
   const [dataCommit, setDataCommit] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
   const [ saveData, setSaveData ] = useState(false);
@@ -49,16 +61,11 @@ export default function AddInfantInc(){
   const [dataCommit9, setDataCommit9] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
   const [ saveData9, setSaveData9] = useState(false);
 
-  console.log(dataCommit);
-
-  console.log(showCommit);
-
-  
-
     return(
         <Container>
           <AddIncomeCommit showCommit={showCommit} setShowCommit={setShowCommit} setDataCommit={setDataCommit} dataCommit={dataCommit} 
-            setSaveData={setSaveData}
+            setSaveData={setSaveData} 
+            
           />
           <AddIncomeCommit2 showCommit2={showCommit2} setShowCommit2={setShowCommit2} setDataCommit2={setDataCommit2} dataCommit2={dataCommit2} 
             setSaveData2={setSaveData2}
@@ -89,17 +96,20 @@ export default function AddInfantInc(){
                 <Col sm={8} className="mt-2 mb-4" style={{backgroundColor: '#f1f1f1', "border-radius":'10px'}}> 
                 <Formik
                 initialValues={{ 
+                  idIngreso: '',
+                  alarmaPreventiva: '',
+                  controlCyD: '',
+                  recibeSuplementos: '',
+                  valoracionMedica: '',
+
                     idSeguimiento: '',
                     afiliacionSgsss: '',
                     saludOral: '',
                     conoceUrgencias: '',
-                    alarmaPreventiva: '',
-                    valoracionMedica: '',
-                    controlCyD: '',
                     patologiaIdentificadaSgsss: '',
                     nombrePatologia: '',
                     recibeMedFormulada: '',
-                    nombreMedFormulada: '',
+                    nombreMedFormululada: '',
                     eapb: '',
                     ips: '',
                     usuarioRemitido: '',
@@ -137,11 +147,49 @@ export default function AddInfantInc(){
                 }}
 
                 onSubmit={(valores, {resetForm}) => {
-                  /*  resetForm();
-                    valores.token = token;
-                    insertUserApi(valores).then(response => {
-                        console.log(repsonse);
-                  });*/
+
+                  const formData ={
+                    idIngreso: '',
+                    alarmaPreventiva: saveData4 ? "SI" : "NO",
+                    controlCyD: saveData6 ? "SI" : "NO",
+                    recibeSuplementos: saveData8 ? "SI" : "NO",
+                    valoracionMedica: saveData5 ? "SI" : "NO",
+
+                    idSeguimiento: 9,
+                    afiliacionSgsss: saveData ? "SI" : "NO",
+                    saludOral: saveData2 ? "SI" : "NO",
+                    conoceUrgencias: saveData3 ? "SI" : "NO",
+                    patologiaIdentificadaSgsss: saveData7 ? "SI" : "NO",
+                    nombrePatologia: valores.nombrePatologia,
+                    recibeMedFormulada: saveData8 ? "SI" : "NO",
+                    nombreMedFormululada: valores.nombreMedFormululada,
+                    eapb: valores.eapb,
+                    ips: valores.ips,
+                    usuarioRemitido: saveData9 ? "SI" : "NO",
+                    causa: valores.causa,
+                  }
+                  console.log(formData);
+                  //resetForm();
+                  formData.token = token;
+                  insertInfantIncomeApi(formData, token).then(response => {
+                    if(response === true){
+                      swal({
+                        title: `¡El ingreso fue almacenado correctamente!`,
+                        icon: 'success'
+                      });
+                      /*.then((value) => {
+                        setGoRedirect(true);
+                      });*/
+                    }else{
+                      swal({
+                        title: `¡Opss, ocurrió un error!`,
+                        icon: 'danger'
+                      });
+                      /*.then((value) => {
+                        setGoRedirect(true);
+                      });*/
+                    }
+                  });
                 }}
                 >
 
@@ -158,7 +206,7 @@ export default function AddInfantInc(){
                             <InputGroup hasValidation>
                             <Form.Control
                             type="number" className="text-center" placeholder="01" size="lg" id="idSeguimiento" name="idSeguimiento" 
-                               value={values.idSeguimiento} onChange={handleChange} onBlur={handleBlur} disabled
+                               value={controlSeguimiento.id} onChange={handleChange} onBlur={handleBlur} disabled
                             />
                           </InputGroup>
                       </Col>

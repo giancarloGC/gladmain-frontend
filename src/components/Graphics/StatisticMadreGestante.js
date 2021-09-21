@@ -48,7 +48,7 @@ const data = {
   };
     return(
         <Container>
-              <h2 className="text-center">IMC para la Edad Gestacional </h2>
+              <h2 className="text-center">Estado Nutricional Madre Gestante</h2>
                 <div className="containerGraphic"> 
                   <p className="ejey">IMC</p>
                 <div style={{"max-width": "800px", "text-align":"center"}} >

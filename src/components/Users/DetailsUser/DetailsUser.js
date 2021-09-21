@@ -154,8 +154,8 @@ let dateFechaNaci = moment(user.fechaNacimiento);
             <Row>
             <Col md={6}>
             <ListGroup className="list-group-flush ">
-              <ListGroupItem>{user.tipoDocumento}:</ListGroupItem>
-              <ListGroupItem>Documento:</ListGroupItem>
+              <ListGroupItem>Tipo de Documento:</ListGroupItem>
+              <ListGroupItem>Numero de Documento:</ListGroupItem>
               <ListGroupItem>Sexo:</ListGroupItem>
               <ListGroupItem>Fecha de Nacimiento:</ListGroupItem>
               <ListGroupItem>Edad:</ListGroupItem>
@@ -167,7 +167,7 @@ let dateFechaNaci = moment(user.fechaNacimiento);
             </Col>
             <Col md={6}>
             <ListGroup className="list-group-flush">
-            <ListGroupItem>Cedula de Ciudadania</ListGroupItem>
+            <ListGroupItem>{user.tipoDocumento}</ListGroupItem>
             <ListGroupItem>{user.documento}</ListGroupItem>
               <ListGroupItem>{user.sexo}</ListGroupItem>
               <ListGroupItem>{formatedDate(user.fechaNacimiento)}</ListGroupItem>
