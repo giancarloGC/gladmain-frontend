@@ -131,7 +131,7 @@ export default function AddCommit(props){
                             <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="01" size="lg" id="idSeguimientoSalud" name="idSeguimientoSalud" 
                                value={controlSeguimiento.id} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.idSeguimientoSalud && touched.idSeguimientoSalud}
-                               isValid={!errors.idSeguimientoSalud && touched.idSeguimientoSalud}
+                               isValid={!errors.idSeguimientoSalud && touched.idSeguimientoSalud} disabled
                             />
                             <Form.Control.Feedback type="invalid">
                                 {errors.idSeguimientoSalud}
@@ -147,7 +147,7 @@ export default function AddCommit(props){
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaCompromiso" name="fechaCompromiso" 
                                  value={moment().format("YYYY-MM-DD")} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaCompromiso && touched.fechaCompromiso}
-                                 isValid={!errors.fechaCompromiso && touched.fechaCompromiso}
+                                 isValid={!errors.fechaCompromiso && touched.fechaCompromiso} disabled
                               />
                               <Form.Control.Feedback type="invalid">
                                   {errors.fechaCompromiso}
