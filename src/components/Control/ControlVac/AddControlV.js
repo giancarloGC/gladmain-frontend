@@ -253,7 +253,7 @@ export default function AddControlV(props){
 
                           <br/>
 
-                          {userControl.edad > 2 && (<>
+                          {userControl.edad >= 2 && (<>
                           <tr style={{"text-align": "center", "vertical-align": "middle"}}>
                               <td rowspan="4">2 Meses</td>
                               <td>Polio (Oral – IM)</td>
@@ -276,7 +276,7 @@ export default function AddControlV(props){
 
                           <br/>
 
-                          {userControl.edad > 4 && (<>
+                          {userControl.edad >= 4 && (<>
                           <tr style={{"text-align": "center", "vertical-align": "middle"}}>
                               <td rowspan="4">4 Meses</td>
                               <td>Polio (Oral – IM)</td>
@@ -300,7 +300,7 @@ export default function AddControlV(props){
                           <br/>
 
 
-                          {userControl.edad > 6 && (<>
+                          {userControl.edad >= 6 && (<>
                           <tr style={{"text-align": "center", "vertical-align": "middle"}}>
                               <td rowspan="4">6 Meses</td>
                               <td colspan="2">Continúe la lactancia materna hasta que cumpla dos años e inicie <br/> alimentación complementaria nutritiva</td>
@@ -324,7 +324,7 @@ export default function AddControlV(props){
                           <br/>
 
 
-                          {userControl.edad > 7 && (<>
+                          {userControl.edad >= 7 && (<>
                           <tr style={{"text-align": "center", "vertical-align": "middle"}}>
                               <td>7 Meses</td>
                               <td>Influenza</td>
@@ -335,7 +335,7 @@ export default function AddControlV(props){
 
                           <br/>
 
-                          {userControl.edad > 12 && (<>
+                          {userControl.edad >= 12 && (<>
                           <tr style={{"text-align": "center", "vertical-align": "middle"}}>
                               <td rowspan="5">12 Meses</td>
                               <td>Sarampión Rubéola Paperas (SRP)</td>
@@ -363,7 +363,7 @@ export default function AddControlV(props){
                           <br/>
 
 
-                          {userControl.edad > 18 && (<>
+                          {userControl.edad >= 18 && (<>
                           <tr style={{"text-align": "center", "vertical-align": "middle"}}>
                               <td rowspan="2">18 Meses</td>
                               <td>Difteria – Tosferina – Tétano (DPT)</td>
@@ -379,7 +379,7 @@ export default function AddControlV(props){
                           <br/>
 
 
-                          {userControl.edad > 60 && (<>
+                          {userControl.edad >= 60 && (<>
                           <tr style={{"text-align": "center", "vertical-align": "middle"}}>
                               <td rowspan="3">5 Años</td>
                               <td>Polio (Oral – IM)</td>

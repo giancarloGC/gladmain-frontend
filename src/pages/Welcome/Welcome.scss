@@ -2,8 +2,30 @@
 	background-color: #4977D6;
 }
 
+.tituloGladMaIn{
+	h1 {text-shadow: 0 0 0.2em rgb(247, 247, 252), 0 0 0.2em rgb(247, 247, 252)}
+}
+
 .navbar-light .navbar-nav .nav-link {
-	color: rgb(19, 75, 139);
+	color: rgb(255, 255, 255);
+}
+
+#portada{
+	background-image: url(./../../assets/img/index.png); 
+	background-repeat: no-repeat;
+	width:100% !important;
+	min-width: 20% !important;
+	max-width: 100% !important;
+	height: auto;
+	background-size: cover;
+}
+
+#fondoGallery{
+	background-image: url(./../../assets/img/FondoGaleria.png); 
+	background-repeat: no-repeat;
+	width:100% !important;
+	min-width: 20% !important;
+	max-width: 100% !important;
 }
 
 nav a {
@@ -31,6 +53,7 @@ nav a {
 
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
     color: #fff;
+	border-radius: 80px;
     background-color: #fd650d;
 }
 
@@ -74,12 +97,11 @@ footer {
     position: fixed;
     text-align: center;
     cursor: pointer;
-    //z-index: 99;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     line-height: 2.1;
     color: #fff;
-    border-radius: 25px;
+    border-radius: 18px;
 }
 
 .ast-scroll-to-top-right {

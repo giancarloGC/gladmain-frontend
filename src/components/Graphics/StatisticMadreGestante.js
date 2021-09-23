@@ -1,19 +1,11 @@
 import React, { useState, useEffect} from "react";
 import { Container, Form } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
-import ListControlN from "../../components/Control/ControlNutri/ListControlN";
-import ImageBackground from "../../assets/img/graphicsPrueba.png";
 import moment from 'moment';
-
 import "./StatisticNutri.scss";
 
 export default function StatisticMadreGestante(props){
 const { listControls, documento } = props;
-const [ sizeImage, setSizeImage] = useState("750");
-const image = new Image();
-image.src = ImageBackground;
-image.width = sizeImage;
-
 
 const generateCoordenadas = () => {
   let coordenadas = [];
@@ -25,11 +17,11 @@ const generateCoordenadas = () => {
       data: [{
         y: item.imc,
         x: item.edadGestacional,
-        r: 15
+        r: 4
       }],
       fill: true,
-      borderColor: '#29E2E8',
-      backgroundColor: '#ffffff',//'rgba(212, 70, 130)',//#D44682',
+      borderColor: '#ffffff',
+      backgroundColor: '#ffffff',
       type: "bubble",
       pointStyle: "bubble", 
     }

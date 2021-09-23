@@ -87,20 +87,19 @@ export default function CalculateStateNutrition(){
     }
 
     const data = {
- 
       labels: edad > 0 && edad <= 24 ? labels : labels2_5,
       datasets: [{
           label: '- 3',
           data: edad > 0 && edad <= 24 ? lineasGraphics.lineMenosTres : lineasGraphics2_5.lineMenosTres,
           fill: false,
-          borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+          borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1,
         },
         {
           label: '- 2',
           data: edad > 0 && edad <= 24 ? lineasGraphics.lineMenosDos : lineasGraphics2_5.lineMenosDos,
           fill: false,
-          borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+          borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1,
           borderDash: [10,5]
         },
@@ -108,28 +107,28 @@ export default function CalculateStateNutrition(){
           label: '- 1',
           data: edad > 0 && edad <= 24 ? lineasGraphics.lineMenosUno : lineasGraphics2_5.lineMenosUno,
           fill: false,
-          borderColor: sexo !== "FEMENINO" ? '#D8E5FD' : '#FFCAFA',
+          borderColor: sexo !== "FEMENINO" ? '#E3B402' : '#E3B402',
           tension: 0.1
         },
         {
           label: '0',
           data: edad > 0 && edad <= 24 ? lineasGraphics.lineCero : lineasGraphics2_5.lineCero,
           fill: false,
-          borderColor: sexo !== "FEMENINO" ? '#8EB2FA' : '#FFA8F6',
+          borderColor: sexo !== "FEMENINO" ? '#127D30' : '#127D30',
           tension: 0.1
         },
         {
           label: '+ 1',
           data: edad > 0 && edad <= 24 ? lineasGraphics.lineMasUno : lineasGraphics2_5.lineMasUno,
           fill: false,
-          borderColor: sexo !== "FEMENINO" ? '#D8E5FD' : '#FFCAFA',
+          borderColor: sexo !== "FEMENINO" ? '#E3B402' : '#E3B402',
           tension: 0.1
         },
         {
           label: '+ 2',
           data: edad > 0 && edad <= 24 ? lineasGraphics.lineMasDos : lineasGraphics2_5.lineMasDos,
           fill: false,
-          borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+          borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1,
           borderDash: [10,5]
         },
@@ -137,14 +136,14 @@ export default function CalculateStateNutrition(){
           label: '+ 3',
           data: edad > 0 && edad <= 24 ? lineasGraphics.lineMasTres : lineasGraphics2_5.lineMasTres,
           fill: false,
-          borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+          borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1
         },
         {
           label: 'Nuevo Control',
-          data: graphicValues.x && [graphicValues],
-          borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#A80B42',
-          backgroundColor: sexo !== "FEMENINO" ? '#5746D4' : 'rgba(212, 70, 130, 0.52)',//#D44682',
+          data: [graphicValues],
+          borderColor: sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
+          backgroundColor: sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
           type: "bubble",
           pointStyle: "bubble",        
         },
@@ -209,30 +208,58 @@ export default function CalculateStateNutrition(){
                     errores.peso = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9-.])*$/.test(valores.peso)){
                     errores.peso = 'Solo puedes escribir números';
-                  }else if(valores.peso < 0){
-                    errores.peso = 'Peso invalido';
+                  }else if(edad > 0 && edad <= 24){
+                    if(valores.peso < 1){
+                      errores.peso = 'el peso debe ser debe ser mayor a 1 kg';
+                    }else if(valores.peso > 26){
+                      errores.peso = 'el peso debe ser menor ó igual a 26 kg';
+                    }
+                  }else{
+                    if(valores.peso < 5){
+                      errores.peso = 'el peso debe ser debe ser mayor a 5 kg';
+                    }else if(valores.peso > 32){
+                      errores.peso = 'el peso debe ser menor ó igual a 32 kg';
+                    }
                   }
 
                   if(!valores.talla){
                     errores.talla = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9-.])*$/.test(valores.talla)){
                     errores.talla = 'Solo puedes escribir números';
-                  }else if(valores.talla < 45){
-                    errores.talla = 'La talla debe ser mayor a 45 cm';
-                  }else if(valores.talla > 120){
-                    errores.talla = 'La talla debe ser menor ó igual a 120 cm';
-                  }else if(valores.talla < 0){
-                    errores.peso = 'Talla invalida';
+                  }else if(edad > 0 && edad <= 24){
+                    if(valores.talla < 45){
+                      errores.talla = 'La talla debe ser mayor a 45 cm';
+                    }else if(valores.talla > 110){
+                      errores.talla = 'La talla debe ser menor ó igual a 110 cm';
+                    }
+                  }else{
+                    if(valores.talla < 65){
+                      errores.talla = 'La talla debe ser mayor a 65 cm';
+                    }else if(valores.talla > 120){
+                      errores.talla = 'La talla debe ser menor ó igual a 120 cm';
+                    }
                   }
 
-                  if(valores.peso > 0 && valores.talla >= 45 && valores.talla <= 120){
-                    let tallaM = convertCmToM(valores.talla);
-                    calculateIMC(valores.peso, tallaM);
-                    calculateStateNutrition(valores.talla, valores.peso);
-                    setGraphicValues({x: valores.talla, y: valores.peso , r: 15});
+                  if(edad > 0 && edad <= 24){
+                    if(valores.peso && valores.talla >= 45 && valores.talla <= 110){
+                      let tallaM = convertCmToM(valores.talla);
+                      calculateIMC(valores.peso, tallaM);
+                      calculateStateNutrition(valores.talla, valores.peso);
+                      setGraphicValues({x: valores.talla, y: valores.peso , r: 3});
+                    }else{
+                      setImc(0);
+                      setGraphicValues({x: 0, y: 0, r: 3});
+                    }
                   }else{
-                    setImc(0);
-                    setGraphicValues({x: 0, y: 0, r: 15});
+                    if(valores.peso && valores.talla >= 65 && valores.talla <= 120){
+                      let tallaM = convertCmToM(valores.talla);
+                      calculateIMC(valores.peso, tallaM);
+                      calculateStateNutrition(valores.talla, valores.peso);
+                      setGraphicValues({x: valores.talla, y: valores.peso , r: 3});
+                    }else{
+                      setImc(0);
+                      setGraphicValues({x: 0, y: 0, r: 3});
+                    }
                   }
                   /*if(!valores.imc){
                     errores.imc = 'Por favor, ingresa solo números';
@@ -384,9 +411,13 @@ export default function CalculateStateNutrition(){
                       }}
                   />
                 </div>
-                <p className="ejex">Longitud(cm)</p>
+                  {edad > 24 ? (
+                    <p className="ejex">Talla(cm)</p>
+                  )
+                  :(
+                    <p className="ejex">Longitud(cm)</p>
+                  )}
                   </Col>
-
 
                   <Col md={4} className="mt-5">
                   {showButtonAdd && (

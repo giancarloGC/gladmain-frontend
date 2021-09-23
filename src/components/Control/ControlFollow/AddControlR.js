@@ -8,7 +8,6 @@ import swal from 'sweetalert';
 import moment from 'moment';
 import "./Switch.scss";
 
-
 export default function AddControlR(props){
   const { controlSeguimiento } = props;
   const token = localStorage.getItem(TOKEN);

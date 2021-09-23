@@ -1,17 +1,12 @@
 import React, { useState, useEffect} from "react";
 import { Container, Form } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
-import ListControlN from "../../components/Control/ControlNutri/ListControlN";
-import ImageBackground from "../../assets/img/graphicsPrueba.png";
+import { lineasGraphics2_5 } from "../Control/ControlNutri/LabelsAndLineas2-5";
 import "./StatisticNutri.scss";
 import moment from 'moment';
 
 export default function StatisticPesoTalla2a5(props){
   const { sexo, listControls } = props;
-  const [ sizeImage, setSizeImage] = useState("750");
-  const image = new Image();
-  image.src = ImageBackground;
-  image.width = sizeImage;
 
   const generateCoordenadas = () => {
     let coordenadas = [];
@@ -23,40 +18,25 @@ export default function StatisticPesoTalla2a5(props){
         data: [{
           y: item.peso,
           x: item.talla,
-          r: 15
+          r: 3
         }],
-        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#A80B42',
-        backgroundColor: sexo !== "FEMENINO" ? '#5746D4' : 'rgba(212, 70, 130, 0.52)',//#D44682',
+        borderColor: sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
+        backgroundColor: sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
         type: "bubble",
         pointStyle: "bubble", 
       }
       coordenadas.push(coor);
     });
   
-    const allCoordenadas = [...lineasArray, ...coordenadas];
+    const allCoordenadas = [...coordenadas, ...lineasArray];
     return allCoordenadas;
   } 
 
-const plugin = {
-  id: 'custom_canvas_background_image',
-  beforeDraw: (chart) => {
-    if (image.complete) {
-      const ctx = chart.ctx;
-      const {top, left, width, height} = chart.chartArea;
-      const x = left + width / 2 - image.width / 2;
-      const y = top + height / 2 - image.height / 2;
-      setSizeImage(`${width}px`);
-      ctx.drawImage(image, x, y);
-    } else {
-      image.onload = () => chart.draw();
-    }
-  }
-};
-
-
 const data = {
- 
-    labels: [ 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120 ],
+    labels: [ 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
+      81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 
+      98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111,
+      112, 113, 114, 115, 116, 117, 118, 119, 120],
     datasets: generateCoordenadas()
   };
     return(
@@ -69,109 +49,85 @@ const data = {
              <center>
              <Form.Label column sm="4" style={{"font-size": "12px !important" }}>Puntuación Z (2 a 5 años)</Form.Label>
              </center>
-             <div className="containerGraphic"> 
-                  <p className="ejey">Peso(kg)</p>
-             <div style={{"max-width": "800px", "background-image": "url('../../assets/img/graphicsPrueba.png')"}}>
-             <Line 
-                data={data}
-                height={500}
-                width={800}
-                options={{
-                  pointStyle: "line",
-                  responsive: true,
-                  scales: {
-                    x: {
-                      type: 'linear',
-                      position: 'bottom',
-                      min: 65,
-                    }
-                  }
-                }}
-             />
+             <div className="container1" style={{"backgroundColor": sexo === "FEMENINO" ? "#FF67C6" : "#35B6FE"}}> 
+              <div className="containerGraphic"> 
+                    <p className="ejey">Peso(kg)</p>
+                <div style={{"max-width": "800px", "text-align":"center"}} style={{"backgroundColor": "white"}}>
+                <Line 
+                    data={data}
+                    height={500}
+                    width={800}
+                    options={{
+                      pointStyle: "line",
+                      responsive: true,
+                      scales: {
+                        x: {
+                          type: 'linear',
+                          position: 'bottom',
+                          min: 65,
+                        }
+                      }
+                    }}
+                />
+                </div>
+              </div>
+                <p className="ejex">Talla(cm)</p>
              </div>
-             </div>
-             <p className="ejex">Talla(cm)</p>
         </Container>
     )
 
     function lineas(){
       return [{
         label: '- 3',
-        data: [ 5.9, 6.8, 7.5, 8.4, 9.2, 10.2, 11.1, 12, 13.2, 14.4, 15.6, 17.1 ],
+        data: lineasGraphics2_5.lineMenosTres,
         fill: false,
-        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+        borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
         tension: 0.1,
       },
       {
         label: '- 2',
-        data: [ 6.5, 7.4, 8.2, 9, 10, 11, 12, 13.1, 14.4, 15.6, 17, 18.6 ],
+        data: lineasGraphics2_5.lineMenosDos,
         fill: false,
-        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+        borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
         tension: 0.1,
         borderDash: [10,5]
       },
       {
         label: '- 1',
-        data: [ 6.9, 7.9, 8.9, 9.8, 10.8, 11.9, 13, 14.2, 15.5, 17, 18.6, 20.4 ],
+        data: lineasGraphics2_5.lineMenosUno,
         fill: false,
-        borderColor: sexo !== "FEMENINO" ? '#D8E5FD' : '#FFCAFA',
+        borderColor: sexo !== "FEMENINO" ? '#E3B402' : '#E3B402',
         tension: 0.1
       },
       {
         label: '0',
-        data: [ 7.5, 8.5, 9.6, 10.6, 11.6, 12.9, 14, 15.4, 16.9, 18.5, 20.4, 22.4 ],
+        data: lineasGraphics2_5.lineCero,
         fill: false,
-        borderColor: sexo !== "FEMENINO" ? '#8EB2FA' : '#FFA8F6',
+        borderColor: sexo !== "FEMENINO" ? '#127D30' : '#127D30',
         tension: 0.1
       },
       {
         label: '+ 1',
-        data: [ 8.1, 9.4, 10.5, 11.5, 12.6, 14, 15.3, 16.7, 18.4, 20.3, 22.4, 24.5 ],
+        data: lineasGraphics2_5.lineMasUn,
         fill: false,
-        borderColor: sexo !== "FEMENINO" ? '#D8E5FD' : '#FFCAFA',
+        borderColor: sexo !== "FEMENINO" ? '#E3B402' : '#E3B402',
         tension: 0.1
       },
       {
         label: '+ 2',
-        data: [ 8.9, 10.2, 11.4, 12.5, 13.8, 15.2, 16.6, 18.2, 20, 22.1, 24.5, 27.2 ],
+        data: lineasGraphics2_5.lineMasDos,
         fill: false,
-        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+        borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
         tension: 0.1,
         borderDash: [10,5]
       },
       {
         label: '+ 3',
-        data: [ 9.6, 11.1, 12.5, 13.7, 15, 16.5, 18.1, 19.9, 22, 24.5, 27.1, 30.1],
+        data: lineasGraphics2_5.lineMasTres,
         fill: false,
-        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+        borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
         tension: 0.1
       }
     ]
-  };
-    return(
-        <Container>
-             {sexo === "MASCULINO" ?
-                <h2 className="text-center">Peso para la Talla Niños </h2>
-              : 
-              <h2 className="text-center">Peso para la Talla Niñas </h2>
-             }
-             <center>
-             <Form.Label column sm="4" style={{"fontSize": "12px !important" }}>Puntuación Z (2 a 5 años)</Form.Label>
-             </center>
-             <div className="containerGraphic"> 
-                  <p className="ejey">Peso(kg)</p>
-             <div style={{"max-width": "800px", "background-image": "url('../../assets/img/graphicsPrueba.png')"}}>
-             <Line 
-                data={data}
-
-                height={500}
-                width={800}
-                options={{pointStyle: "line"}}
-
-             />
-             </div>
-             </div>
-             <p className="ejex">Talla(cm)</p>
-        </Container>
-    )
+  }
 }

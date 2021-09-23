@@ -12,6 +12,7 @@ import Lottie from 'react-lottie';
 import { Line } from "react-chartjs-2";
 import { insertControlApi } from "../../../api/controls";
 import { labels, lineasGraphics } from "./LabelsAndLineas";
+import { labels2_5, lineasGraphics2_5 } from "./LabelsAndLineas2-5";
 import "./GraphicAddNutri.scss";
 import moment from 'moment';
 import { faAddressCard }  from '@fortawesome/free-solid-svg-icons';
@@ -19,6 +20,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function AddControlN(props){
     const { userControl } = props;
+    const { rolUser } = useParams();
     const { user } = AuthContext();
     const token = localStorage.getItem(TOKEN);
     const [show, setShow] = useState(false);
@@ -26,8 +28,8 @@ export default function AddControlN(props){
     const documentoLogin = user.sub.split('-');
     const [ stateNutrition, setStateNutrition ] = useState({ color: "", text: "", animation: null});
     const [ imc, setImc ] = useState(0);
-    const [ graphicValues, setGraphicValues] = useState({ x: 0, y: 0, r: 10});
-    const rolUser = "madre";
+    const [ showButtonAdd, setShowButtonAdd ] = useState(false);
+    const [ graphicValues, setGraphicValues] = useState({ x: 0, y: 0, r: 3});
     const [ goRedirect, setGoRedirect ] = useState(false);
 
     let dateFechaNaci = moment(userControl.fechaNacimiento);
@@ -59,108 +61,117 @@ export default function AddControlN(props){
 
     const calculateStateNutrition = (talla, peso) => {
       //Mirar en que indice esta la talla dijitada para el eje x
+
+      // de 0 A 2 AÑOS
       const indexToFind = (element) => element > talla -1;
-      let indexEjex = labels.findIndex(indexToFind);
-
+      let indexEjex = userControl.edad > 0 && userControl.edad <= 24 ? labels.findIndex(indexToFind) : labels2_5.findIndex(indexToFind)
+      
       //Recorrer cada linea para saber si el numero es mayor o menor a cada linea
-      let valueXlineMasTres = lineasGraphics.lineMasTres[indexEjex];
-      let valueXlineMasDos = lineasGraphics.lineMasDos[indexEjex];
-      let valueXlineMasUno = lineasGraphics.lineMasUno[indexEjex];
-      let valueXlineMenosUno = lineasGraphics.lineMenosUno[indexEjex];
-      let valueXlineMenosDos = lineasGraphics.lineMenosDos[indexEjex];
-      let valueXLineMenosTres = lineasGraphics.lineMenosTres[indexEjex];
-
+      // de 0 A 2 AÑOS
+      //Recorrer cada linea para saber si el numero es mayor o menor a cada linea
+      let valueXlineMasTres = userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMasTres[indexEjex] : lineasGraphics2_5.lineMasTres[indexEjex];
+      let valueXlineMasDos = userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMasDos[indexEjex] : lineasGraphics2_5.lineMasDos[indexEjex];
+      let valueXlineMasUno = userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMasUno[indexEjex] : lineasGraphics2_5.lineMasUno[indexEjex];
+      let valueXlineMenosUno = userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosUno[indexEjex] : lineasGraphics2_5.lineMenosUno[indexEjex];
+      let valueXlineMenosDos = userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosDos[indexEjex] : lineasGraphics2_5.lineMenosDos[indexEjex];
+      let valueXLineMenosTres = userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosTres[indexEjex] : lineasGraphics2_5.lineMenosTres[indexEjex];
 
 
       if(peso > valueXlineMasTres){
+        setShowButtonAdd(false);
         setStateNutrition({ color: "danger", text: "Obesidad", animation: DangerAnimation});
         console.log("es mayor a +3   ");
       }else if(peso > valueXlineMasDos && peso <= valueXlineMasTres){
+        setShowButtonAdd(false);
         setStateNutrition({ color: "danger", text: "Sobrepeso", animation: DangerAnimation});
         console.log("es > a la +2 y < a +3 ");
       }else if(peso > valueXlineMasUno && peso <= valueXlineMasDos){
         console.log("es > a la +1 y < a +2 ");
+        setShowButtonAdd(false);
         setStateNutrition({ color: "warning", text: "Riesgo de Sobrepeso", animation: WarningAnimation});
       }else if(peso >= valueXlineMenosUno && peso <= valueXlineMasUno){
+        setShowButtonAdd(false);
         console.log("es > a la -1 y < a +1 ");
         setStateNutrition({ color: "success", text: "Peso Adecuado para la Talla", animation: SuccessAnimation});
       }else if(peso >= valueXlineMenosDos && peso < valueXlineMenosUno){
+        setShowButtonAdd(true);
         console.log("es > a la -2 y < a -1 ");
         setStateNutrition({ color: "warning", text: "Riesgo de Desnutrición Aguda", animation: WarningAnimation});
       }else if(peso < valueXlineMenosDos && peso >= valueXLineMenosTres){
+        setShowButtonAdd(true);
         console.log("es < 2 y > a la -3 ");
         setStateNutrition({ color: "danger", text: "Desnutrición Aguda Moderada", animation: DangerAnimation});
       }else if(peso < valueXLineMenosTres){
+        setShowButtonAdd(true);
         console.log("es < a la -3 ");
         setStateNutrition({ color: "danger", text: "Desnutrición Aguda Severa", animation: DangerAnimation});
       }
     }
 
     const data = {
- 
-      labels: labels,
+      labels: userControl.edad > 0 && userControl.edad <= 24 ? labels : labels2_5,
       datasets: [{
           label: '- 3',
-          data: lineasGraphics.lineMenosTres,
+          data: userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosTres : lineasGraphics2_5.lineMenosTres,
           fill: false,
-          borderColor: userControl.sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+          borderColor: userControl.sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1,
         },
         {
           label: '- 2',
-          data: lineasGraphics.lineMenosDos,
+          data: userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosDos : lineasGraphics2_5.lineMenosDos,
           fill: false,
-          borderColor: userControl.sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+          borderColor: userControl.sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1,
           borderDash: [10,5]
         },
         {
           label: '- 1',
-          data: lineasGraphics.lineMenosUno,
+          data: userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosUno : lineasGraphics2_5.lineMenosUno,
           fill: false,
-          borderColor: userControl.sexo !== "FEMENINO" ? '#D8E5FD' : '#FFCAFA',
+          borderColor: userControl.sexo !== "FEMENINO" ? '#E3B402' : '#E3B402',
           tension: 0.1
         },
         {
           label: '0',
-          data: lineasGraphics.lineCero,
+          data: userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineCero : lineasGraphics2_5.lineCero,
           fill: false,
-          borderColor: userControl.sexo !== "FEMENINO" ? '#8EB2FA' : '#FFA8F6',
+          borderColor: userControl.sexo !== "FEMENINO" ? '#127D30' : '#127D30',
           tension: 0.1
         },
         {
           label: '+ 1',
-          data: lineasGraphics.lineMasUno,
+          data: userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMasUno : lineasGraphics2_5.lineMasUno,
           fill: false,
-          borderColor: userControl.sexo !== "FEMENINO" ? '#D8E5FD' : '#FFCAFA',
+          borderColor: userControl.sexo !== "FEMENINO" ? '#E3B402' : '#E3B402',
           tension: 0.1
         },
         {
           label: '+ 2',
-          data: lineasGraphics.lineMasDos,
+          data: userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMasDos : lineasGraphics2_5.lineMasDos,
           fill: false,
-          borderColor: userControl.sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+          borderColor: userControl.sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1,
           borderDash: [10,5]
         },
         {
           label: '+ 3',
-          data: lineasGraphics.lineMasTres,
+          data: userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMasTres : lineasGraphics2_5.lineMasTres,
           fill: false,
-          borderColor: userControl.sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+          borderColor: userControl.sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1
         },
         {
           label: 'Nuevo Control',
-          data: [graphicValues],
-          borderColor: userControl.sexo !== "FEMENINO" ? '#4884FC' : '#A80B42',
-          backgroundColor: userControl.sexo !== "FEMENINO" ? '#5746D4' : 'rgba(212, 70, 130, 0.52)',//#D44682',
           type: "bubble",
-          pointStyle: "bubble",        
+          pointStyle: "bubble",
+          data: [graphicValues],
+          borderColor: userControl.sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
+          backgroundColor: userControl.sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
+                  
         },
       ]
     };
-
 
     return(
         <Container>
@@ -177,90 +188,72 @@ export default function AddControlN(props){
                 }}
                 
                 validate={(valores) => {
-                  let errores = {};
-
-                  /*if(!valores.documento){
-                    errores.documento = 'Por favor, ingresa números';
-                  }else if(!/^([0-9])*$/.test(valores.documento)){
-                    errores.documento = 'Documento incorrecto, solo puedes escribir números';
-                  }
-                  let docuemnt = toString(valores.documento);
-                  if(docuemnt.length <= 0 || docuemnt.length > 15){
-                    errores.documento = 'Documento invalido, intente con otro';
-                  }      
-
-                  if(!valores.nombre){
-                    errores.nombre = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.nombre)){
-                    errores.nombre = 'Nombre incorrecto, solo puedes escribir letras';
-                  }
-                  const dateCurrently = new Date();
-                  if(!valores.fechaNacimiento){
-                    errores.fechaNacimiento = 'Asegurese de selecionar una fecha';
-                  }else if(dateCurrently <= valores.fechaNacimiento){
-                    errores.fechaNacimiento = 'Seleccione una fecha valida';
-                  }
-                  if(!valores.sexo){
-                    errores.sexo = 'Asegurese de selecionar una opción';
-                  }
-                  if(!valores.edad){
-                    errores.edad = 'Por favor, ingresa números';
-                  }else if(!/^([0-9])*$/.test(valores.edad)){
-                    errores.edad = 'Edad incorrecta, solo puedes escribir números';
-                  }else if(valores.edad <= 0 || valores.edad > 90){
-                    errores.edad = 'Edad invalida, intente con otra';
-                  }*/      
+                  let errores = {};   
                   const dateCurrently2 = new Date();
-                  /*if(!valores.fechaControl){
-                    errores.fechaControl = 'Asegurese de selecionar una fecha';
-                  }else if(dateCurrently2 <= valores.fechaControl){
-                    errores.fechaControl = 'Seleccione una fecha valida';
-                  }*/
+
                   if(!valores.peso){
                     errores.peso = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9-.])*$/.test(valores.peso)){
                     errores.peso = 'Solo puedes escribir números';
-                  }
-                  if(!valores.talla){
-                    errores.talla = 'Por favor, ingresa solo números';
-                  }else if(!/^([0-9])*$/.test(valores.talla)){
-                    errores.talla = 'Solo puedes escribir números';
-                  }else if(valores.talla < 45){
-                    errores.talla = 'La talla debe ser mayor a 45 cm';
-                  }else if(valores.talla > 110){
-                    errores.talla = 'La talla debe ser menor ó igual a 110 cm';
+                  }else if(userControl.edad > 0 && userControl.edad <= 24){
+                    if(valores.peso < 1){
+                      errores.peso = 'el peso debe ser debe ser mayor a 1 kg';
+                    }else if(valores.peso > 26){
+                      errores.peso = 'el peso debe ser menor ó igual a 26 kg';
+                    }
+                  }else{
+                    if(valores.peso < 5){
+                      errores.peso = 'el peso debe ser debe ser mayor a 5 kg';
+                    }else if(valores.peso > 32){
+                      errores.peso = 'el peso debe ser menor ó igual a 32 kg';
+                    }
                   }
 
-                  if(valores.peso && valores.talla >= 45 && valores.talla <= 110){
-                    let tallaM = convertCmToM(valores.talla);
-                    calculateIMC(valores.peso, tallaM);
-                    calculateStateNutrition(valores.talla, valores.peso);
-                    setGraphicValues({x: valores.talla, y: valores.peso , r: 15});
+                  if(!valores.talla){
+                    errores.talla = 'Por favor, ingresa solo números';
+                  }else if(!/^([0-9-.])*$/.test(valores.talla)){
+                    errores.talla = 'Solo puedes escribir números';
+                  }else if(userControl.edad > 0 && userControl.edad <= 24){
+                    if(valores.talla < 45){
+                      errores.talla = 'La talla debe ser mayor a 45 cm';
+                    }else if(valores.talla > 110){
+                      errores.talla = 'La talla debe ser menor ó igual a 110 cm';
+                    }
                   }else{
-                    setImc(0);
-                    setGraphicValues({x: 0, y: 0, r: 15});
+                    if(valores.talla < 65){
+                      errores.talla = 'La talla debe ser mayor a 65 cm';
+                    }else if(valores.talla > 120){
+                      errores.talla = 'La talla debe ser menor ó igual a 120 cm';
+                    }
                   }
-                  /*if(!valores.imc){
-                    errores.imc = 'Por favor, ingresa solo números';
-                  }else if(!/^([0-9])*$/.test(valores.imc)){
-                    errores.imc = 'Solo puedes escribir números';
+
+                  if(userControl.edad > 0 && userControl.edad <= 24){
+                    if(valores.peso && valores.talla >= 45 && valores.talla <= 110){
+                      let tallaM = convertCmToM(valores.talla);
+                      calculateIMC(valores.peso, tallaM);
+                      calculateStateNutrition(valores.talla, valores.peso);
+                      setGraphicValues({x: valores.talla, y: valores.peso , r: 3});
+                    }else{
+                      setImc(0);
+                      setGraphicValues({x: 0, y: 0, r: 3});
+                    }
+                  }else{
+                    if(valores.peso && valores.talla >= 65 && valores.talla <= 120){
+                      let tallaM = convertCmToM(valores.talla);
+                      calculateIMC(valores.peso, tallaM);
+                      calculateStateNutrition(valores.talla, valores.peso);
+                      setGraphicValues({x: valores.talla, y: valores.peso , r: 3});
+                    }else{
+                      setImc(0);
+                      setGraphicValues({x: 0, y: 0, r: 3});
+                    }
                   }
-                  if(!valores.estadoNutricional){
-                    errores.estadoNutricional = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.estadoNutricional)){
-                    errores.estadoNutricional = 'Solo puedes escribir letras';
-                  }*/
+                  
                   return errores;
                 }}
 
                 onSubmit={(valores, {resetForm}) => {
-                  var tension = null;
-                  var edadGestacional = null;
-                  /*if(parametro === "mamita"){
-                    tension = valores.tension;
-                    edadGestacional = valores.edadGestacional;
-                  }*/
-
+                  
                   var documertParse = parseInt( documentoLogin[0]);
                   const formData = {
                     idUsuario: userControl.documento,
@@ -272,8 +265,8 @@ export default function AddControlN(props){
                     imc: imc,
                     estadoNutricional: stateNutrition.text,
 
-                    tension: null,
-                    edadGestacional: null,
+                    tension: rolUser === "MADRE_GESTANTE" ? valores.tension : null,
+                    edadGestacional: rolUser === "MADRE_GESTANTE" ? valores.edadGestacional : null,
                     proximoControl: null,
                     ultimoControl: null,
                     vigente: false,
@@ -320,10 +313,9 @@ export default function AddControlN(props){
                 <Row>
                   <Col sm={3}></Col>
                   <Col sm={6}> 
-                    <Form.Group as={Row} className="mb-3">
-
+                    <Form.Group as={Row} >
                         <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Número documento</Form.Label>
-                        <Col sm="8">
+                        <Col sm="8" className="mt-2">
                             <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="Dígita aquí el documento" size="lg" id="documento" name="documento" 
                                value={userControl.documento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.documento && touched.documento}
@@ -337,7 +329,7 @@ export default function AddControlN(props){
                         </Col>
                         </Form.Group>
 
-                        <Form.Group as={Row} className="mb-3">
+                        <Form.Group as={Row} >
                         <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Nombre</Form.Label>
                         <Col sm="8">
                         <InputGroup hasValidation>
@@ -353,9 +345,9 @@ export default function AddControlN(props){
                         </Col>
                         </Form.Group>
                       
-                        <Form.Group as={Row} className="mb-3">
+                        <Form.Group as={Row} className="mt-2">
                         <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Fecha nacimiento</Form.Label>
-                        <Col sm="8">
+                        <Col sm="8" className="mt-2">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaNacimiento" name="fechaNacimiento" 
                                  Value={dateFormat(userControl.fechaNacimiento)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaNacimiento && touched.fechaNacimiento}
@@ -420,6 +412,37 @@ export default function AddControlN(props){
                           </InputGroup>
                         </Col>
                         </Form.Group> 
+                        {rolUser === "MADRE_GESTANTE" && ( 
+                              <Form.Group as={Row} className="mb-3">
+                              <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Tensión</Form.Label>
+                              <Col sm="8">
+                                  <InputGroup hasValidation>
+                                  <Form.Control type="number" placeholder="Dígita aquí la tensión" size="lg" id="tension" name="tension" 
+                                     value={values.tension} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.tension && touched.tension}
+                                     isValid={!errors.tension && touched.tension} 
+                                  />
+                                  <Form.Control.Feedback type="invalid">
+                                      {errors.tension}
+                                  </Form.Control.Feedback>
+                                  <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                              </InputGroup>
+                              </Col>
+
+                              <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Edad Gestacional</Form.Label>
+                              <Col sm="8" className="mt-3">
+                                  <InputGroup hasValidation>
+                                  <Form.Control type="number" placeholder="Edad Gestacional en semanas" size="lg" id="edadGestacional" name="edadGestacional" 
+                                     value={values.edadGestacional} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edadGestacional && touched.edadGestacional}
+                                     isValid={!errors.edadGestacional && touched.edadGestacional} 
+                                  />
+                                  <Form.Control.Feedback type="invalid">
+                                      {errors.edadGestacional}
+                                  </Form.Control.Feedback>
+                                  <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                              </InputGroup>
+                              </Col>
+                              </Form.Group>
+                            )} 
 
                         <Row>
                           <Col md={6}>
@@ -469,32 +492,36 @@ export default function AddControlN(props){
 
                 {imc !== 0 && (
                 <Row className="mt-3">
-                  <Col md={8}>
+                 <Col md={8}>
                   <center>
-             <Form.Label column sm="12" style={{"font-size": "12px !important" }}>Puntuación Z (0 a 2 años)</Form.Label>
-             </center>
-                <div >
-                  <Line 
-                      data={data}
-                      height={350}
-                      width={600}
-                      options={{
-                        pointStyle: "line",
-                        responsive: true,
-                        scales: {
-                          x: {
-                            type: 'linear',
-                            position: 'bottom',
-                            min: 45,
-                          }
-                        }
-                      }}
-                  />
-                </div>
-                <p className="ejex">Longitud(cm)</p>
-                  </Col>
-
-
+                  <Form.Label column sm="12" style={{"font-size": "12px !important" }}>Puntuación Z ({userControl.edad > 0 && userControl.edad <= 24 ? "0 a 2 años" : "2 a 5 años"})</Form.Label>
+                  </center>
+                      <div >
+                        <Line 
+                            data={data}
+                            height={350}
+                            width={600}
+                            options={{
+                              pointStyle: "line",
+                              responsive: true,
+                              scales: {
+                                x: {
+                                  type: 'linear',
+                                  position: 'bottom',
+                                  min: userControl.edad > 0 && userControl.edad <= 24 ? 45 : 65 //45 = 0-2 años    65 = 2-5 años
+                                }
+                              }
+                            }}
+                        />
+                      </div>
+                      {userControl.edad > 24 ? (
+                        <p className="ejex">Talla(cm)</p>
+                      )
+                      :(
+                        <p className="ejex">Longitud(cm)</p>
+                      )}
+                        </Col>
+                      
                   <Col md={4} className="mt-5">
                             <Form.Group as={Row}>
                                 <Alert variant="secondary">
@@ -518,13 +545,7 @@ export default function AddControlN(props){
                         </div>
                   </Col>
                 </Row>
-
               )}
-              
-              {rolUser === "MADRE_GESTANTE" && ( 
-                <p>Campo de mamita TENSION</p>
-              )}   
-                
                     </Form>
                             );
                         }}

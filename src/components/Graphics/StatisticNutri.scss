@@ -1,24 +1,31 @@
 .ejey{
-    color: #4977D6 !important;
+    color: #1e1e1f !important;
     transform: rotate(-90deg);
-    margin-left: 300px;
+    margin-left: 250px;
     margin-right: -240px;
 }
 
 .ejex{
-    color: #4977D6 !important;
+    color: #1e1e1f !important;
 }
 
 .containerGraphic{
-    display: flex;
+    margin-top: 35px !important;
+    display: inline-flex;
     flex-direction: row !important;
 }
+
+.container1{
+    width: 1020px;
+    height: 580px;
+    margin-right: 300px;
+}
+
 .valores{
     font-size: 12px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: #171718 !important;
-    margin-left: 225px;
+    margin-left: 220px;
     line-height: 1;
-    letter-spacing: 1.7em;
-    
+    letter-spacing: 1.7em; 
 }

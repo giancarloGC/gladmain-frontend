@@ -15,7 +15,7 @@ import useAuth from '../hooks/useAuth';
 export default function LayoutAdmin(props){
     const { routes } = props;
     const [ openMenu, setOpenMenu ] = useState(false);
-    const [ linkSelected, setLinkSelected ] = useState({roles: true, users: false, controls: false});
+    const [ linkSelected, setLinkSelected ] = useState({home: true, roles: false, users: false, controls: false, calculator: false});
     const { user, isLoading } = useAuth();
     const [ infoUser, setInfoUser ] = useState({});
     const [ loading, setLoading] = useState("");
@@ -72,7 +72,6 @@ export default function LayoutAdmin(props){
                         <Nav className="justify-content-end align-items-center navlayout" activeKey="/home">
                     <Nav.Item>
                         <div className="option" id="/home">
-                            {/*<FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" onClick={() => setOpenMenu(!openMenu)}/>*/}
                             <NavDropdown title={infoUser.nombre} id="nav-dropdown" className="subtitlesMenu"
                                 style={{"fontSize": "24px", "fontWeight": 150, "color": "#D4D1D1"}}
                             >
@@ -98,8 +97,11 @@ export default function LayoutAdmin(props){
                     <div className={openMenu ? "menu__side menu__side_move" : "menu__side"} id="menu_side">
                 
                         <div className="name__page">
-                            <Link to="/admin">
-                                <FontAwesomeIcon icon={faHome} className="icon-home" size="2px"/>
+                            <Link to="/admin" className={linkSelected.home ? "selected" : ""} 
+                               onClick={() => setLinkSelected({home: true, roles: false, users: false, controls: false, calculator: false})}
+                            >
+                                <FontAwesomeIcon icon={faHome} className="icon-home" size="lg"/>
+                                
                             </Link>
                             <img src={Logo} alt="image-logo" style={{"width": "150px"}} />
                         </div>
@@ -145,8 +147,8 @@ export default function LayoutAdmin(props){
                                 </Link>
                             )}
                                             
-                            <Link to="/admin/calculator" className={linkSelected.users ? "selected" : ""}                             onClick={() => setLinkSelected({roles: false, users: true, controls: false})}
-                                    onClick={() => setLinkSelected({roles: false, users: true, controls: false})}
+                            <Link to="/admin/calculator" className={linkSelected.calculator ? "selected" : ""}                         
+                                    onClick={() => setLinkSelected({home: false, roles: false, users: false, controls: false, calculator: true})}
                             >
                                 <div className="option">
                                 <FontAwesomeIcon icon={faCalculator} className="icon" size="2x"/>

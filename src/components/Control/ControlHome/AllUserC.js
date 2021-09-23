@@ -19,7 +19,7 @@ import AnimationAuthorization from "../../../assets/animations/withoutAuthorizat
 
 import "../../../components/Control/ControlHome/AllUserC.scss";
 
-export default function AllUserC ({role}){
+export default function AllUserC ({rolUser}){
     const [ loading, setLoading ] = useState(true);
     const [ usersApi, setUsersApi ] = useState([]);
     const token = localStorage.getItem(TOKEN);
@@ -27,7 +27,8 @@ export default function AllUserC ({role}){
     
     useEffect(() => {
         (async () => {
-            const response = await listUsersByRol(role, token);
+            const response = await listUsersByRol(rolUser, token);
+            
             if(response.status === 403){
                 setLoading(false);
                 setAuthorization(false);
@@ -36,7 +37,7 @@ export default function AllUserC ({role}){
                 setLoading(false);
             }
         })();
-    }, [role]);
+    }, [rolUser]);
 
 
     return(
@@ -65,7 +66,7 @@ export default function AllUserC ({role}){
                     <div className="containerP">
                         {usersApi.length > 0 && (
                             usersApi.map((item, index) => (
-                                role === "MADRE_GESTANTE" ? item.edad >= 200 && item.sexo === "FEMENINO" && (
+                                rolUser === "MADRE_GESTANTE" ? item.edad >= 200 && item.sexo === "FEMENINO" && (
                                 <div className="card">
                                     <div className="content">
                                         <div className="imgBx">
@@ -100,7 +101,7 @@ export default function AllUserC ({role}){
                                             </Link>
                                         </div>
 
-                                        {role === "MADRE_GESTANTE" || (
+                                        {rolUser === "MADRE_GESTANTE" || (
                                         <div className="liB">
                                             <Link className="enlace" to={`/admin/listControlCyD/${item.documento}`}>
                                                 <FontAwesomeIcon icon={faChartLine} size="lg" color="#2D61A4"
@@ -142,6 +143,7 @@ export default function AllUserC ({role}){
                                         </div>
                                         <div className="sci">
                                             <div className="liB">
+                                            
                                                 <Link className="enlace" to={`/admin/ListFollowUpChecks/${item.documento}`}>
                                                     <FontAwesomeIcon icon={faFileMedicalAlt} size="lg" color="#2D61A4"
                                                     data-tip data-for = "boton4"/>
@@ -149,7 +151,7 @@ export default function AllUserC ({role}){
                                                 </Link>
                                             </div>
                                             <div className="liB">
-                                            <Link className="enlace"  to={`/admin/graphics/${item.edad}/${item.sexo}/${item.documento}`}>
+                                            <Link className="enlace"  to={`/admin/graphics/${item.edad}/${item.sexo}/${item.documento}/${rolUser}`}>
                                                    <FontAwesomeIcon icon={faNutritionix} size="lg" color="#2D61A4"
                                                    data-tip data-for = "boton1"/>
                                                    <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Nutrición </ReactTooltip>
