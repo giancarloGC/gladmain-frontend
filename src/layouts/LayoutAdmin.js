@@ -20,7 +20,7 @@ export default function LayoutAdmin(props){
     const [ infoUser, setInfoUser ] = useState({});
     const [ loading, setLoading] = useState("");
     let componentMounted = false;
-    console.log(user);
+
     useEffect(() => {
         componentMounted = true;
         if(componentMounted){
@@ -50,6 +50,10 @@ export default function LayoutAdmin(props){
         let document = user.sub.split("-");
         const response = await getUserByIdApi(document[0], token);
             setInfoUser(response);
+    }
+
+    const validatePrivilegio = (privilegio) => {
+        return user.authorities.filter(priv => priv === privilegio);
     }
 
     const signOff = () => {
@@ -104,40 +108,45 @@ export default function LayoutAdmin(props){
                         </div>
                 
                         <div className="options__menu">	
-                
-                            <Link to="/admin/roles" className={linkSelected.roles ? "selected" : ""} 
-                                onClick={() => setLinkSelected({home: false, roles: true, users: false, controls: false, calculator: false})}
-                            >
-                                <div className="option">
-                                    <FontAwesomeIcon icon={faUserTie} className="icon" size="2x"/>
-                                    <h4 className="subtitlesMenu">Roles</h4>
-                                </div>
-                            </Link>
-                
-                            <Link to="/admin/users" className={linkSelected.users ? "selected" : ""}                       
-                                    onClick={() => setLinkSelected({home: false, roles: false, users: true, controls: false, calculator: false})}
-                            >
-                                <div className="option">
-                                <FontAwesomeIcon icon={faUsers} className="icon" size="2x"/>
-                                    <h4 className="subtitlesMenu" >Usuarios</h4>
-                                </div>
-                            </Link>
-                            
-                            <Link to="#" className={linkSelected.controls ? "selected" : ""}
-                                onClick={() => setLinkSelected({home: false, roles: false, users: false, controls: true, calculator: false})}
-                            >
-                                <div className="option">
-                                <FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" onClick={() => setOpenMenu(!openMenu)}/>
-                                <NavDropdown title="Controles" id="nav-dropdown" className="subtitlesMenu"
-                                    style={{"fontSize": "24px", "fontWeight": 100, "color": "#ffff"}}
+                            {validatePrivilegio("LISTAR_ROLES").length > 0 && (
+                                <Link to="/admin/roles" className={linkSelected.roles ? "selected" : ""} 
+                                    onClick={() => setLinkSelected({roles: true, users: false, controls: false})}
                                 >
-                <NavDropdown.Item><Link to="/admin/listUserControl/INFANTE"><h5>Infantes</h5></Link></NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item><Link to="/admin/listUserControl/MADRE_GESTANTE"><h5>Madres gestantes</h5></Link></NavDropdown.Item>
-              </NavDropdown>
-                                </div>
-                            </Link>
+                                    <div className="option">
+                                        <FontAwesomeIcon icon={faUserTie} className="icon" size="2x"/>
+                                        <h4 className="subtitlesMenu">Roles</h4>
+                                    </div>
+                                </Link>
+                            )}
 
+                            {validatePrivilegio("LISTAR_USUARIOS").length > 0 && (                
+                                <Link to="/admin/users" className={linkSelected.users ? "selected" : ""}                             onClick={() => setLinkSelected({roles: false, users: true, controls: false})}
+                                        onClick={() => setLinkSelected({roles: false, users: true, controls: false})}
+                                >
+                                    <div className="option">
+                                    <FontAwesomeIcon icon={faUsers} className="icon" size="2x"/>
+                                        <h4 className="subtitlesMenu" >Usuarios</h4>
+                                    </div>
+                                </Link>
+                            )}
+
+
+                            {validatePrivilegio("LISTAR_USUARIOS_ROL").length > 0 && (                
+                                <Link to="#" className={linkSelected.controls ? "selected" : ""}
+                                    onClick={() => setLinkSelected({roles: false, users: false, controls: true})}
+                                >
+                                    <div className="option">
+                                    <FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" onClick={() => setOpenMenu(!openMenu)}/>
+                                    <NavDropdown title="Controles" id="nav-dropdown" className="subtitlesMenu"
+                                        style={{"fontSize": "24px", "fontWeight": 100, "color": "#ffff"}}
+                                    >
+                                        <NavDropdown.Item><Link to="/admin/listUserControl/INFANTE"><h5>Infantes</h5></Link></NavDropdown.Item>
+                                        <NavDropdown.Divider />
+                                        <NavDropdown.Item><Link to="/admin/listUserControl/MADRE_GESTANTE"><h5>Madres gestantes</h5></Link></NavDropdown.Item>
+                                    </NavDropdown>
+                                    </div>
+                                </Link>
+                            )}
                                             
                             <Link to="/admin/calculator" className={linkSelected.calculator ? "selected" : ""}                         
                                     onClick={() => setLinkSelected({home: false, roles: false, users: false, controls: false, calculator: true})}
@@ -178,7 +187,6 @@ export default function LayoutAdmin(props){
 }
 
 function LoadRoutes({routes}){
-    console.log(routes);
     return (
         <Switch>
             {routes.map((route, index) => (

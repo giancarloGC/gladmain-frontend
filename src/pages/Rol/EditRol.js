@@ -158,7 +158,7 @@ export default function EditRol(){
 
                             <Col md={4}>
                                 {listPrivilegios.map((item, index) => (
-                                    index > 35 && index <= 53 && (
+                                    index > 35 && index <= 54 && (
                                         checkPrivilegio(item)                                    
                                     )
                                 ))}
