@@ -5,11 +5,25 @@ import ListControlN from "../../components/Control/ControlNutri/ListControlN";
 import ImageBackground from "../../assets/img/graphicsPrueba.png";
 import { lineasGraphics } from "../Control/ControlNutri/LabelsAndLineas";
 import moment from 'moment';
+import { getControlByIdApi } from "../../api/controls"; 
 
 import "./StatisticNutri.scss";
 
 export default function StatisticNutri(props){
-const { sexo, listControls } = props;
+const { sexo, listControls, token } = props;
+
+const getDatasetAtEvent = async (dataset) => {
+  if (!dataset.length) return;
+
+  const datasetIndex = dataset[0].datasetIndex;
+  //setClickedDataset(data.datasets[datasetIndex].label);
+  const infoSelected = data.datasets[datasetIndex].label.split(" ");
+  const idControl = infoSelected[1];
+  const response = await getControlByIdApi(idControl, token);
+  console.log(response);
+};
+
+
 
 const generateCoordenadas = () => {
   let coordenadas = [];
@@ -211,6 +225,7 @@ const data = {
                           }
                         }
                       }}
+                      getDatasetAtEvent={getDatasetAtEvent}
                   />
                 </div>
                 </div>

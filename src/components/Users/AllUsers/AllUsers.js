@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Row, Spinner } from "react-bootstrap";
+import { Col, Row, Spinner, Form } from "react-bootstrap";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import swal from 'sweetalert';
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
@@ -20,13 +20,14 @@ import "./AllUsers.scss";
 import Lottie from 'react-lottie';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import AnimationAuthorization from "../../../assets/animations/withoutAuthorization.json";
-
+import AnimationNotFindSearch from "../../../assets/animations/notFindSearch.json";
 
 export default function AllUsers(){
     const [ usersApi, setUsersApi ] = useState([]);
     const [ loading, setLoading ] = useState(true);
     const token = localStorage.getItem(TOKEN);
     const [ authorization, setAuthorization ] = useState(true);
+    const [ allUsersSaved, setAllUsersSaved ] = useState([]);
 
     useEffect(() => {
         (async () => {
@@ -36,10 +37,17 @@ export default function AllUsers(){
                 setAuthorization(false);
             }else{
                 setLoading(false);
+                setAllUsersSaved(response);
                 setUsersApi(response);
             };
         })();
     }, []);
+
+
+    const search = (e) => {
+        let usersFiltred = allUsersSaved.filter(user => user.nombre.search(e.target.value) >= 0);
+        setUsersApi(usersFiltred);
+    }
 
 
     const confirmDeleteUser = (documento) => {
@@ -98,18 +106,33 @@ export default function AllUsers(){
                 </Row>
             )}
        
-            {usersApi && (
-                <div className="containerGListUsers">
-                <div className="sectionDiv">
-                    <div className="containerP">
-                    {usersApi.length > 0  && (
+            {allUsersSaved && (
+                <>
+                {allUsersSaved.length > 0  && (
+                    <>
                     <h1 className="text-center">Lista de Usuarios <Link to="/admin/addUser" ><FontAwesomeIcon data-tip data-for="boton1" icon={faUserPlus} size="lg" color="#2D61A4"
                         />
                         </Link>
                         <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Agregar Nuevo Usuario </ReactTooltip>
                     </h1>
-                    )}
+                    <Form.Control type="search" placeholder="Buscar Usuario" size="lg" onChange={(e) => search(e)} name="busqueda" 
+                        className="mb-3"
+                    />
+                    </>
+                )}
 
+                {usersApi.length === 0 && (
+                    <>
+                        <p style={{"color": "#2D61A4", "fontSize": 27}}>No se encontraron registros que coincidan</p>
+                        <Lottie height={400} width={400}
+                            options={{ loop: true, autoplay: true, animationData: AnimationNotFindSearch, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                        />
+                    </>
+                )}
+
+                <div className="containerGListUsers">
+                <div className="sectionDiv">
+                    <div className="containerP">
                     {usersApi.map((item, index) => (
                         <div className="card">
                         <div className="content">
@@ -154,6 +177,7 @@ export default function AllUsers(){
                     </div>
                 </div>
                 </div>
+                </>
             )}       
         </>
     )
