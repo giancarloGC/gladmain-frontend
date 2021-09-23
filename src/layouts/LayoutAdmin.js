@@ -72,7 +72,6 @@ export default function LayoutAdmin(props){
                         <Nav className="justify-content-end align-items-center navlayout" activeKey="/home">
                     <Nav.Item>
                         <div className="option" id="/home">
-                            {/*<FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" onClick={() => setOpenMenu(!openMenu)}/>*/}
                             <NavDropdown title={infoUser.nombre} id="nav-dropdown" className="subtitlesMenu"
                                 style={{"fontSize": "24px", "fontWeight": 150, "color": "#D4D1D1"}}
                             >
@@ -99,7 +98,7 @@ export default function LayoutAdmin(props){
                 
                         <div className="name__page">
                             <Link to="/admin">
-                                <FontAwesomeIcon icon={faHome} className="icon-home" size="2px"/>
+                                <FontAwesomeIcon icon={faHome} className="icon-home" size="lg" />
                             </Link>
                             <img src={Logo} alt="image-logo" style={{"width": "150px"}} />
                         </div>
