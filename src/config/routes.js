@@ -44,7 +44,7 @@ import StatisticHomeMadre from "../pages/ControlNutri/StatisticHomeMadre";
 import EditProfileUser from "../pages/Users/EditProfileUser";
 import IndexCalculator from "../pages/Calculator/IndexCalculator";
 import calculateStateNutrition from "../pages/Calculator/CalculateStateNutrition";
-
+import AddControlVacMadre from "../pages/ControlVac/AddControlVacMadre";
 import NotFound404 from "../pages/NotFound404";
 
 const routes = [
@@ -104,7 +104,7 @@ const routes = [
                 component: EditUser,
             },   
             {
-                path: "/admin/addControlNutri/:documento",
+                path: "/admin/addControlNutri/:documento/:rolUser",
                 exact: true,
                 component: AddControlNutri,
             },     
@@ -129,7 +129,7 @@ const routes = [
                 component: EditControlVac,
             },
             {
-                path: "/admin/graphics/:edad/:sexo/:documento",
+                path: "/admin/graphics/:edad/:sexo/:documento/:rolUser",
                 exact: true,
                 component: StatisticHome,                
             }, 
@@ -184,7 +184,7 @@ const routes = [
                 component: StatisticImcEdad5a17,          
             },
             {
-                path: "/admin/statisticHomeMadre/:documento",
+                path: "/admin/statisticHomeMadre/:documento/:rolUser",
                 exact: true,
                 component: StatisticHomeMadre,          
             },
@@ -199,7 +199,7 @@ const routes = [
                 component: ListControlCyD,
             },
             {
-                path: "/admin/listUserControl/:role",
+                path: "/admin/listUserControl/:rolUser",
                 exact: true,
                 component: AllUserControl,
             },
@@ -272,8 +272,12 @@ const routes = [
                 path: "/admin/calculatorState/:edad/:sexo",
                 exact: true,
                 component: calculateStateNutrition
+            },
+            {
+                path: "/admin/addControlVacMadre/:documento",
+                exact: true,
+                component: AddControlVacMadre,
             }
-            
         ]
     }   
 ];

@@ -23,9 +23,9 @@ import { TOKEN } from "../../utils/constans";
 import "./StatisticHome.scss";
 
 export default function StatisticHome(){
-    const { edad, sexo, documento } = useParams();
+    const { edad, sexo, documento, rolUser } = useParams();
     const token = localStorage.getItem(TOKEN);
-    const [ optionsGraphics, setOptionsGraphics] = useState({ check1: edad < 60 ? true : false, check2: edad > 60 ? true : false, check3: false, check4: false });
+    const [ optionsGraphics, setOptionsGraphics] = useState({ check1: true, check2: edad > 60 ? true : false, check3: false, check4: false });
     const [ listControls, setListControls ] = useState([]);
 
     useEffect(() => {
@@ -54,7 +54,7 @@ export default function StatisticHome(){
         <>
             <Container>
             <h1 className="text-center">Patrones de Crecimiento Infantil de la OMS
-            <Link to={`/admin/addControlNutri/${documento}`} >
+            <Link to={`/admin/addControlNutri/${documento}/${rolUser}`} >
                 <FontAwesomeIcon icon={faUserPlus} size="lg" color="#2D61A4" style = {{marginLeft:10}} data-tip data-for = "boton1" />
                 <ReactTooltip id="boton1" place="bottom" type="dark" effect="float">Agregar Control Nutricional</ReactTooltip>
             </Link>
@@ -63,11 +63,9 @@ export default function StatisticHome(){
         <>
 
         <center className="select">
-            {edad >= 60 && edad <=204 || (
-                <Form.Check type="checkbox" inline label="Peso para la Talla" checked={optionsGraphics.check1} onChange={(e) => handleCheck(e, "check1")}/>
-            )}    
+            <Form.Check type="checkbox" inline label="Peso para la Talla" checked={optionsGraphics.check1} onChange={(e) => handleCheck(e, "check1")}/>  
             <Form.Check type="checkbox" inline label="Talla para la Edad" checked={optionsGraphics.check2} onChange={(e) => handleCheck(e, "check2")}/>
-                                
+            
             {edad >= 60 && edad <=204 || (
                 <Form.Check type="checkbox" inline label="Peso para la Edad" checked={optionsGraphics.check3} onChange={(e) => handleCheck(e, "check3")}/>
             )}
@@ -81,6 +79,9 @@ export default function StatisticHome(){
                     <StatisticNutri listControls={listControls} sexo={sexo}/>
                 )}
                 {edad >= 24 && edad < 60 && (
+                    <StatisticPesoTalla2a5 listControls={listControls} sexo={sexo}/>
+                )}
+                {edad >= 60 && edad < 204 && (
                     <StatisticPesoTalla2a5 listControls={listControls} sexo={sexo}/>
                 )}
             </>
@@ -136,9 +137,7 @@ export default function StatisticHome(){
         )
         }
     </Container>
-    )
-        </>
-        
+    </> 
     )
 }
 

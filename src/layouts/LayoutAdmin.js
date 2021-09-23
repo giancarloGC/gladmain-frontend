@@ -15,7 +15,7 @@ import useAuth from '../hooks/useAuth';
 export default function LayoutAdmin(props){
     const { routes } = props;
     const [ openMenu, setOpenMenu ] = useState(false);
-    const [ linkSelected, setLinkSelected ] = useState({roles: true, users: false, controls: false});
+    const [ linkSelected, setLinkSelected ] = useState({home: true, roles: false, users: false, controls: false, calculator: false});
     const { user, isLoading } = useAuth();
     const [ infoUser, setInfoUser ] = useState({});
     const [ loading, setLoading] = useState("");
@@ -94,8 +94,11 @@ export default function LayoutAdmin(props){
                     <div className={openMenu ? "menu__side menu__side_move" : "menu__side"} id="menu_side">
                 
                         <div className="name__page">
-                            <Link to="/admin">
+                            <Link to="/admin" className={linkSelected.home ? "selected" : ""} 
+                               onClick={() => setLinkSelected({home: true, roles: false, users: false, controls: false, calculator: false})}
+                            >
                                 <FontAwesomeIcon icon={faHome} className="icon-home" size="2px"/>
+                                
                             </Link>
                             <img src={Logo} alt="image-logo" style={{"width": "150px"}} />
                         </div>
@@ -103,7 +106,7 @@ export default function LayoutAdmin(props){
                         <div className="options__menu">	
                 
                             <Link to="/admin/roles" className={linkSelected.roles ? "selected" : ""} 
-                                onClick={() => setLinkSelected({roles: true, users: false, controls: false})}
+                                onClick={() => setLinkSelected({home: false, roles: true, users: false, controls: false, calculator: false})}
                             >
                                 <div className="option">
                                     <FontAwesomeIcon icon={faUserTie} className="icon" size="2x"/>
@@ -111,8 +114,8 @@ export default function LayoutAdmin(props){
                                 </div>
                             </Link>
                 
-                            <Link to="/admin/users" className={linkSelected.users ? "selected" : ""}                             onClick={() => setLinkSelected({roles: false, users: true, controls: false})}
-                                    onClick={() => setLinkSelected({roles: false, users: true, controls: false})}
+                            <Link to="/admin/users" className={linkSelected.users ? "selected" : ""}                       
+                                    onClick={() => setLinkSelected({home: false, roles: false, users: true, controls: false, calculator: false})}
                             >
                                 <div className="option">
                                 <FontAwesomeIcon icon={faUsers} className="icon" size="2x"/>
@@ -121,7 +124,7 @@ export default function LayoutAdmin(props){
                             </Link>
                             
                             <Link to="#" className={linkSelected.controls ? "selected" : ""}
-                                onClick={() => setLinkSelected({roles: false, users: false, controls: true})}
+                                onClick={() => setLinkSelected({home: false, roles: false, users: false, controls: true, calculator: false})}
                             >
                                 <div className="option">
                                 <FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" onClick={() => setOpenMenu(!openMenu)}/>
@@ -136,8 +139,8 @@ export default function LayoutAdmin(props){
                             </Link>
 
                                             
-                            <Link to="/admin/calculator" className={linkSelected.users ? "selected" : ""}                             onClick={() => setLinkSelected({roles: false, users: true, controls: false})}
-                                    onClick={() => setLinkSelected({roles: false, users: true, controls: false})}
+                            <Link to="/admin/calculator" className={linkSelected.calculator ? "selected" : ""}                         
+                                    onClick={() => setLinkSelected({home: false, roles: false, users: false, controls: false, calculator: true})}
                             >
                                 <div className="option">
                                 <FontAwesomeIcon icon={faCalculator} className="icon" size="2x"/>

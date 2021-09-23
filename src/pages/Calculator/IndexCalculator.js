@@ -34,14 +34,14 @@ export default function IndexCalculator(){
                 )}
 
                 <Formik
-                initialValues={{ edad: 0, sexo: '' }}
+                
                 validate={(valores) => {
                   let errores = {};
                   if(!valores.edad){
                     errores.edad = 'Por favor, ingresa números';
                   }else if(!/^([0-9])*$/.test(valores.edad)){
                     errores.edad = 'Edad incorrecta, solo puedes escribir números';
-                  }else if(valores.edad <= 0){
+                  }else if(valores.edad < 0){
                     errores.edad = 'Edad invalida, intente con otra';
                   } 
 
@@ -51,6 +51,8 @@ export default function IndexCalculator(){
                   
                   return errores;
                 }}
+                
+                initialValues={{ edad: 0, sexo: '' }}
                 onSubmit={(valores, {resetForm}) => {
                     setGoCalculate({edad: valores.edad, sexo: valores.sexo});
                 }}

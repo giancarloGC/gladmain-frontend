@@ -1,17 +1,10 @@
 import React, { useState, useEffect} from "react";
 import { Container, Form } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
-import ImageBackground from "../../assets/img/graphicsPrueba.png";
 import moment from 'moment';
 
 export default function StatisticImcEdad5a17(props){
 const { sexo, listControls } = props;
-const [ sizeImage, setSizeImage] = useState("150");
-
-const image = new Image();
-image.src = ImageBackground;
-image.width = sizeImage;
-
 const generateCoordenadas = () => {
   let coordenadas = [];
   let lineasArray = lineas();
@@ -22,17 +15,17 @@ const generateCoordenadas = () => {
       data: [{
         y: item.imc,
         x: item.meses,
-        r: 15
+        r: 3
       }],
-      borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#A80B42',
-      backgroundColor: sexo !== "FEMENINO" ? '#5746D4' : 'rgba(212, 70, 130, 0.52)',//#D44682',
+      borderColor: sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
+      backgroundColor: sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
       type: "bubble",
       pointStyle: "bubble", 
     }
     coordenadas.push(coor);
   });
 
-  const allCoordenadas = [...lineasArray, ...coordenadas];
+  const allCoordenadas = [...coordenadas, ...lineasArray];
   return allCoordenadas;
 } 
 
@@ -65,9 +58,10 @@ const data = {
             <center>
              <Form.Label column sm="4" style={{"fontSize": "12px !important" }}>Puntuación Z (5 a 17 años)</Form.Label>
             </center>
+            <div className="container1" style={{"backgroundColor": sexo === "FEMENINO" ? "#FF67C6" : "#35B6FE"}}>
              <div className="containerGraphic"> 
                   <p className="ejey">IMC(kg/m^2)</p>
-                <div style={{"max-width": "800px", "text-align":"center"}} >
+                <div style={{"max-width": "800px", "text-align":"center"}} style={{"backgroundColor": "white"}}>
                   <Line 
                       data={data}
                       height={500}
@@ -88,6 +82,7 @@ const data = {
                 </div>
                 </div>
                 <p className="ejex">Edad (en meses y años cumplidos)</p>
+              </div>
         </Container>
     )
     function lineas(){
@@ -98,9 +93,8 @@ const data = {
                 15.4,15.51,15.65,15.8,15.92,16.06,16.15,16.25,16.35,16.45,16.58,16.69,16.82,16.95,17.05,17.15,
                 17.225,17.3,17.355,17.41,17.465,17.52 ],
         fill: false,
-        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+        borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
         tension: 0.1,
-        //borderDash: [10,5]
       },
       {
         label: '- 1',
@@ -109,7 +103,7 @@ const data = {
                 17.05,17.2,17.38,17.5,17.65,17.8,17.95,18.1,18.25,18.41,18.55,18.67,18.8,18.9,19.01,19.1,19.2,19.3,19.4,
                 19.5,19.6 ],
         fill: false,
-        borderColor: sexo !== "FEMENINO" ? '#D8E5FD' : '#FFCAFA',
+        borderColor: sexo !== "FEMENINO" ? '#E3B402' : '#E3B402',
         tension: 0.1,
       },
       {
@@ -118,7 +112,7 @@ const data = {
                 16.65,16.79,16.9,17.05,17.19,17.37,17.53,17.7,17.85,18.05,18.26,18.43,18.6,18.8,19,19.22,19.43,19.6,19.8,20,
                 20.2,20.4,20.6,20.75,20.94,21.1,21.3,21.45,21.58,21.7,21.83,21.95,22.05,22.1,22.2 ],
         fill: false,
-        borderColor: sexo !== "FEMENINO" ? '#8EB2FA' : '#FFA8F6',
+        borderColor: sexo !== "FEMENINO" ? '#127D30' : '#127D30',
         tension: 0.1,
       },
       {
@@ -127,8 +121,9 @@ const data = {
                 18.85,19,19.2,19.4,19.57,19.78,20,20.2,20.4,20.6,20.8,21.05,21.3,21.52,21.75,22,22.25,22.5,22.72,22.92,23.15,
                 23.38,23.58,23.75,23.94,24.1,24.3,24.48,24.63,24.8,24.98,25.1,25.2,25.3,25.4 ],
         fill: false,
-        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+        borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
         tension: 0.1,
+        borderDash: [10,5]
       },
       {
         label: '+ 2',
@@ -136,7 +131,7 @@ const data = {
                 21.7,21.98,22.25,22.5,22.75,23.05,23.35,23.65,23.95,24.2,24.5,24.8,25.1,25.4,25.7,25.95,26.2,26.48,
                 26.73,27,27.25,27.5,27.7,27.9,28.1,28.3,28.5,28.67,28.85,29.05,29.2,29.35,29.47,29.6,29.7,29.8 ],
         fill: false,
-        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+        borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
         tension: 0.1,
       }
       ]

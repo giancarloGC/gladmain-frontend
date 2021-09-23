@@ -1,15 +1,11 @@
 import React, { useState, useEffect} from "react";
 import { Container, Form } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
-import ListControlN from "../../components/Control/ControlNutri/ListControlN";
-import ImageBackground from "../../assets/img/graphicsPrueba.png";
 import "./StatisticNutri.scss";
 import moment from "moment";
 
 export default function StatisticTallaEdad5a17(props){
   const { sexo, listControls } = props;
-  console.log(listControls);
-
   const generateCoordenadas = () => {
     let coordenadas = [];
     let lineasArray = lineas();
@@ -20,25 +16,22 @@ export default function StatisticTallaEdad5a17(props){
         data: [{
           y: item.talla,
           x: item.meses,
-          r: 15
+          r: 3
         }],
-        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#A80B42',
-        backgroundColor: sexo !== "FEMENINO" ? '#5746D4' : 'rgba(212, 70, 130, 0.52)',//#D44682',
+        borderColor: sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
+        backgroundColor: sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
         type: "bubble",
         pointStyle: "bubble", 
       }
       coordenadas.push(coor);
     });
   
-    const allCoordenadas = [...lineasArray, ...coordenadas];
+    const allCoordenadas = [...coordenadas, ...lineasArray];
     return allCoordenadas;
   } 
 
 
 const data = {
-    /*labels: [ "", 3, 6, 9,"", 3, 6, 9,"" , 3, 6, 9,"" , 3, 6, 9, "", 3, 6, 9, "", 3, 6, 9, "", 3, 6, 9,"", 
-              3, 6, 9, "", 3, 6, 9, "", 3, 6, 9, "", 3, 6, 9, "", 3, 6, 9, "", 3, 6, 9, "", 3, 6, 9,"" ],
-    */
    labels: [60, 
       63, 66, 69, 72,
       75, 78, 81, 84, 
@@ -53,7 +46,7 @@ const data = {
       183, 186, 189, 192, 
       195, 198, 201, 204, 
       207, 210, 213, 216, 
-      219, 222, 225, 228 ], //57
+      219, 222, 225, 228 ], 
     datasets: generateCoordenadas()
   };
     return(
@@ -66,9 +59,10 @@ const data = {
              <center>
              <Form.Label column sm="4" style={{"font-size": "12px !important" }}>Puntuación Z (5 a 17 años)</Form.Label>
              </center>
+             <div className="container1" style={{"backgroundColor": sexo === "FEMENINO" ? "#FF67C6" : "#35B6FE"}}>
              <div className="containerGraphic"> 
                   <p className="ejey">Estatura (cm)</p>
-             <div style={{"max-width": "800px", "background-image": "url('../../assets/img/graphicsPrueba.png')"}}>
+             <div style={{"max-width": "800px", "text-align":"center"}} style={{"backgroundColor": "white"}}>
              <Line 
                 data={data}
                 height={500}
@@ -89,6 +83,7 @@ const data = {
              </div>
              </div>
              <p className="ejex">Edad (en meses y años cumplidos)</p> 
+             </div>
         </Container>
     )
 
@@ -99,7 +94,7 @@ const data = {
                124,125,126,127,128.3,129.5,130.5,131.5,133,134.5,136,137.5,139,141,143,145,146.5,148,149.5,151,152.5,154,
                155,156,157,158,158.8,159.5,159.8,160.3,160.5,160.8,161.3,161.5,161.8,162,162,162],
         fill: false,
-        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+        borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
         tension: 0.1,
         borderDash: [10,5]
       },
@@ -109,7 +104,7 @@ const data = {
                 130.3,131.5,132.5,133.8,135,136.3,137.8,139.2,140.5,142,143.9,145.3,147,148.5,150.3,152,154,155.5,157,
                 158.5,160,161,162,163.1,164,165,165.9,166.5,167,167.6,168,168.3,168.5,168.9,169,169.3,169.5,169.8 ],
         fill: false,
-        borderColor: sexo !== "FEMENINO" ? '#D8E5FD' : '#FFCAFA',
+        borderColor: sexo !== "FEMENINO" ? '#E3B402' : '#E3B402',
         tension: 0.1,
       },
       {
@@ -118,7 +113,7 @@ const data = {
                 135.2,136.5,137.9,139,140.3,141.8,143,144.3,146,147.3,149,150.5,152,154,156,158,160,161.8,163.5,165,
                 166.5,168,169,170,171,172,172.8,173.6,174.3,174.8,175.3,175.7,176.2,176.5,176.8,176.8,176.8,176.8,176.8 ],
         fill: false,
-        borderColor: sexo !== "FEMENINO" ? '#8EB2FA' : '#FFA8F6',
+        borderColor: sexo !== "FEMENINO" ? '#127D30' : '#127D30',
         tension: 0.1,
       },
       {
@@ -127,7 +122,7 @@ const data = {
                 147,148.5,150,151.5,153,154.5,156,158,160,161.8,163.8,165.8,167.8,169.3,171,172.5,174,175.5,176.9,178,179,180,
                 180.8,181.6,182.2,182.5,182.8,183.3,183.5,183.8,184,184,184,184,184 ],
         fill: false,
-        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+        borderColor: sexo !== "FEMENINO" ? '#363D44' : '#363D44',
         tension: 0.1,
       },
       {
@@ -136,7 +131,7 @@ const data = {
                 151.9,153.3,154.9,156.3,158,159.8,161.4,163,165,167,169,171,173,175,177,178.5,180.3,182,183.5,184.7,186,187,188,
                 188.7,189.4,189.8,190,190.3,190.5,190.8,191,191.3,191.5,191.5,191.5,191.5 ],
         fill: false,
-        borderColor: sexo !== "FEMENINO" ? '#4884FC' : '#FC39E5',
+        borderColor: sexo !== "FEMENINO" ? '#363D44' : '#363D44',
         tension: 0.1,
       }
     ]
