@@ -36,7 +36,7 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    margin: 40px 0;
+    margin: 20px 0;
 }
 
 .containerP .card {
@@ -83,14 +83,14 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 70%;
+    height: 70%;
     object-fit: cover;
 }
 
 .containerP .card .content .contentBx h3 {
     color : rgb(4, 43, 100) !important;
-    text-transform: uppercase;
+    text-transform: lowercase;
     letter-spacing: 2px;
     font-weight: 800 !important;
     font-size: 20px;
@@ -121,7 +121,7 @@
 }
 
 .containerP .card:hover .sci .liB{
-    transform: translateY(0px);
+    transform: translateY(2px);
     opacity: 1;
 }
 

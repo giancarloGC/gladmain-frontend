@@ -19,7 +19,6 @@ export default function ListInfantInc(props){
         } 
       }
       
-
      const getNombreAcudiente = (id) => {
         getSegByIdApi(id, token).then(response => {
             console.log(response);
