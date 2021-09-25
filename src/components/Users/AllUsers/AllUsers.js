@@ -136,9 +136,9 @@ export default function AllUsers(){
 
                     <div className="containerP" >
                     {usersApi.map((item, index) => (
-                        <div className="card" style={{"width":"230px", "height":"330px"}}>
+                        <div className="card" >
                         <div className="content">
-                            <div className="imgBx" style={{"width":"128px", "height":"128px"}}>
+                            <div className="imgBx">
                                 {item.edad > 216 ? 
                                     <img src={item.sexo === "FEMENINO" ? ImageWomen : ImageMen} alt="img" />
                                 :
@@ -146,7 +146,7 @@ export default function AllUsers(){
                             }
                             </div>
                             <div className="contentBx" >
-                                <h3 style={{"text-transform": "capitalize"}}>{item.nombre}<br/> 
+                                <h3>{item.nombre}<br/> 
                                     <span> {item.tipoDocumento} : {item.documento}</span> <br />
                                     <span><FontAwesomeIcon icon={faPhoneAlt} size="lg" color="#2D61A4" style={{marginRight:10}}/> 
                                     {item.celular}
@@ -154,7 +154,7 @@ export default function AllUsers(){
                                 </h3>
                             </div>
                         </div>
-                        <div className="sci" style={{"transform": "translateY(13px)", "transition": "0.5s"}}>
+                        <div className="sci">
                             <div className="liB" >
                                 <Link className="enlace" to={`/admin/user/${item.documento}`}>
                                 <FontAwesomeIcon icon={faEye} size="lg" color="#2D61A4" data-tip data-for = "boton1"

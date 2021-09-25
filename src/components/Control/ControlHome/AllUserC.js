@@ -39,7 +39,6 @@ export default function AllUserC ({rolUser}){
         })();
     }, [rolUser]);
 
-
     return(
         <>
             {authorization || (
