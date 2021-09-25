@@ -12,6 +12,7 @@ import EditUser from "../pages/Users/EditUser";
 import User from "../pages/Users/User";
 import ListVac from "../pages/ControlVac/ListVac";
 import ListControlNutri from "../pages/ControlNutri/ListControlNutri";
+import DetailControlNutri from "../pages/ControlNutri/DetailControlNutri";
 import AddControlNutri from "../pages/ControlNutri/AddControlNutri";
 import AddControlNutriMadre from "../pages/ControlNutri/AddControlNutriMadre";
 import AddControlCyD from "../pages/ControlCyD/AddControlCyD";
@@ -198,6 +199,11 @@ const routes = [
                 path: "/admin/listControlNutri/:documento",
                 exact: true,
                 component: ListControlNutri,
+            }, 
+            {
+                path: "/admin/DetailControlNutri/:id/:documento",
+                exact: true,
+                component: DetailControlNutri,
             }, 
             {
                 path: "/admin/listControlCyD/:documento",

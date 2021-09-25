@@ -36,7 +36,7 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    margin: 40px 0;
+    margin: 20px 0;
 }
 
 .containerP .card {
@@ -121,7 +121,7 @@
 }
 
 .containerP .card:hover .sci .liB{
-    transform: translateY(0px);
+    transform: translateY(2px);
     opacity: 1;
 }
 

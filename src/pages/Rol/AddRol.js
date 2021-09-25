@@ -47,7 +47,7 @@ export default function AddRol(){
         <Container>
             <h1 className="text-center">Formulario de Rol</h1>
 
-            <Row>
+            <Row >
                 <Col> 
                 <Formik
                 initialValues={{ name: '' }}
@@ -127,7 +127,8 @@ export default function AddRol(){
                         </Alert>
                     )}
 
-                        <fieldset>
+                    <Container style={{backgroundColor: '#f1f1f1', "border-radius":"6px"}}>
+                        <fieldset >
                             <legend>Seleccione las funciones que tendrá el rol</legend>
                             <Row className="mb-3">
                             <Col md={4}>
@@ -155,8 +156,9 @@ export default function AddRol(){
                             </Col>
                             </Row>
                         </fieldset>
+                    </Container>
 
-                        <div className="d-grid gap-2">
+                        <div className="d-grid gap-2 mt-3">
                             <Button variant="primary" type="submit" size="lg">
                                 Añadir
                             </Button>

@@ -51,7 +51,7 @@ export default function AllUsers(){
     }
 
 
-    const confirmDeleteUser = (documento) => {
+    /*const confirmDeleteUser = (documento) => {
         swal({
             title: "¿Estás seguro de eliminar el usuario?",
             text: "¡Una vez eliminado no se podrá recuperar!",
@@ -84,7 +84,7 @@ export default function AllUsers(){
                   });                  
             }
         })
-    }
+    }*/
     
 
     return(
@@ -125,7 +125,7 @@ export default function AllUsers(){
                 {usersApi.length === 0 && (
                     <>
                         <p style={{"color": "#2D61A4", "fontSize": 27}}>No se encontraron registros que coincidan</p>
-                        <Lottie height={400} width={400}
+                        <Lottie height={400} width={750}
                             options={{ loop: true, autoplay: true, animationData: AnimationNotFindSearch, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
                         />
                     </>
@@ -133,19 +133,20 @@ export default function AllUsers(){
 
                 <div className="containerGListUsers">
                 <div className="sectionDiv">
-                    <div className="containerP">
+
+                    <div className="containerP" >
                     {usersApi.map((item, index) => (
-                        <div className="card">
+                        <div className="card" style={{"width":"230px", "height":"330px"}}>
                         <div className="content">
-                            <div className="imgBx">
+                            <div className="imgBx" style={{"width":"128px", "height":"128px"}}>
                                 {item.edad > 216 ? 
                                     <img src={item.sexo === "FEMENINO" ? ImageWomen : ImageMen} alt="img" />
                                 :
                                     <img src={item.sexo === "FEMENINO" ? ImageNina : ImageNino} alt="img" />
                             }
                             </div>
-                            <div className="contentBx">
-                                <h3>{item.nombre}<br/> 
+                            <div className="contentBx" >
+                                <h3 style={{"text-transform": "capitalize"}}>{item.nombre}<br/> 
                                     <span> {item.tipoDocumento} : {item.documento}</span> <br />
                                     <span><FontAwesomeIcon icon={faPhoneAlt} size="lg" color="#2D61A4" style={{marginRight:10}}/> 
                                     {item.celular}
@@ -153,8 +154,8 @@ export default function AllUsers(){
                                 </h3>
                             </div>
                         </div>
-                        <div className="sci">
-                            <div className="liB">
+                        <div className="sci" style={{"transform": "translateY(13px)", "transition": "0.5s"}}>
+                            <div className="liB" >
                                 <Link className="enlace" to={`/admin/user/${item.documento}`}>
                                 <FontAwesomeIcon icon={faEye} size="lg" color="#2D61A4" data-tip data-for = "boton1"
                                 /> <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Ver </ReactTooltip>
@@ -166,12 +167,12 @@ export default function AllUsers(){
                                 /> <ReactTooltip id="boton2" place="bottom" type="dark" effect="float"> Editar </ReactTooltip>
                                 </Link>
                             </div>
-                            <div className="liB">
+                            {/*<div className="liB">
                             <Link className="enlace" onClick={() => confirmDeleteUser(item.documento)}>
                                 <FontAwesomeIcon icon={faTrash} size="lg" color="#2D61A4" data-tip data-for = "boton3"
                                 /> <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Eliminar </ReactTooltip>
                                 </Link>
-                            </div>
+                        </div>*/}
                         </div>
                     </div>                
                     ))}
