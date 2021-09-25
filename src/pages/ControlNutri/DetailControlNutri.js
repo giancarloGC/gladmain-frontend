@@ -15,6 +15,7 @@ export default function DetailControlNutri(){
     const [ componentLoaded, setComponentLoaded ] = useState(false); 
     const [ userLoaded, setUserLoaded ] = useState({});
     const [ controlLoaded, setControlLoaded ] = useState(false);
+    const [ nombreNutricionista, setNombreNutricionista ] = useState("");
     var loading = true;
 
         useEffect(() => {
@@ -26,6 +27,9 @@ export default function DetailControlNutri(){
         getControlByIdApi(id, token).then(response => {
             setControl(response);
             setControlLoaded(true);
+            getUserByIdApi(response.idUsuarioNutricionista, token).then(response => {
+              setNombreNutricionista(response.nombre);
+          })
         })
         if(!loading){ 
         setComponentLoaded(true); 
@@ -45,7 +49,7 @@ export default function DetailControlNutri(){
             </Row>
           )
           : (
-              <DetailControlN userControl={userControl} control={control} />
+              <DetailControlN userControl={userControl} control={control} nombreNutricionista={nombreNutricionista}/>
           )}
         </Container>        
     )

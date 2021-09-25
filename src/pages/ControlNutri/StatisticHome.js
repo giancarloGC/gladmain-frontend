@@ -76,13 +76,13 @@ export default function StatisticHome(){
         {optionsGraphics.check1 && 
             <>
                 {edad < 24 && (
-                    <StatisticNutri listControls={listControls} sexo={sexo} token={token} />
+                    <StatisticNutri listControls={listControls} sexo={sexo} token={token} documento={documento} />
                 )}
                 {edad >= 24 && edad < 60 && (
-                    <StatisticPesoTalla2a5 listControls={listControls} sexo={sexo} token={token}/>
+                    <StatisticPesoTalla2a5 listControls={listControls} sexo={sexo} token={token} documento={documento}/>
                 )}
                 {edad >= 60 && edad < 204 && (
-                    <StatisticPesoTalla2a5 listControls={listControls} sexo={sexo}/>
+                    <StatisticPesoTalla2a5 listControls={listControls} sexo={sexo} documento={documento}/>
                 )}
             </>
         
@@ -90,36 +90,36 @@ export default function StatisticHome(){
         {optionsGraphics.check2 &&
             <>
                 {edad < 24 && (
-                    <StatisticTallaEdad listControls={listControls} sexo={sexo} token={token}/>
+                    <StatisticTallaEdad listControls={listControls} sexo={sexo} token={token} documento={documento}/>
                 )}
                 {edad >= 24 && edad < 60 && (
-                    <StatisticTallaEdad2a5 listControls={listControls} sexo={sexo} token={token}/>
+                    <StatisticTallaEdad2a5 listControls={listControls} sexo={sexo} token={token} documento={documento}/>
                 )}
                 {edad >= 60 && edad < 204 && (
-                    <StatisticTallaEdad5a17 listControls={listControls} sexo={sexo} token={token}/>
+                    <StatisticTallaEdad5a17 listControls={listControls} sexo={sexo} token={token} documento={documento}/>
                 )}
             </>
         }
         {optionsGraphics.check3 &&
             <>
                 {edad < 24 && (
-                    <StatisticPesoEdad  listControls={listControls} sexo={sexo} token={token}/>
+                    <StatisticPesoEdad  listControls={listControls} sexo={sexo} token={token} documento={documento}/>
                 )}
                 {edad >= 24 && edad < 60 && (
-                    <StatisticPesoEdad2a5 listControls={listControls} sexo={sexo} token={token}/>
+                    <StatisticPesoEdad2a5 listControls={listControls} sexo={sexo} token={token} documento={documento}/>
                 )}
             </>
         }
         {optionsGraphics.check4 &&
             <>
                 {edad < 24 && (
-                    <StatisticImcEdad listControls={listControls} sexo={sexo} token={token}/>
+                    <StatisticImcEdad listControls={listControls} sexo={sexo} token={token} documento={documento}/>
                 )}
                 {edad >= 24 && edad < 60 && (
-                    <StatisticImcEdad2a5 listControls={listControls} sexo={sexo} token={token}/>
+                    <StatisticImcEdad2a5 listControls={listControls} sexo={sexo} token={token} documento={documento}/>
                 )}
                 {edad >= 60 && edad < 240 && (
-                    <StatisticImcEdad5a17 listControls={listControls} sexo={sexo} token={token}/>
+                    <StatisticImcEdad5a17 listControls={listControls} sexo={sexo} token={token} documento={documento}/>
                 )}
             </>
         }
