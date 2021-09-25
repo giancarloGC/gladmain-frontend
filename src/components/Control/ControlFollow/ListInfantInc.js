@@ -11,6 +11,7 @@ import { TOKEN } from "../../../utils/constans";
 
 export default function ListInfantInc(props){
     const { listControls, documento } = props;
+    console.log(listControls);
     const token = localStorage.getItem(TOKEN);
      const dateFormat = (date) => {
         if(date){
@@ -38,41 +39,29 @@ export default function ListInfantInc(props){
  
      return(
          <Container> 
-             <Row > 
-
-             <center>
-             <Row className="mb-5" className="mb-4 row justify-content-center align-self-center">
-                 <Form.Label column sm="3" style={{"fontSize": "12px !important"}}>Nombre Acudiente: </Form.Label>
-                        <Col sm="6">
-                        <InputGroup hasValidation>
-                            <Form.Control type="text" placeholder="Nombre Acudiente" size="lg" id="nombreAcudiente" name="nombreAcudiente" disabled/>
-                        </InputGroup>
-                        </Col>
-             </Row>
-            </center>
-
-           <Col sm={12} style={{backgroundColor: '#f1f1f1'}} >
-           <ListGroup className="mt-3 mb-3">
+           <Row > 
+           <Col sm={12}>
+           <ListGroup>
            {listControls.map((item, index) => (
-                <ListGroup.Item className="shadow border" >
-                
+                <ListGroup.Item className="mt-3" className="shadow border mt-4" style={{height:'125px'}}>
                 <Container>
                 <Row >
                     <Col md={3} className="align-self-center" >
-                        <p style={{"color": "#2D61A4", "fontSize": 23}}><b>Nombre Acudiente</b><br/>
+                        <p style={{color: '#2D61A4', fontSize: 20}}><b>Nombre Acudiente</b><br/>
                         {getNombreAcudiente(item.ingreso.idSeguimiento)}
                         </p>
                     </Col>
-                    <Col md={3} className="align-self-center" >
-                        <p style={{"color": "#2D61A4", "fontSize": 23}}><b>Fecha ingreso</b><br/>
-                        {getFecha(item.ingreso.idSeguimiento)}
+                    <Col md={2} className="align-self-center" >
+                        <p style={{color: '#2D61A4', fontSize: 20}}><b>Fecha ingreso</b><br/>{item.ingreso.idSeguimiento}
+                        {//{getFecha(item.ingreso.idSeguimiento)}
+                        }
                         </p>
                     </Col>
                     <Col md={3} className="align-self-center" >
-                        <p style={{"color": "#2D61A4", "fontSize": 23}}><b>Estado del ingreso</b> <br/>{item.ingreso.idSeguimiento}</p>
+                        <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Estado del ingreso</b> <br/></p>
                     </Col>
-                    <Col md={3} className="align-self-right">
-                         <p style={{"color": "#2D61A4", "fontSize": 23}}><b>Acciones</b> <br/>
+                    <Col md={4} className="align-self-right">
+                         <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Acciones</b> <br/>
                         
                             <Link className="enlace" to="#" className="btn btn-primary mx-0">
                                 <FontAwesomeIcon icon={faEye} size="lg" color="white" data-tip data-for = "boton3" 
@@ -92,12 +81,12 @@ export default function ListInfantInc(props){
                                 <ReactTooltip id="boton5" place="bottom" type="dark" effect="float"> Imprimir </ReactTooltip>
                             </Link >
                                 <br></br> 
-                                <Button href={`/admin/listControlRemission/${documento}/${item.ingreso.idSeguimiento}`} style={{"fontSize": 13, "backgroundColor": "#fd650d", "borderColor":"#fd650d", "fontWeight":"bold"}} color="black">
+                                <Button href={`/admin/listControlRemission/${documento}/${item.ingreso.idSeguimiento}`} style={{"fontSize": 11, "backgroundColor": "#fd650d", "borderColor":"#fd650d"}} color="black">
                                 Remisiones
                                 </Button>{' '}
-                                <Link to="/admin/addCommitment" style={{"fontSize": 13, "backgroundColor": "#fd650d", "borderColor":"#fd650d", "fontWeight":"bold"}} color="black">
+                                <Button href="/admin/addCommitment" style={{"fontSize": 11, "backgroundColor": "#fd650d", "borderColor":"#fd650d"}} color="black">
                                 Compromisos
-                                </Link>{' '}
+                                </Button>{' '}
 
                          </p>                     
                      </Col>

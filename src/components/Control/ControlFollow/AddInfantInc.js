@@ -155,7 +155,7 @@ export default function AddInfantInc(props){
                     recibeSuplementos: saveData8 ? "SI" : "NO",
                     valoracionMedica: saveData5 ? "SI" : "NO",
 
-                    idSeguimiento: 9,
+                    idSeguimiento: 17,
                     afiliacionSgsss: saveData ? "SI" : "NO",
                     saludOral: saveData2 ? "SI" : "NO",
                     conoceUrgencias: saveData3 ? "SI" : "NO",

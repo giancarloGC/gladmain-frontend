@@ -32,29 +32,15 @@ export default function ListFollowUpChecks(){
 
   const [ optionsLists, setOptionsLists] = useState({ check1: true, check2: false, check3: false});
 
-   /* const handleCheck = (e, item) => {
-        console.log(e);
-        console.log(item);
-        if(e.target.checked){
-            if(item === "check1"){
-              setOptionsLists({check1: true, check2: false, check3: false});
-            } else if(item === "check2"){
-              setOptionsLists({check1: false, check2: true, check3: false});
-            } else{
-              setOptionsLists({check1: false, check2: false, check3: true});
-            } 
-        }
-    }*/
-
     return(
         <Container>
-            <h1 className="text-center mb-4">Controles de Seguimiento de {infoUser ? infoUser.nombre : "Anonimo"}
+            <h1 className="text-center mb-4">Seguimientos de {infoUser ? infoUser.nombre : "Anonimo"}
               <Link to={`/admin/addControlFollow/${documento}`}>
-                    <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton" />
+                    <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton" />
                     <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Control </ReactTooltip>
               </Link>
               
-              <FontAwesomeIcon icon={faPrint} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton2" />
+              <FontAwesomeIcon icon={faPrint} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton2" />
               <ReactTooltip id="boton2" place="bottom" type="dark" effect="float"> Imprimir </ReactTooltip>
             </h1>
             {listControls.length === 0 && (
@@ -67,23 +53,6 @@ export default function ListFollowUpChecks(){
             )}
              <ListInfantInc  listControls={listControls} documento={documento}/>
 
-            {/*
-            <center>
-            <Form.Check type="checkbox" inline label="Controles de Ingreso" checked={optionsLists.check1} onChange={(e) => handleCheck(e, "check1")} className="mb-4"/>
-            <Form.Check type="checkbox" inline label="Controles de Remisión" checked={optionsLists.check2} onChange={(e) => handleCheck(e, "check2")} className="mb-4"/>
-            <Form.Check type="checkbox" inline label="Controles de Compromisos" checked={optionsLists.check3} onChange={(e) => handleCheck(e, "check3")} className="mb-4"s/>
-            </center>
-
-            {listControls.length > 0  && optionsLists.check1 && (
-              <ListInfantInc  listControls={listControls}/>
-            )}
-
-            {optionsLists.check2 &&
-                <ListControlR />
-            }
-            {optionsLists.check3 &&
-                <ListCommitment />
-            }*/}
         </Container>
     )
 }

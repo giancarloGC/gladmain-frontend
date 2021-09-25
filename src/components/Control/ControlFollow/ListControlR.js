@@ -21,9 +21,8 @@ export default function ListControlR(props){
       };
  
      return(
-         <Container> 
-             <Row  style={{backgroundColor: '#f1f1f1'}}> 
-
+         <Container className="mt-4"> 
+             <Row> 
              <Row className="mb-4 mt-3">
                  <Col md={3}> </Col>
                  <Col md={6}>
@@ -34,23 +33,20 @@ export default function ListControlR(props){
                  </Col>
                  <Col md={3}> </Col>
              </Row>
-             <Col sm={12} style={{backgroundColor: '#f1f1f1'}} >
+             <Col sm={12} >
            <ListGroup className="mt-3 mb-3">
            {remisionesBySeguimiento.map((item, index) => (
-                <ListGroup.Item className="shadow border" >
+                <ListGroup.Item className="shadow border mt-2 mb-3" style={{height:'120px'}}>
                 
                 <Container>
                 <Row >
-                    <Col md={1} className="align-self-center" >
-                        <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Id</b><br/>{item.id}</p>
-                    </Col>
                     <Col md={3} className="align-self-center" >
                         <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Fecha Remisión</b> <br/> {dateFormat(item.fechaRemision)}</p>
                     </Col>
                     <Col md={2} className="align-self-center" >
                         <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Entidad Remisión</b> <br/>{item.entidadRemitida}</p>
                     </Col>
-                    <Col md={3} className="align-self-center" >
+                    <Col md={4} className="align-self-center" >
                         <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Aux. de Enfermeria</b><br/>{item.nombreAuxEnfermero}</p>
                     </Col>
                     <Col md={3} className="align-self-right">

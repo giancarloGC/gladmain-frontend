@@ -42,57 +42,42 @@ export default function AddControlR(props){
                 
                 validate={(valores) => {
                   let errores = {};
-
-                  if(!valores.id){
-                    errores.id = 'Por favor, ingresa números';
-                  }else if(!/^([0-9])*$/.test(valores.id)){
-                    errores.id = 'Solo puedes escribir números';
-                  }
-                  if(!valores.idSeguimiento){
-                    errores.idSeguimiento = 'Por favor, ingresa números';
-                  }else if(!/^([0-9])*$/.test(valores.idSeguimiento)){
-                    errores.idSeguimiento = 'Solo puedes escribir números';
-                  }
                   const dateCurrently2 = new Date();
-                  if(!valores.fechaRemision){
-                    errores.fechaRemision = 'Asegurese de selecionar una fecha';
-                  }else if(dateCurrently2 <= valores.fechaRemision){
-                    errores.fechaRemision = 'Seleccione una fecha valida';
+                  if(!valores.motivo){
+                    errores.motivo = 'No se permiten campos vacíos'
+                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ.,:; ]+$/g.test(valores.motivo)){
+                    errores.motivo = 'Solo puedes escribir letras';
                   }
-
                   if(!valores.entidadRemitida){
                     errores.entidadRemitida = 'No se permiten campos vacíos'
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.entidadRemitida)){
                     errores.entidadRemitida = 'Solo puedes escribir letras';
                   }
+                  const dateCurrently = moment();
                   if(!valores.fechaAtencion){
                     errores.fechaAtencion = 'Asegurese de selecionar una fecha';
-                  }else if(dateCurrently2 <= valores.fechaAtencion){
-                    errores.fechaAtencion = 'Seleccione una fecha valida';
-                  }
-                  if(!valores.motivo){
-                    errores.motivo = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.motivo)){
-                    errores.motivo = 'Solo puedes escribir letras';
+                  }else{
+                    let atencion = moment(valores.fechaAtencion);
+                    if(atencion.diff(dateCurrently, 'hours') > 0){
+                        errores.fechaAtencion = 'Seleccione una fecha valida';
+                    }
                   }
                   if(!valores.fechaIngreso){
                     errores.fechaIngreso = 'Asegurese de selecionar una fecha';
-                  }else if(dateCurrently2 <= valores.fechaIngreso){
-                    errores.fechaIngreso = 'Seleccione una fecha valida';
-                  }
-                  if(!valores.fechaSalida){
-                    errores.fechaSalida = 'Asegurese de selecionar una fecha';
-                  }else if(dateCurrently2 <= valores.fechaSalida){
-                    errores.fechaSalida = 'Seleccione una fecha valida';
+                  }else{
+                    let ingreso = moment(valores.fechaIngreso);
+                    if(ingreso.diff(dateCurrently, 'hours') > 0){
+                        errores.fechaIngreso = 'Seleccione una fecha valida';
+                    }
                   }
                   if(!valores.razonFallecimiento){
                     errores.razonFallecimiento = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.razonFallecimiento)){
+                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ.,:; ]+$/g.test(valores.razonFallecimiento)){
                     errores.razonFallecimiento = 'Solo puedes escribir letras';
                   }
                   if(!valores.seguimiento){
                     errores.seguimiento = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.seguimiento)){
+                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ.,;: ]+$/g.test(valores.seguimiento)){
                     errores.seguimiento = 'Solo puedes escribir letras';
                   }
                   if(!valores.nombreAuxEnfermero){
@@ -100,6 +85,7 @@ export default function AddControlR(props){
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.nombreAuxEnfermero)){
                     errores.nombreAuxEnfermero = 'Solo puedes escribir letras';
                   }
+                  return errores;
                 }}
 
                 onSubmit={(valores, {resetForm}) => {
@@ -154,7 +140,7 @@ export default function AddControlR(props){
 
                     <Form.Group as={Row} className="mt-2 " style={{ "marginLeft":"6px"}}>
                         <Form.Label column sm="3">
-                        <h1 style={{"fontSize": "20px", "color":"#0084d2" }} className="mt-2">No. Seguimiento</h1></Form.Label>
+                        <h1 style={{fontSize: "20px", color:"#0084d2" }} className="mt-2">No. Seguimiento</h1></Form.Label>
                         <Col sm="2">
                             <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="01" size="lg" id="idSeguimiento" name="idSeguimiento" 
@@ -164,7 +150,7 @@ export default function AddControlR(props){
                         </Col>
 
                         <Form.Label column sm="3" className="mt-2 ">
-                        <h1 style={{"fontSize": "20px", "color":"#0084d2" }} >Fecha Remisión</h1></Form.Label>
+                        <h1 style={{fontSize: "20px", color:"#0084d2" }} >Fecha Remisión</h1></Form.Label>
                         <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaRemision" name="fechaRemision" 
@@ -180,7 +166,7 @@ export default function AddControlR(props){
 
                     <Form.Group as={Row} className="mt-4 " style={{ "marginLeft":"6px"}}>
                     <Form.Label column sm="5">
-                    <h5 style={{"fontSize": "17px", "fontWeight":"bold"}} className="mt-3">Motivo Remisión</h5></Form.Label>
+                    <h5 style={{fontSize: "16px"}} className="mt-3">Motivo Remisión</h5></Form.Label>
                     <Col >
                         <InputGroup hasValidation>
                                <Form.Control as="textarea" aria-label="With textarea" placeholder="Motivo de Remisión" size="xs" id="motivo" name="motivo" 
@@ -197,7 +183,7 @@ export default function AddControlR(props){
                         
                     <Form.Group as={Row} className="mt-4 " style={{ "marginLeft":"6px"}}>
                     <Form.Label column sm="5">
-                    <h5 style={{"fontSize": "17px", "fontWeight":"bold"}} className="mt-1">Entidad a la cual fue remitido</h5></Form.Label>
+                    <h5 style={{fontSize: "16px"}} className="mt-1">Entidad a la cual fue remitido</h5></Form.Label>
                         <Col>
                         <InputGroup hasValidation>
                             <Form.Control type="text" placeholder="Nombre Entidad" size="xs" id="entidadRemitida" name="entidadRemitida" 
@@ -216,7 +202,7 @@ export default function AddControlR(props){
 
                     <Form.Group as={Row} className="mt-3" style={{ "marginLeft":"6px"}}>
                      <Form.Label column sm="3">
-                     <h5 style={{"fontSize": "16px", "fontWeight":"bold"}} className="mt-1">¿Fue Atendido?</h5></Form.Label>
+                     <h5 style={{fontSize: "16px"}} className="mt-1">¿Fue Atendido?</h5></Form.Label>
                      <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="xs" name="atendido" id="atendido" on>
@@ -228,7 +214,7 @@ export default function AddControlR(props){
                       </Col>
 
                       <Form.Label column sm="3">
-                      <h5 style={{"fontSize": "16px", "fontWeight":"bold"}}> Fecha de atención</h5></Form.Label>
+                      <h5 style={{fontSize: "16px"}}> Fecha de atención</h5></Form.Label>
                         <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="xs" id="fechaAtencion" name="fechaAtencion" 
@@ -247,7 +233,7 @@ export default function AddControlR(props){
 
                      <Form.Group as={Row} className="mt-3" style={{ "marginLeft":"6px"}}>
                      <Form.Label column sm="3">
-                     <h5 style={{"fontSize": "16px", "fontWeight":"bold"}}>¿Requirio Hospitalización?</h5></Form.Label>
+                     <h5 style={{fontSize: "16px"}}>¿Requirio Hospitalización?</h5></Form.Label>
                      <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="xs" name="hospitalizado" id="hospitalizado">
@@ -259,7 +245,7 @@ export default function AddControlR(props){
                         </Col>
 
                         <Form.Label column sm="3">
-                        <h5 style={{"fontSize": "16px", "fontWeight":"bold"}}>Fecha Ingreso</h5></Form.Label>
+                        <h5 style={{fontSize: "16px"}}>Fecha Ingreso</h5></Form.Label>
                         <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="xs" id="fechaIngreso" name="fechaIngreso" 
@@ -276,7 +262,7 @@ export default function AddControlR(props){
 
                     <Form.Group as={Row} style={{ "marginLeft":"6px"}}>
                         <Form.Label column sm="3">
-                        <h5 style={{"fontSize": "16px", "fontWeight":"bold"}}>¿Falleció durante el proceso de atención en salud?</h5></Form.Label>
+                        <h5 style={{fontSize: "16px"}}>¿Falleció durante el proceso de atención en salud?</h5></Form.Label>
                         <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="xs" name="fallecido" id="fallecido">
@@ -288,7 +274,7 @@ export default function AddControlR(props){
                         </Col>
                         
                         <Form.Label column sm="3">
-                        <h5 style={{"fontSize": "16px", "fontWeight":"bold"}} >Fecha Egreso</h5></Form.Label>
+                        <h5 style={{fontSize: "16px"}}>Fecha Egreso</h5></Form.Label>
                         <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="xs" id="fechaSalida" name="fechaSalida" 
@@ -305,7 +291,7 @@ export default function AddControlR(props){
                     
                     <Form.Group as={Row} style={{ "marginLeft":"6px"}}>
                     <Form.Label column sm="5">
-                    <h5 style={{"fontSize": "16px", "fontWeight":"bold"}} className="mt-2">Razón del Fallecimiento</h5></Form.Label>
+                    <h5 style={{fontSize: "16px"}} className="mt-2">Razón del Fallecimiento</h5></Form.Label>
                     <Col >
                         <InputGroup hasValidation>
                                <Form.Control as="textarea" aria-label="With textarea" placeholder="Describir Motivo Fallecimiento" size="xs" id="razonFallecimiento" name="razonFallecimiento" 
@@ -322,7 +308,7 @@ export default function AddControlR(props){
  
                     <Form.Group as={Row} className="mt-4" style={{ "marginLeft":"6px"}}>
                         <Form.Label column sm="5" >
-                        <h5 style={{"fontSize": "16px", "fontWeight":"bold"}} className="mt-2">Seguimiento a la atención en salud </h5> </Form.Label>
+                        <h5 style={{fontSize: "16px"}} className="mt-2">Seguimiento a la atención en salud </h5> </Form.Label>
                         <Col >
                         <InputGroup hasValidation>
                         <Form.Control  as="textarea" aria-label="With textarea" placeholder="Describa el seguimiento" size="xs" id="seguimiento" name="seguimiento" 
@@ -339,7 +325,7 @@ export default function AddControlR(props){
 
                     <Form.Group as={Row} className="mt-4" style={{ "marginLeft":"6px"}}>
                         <Form.Label column sm="5">
-                        <h5 style={{"fontSize": "16px", "fontWeight":"bold"}} className="mt-1">Nombre Auxiliar de Enfermeria </h5> </Form.Label>
+                        <h5 style={{fontSize: "16px"}} className="mt-1">Nombre Auxiliar de Enfermeria </h5> </Form.Label>
                         <Col >
                         <InputGroup hasValidation>
                         <Form.Control type="text" placeholder="Nombre del Enfermero(a)" size="xs" id="nombreAuxEnfermero" name="nombreAuxEnfermero" 
