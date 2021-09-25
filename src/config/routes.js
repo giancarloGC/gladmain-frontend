@@ -22,6 +22,7 @@ import ListControlCyD from "../pages/ControlCyD/ListControlCyD";
 import AllUserControl from "../pages/ControlHome/AllUserControl";
 import AddControlVac from "../pages/ControlVac/AddControlVac";
 import EditControlVac from "../pages/ControlVac/EditControlVac";
+import EditControlVacMadre from "../pages/ControlVac/EditControlVacMadre";
 import AddControlFollow from "../pages/ControlFollow/AddControlFollow";
 import AddInfantIncome from "../pages/ControlFollow/AddInfantIncome";
 import EditControlFollow from "../pages/ControlFollow/EditControlFollow";
@@ -140,6 +141,11 @@ const routes = [
                 path: "/admin/editControlVac/:id/:documento",
                 exact: true,
                 component: EditControlVac,
+            },
+            {
+                path: "/admin/EditControlVacMadre/:id/:documento",
+                exact: true,
+                component: EditControlVacMadre,
             },
             {
                 path: "/admin/graphics/:edad/:sexo/:documento/:rolUser",

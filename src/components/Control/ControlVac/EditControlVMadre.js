@@ -3,12 +3,12 @@ import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner } from "r
 import { Formik, Field, ErrorMessage } from "formik";
 import  AuthContext  from "../../../hooks/useAuth";
 import { TOKEN } from "../../../utils/constans";
-import { insertContVaccApi } from "../../../api/vaccination";
+import { updateContVaccApi } from "../../../api/vaccination";
 import swal from 'sweetalert';
 import moment from 'moment';
 
-export default function AddControlVMadre (props){
-    const { userControl } = props;
+export default function EditControlVMadre (props){
+    const { userControl, infoControl } = props;
     const token = localStorage.getItem(TOKEN);
     const [ textFormSend, setTextFormSend ] = useState({});
     const [show, setShow] = useState(false);
@@ -153,7 +153,7 @@ export default function AddControlVMadre (props){
                             <Col sm="7">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaAplicacion" name="fechaAplicacion" 
-                                 value={dateFormat(values.fechaAplicacion)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaAplicacion && touched.fechaAplicacion}
+                                 defaultValue={dateFormat(infoControl.fechaAplicacion)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaAplicacion && touched.fechaAplicacion}
                                  isValid={!errors.fechaAplicacion && touched.fechaAplicacion} 
                               />
                               <Form.Control.Feedback type="invalid">
@@ -169,7 +169,7 @@ export default function AddControlVMadre (props){
                         <Col sm="7">
                         <InputGroup hasValidation>
                             <Form.Control type="text" placeholder="Dígita aquí el nombre de la vacuna" size="lg" id="nombreVacuna" name="nombreVacuna" 
-                               value={values.nombreVacuna} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreVacuna && touched.nombreVacuna}
+                               defaultValue={infoControl.nombreVacuna} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreVacuna && touched.nombreVacuna}
                                isValid={!errors.nombreVacuna && touched.nombreVacuna}
                             />
                             <Form.Control.Feedback type="invalid">
@@ -185,7 +185,7 @@ export default function AddControlVMadre (props){
                             <Col sm="7">
                            <InputGroup hasValidation>
                               <Form.Control type="text" placeholder="Edad gestacional en semanas" size="lg" id="edadGestacional" name="edadGestacional" 
-                              value={values.edadGestacional} onChange={handleChange} onBlur={handleBlur} 
+                              defaultValue={infoControl.edadGestacional} onChange={handleChange} onBlur={handleBlur} 
                               isInvalid={!!errors.edadGestacional && touched.edadGestacional}
                                 isValid={!errors.edadGestacional && touched.edadGestacional}
                               />

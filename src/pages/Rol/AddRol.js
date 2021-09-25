@@ -108,7 +108,7 @@ export default function AddRol(){
                         <Form.Group className="mb-3">
                         <InputGroup hasValidation>
                             <Form.Control type="text" placeholder="Dígita aquí el nombre del rol" size="lg" id="name" name="name" 
-                            value={values.name} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.name && touched.name}
+                            value={values.name.toUpperCase()} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.name && touched.name}
                             isValid={!errors.name && touched.name}
                             />
                             <Form.Control.Feedback type="invalid">

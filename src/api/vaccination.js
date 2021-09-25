@@ -1,6 +1,5 @@
 import { urlBackend } from "./config";
 
-
 export function insertContVaccApi(data, token){
     const url = `/api/control_vacunacion/REGISTRAR_CONTROL_VACUNACION`;
     const params = {
