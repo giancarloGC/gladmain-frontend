@@ -40,7 +40,7 @@ export default function AddIncomeCommit(props) {
                 }}
                 onSubmit={(valores, {resetForm}) => {
                     setDataCommit({name: "titulooo", description: "ejemplo description"});
-                    setSaveData(true);
+                    setSaveData(false); //PASARLO A FALSE
                 }}
     
                 >

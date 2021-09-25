@@ -27,7 +27,7 @@ export default function AddInfantInc(props){
 
   const [showCommit, setShowCommit] = useState(false);
   const [dataCommit, setDataCommit] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
-  const [ saveData, setSaveData ] = useState(false);
+  const [ saveData, setSaveData ] = useState(true); //Pasar el estado a true
   
   const [showCommit2, setShowCommit2] = useState(false);
   const [dataCommit2, setDataCommit2] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
@@ -64,8 +64,7 @@ export default function AddInfantInc(props){
     return(
         <Container>
           <AddIncomeCommit showCommit={showCommit} setShowCommit={setShowCommit} setDataCommit={setDataCommit} dataCommit={dataCommit} 
-            setSaveData={setSaveData} 
-            
+            setSaveData={setSaveData} //Entrar al componente
           />
           <AddIncomeCommit2 showCommit2={showCommit2} setShowCommit2={setShowCommit2} setDataCommit2={setDataCommit2} dataCommit2={dataCommit2} 
             setSaveData2={setSaveData2}
@@ -155,7 +154,7 @@ export default function AddInfantInc(props){
                     recibeSuplementos: saveData8 ? "SI" : "NO",
                     valoracionMedica: saveData5 ? "SI" : "NO",
 
-                    idSeguimiento: 17,
+                    idSeguimiento: 8,
                     afiliacionSgsss: saveData ? "SI" : "NO",
                     saludOral: saveData2 ? "SI" : "NO",
                     conoceUrgencias: saveData3 ? "SI" : "NO",
@@ -170,8 +169,8 @@ export default function AddInfantInc(props){
                   }
                   console.log(formData);
                   //resetForm();
-                  formData.token = token;
                   insertInfantIncomeApi(formData, token).then(response => {
+                    console.log(response);
                     if(response === true){
                       swal({
                         title: `¡El ingreso fue almacenado correctamente!`,
@@ -218,7 +217,8 @@ export default function AddInfantInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="lg" name="afiliacionSgsss" >
-                          <input type="checkbox" checked={showCommit || !saveData ? true : false } onChange={(e) => setShowCommit(!e.target.checked)}></input>
+                            {/* invertir el save data */}
+                          <input type="checkbox" checked={showCommit || !saveData ? false : true } onChange={(e) => setShowCommit(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
