@@ -41,8 +41,8 @@
 
 .containerP .card {
     position: relative;
-    width: 300px;
-    height: 400px;
+    width: 230px;
+    height: 330px;
     background: rgba(255, 255, 255, 0.05);
     margin: 20px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.2);
@@ -71,8 +71,8 @@
 }
 .containerP .card .content .imgBx {
     position: relative;
-    width: 150px;
-    height: 150px;
+    width: 128px;
+    height: 128px;
     border-radius: 50%;
     overflow: hidden;
     border: 10px solid rgba(0,0,0,0.25);
@@ -90,7 +90,7 @@
 
 .containerP .card .content .contentBx h3 {
     color : rgb(119, 68, 68);
-    text-transform: uppercase;
+    text-transform: capitalize;
     letter-spacing: 2px;
     font-weight: 500;
     font-size: 18px;
@@ -101,7 +101,7 @@
 }
 
 .containerP .card .content .contentBx h3 span {
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 300;
     text-transform: initial;
 }
@@ -121,7 +121,7 @@
 }
 
 .containerP .card:hover .sci .liB{
-    transform: translateY(0px);
+    transform: translateY(15px);
     opacity: 1;
 }
 
