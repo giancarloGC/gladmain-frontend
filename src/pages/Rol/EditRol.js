@@ -55,6 +55,7 @@ export default function EditRol(){
         return    <Form.Check type="checkbox" label={item.nombre} defaultChecked={checked} onChange={(e) => handleCheck(e, item)}/>
     }
 
+
     return(
         <Container>
             <h1 className="text-center">Editar Rol</h1>
@@ -65,12 +66,6 @@ export default function EditRol(){
                 initialValues={ name }
                 validate={(valores) => {
                   let errores = {};
-                  /*if(!valores.name){
-                    errores.name = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.name)){
-                    errores.name = 'Nombre incorrecto, solo puedes escribir letras';
-                  }*/
-
                   return errores;
                 }}
                 onSubmit={(valores, {resetForm}) => {
@@ -139,7 +134,7 @@ export default function EditRol(){
 
                         <fieldset>
                             <legend>Seleccione las funciones que tendrá el rol</legend>
-                            <Row className="mb-3">
+                            <Row className="mb-3" style={{backgroundColor: '#f1f1f1', borderRadius:'5px'}}>
                             <Col md={4}>
                                 {listPrivilegios.map((item, index) => (
                                     index <= 17 && (
