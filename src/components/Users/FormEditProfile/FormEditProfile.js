@@ -69,14 +69,6 @@ export default function FormEditProfile(props){
                     errores.celular = 'Teléfono incorrecto, solo puedes escribir números';
                   }  
 
-                  if(!valores.edad){
-                    errores.edad = 'Por favor, ingresa números';
-                  }else if(!/^([0-9])*$/.test(valores.edad)){
-                    errores.edad = 'Edad incorrecta, solo puedes escribir números';
-                  }else if(valores.edad <= 0 || valores.edad > 90){
-                    errores.edad = 'Edad invalida, intente con otra';
-                  }       
-
                   if(!valores.municipio){
                     errores.municipio = 'No se permiten campos vacíos'
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.municipio)){
@@ -84,9 +76,7 @@ export default function FormEditProfile(props){
                   }
 
                   if(!valores.direccion){
-                    errores.direccion = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.direccion)){
-                    errores.direccion = 'Municipio incorrecto, solo puedes escribir letras';
+                    errores.direccion = 'No se permiten campos vacíos';
                   }
 
                   if(!valores.correoElectronico){

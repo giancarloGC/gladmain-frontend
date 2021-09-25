@@ -110,7 +110,7 @@ export default function AllUserC ({rolUser}){
                                         </div>
                                         )}
                                         <div className="liB">
-                                            <Link className="enlace" to={`/admin/listVaccines/${item.documento}`}>
+                                            <Link className="enlace" to={`/admin/listVacMadre/${item.documento}`}>
                                                 <FontAwesomeIcon icon={faSyringe} size="lg" color="#2D61A4"
                                                 data-tip data-for = "boton3"/>
                                                 <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Vacunación </ReactTooltip>

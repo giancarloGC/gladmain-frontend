@@ -11,6 +11,7 @@ import AddUser from "../pages/Users/AddUser";
 import EditUser from "../pages/Users/EditUser";
 import User from "../pages/Users/User";
 import ListVac from "../pages/ControlVac/ListVac";
+import ListVacMadre from "../pages/ControlVac/ListVacMadre";
 import ListControlNutri from "../pages/ControlNutri/ListControlNutri";
 import DetailControlNutri from "../pages/ControlNutri/DetailControlNutri";
 import AddControlNutri from "../pages/ControlNutri/AddControlNutri";
@@ -129,6 +130,11 @@ const routes = [
                 path: "/admin/listVaccines/:documento",
                 exact: true,
                 component: ListVac,
+            },
+            {
+                path: "/admin/listVacMadre/:documento",
+                exact: true,
+                component: ListVacMadre,
             },
             {
                 path: "/admin/editControlVac/:id/:documento",
