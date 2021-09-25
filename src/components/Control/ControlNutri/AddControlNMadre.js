@@ -11,8 +11,7 @@ import swal from 'sweetalert';
 import Lottie from 'react-lottie';
 import { Line } from "react-chartjs-2";
 import { insertControlApi } from "../../../api/controls";
-import { labels, lineasGraphics } from "./LabelsAndLineas";
-import { labels2_5, lineasGraphics2_5 } from "./LabelsAndLineas2-5";
+import { labelsMadre, lineasGraphicsMadre } from "./LabelsAndLineasMadre";
 import "./GraphicAddNutri.scss";
 import moment from 'moment';
 import { faAddressCard }  from '@fortawesome/free-solid-svg-icons';
@@ -20,6 +19,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function AddControlN(props){
     const { userControl } = props;
+    const { rolUser } = useParams();
     const { user } = AuthContext();
     const token = localStorage.getItem(TOKEN);
     const [show, setShow] = useState(false);
@@ -54,121 +54,88 @@ export default function AddControlN(props){
 
     const calculateIMC = (kg, metros) => {
       const imca = kg / (metros * metros);
-      let imcC = parseInt(imca);
+      let imcC = imca;
       setImc(imcC);
     }
 
-    const calculateStateNutrition = (talla, peso) => {
-      //Mirar en que indice esta la talla dijitada para el eje x
-
-      // de 0 A 2 AÑOS
-      const indexToFind = (element) => element > talla -1;
-      let indexEjex = userControl.edad > 0 && userControl.edad <= 24 ? labels.findIndex(indexToFind) : labels2_5.findIndex(indexToFind)
+    const calculateStateNutrition = (edadGestacional) => {
+      //Mirar en que indice esta la edad gestacional dijitada para el eje x
+      const indexToFind = (element) => element > edadGestacional -1;
+      let indexEjex = labelsMadre.findIndex(indexToFind)
       
       //Recorrer cada linea para saber si el numero es mayor o menor a cada linea
-      // de 0 A 2 AÑOS
-      //Recorrer cada linea para saber si el numero es mayor o menor a cada linea
-      let valueXlineMasTres = userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMasTres[indexEjex] : lineasGraphics2_5.lineMasTres[indexEjex];
-      let valueXlineMasDos = userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMasDos[indexEjex] : lineasGraphics2_5.lineMasDos[indexEjex];
-      let valueXlineMasUno = userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMasUno[indexEjex] : lineasGraphics2_5.lineMasUno[indexEjex];
-      let valueXlineMenosUno = userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosUno[indexEjex] : lineasGraphics2_5.lineMenosUno[indexEjex];
-      let valueXlineMenosDos = userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosDos[indexEjex] : lineasGraphics2_5.lineMenosDos[indexEjex];
-      let valueXLineMenosTres = userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosTres[indexEjex] : lineasGraphics2_5.lineMenosTres[indexEjex];
-
+      let valueXObesidad= lineasGraphicsMadre.Obesidad[indexEjex];
+      let valueXSobrepeso = lineasGraphicsMadre.Sobrepeso[indexEjex];
+      let valueXIMCAdecuado = lineasGraphicsMadre.IMCAdecuado[indexEjex];
+      let valueXBajoPeso = lineasGraphicsMadre.BajoPeso[indexEjex];
       
       
-      if(peso > valueXlineMasTres){
+      if(imc > valueXSobrepeso && imc <= valueXObesidad){
         setShowButtonAdd(false);
-        setStateNutrition({ color: "danger", text: "Obesidad", animation: DangerAnimation});
-        console.log("es mayor a +3   ");
-      }else if(peso > valueXlineMasDos && peso <= valueXlineMasTres){
+        setStateNutrition({ color: "danger", text: "Obesidad para la Edad Gestacional", animation: DangerAnimation});
+      }else if(imc > valueXIMCAdecuado && imc <= valueXSobrepeso){
         setShowButtonAdd(false);
-        setStateNutrition({ color: "danger", text: "Sobrepeso", animation: DangerAnimation});
-        console.log("es > a la +2 y < a +3 ");
-      }else if(peso > valueXlineMasUno && peso <= valueXlineMasDos){
-        console.log("es > a la +1 y < a +2 ");
+        setStateNutrition({ color: "danger", text: "Sobrepeso para la Edad Gestacional", animation: DangerAnimation});
+      }else if(imc > valueXBajoPeso && imc <= valueXIMCAdecuado){
         setShowButtonAdd(false);
-        setStateNutrition({ color: "warning", text: "Riesgo de Sobrepeso", animation: WarningAnimation});
-      }else if(peso >= valueXlineMenosUno && peso <= valueXlineMasUno){
-        setShowButtonAdd(false);
-        console.log("es > a la -1 y < a +1 ");
-        setStateNutrition({ color: "success", text: "Peso Adecuado para la Talla", animation: SuccessAnimation});
-      }else if(peso >= valueXlineMenosDos && peso < valueXlineMenosUno){
+        setStateNutrition({ color: "success", text: "IMC adecuado para la Edad Gestacional", animation: SuccessAnimation});
+      }else if(imc < valueXBajoPeso){
         setShowButtonAdd(true);
-        console.log("es > a la -2 y < a -1 ");
-        setStateNutrition({ color: "warning", text: "Riesgo de Desnutrición Aguda", animation: WarningAnimation});
-      }else if(peso < valueXlineMenosDos && peso >= valueXLineMenosTres){
-        setShowButtonAdd(true);
-        console.log("es < 2 y > a la -3 ");
-        setStateNutrition({ color: "danger", text: "Desnutrición Aguda Moderada", animation: DangerAnimation});
-      }else if(peso < valueXLineMenosTres){
-        setShowButtonAdd(true);
-        console.log("es < a la -3 ");
-        setStateNutrition({ color: "danger", text: "Desnutrición Aguda Severa", animation: DangerAnimation});
+        setStateNutrition({ color: "danger", text: "Bajo peso para la Edad Gestacional", animation: DangerAnimation});
       }
     }
 
     const data = {
-      labels: userControl.edad > 0 && userControl.edad <= 24 ? labels : labels2_5,
+      labels: labelsMadre,
       datasets: [{
-          label: '- 3',
-          data: userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosTres : lineasGraphics2_5.lineMenosTres,
-          fill: false,
-          borderColor: userControl.sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
-          tension: 0.1,
+            data: lineasGraphicsMadre.LineaAbajo,
+            fill: true,
+            borderColor: '#FA2E7F',
+            tension: 0.1
         },
         {
-          label: '- 2',
-          data: userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosDos : lineasGraphics2_5.lineMenosDos,
-          fill: false,
-          borderColor: userControl.sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
-          tension: 0.1,
-          borderDash: [10,5]
+            label: 'Bajo peso para la Edad Gestacional',
+            data: lineasGraphicsMadre.BajoPeso,
+            fill: true,
+            borderColor: '#FA2E7F',
+            backgroundColor: 'rgba(254, 17, 150 , 0.6)',
+            tension: 0.1,
+            borderDash: [10,5]
         },
         {
-          label: '- 1',
-          data: userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosUno : lineasGraphics2_5.lineMenosUno,
-          fill: false,
-          borderColor: userControl.sexo !== "FEMENINO" ? '#E3B402' : '#E3B402',
-          tension: 0.1
+            label: 'IMC adecuado para la Edad Gestacional',
+            data: lineasGraphicsMadre.IMCAdecuado,
+            fill: true,
+            borderColor: '#67C16B',
+            backgroundColor: 'rgba(66, 214, 177, 0.3)',
+            tension: 0.1,
+            borderDash: [10,5]
         },
         {
-          label: '0',
-          data: userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineCero : lineasGraphics2_5.lineCero,
-          fill: false,
-          borderColor: userControl.sexo !== "FEMENINO" ? '#127D30' : '#127D30',
-          tension: 0.1
+            label: 'Sobrepeso para la Edad Gestacional',
+            data: lineasGraphicsMadre.Sobrepeso,
+            fill: true,
+            borderColor: '#FBED32',
+            backgroundColor: 'rgba(251, 237, 50, 0.3)',
+            tension: 0.1,
+            borderDash: [10,5]
         },
         {
-          label: '+ 1',
-          data: userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMasUno : lineasGraphics2_5.lineMasUno,
-          fill: false,
-          borderColor: userControl.sexo !== "FEMENINO" ? '#E3B402' : '#E3B402',
-          tension: 0.1
-        },
-        {
-          label: '+ 2',
-          data: userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMasDos : lineasGraphics2_5.lineMasDos,
-          fill: false,
-          borderColor: userControl.sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
-          tension: 0.1,
-          borderDash: [10,5]
-        },
-        {
-          label: '+ 3',
-          data: userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMasTres : lineasGraphics2_5.lineMasTres,
-          fill: false,
-          borderColor: userControl.sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
-          tension: 0.1
+            label: 'Obesidad para la Edad Gestacional',
+            data: lineasGraphicsMadre.Obesidad,
+            fill: true,
+            borderColor: '#f28f35',
+            backgroundColor: 'rgba(242, 143, 53, 0.5)',
+            tension: 0.1,
+            borderDash: [10,5]
         },
         {
           label: 'Nuevo Control',
           type: "bubble",
           pointStyle: "bubble",
           data: [graphicValues],
-          borderColor: userControl.sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
-          backgroundColor: userControl.sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
-                  
+          borderColor: '#0559B7',
+          backgroundColor: '#0559B7',
         },
       ]
     };
@@ -177,10 +144,12 @@ export default function AddControlN(props){
         <Container>
             <Row>
               {goRedirect && (
-                   <Redirect to={`/admin/graphics/${userControl.edad}/${userControl.sexo}/${userControl.documento}`} />
+                   <Redirect to={`/admin/statisticHomeMadre/${userControl.documento}/${rolUser}`} />
               )}
               <Formik
                 initialValues={{ 
+                    tension: '',
+                    edadGestacional: '',
                     peso: '',
                     talla: '',
                     imc: '',
@@ -191,64 +160,56 @@ export default function AddControlN(props){
                   let errores = {};   
                   const dateCurrently2 = new Date();
 
+                  if(!valores.tension){
+                    errores.tension = 'No se permiten campos vacíos';
+                  }else if(!/^([0-9-.])*$/.test(valores.tension)){
+                    errores.tension = 'Tensión incorrecta, solo puedes escribir números';
+                  }  
+
+                  if(!valores.edadGestacional){
+                    errores.edadGestacional = 'No se permiten campos vacíos';
+                  }else if(!/^([0-9])*$/.test(valores.edadGestacional)){
+                    errores.edadGestacional = 'Tensión incorrecta, solo puedes escribir números enteros';
+                  } 
+
+
                   if(!valores.peso){
                     errores.peso = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9-.])*$/.test(valores.peso)){
                     errores.peso = 'Solo puedes escribir números';
-                  }else if(userControl.edad > 0 && userControl.edad <= 24){
-                    if(valores.peso < 1){
+                  }else if(valores.peso < 1){
                       errores.peso = 'el peso debe ser debe ser mayor a 1 kg';
-                    }else if(valores.peso > 26){
-                      errores.peso = 'el peso debe ser menor ó igual a 26 kg';
+                    }else if(valores.peso > 130){
+                      errores.peso = 'el peso debe ser menor ó igual a 130 kg';
                     }
-                  }else{
-                    if(valores.peso < 5){
-                      errores.peso = 'el peso debe ser debe ser mayor a 5 kg';
-                    }else if(valores.peso > 32){
-                      errores.peso = 'el peso debe ser menor ó igual a 32 kg';
-                    }
-                  }
+                  
 
                   if(!valores.talla){
                     errores.talla = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9-.])*$/.test(valores.talla)){
                     errores.talla = 'Solo puedes escribir números';
-                  }else if(userControl.edad > 0 && userControl.edad <= 24){
-                    if(valores.talla < 45){
-                      errores.talla = 'La talla debe ser mayor a 45 cm';
-                    }else if(valores.talla > 110){
-                      errores.talla = 'La talla debe ser menor ó igual a 110 cm';
+                  }else if(valores.talla < 120){
+                      errores.talla = 'La talla debe ser mayor a 120 cm';
+                    }else if(valores.talla > 210){
+                      errores.talla = 'La talla debe ser menor ó igual a 210 cm';
                     }
-                  }else{
-                    if(valores.talla < 65){
-                      errores.talla = 'La talla debe ser mayor a 65 cm';
-                    }else if(valores.talla > 120){
-                      errores.talla = 'La talla debe ser menor ó igual a 120 cm';
+                
+            
+                if(valores.edadGestacional >= 10 && valores.edadGestacional <= 42){
+                    console.log("entro");
+                    let tallaM = convertCmToM(valores.talla);
+                    calculateIMC(valores.peso, tallaM);
+                    calculateStateNutrition(valores.edadGestacional);
+                    if(imc !== 0){
+                        setGraphicValues({x: valores.edadGestacional, y: imc , r: 3});
+                        console.log(imc);
                     }
-                  }
+                }else{
+                    setImc(0);
+                    setGraphicValues({x: 0, y: 0, r: 3});
+                    console.log("no entro");
+                }
 
-                  if(userControl.edad > 0 && userControl.edad <= 24){
-                    if(valores.peso && valores.talla >= 45 && valores.talla <= 110){
-                      let tallaM = convertCmToM(valores.talla);
-                      calculateIMC(valores.peso, tallaM);
-                      calculateStateNutrition(valores.talla, valores.peso);
-                      setGraphicValues({x: valores.talla, y: valores.peso , r: 3});
-                    }else{
-                      setImc(0);
-                      setGraphicValues({x: 0, y: 0, r: 3});
-                    }
-                  }else{
-                    if(valores.peso && valores.talla >= 65 && valores.talla <= 120){
-                      let tallaM = convertCmToM(valores.talla);
-                      calculateIMC(valores.peso, tallaM);
-                      calculateStateNutrition(valores.talla, valores.peso);
-                      setGraphicValues({x: valores.talla, y: valores.peso , r: 3});
-                    }else{
-                      setImc(0);
-                      setGraphicValues({x: 0, y: 0, r: 3});
-                    }
-                  }
-                  
                   return errores;
                 }}
 
@@ -265,8 +226,8 @@ export default function AddControlN(props){
                     imc: imc,
                     estadoNutricional: stateNutrition.text,
 
-                    tension: null,
-                    edadGestacional: null,
+                    tension: rolUser === "MADRE_GESTANTE" ? valores.tension : null,
+                    edadGestacional: rolUser === "MADRE_GESTANTE" ? valores.edadGestacional : null,
                     proximoControl: null,
                     ultimoControl: null,
                     vigente: false,
@@ -412,7 +373,7 @@ export default function AddControlN(props){
                           </InputGroup>
                         </Col>
                         </Form.Group> 
-
+                        
                         <Row>
                           <Col md={6}>
                           <Form.Group as={Row} className="mb-3">
@@ -432,9 +393,7 @@ export default function AddControlN(props){
                         </Form.Group>
                           </Col>
 
-
                           <Col md={6}>
-                      
                           <Form.Group as={Row} className="mb-3">
                         <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Talla</Form.Label>
                         <Col sm="8">
@@ -449,47 +408,76 @@ export default function AddControlN(props){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
-                        </Form.Group>      
+                        </Form.Group>   
                           </Col>
+                          {rolUser === "MADRE_GESTANTE" && ( 
+                              <Col md={12}>
+                              <Form.Group as={Row} className="mb-3">
+                              <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Tensión</Form.Label>
+                              <Col sm="8">
+                                  <InputGroup hasValidation>
+                                  <Form.Control type="number" placeholder="Dígita aquí la tensión" size="lg" id="tension" name="tension" 
+                                     value={values.tension} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.tension && touched.tension}
+                                     isValid={!errors.tension && touched.tension} 
+                                  />
+                                  <Form.Control.Feedback type="invalid">
+                                      {errors.tension}
+                                  </Form.Control.Feedback>
+                                  <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                              </InputGroup>
+                              </Col>
+                              
+                              <Form.Label column sm="4" className="mt-3" style={{"font-size": "12px !important"}}>Edad Gestacional</Form.Label>
+                              <Col sm="8" className="mt-3">
+                                  <InputGroup hasValidation>
+                                  <Form.Control type="number" placeholder="Edad Gestacional en semanas" size="lg" id="edadGestacional" name="edadGestacional" 
+                                     value={values.edadGestacional} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edadGestacional && touched.edadGestacional}
+                                     isValid={!errors.edadGestacional && touched.edadGestacional} 
+                                  />
+                                  <Form.Control.Feedback type="invalid">
+                                      {errors.edadGestacional}
+                                  </Form.Control.Feedback>
+                                  <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                              </InputGroup>
+                              </Col>
+                              </Form.Group>
+                              </Col>
+                            )} 
+
                         </Row>
+
 
                   </Col>
                   <Col sm={3}></Col>
-
-                  
                 </Row>
 
                 {imc !== 0 && (
                 <Row className="mt-3">
                  <Col md={8}>
                   <center>
-                  <Form.Label column sm="12" style={{"font-size": "12px !important" }}>Puntuación Z ({userControl.edad > 0 && userControl.edad <= 24 ? "0 a 2 años" : "2 a 5 años"})</Form.Label>
+                  <Form.Label column sm="12" style={{"font-size": "12px !important" }}>Estado Nutricional Madre Gestante</Form.Label>
                   </center>
                       <div >
                         <Line 
-                            data={data}
-                            height={350}
-                            width={600}
-                            options={{
-                              pointStyle: "line",
-                              responsive: true,
-                              scales: {
-                                x: {
-                                  type: 'linear',
-                                  position: 'bottom',
-                                  min: userControl.edad > 0 && userControl.edad <= 24 ? 45 : 65 //45 = 0-2 años    65 = 2-5 años
-                                }
-                              }
-                            }}
+                        data={data}
+                        height={350}
+                        width={600}
+                        options={{
+                            pointStyle: "line",
+                            responsive: true,
+                            scales: {
+                            x: {
+                                type: 'linear',
+                                position: 'bottom',
+                                min: 10,
+                                max: 42
+                            }
+                            }
+                        }}
                         />
                       </div>
-                      {userControl.edad > 24 ? (
-                        <p className="ejex">Talla(cm)</p>
-                      )
-                      :(
-                        <p className="ejex">Longitud(cm)</p>
-                      )}
-                        </Col>
+                        <p className="ejex">Semanas de Gestación</p>
+                    </Col>
                       
                   <Col md={4} className="mt-5">
                             <Form.Group as={Row}>

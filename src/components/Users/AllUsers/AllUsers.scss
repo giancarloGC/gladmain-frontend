@@ -32,7 +32,7 @@
 .containerP {
     position: relative;
     z-index: 1;
-    display: flex;
+    display: -webkit-inline-flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
@@ -41,8 +41,8 @@
 
 .containerP .card {
     position: relative;
-    width: 300px;
-    height: 400px;
+    width: 230px;
+    height: 370px;
     background: rgba(255, 255, 255, 0.05);
     margin: 20px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.2);
@@ -82,7 +82,7 @@
 .containerP .card .content .imgBx img {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 0;      
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -90,7 +90,7 @@
 
 .containerP .card .content .contentBx h3 {
     color : rgb(4, 43, 100) !important;
-    text-transform: uppercase;
+    text-transform: capitalize;
     letter-spacing: 2px;
     font-weight: 800 !important;
     font-size: 20px;

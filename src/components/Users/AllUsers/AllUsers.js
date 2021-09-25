@@ -16,11 +16,12 @@ import { getUserApi } from "../../../api/user";
 import { deleteUserApi } from "../../../api/user";
 import { TOKEN } from "../../../utils/constans";
 
-import "./AllUsers.scss";
 import Lottie from 'react-lottie';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import AnimationAuthorization from "../../../assets/animations/withoutAuthorization.json";
 import AnimationNotFindSearch from "../../../assets/animations/notFindSearch.json";
+
+import "./AllUsers.scss";
 
 export default function AllUsers(){
     const [ usersApi, setUsersApi ] = useState([]);

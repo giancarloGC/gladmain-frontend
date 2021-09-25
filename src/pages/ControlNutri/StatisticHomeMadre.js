@@ -30,7 +30,7 @@ export default function StatisticHomeMadre(){
         <>
             <Container>
             <h1 className="text-center">IMC para la Edad Gestacional
-            <Link to={`/admin/addControlNutri/${documento}/${rolUser}`} >
+            <Link to={`/admin/AddControlNutriMadre/${documento}/${rolUser}`} >
                 <FontAwesomeIcon icon={faUserPlus} size="lg" color="#2D61A4" style = {{marginLeft:10}} data-tip data-for = "boton1" />
                 <ReactTooltip id="boton1" place="bottom" type="dark" effect="float">Agregar Control Nutricional</ReactTooltip>
             </Link>

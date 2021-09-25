@@ -17,7 +17,6 @@ export default function FormUser(){
     const [ edadFinaly, setEdadFinaly ] = useState(null);
     const [ goRedirect, setGoRedirect ] = useState(false);
 
-
     useEffect(() => {
       getRolesApi().then(response => {
         setRolesApi(response);
@@ -44,12 +43,15 @@ export default function FormUser(){
 
     return(
         <Container>
-            <Row style={{backgroundColor: '#f1f1f1'}}>
+            <Row>
             {goRedirect && (
                    <Redirect to={`/admin/users`} />
               )}
-                <Col sm={2}></Col>
-                <Col sm={8} background="background-color:#A42D55"> 
+                <Col sm={1}></Col>
+                <Col sm={10} style={{backgroundColor: '#f1f1f1', borderRadius: '5px'}} > 
+                <Row>
+                <Col sm={1}></Col>
+                <Col sm={10} className="justify-aling-content-center">
                 <Formik
                 initialValues={{ 
                     documento: '',
@@ -224,11 +226,12 @@ export default function FormUser(){
                             handleChange, handleBlur, handleSubmit, handleReset
                     } = props;
                     return (   
+                    
                     <Form onSubmit={handleSubmit}>
-                        <Form.Group as={Row} className="mb-3 mt-5">
+                        <Form.Group as={Row} className="mb-3 mt-3">
                        <Col md={6}>
                         <InputGroup hasValidation>
-                            <Form.Select size="lg" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
+                            <Form.Select size="xs" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
                                     isValid={!errors.tipoDocumento && touched.tipoDocumento} isInvalid={!!errors.tipoDocumento && touched.tipoDocumento}
                             >
                             <option disabled selected>Selecciona el tipo de documento</option>
@@ -247,7 +250,7 @@ export default function FormUser(){
 
                         <Col md={6}>
                         <InputGroup hasValidation>
-                            <Form.Control type="text" placeholder="Dígita aquí el documento" size="lg" id="documento" name="documento" 
+                            <Form.Control type="text" placeholder="Dígita aquí el documento" size="xs" id="documento" name="documento" 
                             value={values.documento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.documento && touched.documento}
                             isValid={!errors.documento && touched.documento}
                             />
@@ -262,7 +265,7 @@ export default function FormUser(){
                         <Form.Group as={Row} className="mb-3">
                         <Col md={6}>
                         <InputGroup hasValidation>
-                            <Form.Control type="text" placeholder="Dígita aquí el nombre" size="lg" id="nombre" name="nombre" 
+                            <Form.Control type="text" placeholder="Dígita aquí el nombre" size="xs" id="nombre" name="nombre" 
                             value={values.nombre} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombre && touched.nombre}
                             isValid={!errors.nombre && touched.nombre}
                             />
@@ -275,7 +278,7 @@ export default function FormUser(){
 
                         <Col md={6}>
                         <InputGroup hasValidation>
-                        <Form.Select size="lg" name="sexo" onChange={handleChange} onBlur={handleBlur}
+                        <Form.Select size="xs" name="sexo" onChange={handleChange} onBlur={handleBlur}
                                     isValid={!errors.sexo && touched.sexo} isInvalid={!!errors.sexo && touched.sexo}
                             >
                             <option disabled selected>Selecciona el sexo</option>
@@ -294,7 +297,7 @@ export default function FormUser(){
                         <Form.Group as={Row} className="mb-3">
                         <Col md={6}>
                         <InputGroup hasValidation>
-                            <Form.Control type="date" placeholder="Fecha de nacimiento" size="lg" id="fechaNacimiento" name="fechaNacimiento" 
+                            <Form.Control type="date" placeholder="Fecha de nacimiento" size="xs" id="fechaNacimiento" name="fechaNacimiento" 
                             value={values.fechaNacimiento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaNacimiento && touched.fechaNacimiento}
                             isValid={!errors.fechaNacimiento && touched.fechaNacimiento}
                             />
@@ -307,7 +310,7 @@ export default function FormUser(){
 
                         <Col md={6}>
                         <InputGroup hasValidation>
-                            <Form.Control type="number" placeholder="Dígita aquí Teléfono" size="lg" id="celular" name="celular" 
+                            <Form.Control type="number" placeholder="Dígita aquí Teléfono" size="xs" id="celular" name="celular" 
                             value={values.celular} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.celular && touched.celular}
                             isValid={!errors.celular && touched.celular}
                             />
@@ -323,8 +326,8 @@ export default function FormUser(){
                         <Form.Group as={Row} className="mb-3 mt-3">
                         <Col md={6}>
                         <InputGroup hasValidation>
-                              <Form.Control type="text" placeholder="Dígita aquí la edad" size="lg" id="edad" name="edad" 
-                               value={edadFinaly ? `${edadFinaly} meses` : values.edad} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
+                              <Form.Control type="text" placeholder="Dígita aquí la edad" size="xs" id="edad" name="edad" 
+                               value={edadFinaly != null ? `${edadFinaly} meses` : values.edad} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
                                isValid={!errors.edad && touched.edad} disabled
                               />
                               <Form.Control.Feedback type="invalid">
@@ -336,7 +339,7 @@ export default function FormUser(){
 
                         <Col md={6}>
                         <InputGroup hasValidation>
-                            <Form.Control type="text" placeholder="Dígita aquí el municipio" size="lg" id="municipio" name="municipio" 
+                            <Form.Control type="text" placeholder="Dígita aquí el municipio" size="xs" id="municipio" name="municipio" 
                             value={values.municipio} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.municipio && touched.municipio}
                             isValid={!errors.municipio && touched.municipio}
                             />
@@ -351,7 +354,7 @@ export default function FormUser(){
                         <Form.Group as={Row} className="mb-3">
                         <Col md={6}>
                         <InputGroup hasValidation>
-                            <Form.Control type="text" placeholder="Dígita aquí la dirección" size="lg" id="direccion" name="direccion" 
+                            <Form.Control type="text" placeholder="Dígita aquí la dirección" size="xs" id="direccion" name="direccion" 
                             value={values.direccion} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.direccion && touched.direccion}
                             isValid={!errors.direccion && touched.direccion}
                             />
@@ -364,7 +367,7 @@ export default function FormUser(){
 
                         <Col md={6}>
                         <InputGroup hasValidation>
-                            <Form.Control type="email" placeholder="Dígita aquí el Correo " size="lg" id="correoElectronico" name="correoElectronico" 
+                            <Form.Control type="email" placeholder="Dígita aquí el Correo " size="xs" id="correoElectronico" name="correoElectronico" 
                             value={values.correoElectronico} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.correoElectronico && touched.correoElectronico}
                             isValid={!errors.correoElectronico && touched.correoElectronico}
                             />
@@ -379,7 +382,7 @@ export default function FormUser(){
                       <Form.Group as={Row} className="mb-3">
                       <Col md={6}>
                         <InputGroup hasValidation>
-                        <Form.Control size="lg" type="password" placeholder="Password" id="clave" name="clave" 
+                        <Form.Control size="xs" type="password" placeholder="Password" id="clave" name="clave" 
                         value={values.clave} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.clave && touched.clave}
                         isValid={!errors.clave && touched.clave}
                         />
@@ -392,7 +395,7 @@ export default function FormUser(){
 
                       <Col md={6}>
                         <InputGroup hasValidation>
-                        <Form.Control size="lg" type="password" placeholder="Password" id="confirmClave" name="confirmClave" 
+                        <Form.Control size="xs" type="password" placeholder="Password" id="confirmClave" name="confirmClave" 
                         value={values.confirmClave} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.confirmClave && touched.confirmClave}
                         isValid={!errors.confirmClave && touched.confirmClave}
                         />
@@ -404,32 +407,14 @@ export default function FormUser(){
                       </Col>
                       </Form.Group>  
 
-                      {/*<Form.Group as={Row} className="mb-3">
-                        <InputGroup hasValidation>
-                            <Form.Select size="lg" name="role" onChange={handleChange} onBlur={handleBlur}
-                                    isValid={!errors.role && touched.role} isInvalid={!!errors.role && touched.role}
-                            >
-                            <option disabled selected>Selecciona un rol</option>
-                            {rolesApi.length > 0 && (
-                              rolesApi.map((data, index) => (
-                                <option key={index} value={data.idRol}>{data.nombre}</option>
-                              ))
-                              )}
-                          </Form.Select>
-                          <Form.Control.Feedback type="invalid">
-                                        {errors.role}
-                                      </Form.Control.Feedback>
-                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                      </InputGroup>
-                              </Form.Group>*/}
-
-
-                      <fieldset>
-                            <legend>Asignar roles al usuario</legend>
+                      <fieldset className="mb-3 mt-4">
+                        <center>
+                          <h1 style={{fontSize: "22px", color: "#0084D2"}} className="mb-3 ">
+                            Asignar roles al usuario </h1>
                                 {rolesApi.map((item, index) => (
-                                        <Form.Check inline type="checkbox" label={item.nombre} onChange={(e) => handleCheck(e, item)}/>
-                                    
+                                  <Form.Check inline type="checkbox" label={item.nombre} onChange={(e) => handleCheck(e, item)}/>
                                 ))}
+                        </center>
                         </fieldset>
 
                         <div className="d-grid gap-2 mb-3 mt-4">
@@ -437,7 +422,6 @@ export default function FormUser(){
                                 Añadir usuario
                             </Button>
                         </div>
-
                     </Form>
                             );
                         }}
@@ -453,7 +437,9 @@ export default function FormUser(){
                         </Alert>
                     )}
                 </Col>
-                <Col sm={2}></Col>
+                </Row>
+                </Col>
+                <Col sm={1}></Col>
             </Row>
         </Container>
     )

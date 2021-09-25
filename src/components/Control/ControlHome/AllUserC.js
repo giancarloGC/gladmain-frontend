@@ -94,7 +94,7 @@ export default function AllUserC ({rolUser}){
                                             </Link>
                                         </div>
                                         <div className="liB">
-                                            <Link className="enlace"  to={`/admin/statisticHomeMadre/${item.documento}`}>
+                                            <Link className="enlace"  to={`/admin/statisticHomeMadre/${item.documento}/${rolUser}`}>
                                                <FontAwesomeIcon icon={faNutritionix} size="lg" color="#2D61A4"
                                                data-tip data-for = "boton1"/>
                                                <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Nutrición </ReactTooltip>
