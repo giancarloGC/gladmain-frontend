@@ -80,10 +80,10 @@ export default function ListRol(){
             )}
 
             {rolesApi.length > 0 && (
-            <Container >
-            <ListGroup >
+            <Container className="mt-4">
+            <ListGroup>
                 {rolesApi.map((rol, index) => (
-                <ListGroup.Item className="shadow border mt-2 mb-3">
+                <ListGroup.Item className="shadow border mt-2 mb-3" style={{height:'103px'}}>
                 <Container>
                 <Row>
                     <Col md={4} className="align-self-center">

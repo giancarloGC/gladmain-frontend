@@ -127,7 +127,7 @@ export default function AddRol(){
                         </Alert>
                     )}
 
-                    <Container style={{backgroundColor: '#f1f1f1', "border-radius":"6px"}}>
+                    <Container style={{backgroundColor: '#f1f1f1', borderRadius:'5px'}}>
                         <fieldset >
                             <legend>Seleccione las funciones que tendrá el rol</legend>
                             <Row className="mb-3">

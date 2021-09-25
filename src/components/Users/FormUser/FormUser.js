@@ -122,9 +122,6 @@ export default function FormUser(){
                   if(!valores.direccion){
                     errores.direccion = 'No se permiten campos vacíos'
                   }
-                  /*else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.direccion)){
-                    errores.direccion = 'Municipio incorrecto, solo puedes escribir letras';
-                  }*/
 
                   if(!valores.correoElectronico){
                     errores.correoElectronico = 'Por favor, ingresa números'
