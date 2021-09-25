@@ -4,11 +4,14 @@ import { Line } from "react-chartjs-2";
 import { lineasGraphics } from "../Control/ControlNutri/LabelsAndLineas";
 import moment from 'moment';
 import { getControlByIdApi } from "../../api/controls"; 
+import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 
 import "./StatisticNutri.scss";
 
 export default function StatisticNutri(props){
-const { sexo, listControls, token } = props;
+const { sexo, listControls, token, documento } = props;
+const [ goRedirect, setGoRedirect ] = useState(false);
+const [ idControl, setIdControl ] = useState(0);
 
 const getDatasetAtEvent = async (dataset) => {
   if (!dataset.length) return;
@@ -16,9 +19,11 @@ const getDatasetAtEvent = async (dataset) => {
   const datasetIndex = dataset[0].datasetIndex;
   //setClickedDataset(data.datasets[datasetIndex].label);
   const infoSelected = data.datasets[datasetIndex].label.split(" ");
-  const idControl = infoSelected[1];
-  const response = await getControlByIdApi(idControl, token);
-  console.log(response);
+  const id = infoSelected[1];
+  setIdControl(id);
+  setGoRedirect(true);
+  /*const response = await getControlByIdApi(id, token);
+  console.log(response);*/
 };
 
 
@@ -64,6 +69,9 @@ const data = {
   };
     return(
         <Container>
+              {goRedirect && (
+                  <Redirect to={`/admin/DetailControlNutri/${idControl}/${documento}`} />
+              )}
           
              {sexo === "MASCULINO" ?
                 <h2 className="text-center">Peso para la Talla Niños </h2>

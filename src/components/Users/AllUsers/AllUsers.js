@@ -29,7 +29,7 @@ export default function AllUsers(){
     const token = localStorage.getItem(TOKEN);
     const [ authorization, setAuthorization ] = useState(true);
     const [ allUsersSaved, setAllUsersSaved ] = useState([]);
-
+    const [ typeSearch, setTypeSearch ] = useState("nombre");
     useEffect(() => {
         (async () => {
             const response = await getUserApi(token);
@@ -46,7 +46,13 @@ export default function AllUsers(){
 
 
     const search = (e) => {
-        let usersFiltred = allUsersSaved.filter(user => user.nombre.search(e.target.value) >= 0);
+        let usersFiltred = [];
+        if(typeSearch === "nombre"){
+            usersFiltred = allUsersSaved.filter(user => user.nombre.search(e.target.value.toLowerCase()) >= 0);
+        }else{
+            let documento = e.target.value;
+            usersFiltred = allUsersSaved.filter(user => user.documento.toString().search(documento) >= 0);
+        }
         setUsersApi(usersFiltred);
     }
 
@@ -116,9 +122,20 @@ export default function AllUsers(){
                         </Link>
                         <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Agregar Nuevo Usuario </ReactTooltip>
                     </h1>
-                    <Form.Control type="search" placeholder="Buscar Usuario" size="lg" onChange={(e) => search(e)} name="busqueda" 
-                        className="mb-3"
-                    />
+                    <Row>
+                        <Col md={8}>
+                            <Form.Control type="search" placeholder="Buscar Usuario" size="lg" onChange={(e) => search(e)} name="busqueda" 
+                                className="mb-3"
+                            />
+                        </Col>
+                        <Col md={4}>
+                            <Form.Select size="lg" name="tipoDocumento" onChange={(e) => setTypeSearch(e.target.value)}
+                            >
+                                <option value="nombre" selected>Buscar por nombre</option>
+                                <option value="documento">Buscar por documento</option>
+                            </Form.Select>
+                        </Col>
+                    </Row>
                     </>
                 )}
 

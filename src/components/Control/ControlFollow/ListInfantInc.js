@@ -11,6 +11,7 @@ import { TOKEN } from "../../../utils/constans";
 
 export default function ListInfantInc(props){
     const { listControls, documento } = props;
+    console.log("entrooo");
     console.log(listControls);
     const token = localStorage.getItem(TOKEN);
      const dateFormat = (date) => {

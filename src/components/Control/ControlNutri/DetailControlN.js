@@ -12,7 +12,7 @@ import "./GraphicAddNutri.scss";
 import moment from 'moment';
 
 export default function DetailControlN(props){
-    const { userControl, control } = props;
+    const { userControl, control, nombreNutricionista } = props;
     const { user } = AuthContext();
     const token = localStorage.getItem(TOKEN);
     const [show, setShow] = useState(false);
@@ -23,21 +23,12 @@ export default function DetailControlN(props){
     const [ graphicValues, setGraphicValues] = useState({ x: 0, y: 0, r: 10});
     const rolUser = "madre";
     const [ goRedirect, setGoRedirect ] = useState(false);
-    const [ nombreNutricionista, setNombreNutricionista ] = useState("");
 
     let dateFechaNaci = moment(userControl.fechaNacimiento);
     let dateCurrent = moment();
     userControl.edad = dateCurrent.diff(dateFechaNaci, 'months');
 
-     let idUsuarioNutricionista;
-     useEffect(() => {
-        getUserByIdApi(idUsuarioNutricionista, token).then(response => {
-            console.log(response);
-            setNombreNutricionista(response.nombre);
-        })
-    }, []);
-
-    
+     let idUsuarioNutricionista;   
  
     const dateFormat = (date) => {
       if(date){

@@ -26,7 +26,8 @@ export default function ListFollowUpChecks(){
           setInfoUser(responseUser);
       });
       getInfantIncomeApi(documento, token).then(response => {
-          setListControls(response);
+          console.log(response);
+          //setListControls(response);
       });
   }, []);
 
@@ -51,8 +52,10 @@ export default function ListFollowUpChecks(){
                 />
                 </>
             )}
-             <ListInfantInc  listControls={listControls} documento={documento}/>
+            {listControls.length > 0 && (
 
+             <ListInfantInc  listControls={listControls} documento={documento}/>
+            )}
         </Container>
     )
 }

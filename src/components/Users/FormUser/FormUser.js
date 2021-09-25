@@ -162,7 +162,7 @@ export default function FormUser(){
                     const data = {
                       documento: parseInt(valores.documento),
                       tipoDocumento: valores.tipoDocumento,
-                      nombre: valores.nombre,
+                      nombre: valores.nombre.toLowerCase(),
                       sexo: valores.sexo,
                       fechaNacimiento: valores.fechaNacimiento,
                       celular: valores.celular,
