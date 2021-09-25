@@ -78,7 +78,7 @@ export default function FormEditProfile(props){
                   }
 
                   if(!valores.direccion){
-                    errores.direccion = 'No se permiten campos vacíos'
+                    errores.direccion = 'No se permiten campos vacíos';
                   }
 
                   if(!valores.correoElectronico){

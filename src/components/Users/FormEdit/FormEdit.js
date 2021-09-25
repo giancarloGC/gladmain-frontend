@@ -151,9 +151,11 @@ export default function FormEdit(props){
             )
             :
             (
-            <Row style={{backgroundColor: '#f1f1f1'}}>
-                <Col sm={1}></Col>
-                <Col sm={10}> 
+              <Row>
+              <Col sm={1}></Col>
+              <Col sm={10} style={{backgroundColor: '#f1f1f1', borderRadius: '5px'}}> 
+              <Row className="justify-content-center">
+              <Col sm={11}>
                 <Formik
                 initialValues={user}
                 validate={(valores) => {
@@ -276,10 +278,11 @@ export default function FormEdit(props){
                     return (   
                     <Form onSubmit={handleSubmit}>
                         <Form.Group as={Row} className="mb-1 mt-3">
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Tipo documento</Form.Label>
+                        <Form.Label column sm="2">
+                        <h5 style={{fontSize:'17px'}}>Tipo documento</h5></Form.Label>
                         <Col sm="4">
                         <InputGroup hasValidation>
-                            <Form.Select size="lg" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
+                            <Form.Select size="xs" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
                                 defaultValue={user.tipoDocumento} isValid={!errors.tipoDocumento && touched.tipoDocumento} isInvalid={!!errors.tipoDocumento && touched.tipoDocumento}
                             >
                             <option disabled>Selecciona el tipo de documento</option>
@@ -296,10 +299,11 @@ export default function FormEdit(props){
                         </InputGroup>
                         </Col>
 
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Número documento</Form.Label>
+                        <Form.Label column sm="2">
+                        <h5 style={{fontSize:'17px'}}>Número documento</h5></Form.Label>
                         <Col sm="4">
                             <InputGroup hasValidation>
-                            <Form.Control type="number" placeholder="Dígita aquí el documento" size="lg" id="documento" name="documento" 
+                            <Form.Control type="number" placeholder="Dígita aquí el documento" size="xs" id="documento" name="documento" 
                             defaultValue={user.documento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.documento && touched.documento}
                             isValid={!errors.documento && touched.documento}
                             />
@@ -311,12 +315,12 @@ export default function FormEdit(props){
                         </Col>
                         </Form.Group>
 
-
                         <Form.Group as={Row} className="mb-4">
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Nombre</Form.Label>
+                        <Form.Label column sm="2">
+                        <h5 style={{fontSize:'17px'}}>Nombre</h5></Form.Label>
                         <Col sm="4">
                           <InputGroup hasValidation>
-                              <Form.Control type="text" placeholder="Dígita aquí el nombre" size="lg" id="nombre" name="nombre" 
+                              <Form.Control type="text" placeholder="Dígita aquí el nombre" size="xs" id="nombre" name="nombre" 
                               defaultValue={user.nombre} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombre && touched.nombre}
                               isValid={!errors.nombre && touched.nombre}
                               />
@@ -327,10 +331,11 @@ export default function FormEdit(props){
                           </InputGroup>
                         </Col>
 
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Sexo</Form.Label>
+                        <Form.Label column sm="2">
+                        <h5 style={{fontSize:'17px'}}>Sexo</h5></Form.Label>
                         <Col sm="4">
                           <InputGroup hasValidation>
-                          <Form.Select size="lg" name="sexo" onChange={handleChange} onBlur={handleBlur}
+                          <Form.Select size="xs" name="sexo" onChange={handleChange} onBlur={handleBlur}
                                   defaultValue={user.sexo} isValid={!errors.sexo && touched.sexo} isInvalid={!!errors.sexo && touched.sexo}
                               >
                               <option disabled>Selecciona el sexo</option>
@@ -347,10 +352,11 @@ export default function FormEdit(props){
                         </Form.Group>   
 
                         <Form.Group as={Row} className="mt-4">
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Fecha nacimiento</Form.Label>
+                        <Form.Label column sm="2">
+                        <h5 style={{fontSize:'17px'}}>Fecha nacimiento</h5></Form.Label>
                         <Col sm="4">
                           <InputGroup hasValidation>
-                              <Form.Control type="date" size="lg" id="fechaNacimiento" name="fechaNacimiento" 
+                              <Form.Control type="date" size="xs" id="fechaNacimiento" name="fechaNacimiento" 
                                 defaultValue={dateFormat(user.fechaNacimiento)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaNacimiento && touched.fechaNacimiento}
                                 isValid={!errors.fechaNacimiento && touched.fechaNacimiento}
                               />
@@ -361,10 +367,11 @@ export default function FormEdit(props){
                           </InputGroup>
                         </Col>
 
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Celular</Form.Label>
+                        <Form.Label column sm="2">
+                        <h5 style={{fontSize:'17px'}}>Celular</h5></Form.Label>
                         <Col sm="4">
                           <InputGroup hasValidation>
-                              <Form.Control type="number" placeholder="Dígita aquí Teléfono" size="lg" id="celular" name="celular" 
+                              <Form.Control type="number" placeholder="Dígita aquí Teléfono" size="xs" id="celular" name="celular" 
                               defaultValue={user.celular} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.celular && touched.celular}
                               isValid={!errors.celular && touched.celular}
                               />
@@ -377,10 +384,11 @@ export default function FormEdit(props){
                         </Form.Group> 
 
                         <Form.Group as={Row} className="mb-4">
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Edad en meses</Form.Label>
+                        <Form.Label column sm="2">
+                        <h5 style={{fontSize:'17px'}}>Edad en meses</h5></Form.Label>
                         <Col sm="4">
                           <InputGroup hasValidation>
-                              <Form.Control type="text" placeholder="edad" size="lg" id="edad" name="edad" 
+                              <Form.Control type="text" placeholder="edad" size="xs" id="edad" name="edad" 
                               value={edadFinaly ? `${edadFinaly} meses` : values.edad} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
                               isValid={!errors.edad && touched.edad} disabled
                               />
@@ -391,10 +399,11 @@ export default function FormEdit(props){
                           </InputGroup>
                         </Col>
 
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Municipio</Form.Label>
+                        <Form.Label column sm="2">
+                        <h5 style={{fontSize:'17px'}}>Municipio</h5></Form.Label>
                         <Col sm="4">
                           <InputGroup hasValidation>
-                              <Form.Control type="text" placeholder="Dígita aquí el municipio" size="lg" id="municipio" name="municipio" 
+                              <Form.Control type="text" placeholder="Dígita aquí el municipio" size="xs" id="municipio" name="municipio" 
                               defaultValue={user.municipio} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.municipio && touched.municipio}
                               isValid={!errors.municipio && touched.municipio}
                               />
@@ -407,10 +416,10 @@ export default function FormEdit(props){
                         </Form.Group>
 
                         <Form.Group as={Row} >
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Direccion</Form.Label>
+                        <Form.Label column sm="2"><h5 style={{fontSize:'17px'}}>Direccion</h5></Form.Label>
                         <Col sm="4">
                           <InputGroup hasValidation>
-                              <Form.Control type="text" placeholder="Dígita aquí la dirección" size="lg" id="direccion" name="direccion" 
+                              <Form.Control type="text" placeholder="Dígita aquí la dirección" size="xs" id="direccion" name="direccion" 
                               defaultValue={user.direccion} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.direccion && touched.direccion}
                               isValid={!errors.direccion && touched.direccion}
                               />
@@ -421,10 +430,10 @@ export default function FormEdit(props){
                           </InputGroup>
                         </Col>
 
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Correo electronico</Form.Label>
+                        <Form.Label column sm="2"><h5 style={{fontSize:'17px'}}>Correo electronico</h5></Form.Label>
                         <Col sm="4">
                           <InputGroup hasValidation>
-                              <Form.Control type="email" placeholder="Dígita aquí el Correo " size="lg" id="correoElectronico" name="correoElectronico" 
+                              <Form.Control type="email" placeholder="Dígita aquí el Correo " size="xs" id="correoElectronico" name="correoElectronico" 
                               defaultValue={user.correoElectronico} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.correoElectronico && touched.correoElectronico}
                               isValid={!errors.correoElectronico && touched.correoElectronico}
                               />
@@ -436,11 +445,11 @@ export default function FormEdit(props){
                         </Col>
                         </Form.Group> 
 
-                      <Form.Group as={Row} className="mb-2">
-                      <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Contraseña</Form.Label>
+                        <Form.Group as={Row} className="mb-2">
+                      <Form.Label column sm="2"><h5 style={{fontSize:'17px'}}>Contraseña</h5></Form.Label>
                       <Col sm="4">
                         <InputGroup hasValidation>
-                          <Form.Control size="lg" type="password" placeholder="Password" id="clave" name="clave" 
+                          <Form.Control size="xs" type="password" placeholder="Password" id="clave" name="clave" 
                           defaultValue={user.clave} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.clave && touched.clave}
                           isValid={!errors.clave && touched.clave}
                           />
@@ -451,10 +460,10 @@ export default function FormEdit(props){
                         </InputGroup>
                       </Col>
 
-                      <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Confirmar Contraseña</Form.Label>
+                      <Form.Label column sm="2"><h5 style={{fontSize:'17px'}}>Confirmar Contraseña</h5></Form.Label>
                       <Col sm="4">
                         <InputGroup hasValidation>
-                          <Form.Control size="lg" type="password" placeholder="Password" id="clave" name="clave" 
+                          <Form.Control size="xs" type="password" placeholder="Password" id="clave" name="clave" 
                           defaultValue={user.clave} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.clave && touched.clave}
                           isValid={!errors.clave && touched.clave}
                           />
@@ -466,29 +475,6 @@ export default function FormEdit(props){
                       </Col>
 
                       </Form.Group>
-
-                      {/*}
-                      <Form.Group as={Row} className="mb-4">
-                      <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Rol</Form.Label>
-                      <Col sm="10">
-                        <InputGroup hasValidation>
-                            <Form.Select size="lg" name="role" onChange={handleChange} onBlur={handleBlur}
-                                  isValid={!errors.role && touched.role} isInvalid={!!errors.role && touched.role}
-                            >
-                            <option disabled selected>Selecciona un rol</option>
-                            {rolesApi.length > 0 && (
-                              rolesApi.map((data, index) => (
-                                <option key={index} value={data.idRol}>{data.nombre}</option>
-                              ))
-                              )}
-                          </Form.Select>
-                          <Form.Control.Feedback type="invalid">
-                                        {errors.role}
-                                      </Form.Control.Feedback>
-                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                      </Col>
-                              </Form.Group>*/}
 
                         <fieldset>
                             <legend>Asignar roles al usuario</legend>
@@ -517,6 +503,8 @@ export default function FormEdit(props){
                             </p>
                         </Alert>
                     )}
+                </Col>
+                    </Row>
                 </Col>
                 <Col sm={1}></Col>
             </Row>
