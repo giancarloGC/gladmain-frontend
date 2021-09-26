@@ -30,6 +30,7 @@ import AddControlRemission from "../pages/ControlFollow/AddControlRemission";
 import EditControlRemission from "../pages/ControlFollow/EditControlRemission";
 import ListControlRemission from "../pages/ControlFollow/ListControlRemission";
 import AddCommitment from "../pages/ControlFollow/AddCommitment";
+import ListCommitment from "../pages/ControlFollow/ListCommitment";
 import EditCommitment from "../pages/ControlFollow/EditCommitment";
 import ListFollowUpChecks from "../pages/ControlFollow/ListFollowUpChecks";
 import StatisticNutri from "../components/Graphics/StatisticNutri";
@@ -265,6 +266,11 @@ const routes = [
                 path: "/admin/addCommitment/:idSeg",
                 exact: true,
                 component: AddCommitment,
+            },
+            {
+                path: "/admin/commitments/:documento/:idSeguimiento",
+                exact: true,
+                component: ListCommitment
             }, 
             {
                 path: "/admin/editCommitment",

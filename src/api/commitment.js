@@ -49,14 +49,14 @@ export function deleteCompApi(id){
 }
 
 //preguntar a Danny hola
-export function getCompByUserApi(data){
-    const url = `${urlBackend}control_seguimiento/LISTAR_COMPROMISOS`;
+export function getCompByUserApi(documento, token){
+    const url = `/api/control_seguimiento/LISTAR_COMPROMISOS/${documento}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET",
-        body: JSON.stringify(data)
     };
 
     return fetch(url, params)

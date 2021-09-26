@@ -11,14 +11,17 @@ import moment from 'moment';
 export default function FormUser(){
     const [ textFormSend, setTextFormSend ] = useState({});
     const token = localStorage.getItem(TOKEN);
+    const [ showRoles, setShowRoles ] = useState(false);
     const [show, setShow] = useState(false);
     const [ rolesApi, setRolesApi ] = useState([]);
+    const [ allRoles, setAllRoles ] = useState([]);
     const [ rolesSelected, setRolesSelected ] = useState([]);
     const [ edadFinaly, setEdadFinaly ] = useState(null);
     const [ goRedirect, setGoRedirect ] = useState(false);
 
     useEffect(() => {
       getRolesApi().then(response => {
+        setAllRoles(response);
         setRolesApi(response);
       })
     }, []);
@@ -97,13 +100,24 @@ export default function FormUser(){
                   const dateCurrently = moment();
                   if(!valores.fechaNacimiento){
                     errores.fechaNacimiento = 'Asegurese de selecionar una fecha';
+                    setShowRoles(false);
                   }else{
                     let nacimiento = moment(valores.fechaNacimiento);
                     if(nacimiento.diff(dateCurrently, 'hours') > 0){
                         errores.fechaNacimiento = 'Seleccione una fecha valida';
+                        setShowRoles(false);
                     }else{
                       let mesesEdad = dateCurrently.diff(nacimiento, 'months');
                       setEdadFinaly(mesesEdad);
+                      let rolesUpdated = [];
+                      if(mesesEdad > 72){
+                        rolesUpdated = allRoles.filter(rol => rol.nombre !== 'INFANTE');
+                        setRolesApi(rolesUpdated);
+                      }else{
+                        rolesUpdated = allRoles.filter(rol => rol.nombre === 'INFANTE');
+                        setRolesApi(rolesUpdated);
+                      }
+                      setShowRoles(true);
                     }
                   }
 
@@ -404,15 +418,17 @@ export default function FormUser(){
                       </Col>
                       </Form.Group>  
 
+                      {showRoles && (
                       <fieldset className="mb-3 mt-4">
-                        <center>
-                          <h1 style={{fontSize: "22px", color: "#0084D2"}} className="mb-3 ">
-                            Asignar roles al usuario </h1>
-                                {rolesApi.map((item, index) => (
-                                  <Form.Check inline type="checkbox" label={item.nombre} onChange={(e) => handleCheck(e, item)}/>
-                                ))}
-                        </center>
-                        </fieldset>
+                      <center>
+                        <h1 style={{fontSize: "22px", color: "#0084D2"}} className="mb-3 ">
+                          Asignar roles al usuario </h1>
+                              {rolesApi.map((item, index) => (
+                                <Form.Check inline type="checkbox" label={item.nombre} onChange={(e) => handleCheck(e, item)}/>
+                              ))}
+                      </center>
+                      </fieldset>
+                      )}
 
                         <div className="d-grid gap-2 mb-3 mt-4">
                             <Button variant="primary" type="submit" size="lg">
