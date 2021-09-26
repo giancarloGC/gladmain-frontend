@@ -23,7 +23,7 @@ export function insertRolApi({latestRol, name, token, privilegios}){
     const data = {
         rol: {
             idRol: newId,
-            nombre: name
+            nombre: name.toUpperCase()
         },
         privilegios: privilegios
     };

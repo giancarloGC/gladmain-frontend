@@ -26,7 +26,7 @@ const generateCoordenadas = () => {
     coordenadas.push(coor);
   });
 
-  const allCoordenadas = [...lineasArray, ...coordenadas];
+  const allCoordenadas = [...coordenadas, ...lineasArray ];
   return allCoordenadas;
 } 
 

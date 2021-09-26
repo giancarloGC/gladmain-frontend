@@ -69,13 +69,32 @@ export default function AddControlVMadre (props){
                     idUsuario: userControl.documento,
                     fechaAplicacion: valores.fechaAplicacion,
                     nombreVacuna: valores.nombreVacuna,
-                    dosis: 0,
+                    dosis: null,
                     edadGestacional: valores.edadGestacional,
                     vigente: false,
-                    vacunas: null,
+                    vacunas: null
                 }
-
-                //updateAndInsert(dataUser, formData);
+                console.log(formData);
+                valores.token = token;
+                insertContVaccApi(formData, token).then(response => {
+                    if(response === true){
+                    swal("¡Excelente, registro exitoso!, El control fue actualizado correctamente", {
+                        icon: "success",
+                    })
+                    .then((value) => {
+                        window.location.replace(`/admin/listVacMadre/${userControl.documento}`);
+                    }); 
+                    setShow(true);
+                    }else{
+                    swal("Opss! Ocurrió un error!", {
+                        icon: "error",
+                    });
+                    setShow(true);
+                    }
+                });
+                setTimeout(() => {
+                    setShow(false);
+                }, 5000);
               }}
                 >
                 {props => {

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useReducer } from "react";
 import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner } from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
-import  AuthContext  from "../../../hooks/useAuth";
 import { TOKEN } from "../../../utils/constans";
 import { updateContVaccApi } from "../../../api/vaccination";
 import swal from 'sweetalert';
@@ -29,9 +28,9 @@ export default function EditControlVMadre (props){
                 <Col sm={7}>
                 <Formik 
                 initialValues={{ 
-                    fechaAplicacion: '',
-                    nombreVacuna: '', 
-                    edadGestacional: ''
+                    fechaAplicacion: infoControl.fechaAplicacion,
+                    nombreVacuna: infoControl.nombreVacuna, 
+                    edadGestacional: infoControl.edadGestacional,
                 }}
                 
                 validate={(valores) => {
@@ -67,15 +66,33 @@ export default function EditControlVMadre (props){
                   
                   const formData = {
                     idUsuario: userControl.documento,
-                    fechaAplicacion: valores.fechaAplicacion,
                     nombreVacuna: valores.nombreVacuna,
-                    dosis: 0,
+                    fechaAplicacion: valores.fechaAplicacion,
+                    dosis: null,
                     edadGestacional: valores.edadGestacional,
-                    vigente: false,
-                    vacunas: null,
+                    vigente: false
                 }
-
-                //updateAndInsert(dataUser, formData);
+                console.log(formData);
+                valores.token = token;
+                updateContVaccApi(formData, token).then(response => {
+                    if(response === true){
+                    swal("¡Excelente, registro exitoso!, El control fue actualizado correctamente", {
+                        icon: "success",
+                    })
+                    .then((value) => {
+                        window.location.replace(`/admin/listVacMadre/${userControl.documento}`);
+                    }); 
+                    setShow(true);
+                    }else{
+                    swal("Opss! Ocurrió un error!", {
+                        icon: "error",
+                    });
+                    setShow(true);
+                    }
+                });
+                setTimeout(() => {
+                    setShow(false);
+                }, 5000);
               }}
                 >
                 {props => {
@@ -98,7 +115,7 @@ export default function EditControlVMadre (props){
                        <Col sm="7">
                         <InputGroup hasValidation>
                             <Form.Select size="lg" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
-                                defaultValue={userControl.tipoDocumento} isValid={!errors.tipoDocumento && touched.tipoDocumento} 
+                                value={userControl.tipoDocumento} isValid={!errors.tipoDocumento && touched.tipoDocumento} 
                                 isInvalid={!!errors.tipoDocumento && touched.tipoDocumento} disabled
                             >
                             <option disabled>Selecciona el tipo de documento</option>

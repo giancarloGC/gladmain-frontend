@@ -6,7 +6,7 @@ import { TOKEN } from "../../utils/constans";
 import AddControlN from "../../components/Control/ControlNutri/AddControlN";
 
 export default function AddControlNutri(){ 
-    const { documento } = useParams();
+    const { documento, rolUser } = useParams();
     const [userControl, setUser] = useState({});
     const token = localStorage.getItem(TOKEN);
     const [ componentLoaded, setComponentLoaded ] = useState(false); 
@@ -37,7 +37,7 @@ export default function AddControlNutri(){
             </Row>
           )
           : (
-              <AddControlN userControl={userControl} />
+              <AddControlN userControl={userControl} rolUser={rolUser}/>
           )}
         </Container>        
     )

@@ -31,35 +31,35 @@ export default function AddInfantInc(props){
   
   const [showCommit2, setShowCommit2] = useState(false);
   const [dataCommit2, setDataCommit2] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
-  const [ saveData2, setSaveData2] = useState(false);
+  const [ saveData2, setSaveData2] = useState(true);
   
   const [showCommit3, setShowCommit3] = useState(false);
   const [dataCommit3, setDataCommit3] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
-  const [ saveData3, setSaveData3] = useState(false);
+  const [ saveData3, setSaveData3] = useState(true);
   
   const [showCommit4, setShowCommit4] = useState(false);
   const [dataCommit4, setDataCommit4] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
-  const [ saveData4, setSaveData4] = useState(false);
+  const [ saveData4, setSaveData4] = useState(true);
   
   const [showCommit5, setShowCommit5] = useState(false);
   const [dataCommit5, setDataCommit5] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
-  const [ saveData5, setSaveData5] = useState(false);
+  const [ saveData5, setSaveData5] = useState(true);
   
   const [showCommit6, setShowCommit6] = useState(false);
   const [dataCommit6, setDataCommit6] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
-  const [ saveData6, setSaveData6] = useState(false);
+  const [ saveData6, setSaveData6] = useState(true);
   
   const [showCommit7, setShowCommit7] = useState(false);
   const [dataCommit7, setDataCommit7] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
-  const [ saveData7, setSaveData7] = useState(false);
+  const [ saveData7, setSaveData7] = useState(true);
   
   const [showCommit8, setShowCommit8] = useState(false);
   const [dataCommit8, setDataCommit8] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
-  const [ saveData8, setSaveData8] = useState(false);
+  const [ saveData8, setSaveData8] = useState(true);
   
   const [showCommit9, setShowCommit9] = useState(false);
   const [dataCommit9, setDataCommit9] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
-  const [ saveData9, setSaveData9] = useState(false);
+  const [ saveData9, setSaveData9] = useState(true);
 
     return(
         <Container>
@@ -236,7 +236,7 @@ export default function AddInfantInc(props){
                         <Col  class="mid">
                         <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="lg" name="saludOral">
-                          <input type="checkbox" checked={showCommit2 || !saveData2 ? true : false } onChange={(e) => setShowCommit2(!e.target.checked)}></input>
+                          <input type="checkbox" checked={showCommit2 || !saveData2 ? false : true } onChange={(e) => setShowCommit2(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -254,7 +254,7 @@ export default function AddInfantInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-1">
                           <label class="rocker rocker-small" size="lg" name="conoceUrgencias">
-                          <input type="checkbox" checked={showCommit3 || !saveData3 ? true : false } onChange={(e) => setShowCommit3(!e.target.checked)}></input>
+                          <input type="checkbox" checked={showCommit3 || !saveData3 ? false : true } onChange={(e) => setShowCommit3(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -272,7 +272,7 @@ export default function AddInfantInc(props){
                         <Col class="mid" >
                         <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="lg" name="alarmaPreventiva">
-                          <input type="checkbox" checked={showCommit4 || !saveData4 ? true : false } onChange={(e) => setShowCommit4(!e.target.checked)}></input>
+                          <input type="checkbox" checked={showCommit4 || !saveData4 ? false : true } onChange={(e) => setShowCommit4(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -291,7 +291,7 @@ export default function AddInfantInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation >
                           <label class="rocker rocker-small" size="lg" name="valoracionMedica">
-                          <input type="checkbox" checked={showCommit5 || !saveData5 ? true : false } onChange={(e) => setShowCommit5(!e.target.checked)}></input>
+                          <input type="checkbox" checked={showCommit5 || !saveData5 ? false : true } onChange={(e) => setShowCommit5(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -309,7 +309,7 @@ export default function AddInfantInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="lg" name="controlCyD">
-                          <input type="checkbox" checked={showCommit6 || !saveData6 ? true : false } onChange={(e) => setShowCommit6(!e.target.checked)}></input>
+                          <input type="checkbox" checked={showCommit6 || !saveData6 ? false : true } onChange={(e) => setShowCommit6(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -327,7 +327,7 @@ export default function AddInfantInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="lg" name="patologiaIdentificadaSgsss">
-                          <input type="checkbox" checked={showCommit7 || !saveData7 ? true : false } onChange={(e) => setShowCommit7(!e.target.checked)}></input>
+                          <input type="checkbox" checked={showCommit7 || !saveData7 ? false : true } onChange={(e) => setShowCommit7(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -362,7 +362,7 @@ export default function AddInfantInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="lg" name="recibeMedFormulada">
-                          <input type="checkbox" checked={showCommit8 || !saveData8 ? true : false } onChange={(e) => setShowCommit8(!e.target.checked)}></input>
+                          <input type="checkbox" checked={showCommit8 || !saveData8 ? false : true } onChange={(e) => setShowCommit8(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -431,7 +431,7 @@ export default function AddInfantInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="lg" name="usuarioRemitido">
-                          <input type="checkbox" checked={showCommit9 || !saveData9 ? true : false } onChange={(e) => setShowCommit9(!e.target.checked)}></input>
+                          <input type="checkbox" checked={showCommit9 || !saveData9 ? false : true } onChange={(e) => setShowCommit9(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
