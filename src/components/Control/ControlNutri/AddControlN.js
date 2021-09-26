@@ -19,7 +19,7 @@ import { faAddressCard }  from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function AddControlN(props){
-    const { userControl } = props;
+    const { userControl, rolUser } = props;
     const { user } = AuthContext();
     const token = localStorage.getItem(TOKEN);
     const [show, setShow] = useState(false);
@@ -28,7 +28,7 @@ export default function AddControlN(props){
     const [ stateNutrition, setStateNutrition ] = useState({ color: "", text: "", animation: null});
     const [ imc, setImc ] = useState(0);
     const [ showButtonAdd, setShowButtonAdd ] = useState(false);
-    const [ graphicValues, setGraphicValues] = useState({ x: 0, y: 0, r: 3});
+    const [ graphicValues, setGraphicValues] = useState({ r: 3, x: 0, y: 0 });
     const [ goRedirect, setGoRedirect ] = useState(false);
 
     let dateFechaNaci = moment(userControl.fechaNacimiento);
@@ -54,7 +54,7 @@ export default function AddControlN(props){
 
     const calculateIMC = (kg, metros) => {
       const imca = kg / (metros * metros);
-      let imcC = parseInt(imca);
+      let imcC = imca.toFixed(3);
       setImc(imcC);
     }
 
@@ -167,8 +167,7 @@ export default function AddControlN(props){
           pointStyle: "bubble",
           data: [graphicValues],
           borderColor: userControl.sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
-          backgroundColor: userControl.sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
-                  
+          backgroundColor: userControl.sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',       
         },
       ]
     };
@@ -177,7 +176,7 @@ export default function AddControlN(props){
         <Container>
             <Row>
               {goRedirect && (
-                   <Redirect to={`/admin/graphics/${userControl.edad}/${userControl.sexo}/${userControl.documento}`} />
+                   <Redirect to={`/admin/graphics/${userControl.edad}/${userControl.sexo}/${userControl.documento}/${rolUser}`} />
               )}
               <Formik
                 initialValues={{ 
@@ -195,7 +194,7 @@ export default function AddControlN(props){
                     errores.peso = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9-.])*$/.test(valores.peso)){
                     errores.peso = 'Solo puedes escribir números';
-                  }else if(userControl.edad > 0 && userControl.edad <= 24){
+                  }else if(userControl.edad >= 0 && userControl.edad <= 24){
                     if(valores.peso < 1){
                       errores.peso = 'el peso debe ser debe ser mayor a 1 kg';
                     }else if(valores.peso > 26){
@@ -213,7 +212,7 @@ export default function AddControlN(props){
                     errores.talla = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9-.])*$/.test(valores.talla)){
                     errores.talla = 'Solo puedes escribir números';
-                  }else if(userControl.edad > 0 && userControl.edad <= 24){
+                  }else if(userControl.edad >= 0 && userControl.edad <= 24){
                     if(valores.talla < 45){
                       errores.talla = 'La talla debe ser mayor a 45 cm';
                     }else if(valores.talla > 110){
@@ -227,25 +226,25 @@ export default function AddControlN(props){
                     }
                   }
 
-                  if(userControl.edad > 0 && userControl.edad <= 24){
+                  if(userControl.edad >= 0 && userControl.edad <= 24){
                     if(valores.peso && valores.talla >= 45 && valores.talla <= 110){
                       let tallaM = convertCmToM(valores.talla);
                       calculateIMC(valores.peso, tallaM);
                       calculateStateNutrition(valores.talla, valores.peso);
-                      setGraphicValues({x: valores.talla, y: valores.peso , r: 3});
+                      setGraphicValues({ r: 3, x: valores.talla, y: valores.peso });
                     }else{
                       setImc(0);
-                      setGraphicValues({x: 0, y: 0, r: 3});
+                      setGraphicValues({ r: 3, x: 0, y: 0 });
                     }
                   }else{
                     if(valores.peso && valores.talla >= 65 && valores.talla <= 120){
                       let tallaM = convertCmToM(valores.talla);
                       calculateIMC(valores.peso, tallaM);
                       calculateStateNutrition(valores.talla, valores.peso);
-                      setGraphicValues({x: valores.talla, y: valores.peso , r: 3});
+                      setGraphicValues({ r: 3, x: valores.talla, y: valores.peso });
                     }else{
                       setImc(0);
-                      setGraphicValues({x: 0, y: 0, r: 3});
+                      setGraphicValues({r: 3, x: 0, y: 0 });
                     }
                   }
                   
@@ -311,13 +310,31 @@ export default function AddControlN(props){
                         </Alert>
                     )}
                 <Row>
-                  <Col sm={3}></Col>
-                  <Col sm={6}> 
-                    <Form.Group as={Row} >
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Número documento</Form.Label>
-                        <Col sm="8" className="mt-2">
+                  <Col sm={1}></Col>
+                  <Col sm={10}> 
+                  
+                  <Form.Group as={Row} className="mt-4">
+                  <Form.Label column sm="3"><h1 style={{fontSize: "20px", color:"#0084d2" }}>Fecha control</h1></Form.Label>
+                        <Col sm="3">
+                          <InputGroup hasValidation>
+                              <Form.Control type="date" size="xs" id="fechaControl" name="fechaControl" 
+                                 value={moment().format("YYYY-MM-DD")} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaControl && touched.fechaControl}
+                                 isValid={!errors.fechaControl && touched.fechaControl} disabled
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                  {errors.fechaControl}
+                              </Form.Control.Feedback>
+                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          </InputGroup>
+                        </Col>
+                        </Form.Group> 
+                    
+                    <Container style={{border:'2px solid #eee', borderRadius:'5px'}}>                  
+                    <Form.Group as={Row} className="mt-3">
+                        <Form.Label column sm="3"><h5 style={{fontSize: "16px"}} className="mt-1">Número documento</h5></Form.Label>
+                        <Col sm="3">
                             <InputGroup hasValidation>
-                            <Form.Control type="number" placeholder="Dígita aquí el documento" size="lg" id="documento" name="documento" 
+                            <Form.Control type="number" placeholder="Dígita aquí el documento" size="xs" id="documento" name="documento" 
                                value={userControl.documento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.documento && touched.documento}
                                isValid={!errors.documento && touched.documento} disabled
                             />
@@ -327,13 +344,11 @@ export default function AddControlN(props){
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                         </Col>
-                        </Form.Group>
 
-                        <Form.Group as={Row} >
-                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Nombre</Form.Label>
-                        <Col sm="8">
+                        <Form.Label column sm="2"> <h5 style={{fontSize: "16px"}} className="mt-1"> Nombre </h5></Form.Label>
+                        <Col sm="4">
                         <InputGroup hasValidation>
-                            <Form.Control type="text" placeholder="Dígita aquí el nombre" size="lg" id="nombre" name="nombre" 
+                            <Form.Control type="text" placeholder="Dígita aquí el nombre" size="xs" id="nombre" name="nombre" 
                                value={userControl.nombre} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombre && touched.nombre}
                                isValid={!errors.nombre && touched.nombre} disabled
                             />
@@ -344,12 +359,13 @@ export default function AddControlN(props){
                         </InputGroup>
                         </Col>
                         </Form.Group>
-                      
+
                         <Form.Group as={Row} className="mt-2">
-                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Fecha nacimiento</Form.Label>
-                        <Col sm="8" className="mt-2">
+                        <Form.Label column sm="3">
+                        <h5 style={{fontSize: "16px"}}>Fecha Nacimiento</h5></Form.Label>
+                        <Col sm="3">
                           <InputGroup hasValidation>
-                              <Form.Control type="date" size="lg" id="fechaNacimiento" name="fechaNacimiento" 
+                              <Form.Control type="date" size="xs" id="fechaNacimiento" name="fechaNacimiento" 
                                  Value={dateFormat(userControl.fechaNacimiento)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaNacimiento && touched.fechaNacimiento}
                                  isValid={!errors.fechaNacimiento && touched.fechaNacimiento} disabled
                               />
@@ -359,13 +375,27 @@ export default function AddControlN(props){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
-                        </Form.Group> 
 
-                        <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Sexo</Form.Label>
-                        <Col sm="8">
+                        <Form.Label column sm="2"><h5 style={{fontSize: "16px"}}>Edad</h5></Form.Label>
+                        <Col sm="4">
                           <InputGroup hasValidation>
-                          <Form.Select size="lg" name="sexo" onChange={handleChange} onBlur={handleBlur}
+                              <Form.Control type="text" placeholder="Dígita aquí la edad" size="xs" id="edad" name="edad" 
+                               value={`${userControl.edad} meses`} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
+                               isValid={!errors.edad && touched.edad} disabled
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                  {errors.edad}
+                              </Form.Control.Feedback>
+                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          </InputGroup>
+                        </Col>
+                        </Form.Group>
+                       
+                        <Form.Group as={Row} className="mb-3 mt-4">
+                        <Form.Label column sm="1"><h5 style={{fontSize: "16px"}}>Sexo</h5></Form.Label>
+                        <Col sm="3">
+                          <InputGroup hasValidation>
+                          <Form.Select size="xs" name="sexo" onChange={handleChange} onBlur={handleBlur}
                                 value={userControl.sexo} isValid={!errors.sexo && touched.sexo} isInvalid={!!errors.sexo && touched.sexo} disabled
                               >
                               <option disabled>Selecciona el sexo</option>
@@ -379,47 +409,11 @@ export default function AddControlN(props){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                           </Col>
-                        </Form.Group>
 
-                        <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Edad</Form.Label>
-                        <Col sm="8">
+                        <Form.Label column sm="1"><h5 style={{fontSize: "16px"}}>Peso</h5></Form.Label>
+                        <Col sm="3">
                           <InputGroup hasValidation>
-                              <Form.Control type="text" placeholder="Dígita aquí la edad" size="lg" id="edad" name="edad" 
-                               value={`${userControl.edad} meses`} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
-                               isValid={!errors.edad && touched.edad} disabled
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.edad}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                        </Col>
-                        </Form.Group>
-
-                        <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Fecha control</Form.Label>
-                        <Col sm="8">
-                          <InputGroup hasValidation>
-                              <Form.Control type="date" size="lg" id="fechaControl" name="fechaControl" 
-                                 value={moment().format("YYYY-MM-DD")} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaControl && touched.fechaControl}
-                                 isValid={!errors.fechaControl && touched.fechaControl} disabled
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.fechaControl}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                        </Col>
-                        </Form.Group> 
-
-                        <Row>
-                          <Col md={6}>
-                          <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Peso</Form.Label>
-                        <Col sm="8">
-                          <InputGroup hasValidation>
-                              <Form.Control type="text" placeholder="Peso en Kg" size="lg" id="peso" name="peso" 
+                              <Form.Control type="text" placeholder="Peso en Kg" size="xs" id="peso" name="peso" 
                                value={values.peso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.peso && touched.peso}
                                isValid={!errors.peso && touched.peso}
                               />
@@ -429,17 +423,11 @@ export default function AddControlN(props){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
-                        </Form.Group>
-                          </Col>
 
-
-                          <Col md={6}>
-                      
-                          <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Talla</Form.Label>
-                        <Col sm="8">
+                        <Form.Label column sm="1"><h5 style={{fontSize: "16px"}}>Talla</h5></Form.Label>
+                        <Col sm="3">
                           <InputGroup hasValidation>
-                              <Form.Control type="text" placeholder="Talla en cm" size="lg" id="talla" name="talla" 
+                              <Form.Control type="text" placeholder="Talla en cm" size="xs" id="talla" name="talla" 
                                value={values.talla} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.talla && touched.talla}
                               isValid={!errors.talla && touched.talla}
                               />
@@ -449,12 +437,11 @@ export default function AddControlN(props){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
-                        </Form.Group>      
-                          </Col>
-                        </Row>
+                        </Form.Group>
+                    </Container>
 
                   </Col>
-                  <Col sm={3}></Col>
+                  <Col sm={1}></Col>
 
                   
                 </Row>

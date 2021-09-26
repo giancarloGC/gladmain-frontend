@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import EditInfantInc from "../../components/Control/ControlFollow/AddInfantInc";
+import EditInfantInc from "../../components/Control/ControlFollow/EditInfantInc";
 
 export default function EditInfantIncome(){
     return(

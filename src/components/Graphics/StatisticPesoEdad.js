@@ -26,7 +26,7 @@ export default function StatisticPesoEdad(props){
       coordenadas.push(coor);
     });
   
-    const allCoordenadas = [...lineasArray, ...coordenadas];
+    const allCoordenadas = [ ...coordenadas, ...lineasArray ];
     return allCoordenadas;
   } 
 

@@ -38,11 +38,11 @@ export default function IndexCalculator(){
                 validate={(valores) => {
                   let errores = {};
                   if(!valores.edad){
-                    errores.edad = 'Por favor, ingresa números';
+                    errores.edad = 'Por favor, no dejar campos vacios';
                   }else if(!/^([0-9])*$/.test(valores.edad)){
                     errores.edad = 'Edad incorrecta, solo puedes escribir números';
-                  }else if(valores.edad < 0){
-                    errores.edad = 'Edad invalida, intente con otra';
+                  }else if(valores.edad < 0 && valores.edad > 72){
+                    errores.edad = 'Edad invalida, solo edad entre 0 y 72 meses';
                   } 
 
                     if(!valores.sexo){
@@ -72,7 +72,7 @@ export default function IndexCalculator(){
                           <Col md={5}>
                           <InputGroup hasValidation>
                               <Form.Control type="number" placeholder="Edad en meses" size="lg" id="edad" name="edad" 
-                               onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
+                                onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
                                isValid={!errors.edad && touched.edad}
                               />
                               <Form.Control.Feedback type="invalid">

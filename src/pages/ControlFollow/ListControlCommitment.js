@@ -2,46 +2,39 @@ import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faPrint } from '@fortawesome/free-solid-svg-icons';
-import ListInfantInc from "../../components/Control/ControlFollow/ListInfantInc";
+import ListCommitment from "../../components/Control/ControlFollow/ListCommitment";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link} from "react-router-dom";
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import {Row, Form} from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { getInfantIncomeApi } from "../../api/infant_income";
+import { getRemisByUserApi } from "../../api/remission";
 import { TOKEN } from "../../utils/constans";
 import Lottie from 'react-lottie';
 import NotResults from "../../assets/animations/notResults.json";
 import { getUserByIdApi } from "../../api/user";
 
 
-export default function ListFollowUpChecks(){
+export default function ListControlCommitment(){
 
-  const { documento, idSeg } = useParams();
+  const { documento, idSeguimiento } = useParams();
   const token = localStorage.getItem(TOKEN);
   const [ infoUser, setInfoUser ] = useState(null);
-  const [ listControls, setListControls ] = useState([]);
-
+  
   useEffect(() => {
       getUserByIdApi(documento, token).then(responseUser => {
           setInfoUser(responseUser);
       });
-      getInfantIncomeApi(documento, token).then(response => {
-          console.log(response);
-          setListControls(response);
-      });
   }, []);
-
-  const [ optionsLists, setOptionsLists] = useState({ check1: true, check2: false, check3: false});
 
     return(
         <Container>
-            <h1 className="text-center mb-4">Seguimientos de {infoUser ? infoUser.nombre : "Anonimo"}
-              <Link to={`/admin/addControlFollow/${documento}`}>
-                    <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton" />
+            <h1 className="text-center mb-4">Compromisos de {infoUser ? infoUser.nombre : "Anonimo"}
+              <Link to={`/admin/addCommitment/${idSeguimiento}`}>
+                    <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton" />
                     <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Control </ReactTooltip>
               </Link>
               
-              <FontAwesomeIcon icon={faPrint} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton2" />
+              <FontAwesomeIcon icon={faPrint} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton2" />
               <ReactTooltip id="boton2" place="bottom" type="dark" effect="float"> Imprimir </ReactTooltip>
             </h1>
             {listControls.length === 0 && (
@@ -52,10 +45,8 @@ export default function ListFollowUpChecks(){
                 />
                 </>
             )}
-            {listControls.length > 0 && (
-
-             <ListInfantInc  listControls={listControls} documento={documento}/>
-            )}
+             <ListCommitment  listControls={listControls} idSeguimiento={idSeguimiento}/>
+                        
         </Container>
     )
 }

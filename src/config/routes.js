@@ -22,12 +22,15 @@ import ListControlCyD from "../pages/ControlCyD/ListControlCyD";
 import AllUserControl from "../pages/ControlHome/AllUserControl";
 import AddControlVac from "../pages/ControlVac/AddControlVac";
 import EditControlVac from "../pages/ControlVac/EditControlVac";
+import EditControlVacMadre from "../pages/ControlVac/EditControlVacMadre";
 import AddControlFollow from "../pages/ControlFollow/AddControlFollow";
 import AddInfantIncome from "../pages/ControlFollow/AddInfantIncome";
 import EditControlFollow from "../pages/ControlFollow/EditControlFollow";
 import EditInfantIncome from "../pages/ControlFollow/EditInfantIncome";
+import DetailsInfantIncome from "../pages/ControlFollow/DetailsInfantIncome";
 import AddControlRemission from "../pages/ControlFollow/AddControlRemission";
 import EditControlRemission from "../pages/ControlFollow/EditControlRemission";
+import DetailsControlRemission from "../pages/ControlFollow/DetailsControlRemission";
 import ListControlRemission from "../pages/ControlFollow/ListControlRemission";
 import AddCommitment from "../pages/ControlFollow/AddCommitment";
 import ListCommitment from "../pages/ControlFollow/ListCommitment";
@@ -143,6 +146,11 @@ const routes = [
                 component: EditControlVac,
             },
             {
+                path: "/admin/EditControlVacMadre/:id/:documento",
+                exact: true,
+                component: EditControlVacMadre,
+            },
+            {
                 path: "/admin/graphics/:edad/:sexo/:documento/:rolUser",
                 exact: true,
                 component: StatisticHome,                
@@ -248,6 +256,11 @@ const routes = [
                 component: EditInfantIncome,
             }, 
             {
+                path: "/admin/detailsInfantIncome",
+                exact: true,
+                component: DetailsInfantIncome,
+            }, 
+            {
                 path: "/admin/addControlRemission/:idSeg",
                 exact: true,
                 component: AddControlRemission,
@@ -256,7 +269,12 @@ const routes = [
                 path: "/admin/editControlRemission",
                 exact: true,
                 component: EditControlRemission,
-            },   
+            }, 
+            {
+                path: "/admin/detailsControlRemission",
+                exact: true,
+                component: DetailsControlRemission,
+            }, 
             {
                 path: "/admin/listControlRemission/:documento/:idSeguimiento",
                 exact: true,

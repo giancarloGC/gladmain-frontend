@@ -25,35 +25,34 @@ export default function ListControlR(props){
              <Row> 
              <Row className="mb-4 mt-3">
                  <Col md={3}> </Col>
-                 <Col md={6}>
-                    <InputGroup hasValidation>
-                        <Form.Control type="search" placeholder="Buscar Control" size="lg" id="busqueda" name="busqueda" />
-                        <Button class="btn btn-outline-success" type="submit">Buscar</Button>
+                 <Col md={5}>
+                    <InputGroup hasValidation className="mt-3">
+                        <Form.Control type="search" placeholder="Buscar Control" size="l" id="busqueda" name="busqueda" />  
                     </InputGroup>
                  </Col>
-                 <Col md={3}> </Col>
+                 <Col md={4}> <Button class="btn btn-outline-success" type="submit" size="l">Buscar</Button></Col>
              </Row>
              <Col sm={12} >
            <ListGroup className="mt-3 mb-3">
            {remisionesBySeguimiento.map((item, index) => (
-                <ListGroup.Item className="shadow border mt-2 mb-3" style={{height:'120px'}}>
+                <ListGroup.Item className="shadow border mt-2 mb-3">
                 
                 <Container>
                 <Row >
-                    <Col md={3} className="align-self-center" >
-                        <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Fecha Remisión</b> <br/> {dateFormat(item.fechaRemision)}</p>
+                    <Col sm={2} className="align-self-center" >
+                        <p style={{"color": "#2D61A4", "fontSize": 19.2}}><b>Fecha</b> <br/> {dateFormat(item.fechaRemision)}</p>
                     </Col>
-                    <Col md={2} className="align-self-center" >
+                    <Col sm={3} className="align-self-center" >
                         <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Entidad Remisión</b> <br/>{item.entidadRemitida}</p>
                     </Col>
-                    <Col md={4} className="align-self-center" >
-                        <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Aux. de Enfermeria</b><br/>{item.nombreAuxEnfermero}</p>
+                    <Col sm={4} className="align-self-center" >
+                        <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Aux. Enfermeria</b><br/>{item.nombreAuxEnfermero}</p>
                     </Col>
-                    <Col md={3} className="align-self-right">
+                    <Col sm={3} className="align-self-right">
                          <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Acciones</b> <br/>
                         
                             <Link className="enlace" to="#" className="btn btn-primary mx-0">
-                                <FontAwesomeIcon icon={faEye} size="lg" color="white" data-tip data-for = "boton3" 
+                                <FontAwesomeIcon icon={faEye} size="l" color="white" data-tip data-for = "boton3" 
                                 /> <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Ver </ReactTooltip>
                             </Link>
                              <Link href="#" className="btn btn-warning mx-3">

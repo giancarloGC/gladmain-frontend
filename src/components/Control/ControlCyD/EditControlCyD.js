@@ -120,7 +120,7 @@ export default function EditControlCyD(props){
               formData.token = token;
               updateControlApi(formData).then(response => {
                 if(response === true){
-                  swal("¡Excelente, registro exitoso!, El control fue almacenado correctamente", {
+                  swal("¡Excelente, registro exitoso!, El control fue actualizado correctamente", {
                     icon: "success",
                 })
                 .then((value) => {

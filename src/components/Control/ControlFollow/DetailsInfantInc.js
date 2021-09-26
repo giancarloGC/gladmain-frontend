@@ -13,7 +13,7 @@ import AddIncomeCommit7 from "./AddIncomeCommit/AddIncomeCommit7";
 import AddIncomeCommit8 from "./AddIncomeCommit/AddIncomeCommit8";
 import AddIncomeCommit9 from "./AddIncomeCommit/AddIncomeCommit9";
 
-export default function EditInfantInc(){
+export default function DetailsInfantInc(){
   
   const [showCommit, setShowCommit] = useState(false);
   const [dataCommit, setDataCommit] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
@@ -82,7 +82,7 @@ export default function EditInfantInc(){
           />
               <Row >
               <Col sm={2}> </Col>
-                <Col sm={8} className="mt-2 mb-4" style={{backgroundColor: '#f1f1f1', "border-radius":'10px'}}> 
+                <Col sm={8} className="mt-2 mb-4" style={{border:'2px solid #eee', borderRadius:'5px'}}> 
                 <Formik
                   initialValues={{ 
                     idIngreso: '',
@@ -104,34 +104,6 @@ export default function EditInfantInc(){
                       usuarioRemitido: '',
                       causa: '',
                   }}
-                
-                validate={(valores) => {
-                  let errores = {};
-
-                  if(!valores.nombrePatologia){
-                    errores.nombrePatologia = 'No se permiten campos vacíos'
-                  }
-                  if(!valores.nombreMedFormulada){
-                    errores.nombreMedFormulada = 'No se permiten campos vacíos'
-                  }
-                  if(!valores.eapb){
-                    errores.eapb = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.eapb)){
-                    errores.eapb = 'Solo puedes escribir letras';
-                  }
-                  if(!valores.ips){
-                    errores.ips = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.ips)){
-                    errores.ips = 'Solo puedes escribir letras';
-                  }
-                  if(!valores.causa){
-                    errores.causa = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.causa)){
-                    errores.causa = 'Solo puedes escribir letras';
-                  };
-
-                  return errores;
-                }}
 
                 onSubmit={(valores, {resetForm}) => {
 
@@ -189,10 +161,6 @@ export default function EditInfantInc(){
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
-                            <Form.Control.Feedback type="invalid">
-                                        {errors.afiliacionSgsss}
-                                        </Form.Control.Feedback>
-                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
                         </InputGroup>
                         </Col>
                         </Form.Group>
@@ -206,11 +174,7 @@ export default function EditInfantInc(){
                           <input type="checkbox" checked={showCommit2 || !saveData2 ? true : false } onChange={(e) => setShowCommit2(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
-                          </label>
-                            <Form.Control.Feedback type="invalid">
-                                        {errors.saludOral}
-                                        </Form.Control.Feedback>
-                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
+                          </label> 
                         </InputGroup>
                         </Col>
                     </Form.Group>
@@ -225,10 +189,6 @@ export default function EditInfantInc(){
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
-                            <Form.Control.Feedback type="invalid">
-                                        {errors.conoceUrgencias}
-                                        </Form.Control.Feedback>
-                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
                         </InputGroup>
                         </Col>
                         </Form.Group>
@@ -243,10 +203,6 @@ export default function EditInfantInc(){
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
-                            <Form.Control.Feedback type="invalid">
-                                        {errors.alarmaPreventiva}
-                                        </Form.Control.Feedback>
-                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
                         </InputGroup>
                         </Col>
                     </Form.Group>
@@ -261,11 +217,7 @@ export default function EditInfantInc(){
                           <input type="checkbox" checked={showCommit5 || !saveData5 ? true : false } onChange={(e) => setShowCommit5(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
-                          </label>
-                            <Form.Control.Feedback type="invalid">
-                                        {errors.valoracionMedica}
-                                        </Form.Control.Feedback>
-                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
+                          </label> 
                         </InputGroup>
                         </Col>
                         </Form.Group>
@@ -280,10 +232,6 @@ export default function EditInfantInc(){
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
-                            <Form.Control.Feedback type="invalid">
-                                        {errors.controlCyD}
-                                        </Form.Control.Feedback>
-                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
                         </InputGroup>
                         </Col>
                     </Form.Group>
@@ -298,10 +246,6 @@ export default function EditInfantInc(){
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
-                            <Form.Control.Feedback type="invalid">
-                                        {errors.patologiaIdentificadaSgsss}
-                                        </Form.Control.Feedback>
-                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
                         </InputGroup>
                         </Col>
                         </Form.Group>
@@ -312,13 +256,8 @@ export default function EditInfantInc(){
                     <Col sm="9" class="mid">
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre Patología" size="lg" id="nombrePatologia" name="nombrePatologia" 
-                               value={values.nombrePatologia} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
-                               isValid={!errors.nombrePatologia && touched.nombrePatologia}
+                               value={values.nombrePatologia} onChange={handleChange} onBlur={handleBlur} disabled
                             />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.nombrePatologia}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                     </Col>
                     </Form.Group>
@@ -333,10 +272,6 @@ export default function EditInfantInc(){
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
-                            <Form.Control.Feedback type="invalid">
-                                        {errors.recibeMedFormulada}
-                                        </Form.Control.Feedback>
-                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
                         </InputGroup>
                         </Col>
                     </Form.Group>
@@ -348,13 +283,8 @@ export default function EditInfantInc(){
                     <Col md="9" class="mid" >
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre Medicamento Formulado" size="lg" id="nombreMedFormulada" name="nombreMedFormulada" 
-                               value={values.nombreMedFormulada} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
-                               isValid={!errors.nombreMedFormulada && touched.nombreMedFormulada}
+                               value={values.nombreMedFormulada} onChange={handleChange} onBlur={handleBlur} disabled
                             />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.nombreMedFormulada}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                       </Col>
                     </Form.Group>
@@ -365,13 +295,8 @@ export default function EditInfantInc(){
                      <Col md="4" class="mid" >
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre EAPB" size="lg" id="eapb" name="eapb" 
-                               value={values.eapb} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.eapb && touched.eapb}
-                               isValid={!errors.eapb && touched.eapb}
+                               value={values.eapb} onChange={handleChange} onBlur={handleBlur} disabled
                             />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.eapb}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                         </Col>
 
@@ -380,13 +305,8 @@ export default function EditInfantInc(){
                         <Col sm="4" >
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre IPS" size="lg" id="ips" name="ips" 
-                               value={values.ips} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.ips && touched.ips}
-                               isValid={!errors.ips && touched.ips}
+                               value={values.ips} onChange={handleChange} onBlur={handleBlur} disabled
                             />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.ips}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                         </Col>
                     </Form.Group>
@@ -401,11 +321,7 @@ export default function EditInfantInc(){
                           <input type="checkbox" checked={showCommit9 || !saveData9 ? true : false } onChange={(e) => setShowCommit9(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
-                          </label>
-                            <Form.Control.Feedback type="invalid">
-                                        {errors.usuarioRemitido}
-                                        </Form.Control.Feedback>
-                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
+                          </label>  
                         </InputGroup>
                         </Col>
                     </Form.Group>
@@ -416,13 +332,8 @@ export default function EditInfantInc(){
                     <Col sm="9">
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Escriba la causa" size="lg" id="causa" name="causa" 
-                               value={values.causa} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.causa && touched.causa}
-                               isValid={!errors.causa && touched.causa}
+                               value={values.causa} onChange={handleChange} onBlur={handleBlur} disabled
                             />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.causa}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                     </Col>
                     </Form.Group>
