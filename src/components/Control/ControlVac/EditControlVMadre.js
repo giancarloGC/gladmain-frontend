@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useReducer } from "react";
 import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner } from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
-import  AuthContext  from "../../../hooks/useAuth";
 import { TOKEN } from "../../../utils/constans";
-import { insertContVaccApi } from "../../../api/vaccination";
+import { updateContVaccApi } from "../../../api/vaccination";
 import swal from 'sweetalert';
 import moment from 'moment';
 
-export default function AddControlVMadre (props){
-    const { userControl } = props;
+export default function EditControlVMadre (props){
+    const { userControl, infoControl } = props;
     const token = localStorage.getItem(TOKEN);
     const [ textFormSend, setTextFormSend ] = useState({});
     const [show, setShow] = useState(false);
@@ -29,9 +28,9 @@ export default function AddControlVMadre (props){
                 <Col sm={7}>
                 <Formik 
                 initialValues={{ 
-                    fechaAplicacion: '',
-                    nombreVacuna: '', 
-                    edadGestacional: ''
+                    fechaAplicacion: infoControl.fechaAplicacion,
+                    nombreVacuna: infoControl.nombreVacuna, 
+                    edadGestacional: infoControl.edadGestacional,
                 }}
                 
                 validate={(valores) => {
@@ -67,16 +66,15 @@ export default function AddControlVMadre (props){
                   
                   const formData = {
                     idUsuario: userControl.documento,
-                    fechaAplicacion: valores.fechaAplicacion,
                     nombreVacuna: valores.nombreVacuna,
+                    fechaAplicacion: valores.fechaAplicacion,
                     dosis: null,
                     edadGestacional: valores.edadGestacional,
-                    vigente: false,
-                    vacunas: null
+                    vigente: false
                 }
                 console.log(formData);
                 valores.token = token;
-                insertContVaccApi(formData, token).then(response => {
+                updateContVaccApi(formData, token).then(response => {
                     if(response === true){
                     swal("¡Excelente, registro exitoso!, El control fue actualizado correctamente", {
                         icon: "success",
@@ -117,7 +115,7 @@ export default function AddControlVMadre (props){
                        <Col sm="7">
                         <InputGroup hasValidation>
                             <Form.Select size="lg" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
-                                defaultValue={userControl.tipoDocumento} isValid={!errors.tipoDocumento && touched.tipoDocumento} 
+                                value={userControl.tipoDocumento} isValid={!errors.tipoDocumento && touched.tipoDocumento} 
                                 isInvalid={!!errors.tipoDocumento && touched.tipoDocumento} disabled
                             >
                             <option disabled>Selecciona el tipo de documento</option>
@@ -172,7 +170,7 @@ export default function AddControlVMadre (props){
                             <Col sm="7">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaAplicacion" name="fechaAplicacion" 
-                                 value={dateFormat(values.fechaAplicacion)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaAplicacion && touched.fechaAplicacion}
+                                 defaultValue={dateFormat(infoControl.fechaAplicacion)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaAplicacion && touched.fechaAplicacion}
                                  isValid={!errors.fechaAplicacion && touched.fechaAplicacion} 
                               />
                               <Form.Control.Feedback type="invalid">
@@ -188,7 +186,7 @@ export default function AddControlVMadre (props){
                         <Col sm="7">
                         <InputGroup hasValidation>
                             <Form.Control type="text" placeholder="Dígita aquí el nombre de la vacuna" size="lg" id="nombreVacuna" name="nombreVacuna" 
-                               value={values.nombreVacuna} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreVacuna && touched.nombreVacuna}
+                               defaultValue={infoControl.nombreVacuna} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreVacuna && touched.nombreVacuna}
                                isValid={!errors.nombreVacuna && touched.nombreVacuna}
                             />
                             <Form.Control.Feedback type="invalid">
@@ -204,7 +202,7 @@ export default function AddControlVMadre (props){
                             <Col sm="7">
                            <InputGroup hasValidation>
                               <Form.Control type="text" placeholder="Edad gestacional en semanas" size="lg" id="edadGestacional" name="edadGestacional" 
-                              value={values.edadGestacional} onChange={handleChange} onBlur={handleBlur} 
+                              defaultValue={infoControl.edadGestacional} onChange={handleChange} onBlur={handleBlur} 
                               isInvalid={!!errors.edadGestacional && touched.edadGestacional}
                                 isValid={!errors.edadGestacional && touched.edadGestacional}
                               />

@@ -19,7 +19,7 @@ import { faAddressCard }  from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function AddControlN(props){
-    const { userControl } = props;
+    const { userControl, rolUser } = props;
     const { user } = AuthContext();
     const token = localStorage.getItem(TOKEN);
     const [show, setShow] = useState(false);
@@ -28,7 +28,7 @@ export default function AddControlN(props){
     const [ stateNutrition, setStateNutrition ] = useState({ color: "", text: "", animation: null});
     const [ imc, setImc ] = useState(0);
     const [ showButtonAdd, setShowButtonAdd ] = useState(false);
-    const [ graphicValues, setGraphicValues] = useState({ x: 0, y: 0, r: 3});
+    const [ graphicValues, setGraphicValues] = useState({ r: 3, x: 0, y: 0 });
     const [ goRedirect, setGoRedirect ] = useState(false);
 
     let dateFechaNaci = moment(userControl.fechaNacimiento);
@@ -167,8 +167,7 @@ export default function AddControlN(props){
           pointStyle: "bubble",
           data: [graphicValues],
           borderColor: userControl.sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
-          backgroundColor: userControl.sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
-                  
+          backgroundColor: userControl.sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',       
         },
       ]
     };
@@ -177,7 +176,7 @@ export default function AddControlN(props){
         <Container>
             <Row>
               {goRedirect && (
-                   <Redirect to={`/admin/graphics/${userControl.edad}/${userControl.sexo}/${userControl.documento}`} />
+                   <Redirect to={`/admin/graphics/${userControl.edad}/${userControl.sexo}/${userControl.documento}/${rolUser}`} />
               )}
               <Formik
                 initialValues={{ 
@@ -195,7 +194,7 @@ export default function AddControlN(props){
                     errores.peso = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9-.])*$/.test(valores.peso)){
                     errores.peso = 'Solo puedes escribir números';
-                  }else if(userControl.edad > 0 && userControl.edad <= 24){
+                  }else if(userControl.edad >= 0 && userControl.edad <= 24){
                     if(valores.peso < 1){
                       errores.peso = 'el peso debe ser debe ser mayor a 1 kg';
                     }else if(valores.peso > 26){
@@ -213,7 +212,7 @@ export default function AddControlN(props){
                     errores.talla = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9-.])*$/.test(valores.talla)){
                     errores.talla = 'Solo puedes escribir números';
-                  }else if(userControl.edad > 0 && userControl.edad <= 24){
+                  }else if(userControl.edad >= 0 && userControl.edad <= 24){
                     if(valores.talla < 45){
                       errores.talla = 'La talla debe ser mayor a 45 cm';
                     }else if(valores.talla > 110){
@@ -227,25 +226,25 @@ export default function AddControlN(props){
                     }
                   }
 
-                  if(userControl.edad > 0 && userControl.edad <= 24){
+                  if(userControl.edad >= 0 && userControl.edad <= 24){
                     if(valores.peso && valores.talla >= 45 && valores.talla <= 110){
                       let tallaM = convertCmToM(valores.talla);
                       calculateIMC(valores.peso, tallaM);
                       calculateStateNutrition(valores.talla, valores.peso);
-                      setGraphicValues({x: valores.talla, y: valores.peso , r: 3});
+                      setGraphicValues({ r: 3, x: valores.talla, y: valores.peso });
                     }else{
                       setImc(0);
-                      setGraphicValues({x: 0, y: 0, r: 3});
+                      setGraphicValues({ r: 3, x: 0, y: 0 });
                     }
                   }else{
                     if(valores.peso && valores.talla >= 65 && valores.talla <= 120){
                       let tallaM = convertCmToM(valores.talla);
                       calculateIMC(valores.peso, tallaM);
                       calculateStateNutrition(valores.talla, valores.peso);
-                      setGraphicValues({x: valores.talla, y: valores.peso , r: 3});
+                      setGraphicValues({ r: 3, x: valores.talla, y: valores.peso });
                     }else{
                       setImc(0);
-                      setGraphicValues({x: 0, y: 0, r: 3});
+                      setGraphicValues({r: 3, x: 0, y: 0 });
                     }
                   }
                   

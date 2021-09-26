@@ -1,34 +1,41 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "react-bootstrap";
+import EditControlVMadre from "../../components/Control/ControlVac/EditControlVMadre";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import { getUserByIdApi } from "../../api/user";
-import { TOKEN } from "../../utils/constans";
-import AddControlN from "../../components/Control/ControlNutri/AddControlN";
+import { getContVaccByIdApi } from "../../api/vaccination";
 
-export default function AddControlNutri(){ 
-    const { documento, rolUser } = useParams();
+import { TOKEN } from "../../utils/constans";
+
+export default function AddControlVac(){
+    const { id, documento } = useParams();
+    const [infoControl, setInfoControl] = useState({});
     const [userControl, setUser] = useState({});
     const token = localStorage.getItem(TOKEN);
-    const [ componentLoaded, setComponentLoaded ] = useState(false); 
     const [ userLoaded, setUserLoaded ] = useState({});
+    const [ componentLoaded, setComponentLoaded ] = useState(false);   
     var loading = true;
 
-        useEffect(() => {
+
+    useEffect(() => {
         loading = false;
+        if(!loading){ 
         getUserByIdApi(documento, token).then(response => {
             setUser(response);
-            setComponentLoaded(true); 
-        })
-        if(!loading){ 
-          setComponentLoaded(true); 
+        });
+        getContVaccByIdApi(id, token).then(responseControl => {
+           setInfoControl(responseControl);
+           setComponentLoaded(true); 
+        });
+        //setComponentLoaded(true); 
         setUserLoaded(userControl);
         }
       }, []);
 
     return(
         <Container>
-            <h1 className="text-center">Añadir Control Nutricional</h1>
-            {!componentLoaded ? (
+            <h1 className="text-center">Editar Control de Vacunación</h1>
+        {!componentLoaded ? (
             <Row className="justify-content-md-center text-center">
               <Col md={1} className="justify-content-center">
               <Spinner animation="border" >
@@ -36,9 +43,12 @@ export default function AddControlNutri(){
               </Col>
             </Row>
           )
-          : (
-              <AddControlN userControl={userControl} rolUser={rolUser}/>
-          )}
-        </Container>        
+        :
+        (
+            <EditControlVMadre userControl={userControl} infoControl={infoControl}/>
+        )
+        }
+        </Container>
     )
+    
 }

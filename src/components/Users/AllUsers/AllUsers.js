@@ -122,14 +122,14 @@ export default function AllUsers(){
                         </Link>
                         <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Agregar Nuevo Usuario </ReactTooltip>
                     </h1>
-                    <Row>
-                        <Col md={8}>
-                            <Form.Control type="search" placeholder="Buscar Usuario" size="lg" onChange={(e) => search(e)} name="busqueda" 
-                                className="mb-3"
+                    <Row className="justify-content-center">
+                        <Col md={4}>
+                            <Form.Control style={{borderColor: "#1783db"}} type="search" placeholder="Buscar Usuario" size="lg" onChange={(e) => search(e)} name="busqueda" 
+                                className="mb-1 mt-3"
                             />
                         </Col>
-                        <Col md={4}>
-                            <Form.Select size="lg" name="tipoDocumento" onChange={(e) => setTypeSearch(e.target.value)}
+                        <Col md={3}>
+                            <Form.Select style={{borderColor: "#1783db"}} className="mb-1 mt-3" size="lg" name="tipoDocumento" onChange={(e) => setTypeSearch(e.target.value)}
                             >
                                 <option value="nombre" selected>Buscar por nombre</option>
                                 <option value="documento">Buscar por documento</option>
@@ -150,7 +150,6 @@ export default function AllUsers(){
 
                 <div className="containerGListUsers">
                 <div className="sectionDiv">
-
                     <div className="containerP" >
                     {usersApi.map((item, index) => (
                         <div className="card" >
@@ -184,12 +183,7 @@ export default function AllUsers(){
                                 /> <ReactTooltip id="boton2" place="bottom" type="dark" effect="float"> Editar </ReactTooltip>
                                 </Link>
                             </div>
-                            {/*<div className="liB">
-                            <Link className="enlace" onClick={() => confirmDeleteUser(item.documento)}>
-                                <FontAwesomeIcon icon={faTrash} size="lg" color="#2D61A4" data-tip data-for = "boton3"
-                                /> <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Eliminar </ReactTooltip>
-                                </Link>
-                        </div>*/}
+                            
                         </div>
                     </div>                
                     ))}

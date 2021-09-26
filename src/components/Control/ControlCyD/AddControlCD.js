@@ -148,7 +148,7 @@ export default function AddControlCD(props){
                     errores.peso = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9-.])*$/.test(valores.peso)){
                     errores.peso = 'Solo puedes escribir números';
-                  }else if(userControl.edad > 0 && userControl.edad <= 24){
+                  }else if(userControl.edad >= 0 && userControl.edad <= 24){
                     if(valores.peso < 1){
                       errores.peso = 'el peso debe ser debe ser mayor a 1 kg';
                     }else if(valores.peso > 26){
@@ -166,7 +166,7 @@ export default function AddControlCD(props){
                     errores.talla = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9-.])*$/.test(valores.talla)){
                     errores.talla = 'Solo puedes escribir números';
-                  }else if(userControl.edad > 0 && userControl.edad <= 24){
+                  }else if(userControl.edad >= 0 && userControl.edad <= 24){
                     if(valores.talla < 45){
                       errores.talla = 'La talla debe ser mayor a 45 cm';
                     }else if(valores.talla > 110){

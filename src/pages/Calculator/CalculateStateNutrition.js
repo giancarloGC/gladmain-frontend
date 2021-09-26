@@ -190,20 +190,18 @@ export default function CalculateStateNutrition(){
                   }
                   if(!valores.sexo){
                     errores.sexo = 'Asegurese de selecionar una opción';
-                  }
+                  }   
+
                   if(!valores.edad){
                     errores.edad = 'Por favor, ingresa números';
                   }else if(!/^([0-9])*$/.test(valores.edad)){
-                    errores.edad = 'Edad incorrecta, solo puedes escribir números';
-                  }else if(valores.edad <= 0 || valores.edad > 90){
-                    errores.edad = 'Edad invalida, intente con otra';
-                  }*/      
+                    errores.edad = 'Edad incorrecta, solo puedes escribir números enteros';
+                  }else if(valores.edad < 0 && valores.edad > 72){
+                    errores.edad = 'Edad invalida, solo edad entre 0 y 72 meses';
+                  } */ 
+
                   const dateCurrently2 = new Date();
-                  /*if(!valores.fechaControl){
-                    errores.fechaControl = 'Asegurese de selecionar una fecha';
-                  }else if(dateCurrently2 <= valores.fechaControl){
-                    errores.fechaControl = 'Seleccione una fecha valida';
-                  }*/
+                  
                   if(!valores.peso){
                     errores.peso = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9-.])*$/.test(valores.peso)){
