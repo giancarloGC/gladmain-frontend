@@ -120,13 +120,9 @@ export default function AddInfantInc(props){
 
                   if(!valores.nombrePatologia){
                     errores.nombrePatologia = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.nombrePatologia)){
-                    errores.nombrePatologia = 'Solo puedes escribir letras';
                   }
                   if(!valores.nombreMedFormulada){
                     errores.nombreMedFormulada = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.nombreMedFormulada)){
-                    errores.nombreMedFormulada = 'Ssolo puedes escribir letras';
                   }
                   if(!valores.eapb){
                     errores.eapb = 'No se permiten campos vacíos'
@@ -143,6 +139,8 @@ export default function AddInfantInc(props){
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.causa)){
                     errores.causa = 'Solo puedes escribir letras';
                   }
+                  
+                  return errores;
                 }}
 
                 onSubmit={(valores, {resetForm}) => {

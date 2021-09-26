@@ -22,7 +22,7 @@ export default function AddControlR(props){
         <Container>
             <Row >
             <Col sm={2}> </Col>
-              <Col sm={8} className="mt-2 mb-4" style={{backgroundColor: '#f1f1f1', "border-radius":'10px'}}>
+              <Col sm={8} className="mt-2 mb-4" style={{backgroundColor: '#f1f1f1', borderRadius:'5px'}}>
                 <Formik
                 initialValues={{ 
                   idSeguimiento:"",

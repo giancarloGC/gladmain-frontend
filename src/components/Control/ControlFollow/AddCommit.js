@@ -25,9 +25,9 @@ export default function AddCommit(props){
 
     return(
         <Container>
-            <Row style={{backgroundColor: '#f1f1f1'}}>
-                <Col sm={1}></Col>
+            <Row className='justify-content-center'>
                 <Col sm={10} className="mt-2 mb-4"> 
+                
                 <Formik
                 initialValues={{ 
                   idSeguimientoSalud: '',
@@ -41,32 +41,12 @@ export default function AddCommit(props){
                 
                 validate={(valores) => {
                   let errores = {};
-
-                  if(!valores.id){
-                    errores.id = 'Por favor, ingresa números';
-                  }else if(!/^([0-9])*$/.test(valores.id)){
-                    errores.id = 'Solo puedes escribir números';
-                  }
-                  if(!valores.idSeguimientoSalud){
-                    errores.idSeguimientoSalud = 'Por favor, ingresa números';
-                  }else if(!/^([0-9])*$/.test(valores.idSeguimientoSalud)){
-                    errores.idSeguimientoSalud = 'Solo puedes escribir números';
-                  }
-                  const dateCurrently = new Date();
-                  if(!valores.fechaCompromiso){
-                    errores.fechaCompromiso = 'Asegurese de selecionar una fecha';
-                  }else if(dateCurrently <= valores.fechaCompromiso){
-                    errores.fechaCompromiso = 'Seleccione una fecha valida';
-                  }
+                 
                   if(!valores.nombre){
                     errores.nombre = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.nombre)){
-                    errores.nombre = 'Nombre incorrecto, solo puedes escribir letras';
                   }
                   if(!valores.nuevoCompromiso){
                     errores.nuevoCompromiso = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.nuevoCompromiso)){
-                    errores.nuevoCompromiso = 'Nombre incorrecto, solo puedes escribir letras';
                   }
                   const dateCurrently2 = new Date();
                   if(!valores.fechaCumplimiento){
@@ -79,6 +59,8 @@ export default function AddCommit(props){
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.nombreAuxiliarEnfermeria)){
                     errores.nombreAuxiliarEnfermeria = 'Nombre incorrecto, solo puedes escribir letras';
                   }
+
+                  return errores;
                 }}
 
                 onSubmit={(valores, {resetForm}) => {
@@ -126,37 +108,26 @@ export default function AddCommit(props){
                     return (   
                     <Form onSubmit={handleSubmit}>
                     <Form.Group as={Row} className="mb-1 mt-3">
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>No. Seguimiento</Form.Label>
+                        <Form.Label column sm="2"><h1 style={{fontSize: "20px", color:"#0084d2" }} >No. Seguimiento</h1></Form.Label>
                         <Col sm="2">
                             <InputGroup hasValidation>
-                            <Form.Control type="number" placeholder="01" size="lg" id="idSeguimientoSalud" name="idSeguimientoSalud" 
-                               value={controlSeguimiento.id} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.idSeguimientoSalud && touched.idSeguimientoSalud}
-                               isValid={!errors.idSeguimientoSalud && touched.idSeguimientoSalud} disabled
+                            <Form.Control type="number" placeholder="01" size="xs" id="idSeguimientoSalud" name="idSeguimientoSalud" 
+                               value={controlSeguimiento.id} onChange={handleChange} onBlur={handleBlur} disabled
                             />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.idSeguimientoSalud}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                         </Col>
-
-                        <Col sm="3"> </Col>
-
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Fecha Compromiso </Form.Label>
+                        <Col sm=""></Col>
+                        <Form.Label column sm="2"><h1 style={{fontSize: "20px", color:"#0084d2" }} >Fecha Compromiso</h1></Form.Label>
                         <Col sm="3">
                           <InputGroup hasValidation>
-                              <Form.Control type="date" size="lg" id="fechaCompromiso" name="fechaCompromiso" 
-                                 value={moment().format("YYYY-MM-DD")} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaCompromiso && touched.fechaCompromiso}
-                                 isValid={!errors.fechaCompromiso && touched.fechaCompromiso} disabled
+                              <Form.Control type="date" size="xs" id="fechaCompromiso" name="fechaCompromiso" 
+                                 value={moment().format("YYYY-MM-DD")} onChange={handleChange} onBlur={handleBlur} disabled
                               />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.fechaCompromiso}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
                     </Form.Group>
                     
+                    <Container style={{backgroundColor: '#f1f1f1', borderRadius:'5px'}}><br/>
                     <Form.Group as={Row} className="mb-1 ">
                     <div class="middle">
                       <label>
@@ -175,12 +146,13 @@ export default function AddCommit(props){
                     </div>
                     </Form.Group>
 
-                    <Form.Group as={Row} className="mb-3 mt-3">
-                    <Form.Label column sm="0" style={{"fontSize": "12px !important"}} className="row justify-content-center">Nombre Compromiso</Form.Label>
-                    <Col sm={1}></Col>
-                    <Col sm={10}>
+                    <Form.Group as={Row} className="mt-2">
+                    <center>
+                    <Form.Label column sm="3"><b style={{fontSize: "16px"}}>Nombre Compromiso</b></Form.Label>
+                    </center>
+                    <Col sm={12}>
                         <InputGroup hasValidation>
-                               <Form.Control type="text" placeholder="Nombre Compromiso" size="lg" id="nombre" name="nombre" 
+                               <Form.Control type="text" placeholder="Nombre Compromiso" size="xs" id="nombre" name="nombre" 
                                value={values.nombre} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombre && touched.nombre}
                                isValid={!errors.nombre && touched.nombre}
                             />
@@ -190,15 +162,15 @@ export default function AddCommit(props){
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                      </Col>
-                     <Col sm={1}></Col>
                      </Form.Group>
 
-                     <Form.Group as={Row} className="mb-3 mt-3">
-                    <Form.Label column sm="0" style={{"fontSize": "12px !important"}}  className="row justify-content-center">Nuevo Compromiso</Form.Label>
-                    <Col sm={1}></Col>
-                    <Col sm={10}>
+                     <Form.Group as={Row} className="mt-1">
+                    <center>
+                    <Form.Label column sm="3"><b style={{fontSize: "16px"}}>Nuevo Compromiso</b></Form.Label>
+                    </center>
+                    <Col sm={12}>
                         <InputGroup hasValidation>
-                               <Form.Control type="text" placeholder="Descripción Compromiso" size="lg" id="nuevoCompromiso" name="nuevoCompromiso" 
+                               <Form.Control as="textarea" aria-label="With textarea" type="text" placeholder="Descripción Compromiso" size="xs" id="nuevoCompromiso" name="nuevoCompromiso" 
                                value={values.nuevoCompromiso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nuevoCompromiso && touched.nuevoCompromiso}
                                isValid={!errors.nuevoCompromiso && touched.nuevoCompromiso}
                             />
@@ -208,14 +180,13 @@ export default function AddCommit(props){
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                      </Col>
-                     <Col sm={1}></Col>
                     </Form.Group>
 
-                    <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Fecha Cumplimiento </Form.Label>
+                    <Form.Group as={Row} className="mt-4">
+                    <Form.Label column sm="2"><h5 style={{fontSize: "16px"}}>Fecha Cumplimiento </h5></Form.Label>
                         <Col sm="3">
                           <InputGroup hasValidation>
-                              <Form.Control type="date" size="lg" id="fechaCumplimiento" name="fechaCumplimiento" 
+                              <Form.Control type="date" size="xs" id="fechaCumplimiento" name="fechaCumplimiento" 
                                  value={values.fechaCumplimiento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaCumplimiento && touched.fechaCumplimiento}
                                  isValid={!errors.fechaCumplimiento && touched.fechaCumplimiento}
                               />
@@ -228,10 +199,10 @@ export default function AddCommit(props){
 
                         <Col sm={1}></Col>
 
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Nombre Aux. Enfermero(a) </Form.Label>
+                        <Form.Label column sm="2"><h5 style={{fontSize: "16px"}}>Nombre Aux. Enfermero(a)</h5></Form.Label>
                         <Col md={4}>
                         <InputGroup hasValidation>
-                        <Form.Control type="text" placeholder="nombre Auxiliar enfermero(a)" size="lg" id="nombreAuxiliarEnfermeria" name="nombreAuxiliarEnfermeria" 
+                        <Form.Control type="text" placeholder="nombre Auxiliar enfermero(a)" size="xs" id="nombreAuxiliarEnfermeria" name="nombreAuxiliarEnfermeria" 
                                value={values.nombreAuxiliarEnfermeria} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreAuxiliarEnfermeria && touched.nombreAuxiliarEnfermeria}
                                isValid={!errors.nombreAuxiliarEnfermeria && touched.nombreAuxiliarEnfermeria}
                             />
@@ -247,14 +218,13 @@ export default function AddCommit(props){
                             <Button variant="primary" type="submit" size="lg">
                                Guardar
                             </Button>
-                        </div>
-
+                        </div><br/>
+                      </Container>
                     </Form>
                             );
                         }}
                       </Formik> 
                 </Col>
-                <Col sm={1}></Col>
             </Row>
         </Container>
     )

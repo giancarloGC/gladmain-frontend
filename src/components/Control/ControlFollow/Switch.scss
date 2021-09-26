@@ -189,7 +189,7 @@ $orange: #fd650d;
   }
   .box {
     width: 250px;
-    height: 70px;
+    height: 72px;
     background-color: $white;
     will-change: transition;
     display: inline-block;
@@ -207,7 +207,7 @@ $orange: #fd650d;
       left: 0;
       right: 0;
       transition: all 400ms ease;
-      font-size: 1.5em;
+      font-size: 1.1em;
       user-select: none;
       color: $orange;
       &:before {

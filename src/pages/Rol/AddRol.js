@@ -55,10 +55,7 @@ export default function AddRol(){
                   let errores = {};
                   if(!valores.name){
                     errores.name = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.name)){
-                    errores.name = 'Nombre incorrecto, solo puedes escribir letras';
                   }
-
                   return errores;
                 }}
                 onSubmit={(valores, {resetForm}) => {

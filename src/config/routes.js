@@ -26,8 +26,10 @@ import AddControlFollow from "../pages/ControlFollow/AddControlFollow";
 import AddInfantIncome from "../pages/ControlFollow/AddInfantIncome";
 import EditControlFollow from "../pages/ControlFollow/EditControlFollow";
 import EditInfantIncome from "../pages/ControlFollow/EditInfantIncome";
+import DetailsInfantIncome from "../pages/ControlFollow/DetailsInfantIncome";
 import AddControlRemission from "../pages/ControlFollow/AddControlRemission";
 import EditControlRemission from "../pages/ControlFollow/EditControlRemission";
+import DetailsControlRemission from "../pages/ControlFollow/DetailsControlRemission";
 import ListControlRemission from "../pages/ControlFollow/ListControlRemission";
 import AddCommitment from "../pages/ControlFollow/AddCommitment";
 import EditCommitment from "../pages/ControlFollow/EditCommitment";
@@ -247,6 +249,11 @@ const routes = [
                 component: EditInfantIncome,
             }, 
             {
+                path: "/admin/detailsInfantIncome",
+                exact: true,
+                component: DetailsInfantIncome,
+            }, 
+            {
                 path: "/admin/addControlRemission/:idSeg",
                 exact: true,
                 component: AddControlRemission,
@@ -255,7 +262,12 @@ const routes = [
                 path: "/admin/editControlRemission",
                 exact: true,
                 component: EditControlRemission,
-            },   
+            }, 
+            {
+                path: "/admin/detailsControlRemission",
+                exact: true,
+                component: DetailsControlRemission,
+            }, 
             {
                 path: "/admin/listControlRemission/:documento/:idSeguimiento",
                 exact: true,

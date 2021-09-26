@@ -8,13 +8,13 @@ import swal from 'sweetalert';
 import moment from 'moment';
 import "./Switch.scss";
 
-export default function EditControlR(props){
+export default function DetailsControlR(props){
  
     return(
         <Container>
             <Row >
             <Col sm={2}> </Col>
-              <Col sm={8} className="mt-2 mb-4" style={{backgroundColor: '#f1f1f1', borderRadius:'5px'}}>
+              <Col sm={8} className="mt-2 mb-4" style={{border:'2px solid #eee', borderRadius:'5px'}}>
                 <Formik
                 initialValues={{ 
                   idSeguimiento:"",
@@ -30,76 +30,6 @@ export default function EditControlR(props){
                   razonFallecimiento: '',
                   seguimiento: '',
                   nombreAuxEnfermero: '',
-                }}
-                
-                validate={(valores) => {
-                  let errores = {};
-                  const dateCurrently2 = new Date();
-                  if(!valores.motivo){
-                    errores.motivo = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ.,:; ]+$/g.test(valores.motivo)){
-                    errores.motivo = 'Solo puedes escribir letras';
-                  }
-                  if(!valores.entidadRemitida){
-                    errores.entidadRemitida = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.entidadRemitida)){
-                    errores.entidadRemitida = 'Solo puedes escribir letras';
-                  }
-                  const dateCurrently = moment();
-                  if(!valores.fechaAtencion){
-                    errores.fechaAtencion = 'Asegurese de selecionar una fecha';
-                  }else{
-                    let atencion = moment(valores.fechaAtencion);
-                    if(atencion.diff(dateCurrently, 'hours') > 0){
-                        errores.fechaAtencion = 'Seleccione una fecha valida';
-                    }
-                  }
-                  if(!valores.fechaIngreso){
-                    errores.fechaIngreso = 'Asegurese de selecionar una fecha';
-                  }else{
-                    let ingreso = moment(valores.fechaIngreso);
-                    if(ingreso.diff(dateCurrently, 'hours') > 0){
-                        errores.fechaIngreso = 'Seleccione una fecha valida';
-                    }
-                  }
-                  if(!valores.razonFallecimiento){
-                    errores.razonFallecimiento = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ.,:; ]+$/g.test(valores.razonFallecimiento)){
-                    errores.razonFallecimiento = 'Solo puedes escribir letras';
-                  }
-                  if(!valores.seguimiento){
-                    errores.seguimiento = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ.,;: ]+$/g.test(valores.seguimiento)){
-                    errores.seguimiento = 'Solo puedes escribir letras';
-                  }
-                  if(!valores.nombreAuxEnfermero){
-                    errores.nombreAuxEnfermero = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.nombreAuxEnfermero)){
-                    errores.nombreAuxEnfermero = 'Solo puedes escribir letras';
-                  }
-                  return errores;
-                }}
-
-                onSubmit={(valores, {resetForm}) => {
-
-                  const formData={
-                    idSeguimiento: '',
-                    fechaRemision: '',
-                    entidadRemitida: '',
-                    atendido: '',
-                    fechaAtencion: '',
-                    motivo: '',
-                    hospitalizado: '',
-                    fechaIngreso: '',
-                    fechaSalida: '',
-                    fallecido: '',
-                    razonFallecimiento: '',
-                    seguimiento: '',
-                    nombreAuxEnfermero: '',
-                  }
-
-                  console.log(formData);
-                  //resetForm();
                 }}
                 >
 
@@ -142,13 +72,8 @@ export default function EditControlR(props){
                     <Col >
                         <InputGroup hasValidation>
                                <Form.Control as="textarea" aria-label="With textarea" placeholder="Motivo de Remisión" size="xs" id="motivo" name="motivo" 
-                               value={values.motivo} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.motivo && touched.motivo}
-                               isValid={!errors.motivo && touched.motivo}
+                               value={values.motivo} onChange={handleChange} onBlur={handleBlur} disabled
                             />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.motivo}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                      </Col>
                      </Form.Group>
@@ -159,13 +84,8 @@ export default function EditControlR(props){
                         <Col>
                         <InputGroup hasValidation>
                             <Form.Control type="text" placeholder="Nombre Entidad" size="xs" id="entidadRemitida" name="entidadRemitida" 
-                            value={values.entidadRemitida} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.entidadRemitida && touched.entidadRemitida}
-                            isValid={!errors.entidadRemitida && touched.entidadRemitida}
+                            value={values.entidadRemitida} onChange={handleChange} onBlur={handleBlur} disabled
                             />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.entidadRemitida}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                         </Col>
                         </Form.Group>
@@ -190,13 +110,8 @@ export default function EditControlR(props){
                         <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="xs" id="fechaAtencion" name="fechaAtencion" 
-                                 value={values.fechaAtencion} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaAtencion && touched.fechaAtencion}
-                                 isValid={!errors.fechaAtencion && touched.fechaAtencion}
+                                 value={values.fechaAtencion} onChange={handleChange} onBlur={handleBlur} disabled
                               />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.fechaAtencion}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
                       </Form.Group>
@@ -221,13 +136,8 @@ export default function EditControlR(props){
                         <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="xs" id="fechaIngreso" name="fechaIngreso" 
-                                 value={values.fechaIngreso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaIngreso && touched.fechaIngreso}
-                                 isValid={!errors.fechaIngreso && touched.fechaIngreso}
+                                 value={values.fechaIngreso} onChange={handleChange} onBlur={handleBlur} disabled
                               />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.fechaIngreso}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
                     </Form.Group>
@@ -250,13 +160,8 @@ export default function EditControlR(props){
                         <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="xs" id="fechaSalida" name="fechaSalida" 
-                                 value={values.fechaSalida} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaSalida && touched.fechaSalida}
-                                 isValid={!errors.fechaSalida && touched.fechaSalida}
+                                 value={values.fechaSalida} onChange={handleChange} onBlur={handleBlur} disabled
                               />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.fechaSalida}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
                     </Form.Group>
@@ -267,13 +172,8 @@ export default function EditControlR(props){
                     <Col >
                         <InputGroup hasValidation>
                                <Form.Control as="textarea" aria-label="With textarea" placeholder="Describir Motivo Fallecimiento" size="xs" id="razonFallecimiento" name="razonFallecimiento" 
-                               value={values.razonFallecimiento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.razonFallecimiento && touched.razonFallecimiento}
-                               isValid={!errors.razonFallecimiento && touched.razonFallecimiento}
+                               value={values.razonFallecimiento} onChange={handleChange} onBlur={handleBlur} disabled
                             />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.razonFallecimiento}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                      </Col>
                     </Form.Group>
@@ -284,13 +184,8 @@ export default function EditControlR(props){
                         <Col >
                         <InputGroup hasValidation>
                         <Form.Control  as="textarea" aria-label="With textarea" placeholder="Describa el seguimiento" size="xs" id="seguimiento" name="seguimiento" 
-                               value={values.seguimiento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.seguimiento && touched.seguimiento}
-                               isValid={!errors.seguimiento && touched.seguimiento}
+                               value={values.seguimiento} onChange={handleChange} onBlur={handleBlur} disabled
                             />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.seguimiento}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                         </Col>
                     </Form.Group> 
@@ -301,13 +196,8 @@ export default function EditControlR(props){
                         <Col >
                         <InputGroup hasValidation>
                         <Form.Control type="text" placeholder="Nombre del Enfermero(a)" size="xs" id="nombreAuxEnfermero" name="nombreAuxEnfermero" 
-                               value={values.nombreAuxEnfermero} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreAuxEnfermero && touched.nombreAuxEnfermero}
-                               isValid={!errors.nombreAuxEnfermero && touched.nombreAuxEnfermero}
+                               value={values.nombreAuxEnfermero} onChange={handleChange} onBlur={handleBlur} disabled
                             />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.nombreAuxEnfermero}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                         </Col>
                     </Form.Group>  
