@@ -35,6 +35,7 @@ import ListControlRemission from "../pages/ControlFollow/ListControlRemission";
 import AddCommitment from "../pages/ControlFollow/AddCommitment";
 import ListCommitment from "../pages/ControlFollow/ListCommitment";
 import EditCommitment from "../pages/ControlFollow/EditCommitment";
+import DetailCommitment from "../pages/ControlFollow/DetailCommitment";
 import ListFollowUpChecks from "../pages/ControlFollow/ListFollowUpChecks";
 import StatisticNutri from "../components/Graphics/StatisticNutri";
 import StatisticTallaEdad from "../components/Graphics/StatisticTallaEdad";
@@ -291,10 +292,15 @@ const routes = [
                 component: ListCommitment
             }, 
             {
-                path: "/admin/editCommitment",
+                path: "/admin/editCommitment/:idSeg/:idComp",
                 exact: true,
                 component: EditCommitment,
             }, 
+            {
+                path: "/admin/detailCommitment/:idSeg/:idComp",
+                exact: true,
+                component: DetailCommitment,
+            },
             {
                 path: "/admin/ListFollowUpChecks/:documento",
                 exact: true,

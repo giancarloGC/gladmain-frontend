@@ -129,6 +129,9 @@ export default function AddCommit(props){
                     
                     <Container style={{backgroundColor: '#f1f1f1', borderRadius:'5px'}}><br/>
                     <Form.Group as={Row} className="mb-1 ">
+                    <center>
+                    <Form.Label column sm="3"><b style={{fontSize: "16px"}}>Seleccione una opción</b></Form.Label>
+                    </center>
                     <div class="middle">
                       <label>
                       <input type="radio" name="radio1" checked={checkeds.radio1} onChange={e => onChangeChecked(e)}/>

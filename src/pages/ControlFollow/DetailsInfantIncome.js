@@ -5,7 +5,7 @@ import DetailsInfantInc from "../../components/Control/ControlFollow/DetailsInfa
 export default function DetailsInfantIncome(){
     return(
         <Container>
-             <h1 className="text-center">Editar Remisión </h1>
+             <h1 className="text-center">Detalles Ingreso </h1>
             <DetailsInfantInc />
         </Container>
     )
