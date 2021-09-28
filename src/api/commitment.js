@@ -17,13 +17,14 @@ export function insertCompApi(data, token){
             .catch(err => {return err});
 }
 
-export function updateCompApi(data){
-    const url = `${urlBackend}control_seguimiento/ACTUALIZAR_COMPROMISO`;
+export function updateCompApi(data, token){
+    const url = `/api/control_seguimiento/ACTUALIZAR_COMPROMISO`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
-        method: "PUT",
+        method: "POST",
         body: JSON.stringify(data)
     };
 
@@ -33,13 +34,14 @@ export function updateCompApi(data){
             .catch(err => {return err});
 }
 
-export function deleteCompApi(id){
-    const url = `${urlBackend}control_seguimiento/ELIMINAR_COMPROMISO/${id}`;
+export function deleteCompApi(id, token){
+    const url = `/api/control_seguimiento/ELIMINAR_COMPROMISO/${id}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
-        method: "DELETE"
+        method: "GET"
     };
 
     return fetch(url, params)
@@ -65,11 +67,12 @@ export function getCompByUserApi(documento, token){
             .catch(err => {return err});
 }
 
-export function getCompByIdApi(id){
-    const url = `${urlBackend}control_seguimiento/CONSULTAR_COMPROMISO/${id}`;
+export function getCompByIdApi(id, token){
+    const url = `/api/control_seguimiento/CONSULTAR_COMPROMISO/${id}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET"
     };

@@ -5,7 +5,7 @@ import DetailsControlR from "../../components/Control/ControlFollow/DetailsContr
 export default function DetailsControlRemission(){
     return(
         <Container>
-             <h1 className="text-center">Editar Remisión </h1>
+             <h1 className="text-center">Detalles Remisión </h1>
             <DetailsControlR />
         </Container>
     )

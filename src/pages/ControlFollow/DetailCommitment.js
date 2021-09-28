@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import { Container } from "react-bootstrap";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
-import EditCommit from "../../components/Control/ControlFollow/EditCommit";
+import DetailsCommit from "../../components/Control/ControlFollow/DetailsCommit";
 import { getSegByIdApi } from "../../api/follow-up";
 import { getCompByIdApi } from "../../api/commitment";
 import { TOKEN } from "../../utils/constans";
 
-export default function EditCommitment(){
+export default function DetailCommitment(){
 
     const { idSeg, idComp } = useParams();
     const [control, setControl] = useState({});
@@ -15,7 +15,7 @@ export default function EditCommitment(){
     const [ componentLoaded, setComponentLoaded ] = useState(false); 
     const [ segLoaded, setSegLoaded ] = useState({});
     const [ controlLoaded, setControlLoaded ] = useState(false);
-    const [ checkeds, setCheckeds ] = useState({radio1: false, radio: false});
+    const [ nombreNutricionista, setNombreNutricionista ] = useState("");
     var loading = true;
     
         useEffect(() => {
@@ -25,10 +25,6 @@ export default function EditCommitment(){
             setComponentLoaded(true); 
         });
         getCompByIdApi(idComp, token).then(responseComp => {
-            setCheckeds({
-                radio1: responseComp.tipo === "Compromiso cumplido que no se mantuvo" ? true : false, 
-                radio: responseComp.tipo === "Compromiso por nuevo factor de riesgo" ? true : false 
-            });
             setControl(responseComp);
             setControlLoaded(true);
         })
@@ -38,13 +34,11 @@ export default function EditCommitment(){
         setSegLoaded(segControl);
         }
       }, []);
-
+      
     return(
         <Container>
-             <h1 className="text-center">Editar Compromiso </h1>
-             {control && (
-                 <EditCommit segControl={segControl} control={control} checkeds={checkeds} setCheckeds={setCheckeds}/>
-             )}
+             <h1 className="text-center">Detalles Compromiso </h1>
+            <DetailsCommit segControl={segControl} control={control}/>
         </Container>
     )
 }
