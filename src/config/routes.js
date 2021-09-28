@@ -283,7 +283,7 @@ const routes = [
                 component: DetailsControlRemission,
             }, 
             {
-                path: "/admin/listControlRemission/:idseg/:documento",
+                path: "/admin/listControlRemission/:idSeg/:documento",
                 exact: true,
                 component: ListControlRemission,
             },   

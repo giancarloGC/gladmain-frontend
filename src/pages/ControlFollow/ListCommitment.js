@@ -17,7 +17,7 @@ import { getUserByIdApi } from "../../api/user";
 
 export default function ListCommitment(){
 
-  const { documento, idSeguimiento } = useParams();
+  const { idSeg, documento } = useParams();
   const token = localStorage.getItem(TOKEN);
   const [ infoUser, setInfoUser ] = useState(null);
   const [ listControls, setListControls ] = useState([]);
@@ -29,8 +29,8 @@ export default function ListCommitment(){
       getCompByUserApi(documento, token).then(response => {
           console.log(response);
           if(response.length > 0){
-              console.log(idSeguimiento);
-              let compromisosBySegui = response.filter(comp => comp.idSeguimientoSalud.toString() === idSeguimiento );
+              console.log(idSeg);
+              let compromisosBySegui = response.filter(comp => comp.idSeguimientoSalud.toString() === idSeg );
             console.log(compromisosBySegui);
               setListControls(compromisosBySegui);
           }
@@ -66,14 +66,14 @@ const deleteCom = (id) => {
                 icon: "success",
             })
             .then((value) => {
-                window.location.replace(`/admin/commitments/${documento}/${idSeguimiento}`);
+                window.location.replace(`/admin/commitments/${documento}/${idSeg}`);
               });                      
         }else{
             swal("Opss! Ocurrió un error al eliminar el rol!", {
                 icon: "error",
             })
             .then((value) => {
-                window.location.replace(`/admin/commitments/${documento}/${idSeguimiento}`);
+                window.location.replace(`/admin/commitments/${documento}/${idSeg}`);
               });                  
         }
     })
@@ -82,9 +82,9 @@ const deleteCom = (id) => {
         <Container>
             
             <h1 className="text-center mb-4">Compromisos de {infoUser ? infoUser.nombre : "Anonimo"}
-              <Link to={`/admin/addCommitment/${idSeguimiento}`}>
+              <Link to={`/admin/addCommitment/${idSeg}`}>
                     <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton" />
-                    <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Control </ReactTooltip>
+                    <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Compromiso </ReactTooltip>
               </Link>
               
               <FontAwesomeIcon icon={faPrint} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton2" />
@@ -132,11 +132,11 @@ const deleteCom = (id) => {
                        </Col>
                        <Col md={3} className="align-self-center">
                             <p style={{"color": "#2D61A4", "fontSize": 23}}><b>Acciones</b> <br/>
-                                <Link to={`/admin/detailCommitment/${idSeguimiento}/${item.id}`} className="btn btn-primary">
+                                <Link to={`/admin/detailCommitment/${idSeg}/${item.id}`} className="btn btn-primary">
                                 <FontAwesomeIcon icon={faEye} size="l" data-tip data-for = "boton3" 
                                 /> <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Ver </ReactTooltip>
                                 </Link>
-                                <Link to={`/admin/editCommitment/${idSeguimiento}/${item.id}`} className="btn btn-primary">
+                                <Link to={`/admin/editCommitment/${idSeg}/${item.id}`} className="btn btn-primary">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-pen-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
                                     </svg>

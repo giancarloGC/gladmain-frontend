@@ -9,7 +9,6 @@ import ReactTooltip, { TooltipProps } from 'react-tooltip';
 export default function ListControlR(props){
     const {listControls, idSeg} = props;
     console.log(listControls); 
-    console.log(idSeg); 
     
     let remisionesBySeguimiento = listControls.filter(remission => remission.idSeg === parseInt(idSeg));
     console.log(remisionesBySeguimiento);

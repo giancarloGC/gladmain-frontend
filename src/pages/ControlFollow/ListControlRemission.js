@@ -5,7 +5,6 @@ import { faPlus, faPrint } from '@fortawesome/free-solid-svg-icons';
 import ListControlR from "../../components/Control/ControlFollow/ListControlR";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link} from "react-router-dom";
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
-import {Row, Form} from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { getRemisByUserApi } from "../../api/remission";
 import { TOKEN } from "../../utils/constans";
@@ -20,8 +19,7 @@ export default function ListControlRemission(){
   const [ infoUser, setInfoUser ] = useState(null);
   const [ listRemis, setListRemis ] = useState([]);
   
-  console.log(idSeg); 
-  
+
   useEffect(() => {
       getUserByIdApi(documento, token).then(responseUser => {
           setInfoUser(responseUser);
