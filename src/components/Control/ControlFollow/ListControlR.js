@@ -7,10 +7,9 @@ import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from 
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 
 export default function ListControlR(props){
-    const {listControls, idSeg} = props;
-    console.log(listControls); 
+    const {listRemis, idSeg} = props;
     
-    let remisionesBySeguimiento = listControls.filter(remission => remission.idSeg === parseInt(idSeg));
+    let remisionesBySeguimiento = listRemis.filter(remission => remission.idSeguimiento === parseInt(idSeg));
     console.log(remisionesBySeguimiento);
 
     const dateFormat = (date) => {

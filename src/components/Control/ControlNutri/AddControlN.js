@@ -111,6 +111,14 @@ export default function AddControlN(props){
     const data = {
       labels: userControl.edad >= 0 && userControl.edad <= 24 ? labels : labels2_5,
       datasets: [{
+        label: 'Nuevo Control',
+        type: "bubble",
+        pointStyle: "bubble",
+        data: [graphicValues],
+        borderColor: userControl.sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
+        backgroundColor: userControl.sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',       
+      },
+        {
           label: '- 3',
           data: userControl.edad >= 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosTres : lineasGraphics2_5.lineMenosTres,
           fill: false,
@@ -160,14 +168,6 @@ export default function AddControlN(props){
           fill: false,
           borderColor: userControl.sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1
-        },
-        {
-          label: 'Nuevo Control',
-          type: "bubble",
-          pointStyle: "bubble",
-          data: [graphicValues],
-          borderColor: userControl.sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
-          backgroundColor: userControl.sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',       
         },
       ]
     };

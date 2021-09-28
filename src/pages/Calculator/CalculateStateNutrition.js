@@ -89,6 +89,14 @@ export default function CalculateStateNutrition(){
     const data = {
       labels: edad >= 0 && edad <= 24 ? labels : labels2_5,
       datasets: [{
+        label: 'Nuevo Control',
+        data: [graphicValues],
+        borderColor: sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
+        backgroundColor: sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
+        type: "bubble",
+        pointStyle: "bubble",        
+      },
+        {
           label: '- 3',
           data: edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosTres : lineasGraphics2_5.lineMenosTres,
           fill: false,
@@ -138,14 +146,6 @@ export default function CalculateStateNutrition(){
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1
-        },
-        {
-          label: 'Nuevo Control',
-          data: [graphicValues],
-          borderColor: sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
-          backgroundColor: sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
-          type: "bubble",
-          pointStyle: "bubble",        
         },
       ]
     };
