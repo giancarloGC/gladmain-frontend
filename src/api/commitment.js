@@ -34,13 +34,14 @@ export function updateCompApi(data, token){
             .catch(err => {return err});
 }
 
-export function deleteCompApi(id){
-    const url = `${urlBackend}control_seguimiento/ELIMINAR_COMPROMISO/${id}`;
+export function deleteCompApi(id, token){
+    const url = `/api/control_seguimiento/ELIMINAR_COMPROMISO/${id}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
-        method: "DELETE"
+        method: "GET"
     };
 
     return fetch(url, params)
