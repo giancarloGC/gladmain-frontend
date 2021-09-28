@@ -7,10 +7,11 @@ import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from 
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 
 export default function ListControlR(props){
-    const {listControls, idSeguimiento} = props;
+    const {listControls, idSeg} = props;
     console.log(listControls); 
+    console.log(idSeg); 
     
-    let remisionesBySeguimiento = listControls.filter(remission => remission.idSeguimiento === parseInt(idSeguimiento));
+    let remisionesBySeguimiento = listControls.filter(remission => remission.idSeg === parseInt(idSeg));
     console.log(remisionesBySeguimiento);
 
     const dateFormat = (date) => {
@@ -23,15 +24,6 @@ export default function ListControlR(props){
      return(
          <Container className="mt-4"> 
              <Row> 
-             <Row className="mb-4 mt-3">
-                 <Col md={3}> </Col>
-                 <Col md={5}>
-                    <InputGroup hasValidation className="mt-3">
-                        <Form.Control type="search" placeholder="Buscar Control" size="l" id="busqueda" name="busqueda" />  
-                    </InputGroup>
-                 </Col>
-                 <Col md={4}> <Button class="btn btn-outline-success" type="submit" size="l">Buscar</Button></Col>
-             </Row>
              <Col sm={12} >
            <ListGroup className="mt-3 mb-3">
            {remisionesBySeguimiento.map((item, index) => (

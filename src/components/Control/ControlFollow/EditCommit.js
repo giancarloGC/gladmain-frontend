@@ -40,12 +40,12 @@ export default function EditCommit(props){
                 <Formik
                 initialValues={{ 
                   idSeguimientoSalud: '',
-                  fechaCompromiso: '',
-                  nombre: '',
-                  nuevoCompromiso: '',
-                  fechaCumplimiento: '',
-                  nombreAuxiliarEnfermeria: '',
-                  tipo: '',
+                  fechaCompromiso: control.fechaCompromiso,
+                  nombre: control.nombre,
+                  nuevoCompromiso: control.nuevoCompromiso,
+                  fechaCumplimiento: control.fechaCumplimiento,
+                  nombreAuxiliarEnfermeria: control.nombreAuxiliarEnfermeria,
+                  tipo: control.tipo,
                 }}
                 
                 validate={(valores) => {

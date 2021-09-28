@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Container } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "react-bootstrap";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import EditCommit from "../../components/Control/ControlFollow/EditCommit";
 import { getSegByIdApi } from "../../api/follow-up";
@@ -17,12 +17,12 @@ export default function EditCommitment(){
     const [ controlLoaded, setControlLoaded ] = useState(false);
     const [ checkeds, setCheckeds ] = useState({radio1: false, radio: false});
     var loading = true;
-    
-        useEffect(() => {
+
+      useEffect(() => {
         loading = false;
+        if(!loading){ 
         getSegByIdApi(idSeg, token).then(response => {
             setSeg(response);
-            setComponentLoaded(true); 
         });
         getCompByIdApi(idComp, token).then(responseComp => {
             setCheckeds({
@@ -31,9 +31,9 @@ export default function EditCommitment(){
             });
             setControl(responseComp);
             setControlLoaded(true);
-        })
-        if(!loading){ 
-        setComponentLoaded(true); 
+            setComponentLoaded(true); 
+        });
+        //setComponentLoaded(true); 
         setControlLoaded(control);
         setSegLoaded(segControl);
         }
@@ -41,10 +41,20 @@ export default function EditCommitment(){
 
     return(
         <Container>
-             <h1 className="text-center">Editar Compromiso </h1>
-             {control && (
-                 <EditCommit segControl={segControl} control={control} checkeds={checkeds} setCheckeds={setCheckeds}/>
-             )}
+            <h1 className="text-center">Editar Compromiso</h1>
+        {!componentLoaded ? (
+            <Row className="justify-content-md-center text-center">
+              <Col md={1} className="justify-content-center">
+              <Spinner animation="border" >
+              </Spinner> 
+              </Col>
+            </Row>
+          )
+        :
+        (
+            <EditCommit segControl={segControl} control={control} checkeds={checkeds} setCheckeds={setCheckeds}/>
+        )
+        }
         </Container>
     )
 }

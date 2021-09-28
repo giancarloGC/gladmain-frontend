@@ -48,6 +48,22 @@ export function deleteSegApi(id){
             .catch(err => {return err});
 }
 
+export function getSegApi(documento, token){
+    const url = `/api/control_seguimiento/LISTAR_SEGUIMIENTOS/${documento}`;
+    const params = {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": token
+        },
+        method: "GET"
+    };
+
+    return fetch(url, params)
+            .then(response => {return response.json()})
+            .then(result => {return result})
+            .catch(err => {return err});
+}
+
 export function getSegByIdApi(id, token){
     const url = `/api/control_seguimiento/CONSULTAR_SEGUIMIENTO/${id}`;
     const params = {

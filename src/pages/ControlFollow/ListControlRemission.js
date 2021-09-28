@@ -15,11 +15,12 @@ import { getUserByIdApi } from "../../api/user";
 
 
 export default function ListControlRemission(){
-
-  const { documento, idSeguimiento } = useParams();
+  const { idSeg, documento } = useParams();
   const token = localStorage.getItem(TOKEN);
   const [ infoUser, setInfoUser ] = useState(null);
-  const [ listControls, setListControls ] = useState([]);
+  const [ listRemis, setListRemis ] = useState([]);
+  
+  console.log(idSeg); 
   
   useEffect(() => {
       getUserByIdApi(documento, token).then(responseUser => {
@@ -27,22 +28,22 @@ export default function ListControlRemission(){
       });
       getRemisByUserApi(documento, token).then(response => {
           console.log(response);
-          setListControls(response);
+          setListRemis(response);
       });
   }, []);
 
     return(
         <Container>
             <h1 className="text-center mb-4">Remisiones de {infoUser ? infoUser.nombre : "Anonimo"}
-              <Link to={`/admin/addControlRemission/${documento}`}>
+              <Link to={`/admin/addControlRemission/${idSeg}`}>
                     <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton" />
-                    <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Control </ReactTooltip>
+                    <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nueva Remision </ReactTooltip>
               </Link>
               
               <FontAwesomeIcon icon={faPrint} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton2" />
               <ReactTooltip id="boton2" place="bottom" type="dark" effect="float"> Imprimir </ReactTooltip>
             </h1>
-            {listControls.length === 0 && (
+            {listRemis.length === 0 && (
                 <>
                 <p style={{"color": "#2D61A4", "fontSize": 27}}>No se encontraron registros</p>
                 <Lottie height={400} width={670}
@@ -50,7 +51,9 @@ export default function ListControlRemission(){
                 />
                 </>
             )}
-             <ListControlR  listControls={listControls} idSeguimiento={idSeguimiento}/>
+            {listRemis.length > 0 && (
+             <ListControlR  listRemis={listRemis} idSeg={idSeg}/>
+            )}
                         
         </Container>
     )

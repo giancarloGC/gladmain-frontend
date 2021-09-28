@@ -4,7 +4,6 @@ import EditControlVMadre from "../../components/Control/ControlVac/EditControlVM
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import { getUserByIdApi } from "../../api/user";
 import { getContVaccByIdApi } from "../../api/vaccination";
-
 import { TOKEN } from "../../utils/constans";
 
 export default function AddControlVac(){

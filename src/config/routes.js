@@ -37,7 +37,7 @@ import AddCommitment from "../pages/ControlFollow/AddCommitment";
 import ListCommitment from "../pages/ControlFollow/ListCommitment";
 import EditCommitment from "../pages/ControlFollow/EditCommitment";
 import DetailCommitment from "../pages/ControlFollow/DetailCommitment";
-import ListFollowUpChecks from "../pages/ControlFollow/ListFollowUpChecks";
+import ListFollow from "../pages/ControlFollow/ListFollow";
 import StatisticNutri from "../components/Graphics/StatisticNutri";
 import StatisticTallaEdad from "../components/Graphics/StatisticTallaEdad";
 import StatisticPesoEdad from "../components/Graphics/StatisticPesoEdad";
@@ -283,7 +283,7 @@ const routes = [
                 component: DetailsControlRemission,
             }, 
             {
-                path: "/admin/listControlRemission/:documento/:idSeguimiento",
+                path: "/admin/listControlRemission/:idseg/:documento",
                 exact: true,
                 component: ListControlRemission,
             },   
@@ -293,9 +293,9 @@ const routes = [
                 component: AddCommitment,
             },
             {
-                path: "/admin/commitments/:documento/:idSeguimiento",
+                path: "/admin/commitments/:idSeg/:documento",
                 exact: true,
-                component: ListCommitment
+                component: ListCommitment,
             }, 
             {
                 path: "/admin/editCommitment/:idSeg/:idComp",
@@ -308,9 +308,9 @@ const routes = [
                 component: DetailCommitment,
             },
             {
-                path: "/admin/ListFollowUpChecks/:documento",
+                path: "/admin/ListFollowUp/:documento",
                 exact: true,
-                component: ListFollowUpChecks,
+                component: ListFollow,
             },
             {
                 path: "/admin/EditProfileUser/:documento",
