@@ -10,7 +10,7 @@ import SuccessAnimation from "../../../assets/animations/control/successNew.json
 import swal from 'sweetalert';
 import Lottie from 'react-lottie';
 import { Line } from "react-chartjs-2";
-import { insertControlApi } from "../../../api/controls";
+import { updateControlApi } from "../../../api/controls";
 import { labels, lineasGraphics } from "./LabelsAndLineas";
 import { labels2_5, lineasGraphics2_5 } from "./LabelsAndLineas2-5";
 import "./GraphicAddNutri.scss";
@@ -18,8 +18,8 @@ import moment from 'moment';
 import { faAddressCard }  from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function AddControlN(props){
-    const { userControl, rolUser } = props;
+export default function EditControlN(props){
+    const { userControl, infoControl, rolUser } = props;
     const { user } = AuthContext();
     const token = localStorage.getItem(TOKEN);
     const [show, setShow] = useState(false);
@@ -180,8 +180,8 @@ export default function AddControlN(props){
               )}
               <Formik
                 initialValues={{ 
-                    peso: '',
-                    talla: '',
+                    peso: infoControl.peso,
+                    talla: infoControl.talla,
                     imc: '',
                     estadoNutricional: '',
                 }}
@@ -255,6 +255,7 @@ export default function AddControlN(props){
                   
                   var documertParse = parseInt( documentoLogin[0]);
                   const formData = {
+                    id: infoControl.id,
                     idUsuario: userControl.documento,
                     idUsuarioNutricionista: documertParse,
                     fechaControl: moment().format("YYYY-MM-DD"),
@@ -273,7 +274,9 @@ export default function AddControlN(props){
                 }
 
                   console.log(formData);
-                  insertControlApi(formData, token, true).then(response => {
+
+                  formData.token = token;
+                  updateControlApi(formData).then(response => {
                       if(response === true){
                         swal({
                           title: `¡El control fue almacenado correctamente!`,
@@ -414,7 +417,7 @@ export default function AddControlN(props){
                         <Col sm="3">
                           <InputGroup hasValidation>
                               <Form.Control type="text" placeholder="Peso en Kg" size="xs" id="peso" name="peso" 
-                               value={values.peso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.peso && touched.peso}
+                               defaultValue={infoControl.peso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.peso && touched.peso}
                                isValid={!errors.peso && touched.peso}
                               />
                               <Form.Control.Feedback type="invalid">
@@ -428,7 +431,7 @@ export default function AddControlN(props){
                         <Col sm="3">
                           <InputGroup hasValidation>
                               <Form.Control type="text" placeholder="Talla en cm" size="xs" id="talla" name="talla" 
-                               value={values.talla} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.talla && touched.talla}
+                               defaultValue={infoControl.talla} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.talla && touched.talla}
                               isValid={!errors.talla && touched.talla}
                               />
                               <Form.Control.Feedback type="invalid">
@@ -496,7 +499,7 @@ export default function AddControlN(props){
 
                             <div className="d-grid gap-2">
                             <Button variant="primary" type="submit" size="lg">
-                                Añadir control   <FontAwesomeIcon data-tip data-for="boton1" icon={faAddressCard} size="lg" color="#FFF" />
+                                Editar control   <FontAwesomeIcon data-tip data-for="boton1" icon={faAddressCard} size="lg" color="#FFF" />
                             </Button>
                         </div>
                   </Col>

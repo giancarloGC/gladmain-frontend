@@ -110,7 +110,7 @@ export default function FormUser(){
                       let mesesEdad = dateCurrently.diff(nacimiento, 'months');
                       setEdadFinaly(mesesEdad);
                       let rolesUpdated = [];
-                      if(mesesEdad > 72){
+                      if(mesesEdad > 83){
                         rolesUpdated = allRoles.filter(rol => rol.nombre !== 'INFANTE');
                         setRolesApi(rolesUpdated);
                       }else{

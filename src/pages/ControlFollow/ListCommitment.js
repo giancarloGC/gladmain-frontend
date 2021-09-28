@@ -46,7 +46,7 @@ export default function ListCommitment(){
     return(
         <Container>
             <h1 className="text-center mb-4">Compromisos de {infoUser ? infoUser.nombre : "Anonimo"}
-              <Link to={`/admin/addControlRemission/${documento}`}>
+              <Link to={`/admin/addCommitment/${idSeguimiento}`}>
                     <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton" />
                     <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Control </ReactTooltip>
               </Link>

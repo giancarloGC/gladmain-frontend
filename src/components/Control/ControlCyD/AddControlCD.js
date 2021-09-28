@@ -73,7 +73,7 @@ export default function AddControlCD(props){
 
   const calculateIMC = (kg, metros) => {
     const imc = kg / (metros * metros);
-    return imc;
+    return imc.toFixed(2);
   }
 
   const updateAgeUser = async (dataUser) => {
@@ -129,11 +129,7 @@ export default function AddControlCD(props){
                   }else if(valores.edad <= 0 || valores.edad > 90){
                     errores.edad = 'Edad invalida, intente con otra';
                   }  
-                  
-                  if(!valores.proximoControl){
-                    errores.proximoControl = 'Asegurese de selecionar una fecha';
-                  }
-
+                
                   const dateCurrently = moment();
                   if(!valores.fechaControl){
                     errores.fechaControl = 'Asegurese de selecionar una fecha';
@@ -181,7 +177,7 @@ export default function AddControlCD(props){
                   }
 
                   if(valores.talla && valores.peso){
-                    let tal = parseInt(calculateIMC(valores.peso, convertCmToM(valores.talla)))
+                    let tal = calculateIMC(valores.peso, convertCmToM(valores.talla))
                     setImc(tal);
                   }else{
                     setImc(null);
@@ -198,14 +194,14 @@ export default function AddControlCD(props){
                     idUsuario: userControl.documento,
                     idUsuarioNutricionista: documertParse,
                     fechaControl: valores.fechaControl,
-                    peso: convertKgToG(valores.peso),
+                    peso: valores.peso,
                     talla: valores.talla,
                     imc: imc,
                     estadoNutricional: "",
                     tension: null,
                     edadGestacional: null,
                     ultimoControl: valores.ultimoControl,
-                    proximoControl: valores.proximoControl,
+                    proximoControl: 0,
                     vigente: false,
                     meses: valores.edad,
                 }
@@ -325,7 +321,7 @@ export default function AddControlCD(props){
                         <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="number" placeholder="Peso en (Kg)" size="lg" id="peso" name="peso" 
-                               defaultValue={convertKgToG(values.peso)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.peso && touched.peso}
+                               defaultValue={values.peso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.peso && touched.peso}
                                isValid={!errors.peso && touched.peso}
                               />
                               <Form.Control.Feedback type="invalid">
@@ -381,19 +377,6 @@ export default function AddControlCD(props){
                           </InputGroup>
                         </Col>
 
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Fecha prox. control</Form.Label>
-                        <Col sm="4">
-                          <InputGroup hasValidation>
-                              <Form.Control  className="mt-2" type="date" size="lg" id="proximoControl" name="proximoControl" 
-                                 value={values.proximoControl} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.proximoControl && touched.proximoControl}
-                                 isValid={!errors.proximoControl && touched.proximoControl}
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.proximoControl}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                        </Col>
                         </Form.Group> 
 
                         <Row >

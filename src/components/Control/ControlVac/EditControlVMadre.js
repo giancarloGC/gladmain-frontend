@@ -65,6 +65,7 @@ export default function EditControlVMadre (props){
                   valores.token = token;
                   
                   const formData = {
+                    id: infoControl.id,
                     idUsuario: userControl.documento,
                     nombreVacuna: valores.nombreVacuna,
                     fechaAplicacion: valores.fechaAplicacion,

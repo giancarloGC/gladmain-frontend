@@ -27,10 +27,10 @@ export default function EditControlCyD(props){
     return resultado;
   }
 
-  const convertGToKg = (kg) => {
+  /*const convertGToKg = (kg) => {
     let resultado = kg / 1000;
     return resultado;
-  }
+  }*/
     
   const convertCmToM = (cm) => {
     let resultado = cm / 100;
@@ -39,7 +39,7 @@ export default function EditControlCyD(props){
 
   const calculateIMC = (kg, metros) => {
     const imc = kg / (metros * metros);
-    return imc;
+    return imc.toFixed(2);
   }
 
   return (
@@ -67,15 +67,39 @@ export default function EditControlCyD(props){
               let errores = {};
 
               if(!valores.peso){
-                errores.peso = 'Por favor, ingresa números';
-              }else if(!/^([0-9])*$/.test(valores.peso)){
+                errores.peso = 'Por favor, ingresa solo números';
+              }else if(!/^([0-9-.])*$/.test(valores.peso)){
                 errores.peso = 'Solo puedes escribir números';
+              }else if(userControl.edad >= 0 && userControl.edad <= 24){
+                if(valores.peso < 1){
+                  errores.peso = 'el peso debe ser debe ser mayor a 1 kg';
+                }else if(valores.peso > 26){
+                  errores.peso = 'el peso debe ser menor ó igual a 26 kg';
+                }
+              }else{
+                if(valores.peso < 5){
+                  errores.peso = 'el peso debe ser debe ser mayor a 5 kg';
+                }else if(valores.peso > 32){
+                  errores.peso = 'el peso debe ser menor ó igual a 32 kg';
+                }
               }
 
               if(!valores.talla){
-                errores.talla = 'Por favor, ingresa números';
-              }else if(!/^([0-9])*$/.test(valores.talla)){
+                errores.talla = 'Por favor, ingresa solo números';
+              }else if(!/^([0-9-.])*$/.test(valores.talla)){
                 errores.talla = 'Solo puedes escribir números';
+              }else if(userControl.edad >= 0 && userControl.edad <= 24){
+                if(valores.talla < 45){
+                  errores.talla = 'La talla debe ser mayor a 45 cm';
+                }else if(valores.talla > 110){
+                  errores.talla = 'La talla debe ser menor ó igual a 110 cm';
+                }
+              }else{
+                if(valores.talla < 65){
+                  errores.talla = 'La talla debe ser mayor a 65 cm';
+                }else if(valores.talla > 120){
+                  errores.talla = 'La talla debe ser menor ó igual a 120 cm';
+                }
               }
 
               const dateCurrently = moment();
@@ -105,9 +129,9 @@ export default function EditControlCyD(props){
                 idUsuario: userControl.documento,
                 idUsuarioNutricionista: documertParse,
                 fechaControl: valores.fechaControl,
-                peso: convertKgToG(valores.peso),
+                peso: valores.peso,
                 talla: valores.talla,
-                imc: parseInt(calculateIMC(valores.peso, convertCmToM(valores.talla))),
+                imc: calculateIMC(valores.peso, convertCmToM(valores.talla)),
                 estadoNutricional: "",
                 tension: null,
                 edadGestacional: null,
@@ -206,8 +230,8 @@ export default function EditControlCyD(props){
                     <Form.Label column sm="1" style={{"font-size": "12px !important"}}>Peso (kg)</Form.Label>
                     <Col sm="2">
                       <InputGroup hasValidation>
-                        <Form.Control type="number" placeholder="Peso (kg)" size="lg" id="peso" name="peso" 
-                          defaultValue={convertGToKg(control.peso)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.peso && touched.peso}
+                        <Form.Control type="text" placeholder="Peso (kg)" size="lg" id="peso" name="peso" 
+                          defaultValue={control.peso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.peso && touched.peso}
                           isValid={!errors.peso && touched.peso} />
                         <Form.Control.Feedback type="invalid"> {errors.peso} </Form.Control.Feedback>
                         <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
@@ -217,7 +241,7 @@ export default function EditControlCyD(props){
                     <Form.Label column sm="1" style={{"font-size": "12px !important"}}>Talla (cm)</Form.Label>
                     <Col sm="2">
                       <InputGroup hasValidation>
-                        <Form.Control type="number" placeholder="Talla (cm)" size="lg" id="talla" name="talla" 
+                        <Form.Control type="text" placeholder="Talla (cm)" size="lg" id="talla" name="talla" 
                           defaultValue={control.talla} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.talla && touched.talla}
                           isValid={!errors.talla && touched.talla} />
                         <Form.Control.Feedback type="invalid"> {errors.talla} </Form.Control.Feedback>
@@ -254,7 +278,7 @@ export default function EditControlCyD(props){
                       <InputGroup hasValidation>
                         <Form.Control  className="mt-2" type="date" size="lg" id="proximoControl" name="proximoControl" 
                           defaultValue={dateFormat(control.proximoControl)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.proximoControl && touched.proximoControl}
-                          isValid={!errors.proximoControl && touched.proximoControl} />
+                          isValid={!errors.proximoControl && touched.proximoControl} disabled/>
                         <Form.Control.Feedback type="invalid"> {errors.proximoControl} </Form.Control.Feedback>
                         <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                       </InputGroup>

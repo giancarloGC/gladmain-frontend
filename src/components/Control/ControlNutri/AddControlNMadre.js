@@ -55,7 +55,7 @@ export default function AddControlN(props){
     const calculateIMC = (kg, metros) => {
       const imca = kg / (metros * metros);
       let imcC = imca;
-      setImc(imcC);
+      setImc(imcC.toFixed(2));
     }
 
     const calculateStateNutrition = (edadGestacional) => {
@@ -164,14 +164,9 @@ export default function AddControlN(props){
                     errores.tension = 'No se permiten campos vacíos';
                   }else if(!/^([0-9-.])*$/.test(valores.tension)){
                     errores.tension = 'Tensión incorrecta, solo puedes escribir números';
-                  }  
-
-                  if(!valores.edadGestacional){
-                    errores.edadGestacional = 'No se permiten campos vacíos';
-                  }else if(!/^([0-9])*$/.test(valores.edadGestacional)){
-                    errores.edadGestacional = 'Tensión incorrecta, solo puedes escribir números enteros';
-                  } 
-
+                  }else if(valores.tension < 50 || valores.tension > 190 ){
+                    errores.talla = 'La tensión debe ser mayor a 50 mmHg y menor a 190 mmHg';
+                  }
 
                   if(!valores.peso){
                     errores.peso = 'Por favor, ingresa solo números';
@@ -194,20 +189,24 @@ export default function AddControlN(props){
                       errores.talla = 'La talla debe ser menor ó igual a 210 cm';
                     }
                 
-            
+                    if(!valores.edadGestacional){
+                      errores.edadGestacional = 'Por favor, ingresa solo números';
+                    }else if(!/^([0-9])*$/.test(valores.edadGestacional)){
+                      errores.talla = 'Solo puedes escribir números';
+                    }else if(valores.edadGestacional < 10 || valores.edadGestacional > 42 ){
+                        errores.talla = 'La edad gestacional debe ser mayor a 10 semanas y menos a 42 semanas';
+                      }
+
                 if(valores.edadGestacional >= 10 && valores.edadGestacional <= 42){
-                    console.log("entro");
                     let tallaM = convertCmToM(valores.talla);
                     calculateIMC(valores.peso, tallaM);
                     calculateStateNutrition(valores.edadGestacional);
                     if(imc !== 0){
                         setGraphicValues({x: valores.edadGestacional, y: imc , r: 3});
-                        console.log(imc);
                     }
                 }else{
                     setImc(0);
                     setGraphicValues({x: 0, y: 0, r: 3});
-                    console.log("no entro");
                 }
 
                   return errores;
@@ -413,7 +412,7 @@ export default function AddControlN(props){
                           {rolUser === "MADRE_GESTANTE" && ( 
                               <Col md={12}>
                               <Form.Group as={Row} className="mb-3">
-                              <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Tensión</Form.Label>
+                              <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Tensión (mmHg)</Form.Label>
                               <Col sm="8">
                                   <InputGroup hasValidation>
                                   <Form.Control type="number" placeholder="Dígita aquí la tensión" size="lg" id="tension" name="tension" 

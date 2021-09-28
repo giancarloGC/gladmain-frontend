@@ -43,15 +43,15 @@ export default function CalculateStateNutrition(){
     const calculateStateNutrition = (talla, peso) => {
       //Mirar en que indice esta la talla dijitada para el eje x
       const indexToFind = (element) => element > talla -1;
-      let indexEjex = edad > 0 && edad <= 24 ? labels.findIndex(indexToFind) : labels2_5.findIndex(indexToFind);
+      let indexEjex = edad >= 0 && edad <= 24 ? labels.findIndex(indexToFind) : labels2_5.findIndex(indexToFind);
 
       //Recorrer cada linea para saber si el numero es mayor o menor a cada linea
-      let valueXlineMasTres = edad > 0 && edad <= 24 ? lineasGraphics.lineMasTres[indexEjex] : lineasGraphics2_5.lineMasTres[indexEjex];
-      let valueXlineMasDos = edad > 0 && edad <= 24 ? lineasGraphics.lineMasDos[indexEjex] : lineasGraphics2_5.lineMasDos[indexEjex];
-      let valueXlineMasUno = edad > 0 && edad <= 24 ? lineasGraphics.lineMasUno[indexEjex] : lineasGraphics2_5.lineMasUno[indexEjex];
-      let valueXlineMenosUno = edad > 0 && edad <= 24 ? lineasGraphics.lineMenosUno[indexEjex] : lineasGraphics2_5.lineMenosUno[indexEjex];
-      let valueXlineMenosDos = edad > 0 && edad <= 24 ? lineasGraphics.lineMenosDos[indexEjex] : lineasGraphics2_5.lineMenosDos[indexEjex];
-      let valueXLineMenosTres = edad > 0 && edad <= 24 ? lineasGraphics.lineMenosTres[indexEjex] : lineasGraphics2_5.lineMenosTres[indexEjex];
+      let valueXlineMasTres = edad >= 0 && edad <= 24 ? lineasGraphics.lineMasTres[indexEjex] : lineasGraphics2_5.lineMasTres[indexEjex];
+      let valueXlineMasDos = edad >= 0 && edad <= 24 ? lineasGraphics.lineMasDos[indexEjex] : lineasGraphics2_5.lineMasDos[indexEjex];
+      let valueXlineMasUno = edad >= 0 && edad <= 24 ? lineasGraphics.lineMasUno[indexEjex] : lineasGraphics2_5.lineMasUno[indexEjex];
+      let valueXlineMenosUno = edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosUno[indexEjex] : lineasGraphics2_5.lineMenosUno[indexEjex];
+      let valueXlineMenosDos = edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosDos[indexEjex] : lineasGraphics2_5.lineMenosDos[indexEjex];
+      let valueXLineMenosTres = edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosTres[indexEjex] : lineasGraphics2_5.lineMenosTres[indexEjex];
 
 
 
@@ -87,17 +87,17 @@ export default function CalculateStateNutrition(){
     }
 
     const data = {
-      labels: edad > 0 && edad <= 24 ? labels : labels2_5,
+      labels: edad >= 0 && edad <= 24 ? labels : labels2_5,
       datasets: [{
           label: '- 3',
-          data: edad > 0 && edad <= 24 ? lineasGraphics.lineMenosTres : lineasGraphics2_5.lineMenosTres,
+          data: edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosTres : lineasGraphics2_5.lineMenosTres,
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1,
         },
         {
           label: '- 2',
-          data: edad > 0 && edad <= 24 ? lineasGraphics.lineMenosDos : lineasGraphics2_5.lineMenosDos,
+          data: edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosDos : lineasGraphics2_5.lineMenosDos,
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1,
@@ -105,28 +105,28 @@ export default function CalculateStateNutrition(){
         },
         {
           label: '- 1',
-          data: edad > 0 && edad <= 24 ? lineasGraphics.lineMenosUno : lineasGraphics2_5.lineMenosUno,
+          data: edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosUno : lineasGraphics2_5.lineMenosUno,
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#E3B402' : '#E3B402',
           tension: 0.1
         },
         {
           label: '0',
-          data: edad > 0 && edad <= 24 ? lineasGraphics.lineCero : lineasGraphics2_5.lineCero,
+          data: edad >= 0 && edad <= 24 ? lineasGraphics.lineCero : lineasGraphics2_5.lineCero,
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#127D30' : '#127D30',
           tension: 0.1
         },
         {
           label: '+ 1',
-          data: edad > 0 && edad <= 24 ? lineasGraphics.lineMasUno : lineasGraphics2_5.lineMasUno,
+          data: edad >= 0 && edad <= 24 ? lineasGraphics.lineMasUno : lineasGraphics2_5.lineMasUno,
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#E3B402' : '#E3B402',
           tension: 0.1
         },
         {
           label: '+ 2',
-          data: edad > 0 && edad <= 24 ? lineasGraphics.lineMasDos : lineasGraphics2_5.lineMasDos,
+          data: edad >= 0 && edad <= 24 ? lineasGraphics.lineMasDos : lineasGraphics2_5.lineMasDos,
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1,
@@ -134,7 +134,7 @@ export default function CalculateStateNutrition(){
         },
         {
           label: '+ 3',
-          data: edad > 0 && edad <= 24 ? lineasGraphics.lineMasTres : lineasGraphics2_5.lineMasTres,
+          data: edad >= 0 && edad <= 24 ? lineasGraphics.lineMasTres : lineasGraphics2_5.lineMasTres,
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1
@@ -206,7 +206,7 @@ export default function CalculateStateNutrition(){
                     errores.peso = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9-.])*$/.test(valores.peso)){
                     errores.peso = 'Solo puedes escribir números';
-                  }else if(edad > 0 && edad <= 24){
+                  }else if(edad >= 0 && edad <= 24){
                     if(valores.peso < 1){
                       errores.peso = 'el peso debe ser debe ser mayor a 1 kg';
                     }else if(valores.peso > 26){
@@ -224,7 +224,7 @@ export default function CalculateStateNutrition(){
                     errores.talla = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9-.])*$/.test(valores.talla)){
                     errores.talla = 'Solo puedes escribir números';
-                  }else if(edad > 0 && edad <= 24){
+                  }else if(edad >= 0 && edad <= 24){
                     if(valores.talla < 45){
                       errores.talla = 'La talla debe ser mayor a 45 cm';
                     }else if(valores.talla > 110){
@@ -238,7 +238,7 @@ export default function CalculateStateNutrition(){
                     }
                   }
 
-                  if(edad > 0 && edad <= 24){
+                  if(edad >= 0 && edad <= 24){
                     if(valores.peso && valores.talla >= 45 && valores.talla <= 110){
                       let tallaM = convertCmToM(valores.talla);
                       calculateIMC(valores.peso, tallaM);
@@ -389,7 +389,7 @@ export default function CalculateStateNutrition(){
                 <Row className="mt-3">
                   <Col md={8}>
                   <center>
-             <Form.Label column sm="12" style={{"font-size": "12px !important" }}>Puntuación Z ({edad > 0 && edad <= 24 ? "0 a 2 años" : "2 a 5 años"})</Form.Label>
+             <Form.Label column sm="12" style={{"font-size": "12px !important" }}>Puntuación Z ({edad >= 0 && edad <= 24 ? "0 a 2 años" : "2 a 5 años"})</Form.Label>
              </center>
                 <div >
                   <Line 
@@ -403,7 +403,7 @@ export default function CalculateStateNutrition(){
                           x: {
                             type: 'linear',
                             position: 'bottom',
-                            min: edad > 0 && edad <= 24 ? 45 : 65 //45 = 0-2 años    65 = 2-5 años
+                            min: edad >= 0 && edad <= 24 ? 45 : 65 //45 = 0-2 años    65 = 2-5 años
                           }
                         }
                       }}
