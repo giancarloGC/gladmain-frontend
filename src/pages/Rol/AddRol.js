@@ -130,7 +130,7 @@ export default function AddRol(){
                             <Row className="mb-3">
                             <Col md={4}>
                                 {listPrivilegios.map((item, index) => (
-                                    index <= 17 && (
+                                    index <= 18 && (
                                         <Form.Check type="checkbox" label={item.nombre} onChange={(e) => handleCheck(e, item)}/>
                                     )
                                 ))}
@@ -138,7 +138,7 @@ export default function AddRol(){
 
                             <Col md={4}>
                                 {listPrivilegios.map((item, index) => (
-                                    index > 17 && index <= 35 && (
+                                    index > 18 && index <= 37 && (
                                         <Form.Check type="checkbox" label={item.nombre} onChange={(e) => handleCheck(e, item)}/>
                                     )
                                 ))}
@@ -146,7 +146,7 @@ export default function AddRol(){
 
                             <Col md={4}>
                                 {listPrivilegios.map((item, index) => (
-                                    index > 35 && index <= 54 && (
+                                    index > 37 && index <= 55 && (
                                         <Form.Check type="checkbox" label={item.nombre} onChange={(e) => handleCheck(e, item)}/>
                                     )
                                 ))}

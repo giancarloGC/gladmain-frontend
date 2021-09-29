@@ -137,7 +137,7 @@ export default function EditRol(){
                             <Row className="mb-3" style={{backgroundColor: '#f1f1f1', borderRadius:'5px'}}>
                             <Col md={4}>
                                 {listPrivilegios.map((item, index) => (
-                                    index <= 17 && (
+                                    index <= 18 && (
                                         checkPrivilegio(item)
                                     )
                                 ))}
@@ -145,7 +145,7 @@ export default function EditRol(){
 
                             <Col md={4}>
                                 {listPrivilegios.map((item, index) => (
-                                    index > 17 && index <= 35 && (
+                                    index > 18 && index <= 37 && (
                                         checkPrivilegio(item)
                                     )
                                 ))}
@@ -153,7 +153,7 @@ export default function EditRol(){
 
                             <Col md={4}>
                                 {listPrivilegios.map((item, index) => (
-                                    index > 35 && index <= 54 && (
+                                    index > 37 && index <= 55 && (
                                         checkPrivilegio(item)                                    
                                     )
                                 ))}

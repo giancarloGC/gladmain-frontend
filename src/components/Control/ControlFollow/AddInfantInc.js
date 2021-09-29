@@ -146,12 +146,14 @@ export default function AddInfantInc(props){
                 onSubmit={(valores, {resetForm}) => {
 
                   const formData ={
+                    id: '',
                     idIngreso: '',
                     alarmaPreventiva: saveData4 ? "SI" : "NO",
                     controlCyD: saveData6 ? "SI" : "NO",
                     recibeSuplementos: saveData8 ? "SI" : "NO",
                     valoracionMedica: saveData5 ? "SI" : "NO",
 
+                    id: '',
                     idSeguimiento: 8,
                     afiliacionSgsss: saveData ? "SI" : "NO",
                     saludOral: saveData2 ? "SI" : "NO",
@@ -166,8 +168,8 @@ export default function AddInfantInc(props){
                     causa: valores.causa,
                   }
                   console.log(formData);
-                  //resetForm();
-                  insertInfantIncomeApi(formData, token).then(response => {
+                  formData.token = token;
+                  insertInfantIncomeApi(formData).then(response => {
                     console.log(response);
                     if(response === true){
                       swal({

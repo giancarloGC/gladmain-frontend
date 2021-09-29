@@ -17,13 +17,14 @@ export function insertRemisApi(data, token){
             .catch(err => {return err});
 }
 
-export function updateRemisApi(data){
-    const url = `${urlBackend}control_seguimiento/ACTUALIZAR_REMICION`;
+export function updateRemisApi(data, token){
+    const url = `/api/control_seguimiento/ACTUALIZAR_REMICION`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
-        method: "PUT",
+        method: "POST",
         body: JSON.stringify(data)
     };
 
