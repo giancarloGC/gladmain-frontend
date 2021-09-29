@@ -7,6 +7,7 @@ import ListRol from "../pages/Rol/ListRol";
 import AddRol from "../pages/Rol/AddRol";
 import EditRol from "../pages/Rol/EditRol";
 import ListUsers from "../pages/Users/ListUsers";
+import ListUserDesnutrition from "../pages/Users/ListUserDesnutrition";
 import AddUser from "../pages/Users/AddUser";
 import EditUser from "../pages/Users/EditUser";
 import User from "../pages/Users/User";
@@ -97,6 +98,11 @@ const routes = [
                 exact: true,
                 component: ListUsers,
             },  
+            {
+                path: "/admin/usersDesnutrition",
+                exact: true,
+                component: ListUserDesnutrition,
+            },
             {
                 path: "/admin/addUser",
                 exact: true,
