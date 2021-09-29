@@ -18,7 +18,6 @@ export default function ListControlRemission(){
   const token = localStorage.getItem(TOKEN);
   const [ infoUser, setInfoUser ] = useState(null);
   const [ listRemis, setListRemis ] = useState([]);
-  
 
   useEffect(() => {
       getUserByIdApi(documento, token).then(responseUser => {
@@ -33,7 +32,7 @@ export default function ListControlRemission(){
     return(
         <Container>
             <h1 className="text-center mb-4">Remisiones de {infoUser ? infoUser.nombre : "Anonimo"}
-              <Link to={`/admin/addControlRemission/${idSeg}`}>
+              <Link to={`/admin/addControlRemission/${idSeg}/${documento}`}>
                     <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton" />
                     <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nueva Remision </ReactTooltip>
               </Link>
@@ -51,7 +50,7 @@ export default function ListControlRemission(){
                 </>
             )}
             {listRemis.length > 0 && (
-             <ListControlR  listRemis={listRemis} idSeg={idSeg}/>
+             <ListControlR  listRemis={listRemis} idSeg={idSeg} documento={documento}/>
             )}
                         
         </Container>

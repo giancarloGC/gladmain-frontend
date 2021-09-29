@@ -10,7 +10,7 @@ import moment from 'moment';
 import "./Switch.scss";
 
 export default function EditCommit(props){
-  const { segControl, control, checkeds, setCheckeds} = props;
+  const { segControl, control, documento, checkeds, setCheckeds} = props;
   const token = localStorage.getItem(TOKEN);
  
   console.log(control);
@@ -81,13 +81,17 @@ export default function EditCommit(props){
                       swal({
                         title: `¡El compromiso fue almacenado correctamente!`,
                         icon: 'success'
-                      });
+                      }).then((value) => {
+                        window.location.replace(`/admin/commitments/${segControl.id}/${documento}`);
+                    }); 
                     }else{
                       console.log("no resgistro compromiso");
                       swal({
                         title: `¡Opss, ocurrió un error!`,
                         icon: 'danger'
-                      });
+                      }).then((value) => {
+                        window.location.replace(`/admin/commitments/${segControl.id}/${documento}`);
+                    }); 
                     }
                   });
                 }}

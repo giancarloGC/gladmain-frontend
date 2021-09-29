@@ -8,7 +8,7 @@ import { TOKEN } from "../../utils/constans";
 
 export default function EditCommitment(){
 
-    const { idSeg, idComp } = useParams();
+    const { idSeg, idComp, documento } = useParams();
     const [control, setControl] = useState({});
     const [segControl, setSeg] = useState({});
     const token = localStorage.getItem(TOKEN);
@@ -27,7 +27,7 @@ export default function EditCommitment(){
         getCompByIdApi(idComp, token).then(responseComp => {
             setCheckeds({
                 radio1: responseComp.tipo === "Compromiso cumplido que no se mantuvo" ? true : false, 
-                radio: responseComp.tipo === "Compromiso por nuevo factor de riesgo" ? true : false 
+                radio: responseComp.tipo === "Compromiso por nuevo factor de riesgo" ? true : false,
             });
             setControl(responseComp);
             setControlLoaded(true);
@@ -52,7 +52,7 @@ export default function EditCommitment(){
           )
         :
         (
-            <EditCommit segControl={segControl} control={control} checkeds={checkeds} setCheckeds={setCheckeds}/>
+            <EditCommit segControl={segControl} control={control} documento={documento} checkeds={checkeds} setCheckeds={setCheckeds}/>
         )
         }
         </Container>

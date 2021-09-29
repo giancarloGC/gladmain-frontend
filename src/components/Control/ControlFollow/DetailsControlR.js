@@ -9,7 +9,15 @@ import moment from 'moment';
 import "./Switch.scss";
 
 export default function DetailsControlR(props){
- 
+  const { idSeg, infoRemi, checkeds, setCheckeds } = props;
+
+  const dateFormat = (date) => {
+    if(date){
+        let dateFormated = date.split('T');
+        return dateFormated[0];
+    }
+  }
+
     return(
         <Container>
             <Row >
@@ -17,22 +25,21 @@ export default function DetailsControlR(props){
               <Col sm={8} className="mt-2 mb-4" style={{border:'2px solid #eee', borderRadius:'5px'}}>
                 <Formik
                 initialValues={{ 
-                  idSeguimiento:"",
-                  fechaRemision: '',
-                  entidadRemitida: '',
-                  atendido: '',
-                  fechaAtencion: '',
-                  motivo: '',
-                  hospitalizado: '',
-                  fechaIngreso: '',
-                  fechaSalida: '',
-                  fallecido: '',
-                  razonFallecimiento: '',
-                  seguimiento: '',
-                  nombreAuxEnfermero: '',
+                  idSeguimiento: idSeg,
+                  fechaRemision: infoRemi.fechaRemision,
+                  entidadRemitida: infoRemi.entidadRemitida,
+                  atendido: infoRemi.atendido,
+                  fechaAtencion: infoRemi.fechaAtencion,
+                  motivo: infoRemi.motivo,
+                  hospitalizado: infoRemi.hospitalizado,
+                  fechaIngreso: infoRemi.fechaIngreso,
+                  fechaSalida: infoRemi.fechaSalida,
+                  fallecido: infoRemi.fallecido,
+                  razonFallecimiento: infoRemi.razonFallecimiento,
+                  seguimiento: infoRemi.seguimiento,
+                  nombreAuxEnfermero: infoRemi.nombreAuxEnfermero,
                 }}
                 >
-
                 {props => {
                     const { values, touched, errors, dirty, isSubmitting,
                             handleChange, handleBlur, handleSubmit, handleReset
@@ -46,7 +53,7 @@ export default function DetailsControlR(props){
                         <Col sm="2">
                             <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="01" size="lg" id="idSeguimiento" name="idSeguimiento" 
-                               value={values.idSeguimiento} onChange={handleChange} onBlur={handleBlur}disabled
+                               value={idSeg} onChange={handleChange} onBlur={handleBlur}disabled
                             />
                         </InputGroup>
                         </Col>
@@ -56,7 +63,7 @@ export default function DetailsControlR(props){
                         <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaRemision" name="fechaRemision" 
-                                 value={values.fechaRemision} onChange={handleChange} onBlur={handleBlur} disabled
+                                 value={dateFormat(infoRemi.fechaRemision)} onChange={handleChange} onBlur={handleBlur} disabled
                               />
                               <Form.Control.Feedback type="invalid">
                                   {errors.fechaRemision}
@@ -72,7 +79,7 @@ export default function DetailsControlR(props){
                     <Col >
                         <InputGroup hasValidation>
                                <Form.Control as="textarea" aria-label="With textarea" placeholder="Motivo de Remisión" size="xs" id="motivo" name="motivo" 
-                               value={values.motivo} onChange={handleChange} onBlur={handleBlur} disabled
+                               value={infoRemi.motivo} onChange={handleChange} onBlur={handleBlur} disabled
                             />
                         </InputGroup>
                      </Col>
@@ -84,7 +91,7 @@ export default function DetailsControlR(props){
                         <Col>
                         <InputGroup hasValidation>
                             <Form.Control type="text" placeholder="Nombre Entidad" size="xs" id="entidadRemitida" name="entidadRemitida" 
-                            value={values.entidadRemitida} onChange={handleChange} onBlur={handleBlur} disabled
+                            value={infoRemi.entidadRemitida} onChange={handleChange} onBlur={handleBlur} disabled
                             />
                         </InputGroup>
                         </Col>
@@ -98,7 +105,7 @@ export default function DetailsControlR(props){
                      <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="xs" name="atendido" id="atendido" on>
-                          <input type="checkbox" name="atendido"></input>
+                          <input type="radio" name="radio" checked={checkeds.radio} disabled/>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>   
@@ -110,7 +117,7 @@ export default function DetailsControlR(props){
                         <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="xs" id="fechaAtencion" name="fechaAtencion" 
-                                 value={values.fechaAtencion} onChange={handleChange} onBlur={handleBlur} disabled
+                                 value={dateFormat(infoRemi.fechaAtencion)} onChange={handleChange} onBlur={handleBlur} disabled
                               />
                           </InputGroup>
                         </Col>
@@ -124,7 +131,7 @@ export default function DetailsControlR(props){
                      <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="xs" name="hospitalizado" id="hospitalizado">
-                          <input type="checkbox"  name="hospitalizado" ></input>
+                          <input type="radio" name="radio1" checked={checkeds.radio1} disabled/>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>   
@@ -136,7 +143,7 @@ export default function DetailsControlR(props){
                         <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="xs" id="fechaIngreso" name="fechaIngreso" 
-                                 value={values.fechaIngreso} onChange={handleChange} onBlur={handleBlur} disabled
+                                 value={dateFormat(infoRemi.fechaIngreso)} onChange={handleChange} onBlur={handleBlur} disabled
                               />
                           </InputGroup>
                         </Col>
@@ -148,7 +155,7 @@ export default function DetailsControlR(props){
                         <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="xs" name="fallecido" id="fallecido">
-                          <input type="checkbox" name="fallecido"></input>
+                          <input type="radio" name="radio2" checked={checkeds.radio2} disabled/>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>  
@@ -160,7 +167,7 @@ export default function DetailsControlR(props){
                         <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="xs" id="fechaSalida" name="fechaSalida" 
-                                 value={values.fechaSalida} onChange={handleChange} onBlur={handleBlur} disabled
+                                 value={dateFormat(infoRemi.fechaSalida)} onChange={handleChange} onBlur={handleBlur} disabled
                               />
                           </InputGroup>
                         </Col>
@@ -172,7 +179,7 @@ export default function DetailsControlR(props){
                     <Col >
                         <InputGroup hasValidation>
                                <Form.Control as="textarea" aria-label="With textarea" placeholder="Describir Motivo Fallecimiento" size="xs" id="razonFallecimiento" name="razonFallecimiento" 
-                               value={values.razonFallecimiento} onChange={handleChange} onBlur={handleBlur} disabled
+                               value={infoRemi.razonFallecimiento} onChange={handleChange} onBlur={handleBlur} disabled
                             />
                         </InputGroup>
                      </Col>
@@ -184,7 +191,7 @@ export default function DetailsControlR(props){
                         <Col >
                         <InputGroup hasValidation>
                         <Form.Control  as="textarea" aria-label="With textarea" placeholder="Describa el seguimiento" size="xs" id="seguimiento" name="seguimiento" 
-                               value={values.seguimiento} onChange={handleChange} onBlur={handleBlur} disabled
+                               value={infoRemi.seguimiento} onChange={handleChange} onBlur={handleBlur} disabled
                             />
                         </InputGroup>
                         </Col>
@@ -196,22 +203,11 @@ export default function DetailsControlR(props){
                         <Col >
                         <InputGroup hasValidation>
                         <Form.Control type="text" placeholder="Nombre del Enfermero(a)" size="xs" id="nombreAuxEnfermero" name="nombreAuxEnfermero" 
-                               value={values.nombreAuxEnfermero} onChange={handleChange} onBlur={handleBlur} disabled
+                               value={infoRemi.nombreAuxEnfermero} onChange={handleChange} onBlur={handleBlur} disabled
                             />
                         </InputGroup>
                         </Col>
                     </Form.Group>  
-                    <Row>
-                    <Col md="1"> </Col>
-                      <Col md="10">
-                        <div className="d-grid gap-2 mb-3 mt-3">
-                            <Button variant="primary" type="submit" size="lg">
-                               Guardar
-                            </Button>
-                        </div>
-                      </Col>
-                   <Col md="1"> </Col>
-                   </Row>
                     </Form>
                             );
                         }}

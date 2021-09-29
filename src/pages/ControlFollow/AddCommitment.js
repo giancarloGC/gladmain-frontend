@@ -6,7 +6,7 @@ import { TOKEN } from "../../utils/constans";
 import AddCommit from "../../components/Control/ControlFollow/AddCommit";
 
 export default function AddCommitment(){
-    const { idSeg } = useParams();
+    const { idSeg, documento } = useParams();
     const [controlSeguimiento, setControl] = useState({});
     const token = localStorage.getItem(TOKEN);
     const [ componentLoaded, setComponentLoaded ] = useState(false); 
@@ -38,7 +38,7 @@ export default function AddCommitment(){
         )
         :
         (
-            <AddCommit controlSeguimiento={controlSeguimiento}/>
+            <AddCommit controlSeguimiento={controlSeguimiento} documento={documento} />
         )
         }
         </Container>
