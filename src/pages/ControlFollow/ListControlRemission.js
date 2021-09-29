@@ -40,6 +40,7 @@ export default function ListControlRemission(){
               <FontAwesomeIcon icon={faPrint} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton2" />
               <ReactTooltip id="boton2" place="bottom" type="dark" effect="float"> Imprimir </ReactTooltip>
             </h1>
+            
             {listRemis.length === 0 && (
                 <>
                 <p style={{"color": "#2D61A4", "fontSize": 27}}>No se encontraron registros</p>
