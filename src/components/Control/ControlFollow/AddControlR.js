@@ -9,8 +9,9 @@ import moment from 'moment';
 import "./Switch.scss";
 
 export default function AddControlR(props){
-  const { controlSeguimiento } = props;
+  const { controlSeguimiento, documento } = props;
   const token = localStorage.getItem(TOKEN);
+  const [ goRedirect, setGoRedirect ] = useState(false);
   const [ checkeds, setCheckeds ] = useState({ atendido: false, hospitalizado: false, fallecido: false });
   console.log(checkeds);
 
@@ -114,18 +115,16 @@ export default function AddControlR(props){
                       swal({
                         title: `¡La remisión fue almacenada correctamente!`,
                         icon: 'success'
-                      });
-                      /*.then((value) => {
-                        setGoRedirect(true);
-                      });*/
+                      }).then((value) => {
+                        window.location.replace(`/admin/listControlRemission/${controlSeguimiento.id}/${documento}`);
+                    }); 
                     }else{
                       swal({
                         title: `¡Opss, ocurrió un error!`,
                         icon: 'danger'
-                      });
-                      /*.then((value) => {
-                        setGoRedirect(true);
-                      });*/
+                      }).then((value) => {
+                        window.location.replace(`/admin/listControlRemission/${controlSeguimiento.id}/${documento}`);
+                    });    
                     }
                   });
                 }}

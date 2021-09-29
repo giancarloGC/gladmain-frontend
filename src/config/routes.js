@@ -268,7 +268,7 @@ const routes = [
                 component: DetailsInfantIncome,
             }, 
             {
-                path: "/admin/addControlRemission/:idSeg",
+                path: "/admin/addControlRemission/:idSeg/:documento",
                 exact: true,
                 component: AddControlRemission,
             },
@@ -278,7 +278,7 @@ const routes = [
                 component: EditControlRemission,
             }, 
             {
-                path: "/admin/detailsControlRemission",
+                path: "/admin/detailsControlRemission/:idSeg/:idRemi",
                 exact: true,
                 component: DetailsControlRemission,
             }, 
@@ -288,7 +288,7 @@ const routes = [
                 component: ListControlRemission,
             },   
             {
-                path: "/admin/addCommitment/:idSeg",
+                path: "/admin/addCommitment/:idSeg/:documento",
                 exact: true,
                 component: AddCommitment,
             },
@@ -298,7 +298,7 @@ const routes = [
                 component: ListCommitment,
             }, 
             {
-                path: "/admin/editCommitment/:idSeg/:idComp",
+                path: "/admin/editCommitment/:idSeg/:idComp/:documento",
                 exact: true,
                 component: EditCommitment,
             }, 
