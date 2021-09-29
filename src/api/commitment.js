@@ -50,7 +50,6 @@ export function deleteCompApi(id, token){
             .catch(err => {return err});
 }
 
-//preguntar a Danny hola
 export function getCompByUserApi(documento, token){
     const url = `/api/control_seguimiento/LISTAR_COMPROMISOS/${documento}`;
     const params = {

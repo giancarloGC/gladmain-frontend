@@ -18,6 +18,7 @@ export default function ListFollow(){
     const token = localStorage.getItem(TOKEN);
     const [ infoUser, setInfoUser ] = useState(null);
     const [ listSeg, setListSeg ] = useState([]);
+    const [ listInc, setListInc ] = useState([]);
 
     useEffect(() => {
         getUserByIdApi(documento, token).then(responseUser => {
@@ -25,7 +26,6 @@ export default function ListFollow(){
         });
         getSegApi(documento, token).then(response => {
             setListSeg(response);
-            
         });
     }, []);
 
@@ -49,7 +49,7 @@ export default function ListFollow(){
                 </>
             )}
             {listSeg.length > 0 && (
-             <ListFollowUp  listSeg={listSeg} documento={documento}/>
+             <ListFollowUp  listSeg={listSeg} documento={documento} listInc={listInc}/>
             )}
         </Container>
     )

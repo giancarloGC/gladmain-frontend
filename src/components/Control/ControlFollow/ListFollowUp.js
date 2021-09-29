@@ -21,29 +21,29 @@ export default function ListFollowUp(props){
     }
 
     return(
-        <Container> 
+        <Container className="mt-4"> 
             <Row > 
            <Col sm={12}>
-          <ListGroup >
+          <ListGroup className="mt-3 mb-3">
           {listSeg.map((item, index) => (
-               
                <ListGroup.Item className="shadow border mt-2 mb-3">
+                   
                <Container>
                <Row >
-                   <Col md={3} className="row justify-content-center align-self-center">
-                       <p style={{"color": "#2D61A4", "font-size": 24}}><b>Nombre Acudiente</b> <br/>{item.nombreAcudiente}</p>
+                   <Col sm={3} className="align-self-center">
+                       <p style={{"color": "#2D61A4", "font-size": 20}}><b>Nombre Acudiente</b> <br/>{item.nombreAcudiente}</p>
                    </Col>
-                   <Col md={2} className="row justify-content-center align-self-center">
-                       <p style={{"color": "#2D61A4", "font-size": 24}}><b>Fecha Ingreso</b> <br/>{dateFormat(item.fecha)}</p>
+                   <Col sm={3} className="align-self-center">
+                       <p style={{"color": "#2D61A4", "font-size": 20}}><b>Fecha Ingreso</b> <br/>{dateFormat(item.fecha)}</p>
                    </Col>
-                   <Col md={2} className="row justify-content-center align-self-center">
-                       <p style={{"color": "#2D61A4", "font-size": 24}}><b>Estado del Ingreso </b> <br/></p>
+                   <Col md={3} className="align-self-center">
+                       <p style={{"color": "#2D61A4", "font-size": 20}}><b>Estado del Ingreso </b> <br/></p>
                    </Col>
-                   <Col md={3} className="align-self-center justify-content-around">
+                   <Col sm={3} className="align-self-right">
                    <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Acciones</b> <br/>
                         
-                        <Link className="enlace" to="#" className="btn btn-primary mx-0">
-                            <FontAwesomeIcon icon={faEye} size="lg" color="white" data-tip data-for = "boton3" 
+                        <Link className="enlace"to={`/admin/detailsInfantIncome/${item.id}/${4}`} className="btn btn-primary mx-0">
+                            <FontAwesomeIcon icon={faEye} size="l" color="white" data-tip data-for = "boton3" 
                             /> <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Ver </ReactTooltip>
                         </Link>
                          <Link href="#" className="btn btn-warning mx-3">
@@ -60,13 +60,12 @@ export default function ListFollowUp(props){
                             <ReactTooltip id="boton5" place="bottom" type="dark" effect="float"> Imprimir </ReactTooltip>
                         </Link >
                             <br></br> 
-                            <Button href={`/admin/listControlRemission/${item.id}/${documento}`} style={{"fontSize": 11, "backgroundColor": "#fd650d", "borderColor":"#fd650d"}} color="black">
+                            <Button href={`/admin/listControlRemission/${item.id}/${documento}`} style={{"fontSize": 10.3, "backgroundColor": "#fd650d", "borderColor":"#fd650d"}}>
                                 Remisiones
                             </Button>{' '}
-                            <Button href={`/admin/commitments/${item.id}/${documento}`} style={{"fontSize": 11, "backgroundColor": "#fd650d", "borderColor":"#fd650d"}} color="black">
+                            <Button href={`/admin/commitments/${item.id}/${documento}`} style={{"fontSize": 10.3, "backgroundColor": "#fd650d", "borderColor":"#fd650d"}}>
                                 Compromisos
                             </Button>{' '}
-
                      </p>                     
                     </Col>
                 </Row>

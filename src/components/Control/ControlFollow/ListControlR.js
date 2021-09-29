@@ -22,6 +22,17 @@ export default function ListControlR(props){
      return(
          <Container className="mt-4"> 
              <Row> 
+             <Row className="mb-2 mt-3">
+                    <Col md={3}> </Col>
+                    <Col md={6}>
+                       <InputGroup hasValidation>
+                           <Form.Control type="search" placeholder="Buscar Control" size="lg" id="busqueda" name="busqueda" />
+                           <Button className="btn btn-outline-success" type="submit">Buscar</Button>
+                       </InputGroup>
+                    </Col>
+                    <Col md={3}> </Col>
+            </Row>
+            
              <Col sm={12} >
            <ListGroup className="mt-3 mb-3">
            {remisionesBySeguimiento.map((item, index) => (

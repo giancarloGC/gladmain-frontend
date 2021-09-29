@@ -8,16 +8,16 @@ export default function AddIncomeCommit(props) {
   let dateCurrent = moment();
 
     return(
-      <Modal show={showCommit ? true : false} size="lg"  onHide={() => setShowCommit(false)}  centered aria-labelledby="example-custom-modal-styling-title">
+      <Modal show={showCommit ? true : false} size="xs"  onHide={() => setShowCommit(false)}  centered aria-labelledby="example-custom-modal-styling-title">
         <Modal.Header closeButton>
-          <Modal.Title id="example-custom-modal-styling-title"> Agregar Compromiso </Modal.Title>
+          <Modal.Title id="example-custom-modal-styling-title" style={{fontSize: "14px"}}> Agregar Compromiso </Modal.Title>
         </Modal.Header>
         <Modal.Body className="show-grid">
 
         <Container >
             <Row>
                 <Col sm={3} md={12} className="text-center">
-                <h1 className="mb-3">Nuevo Compromiso</h1>
+                <h1 className="mb-3" style={{"fontSize": "25px"}}>Nuevo Compromiso</h1>
 
                 <Formik
                 initialValues=
@@ -52,11 +52,11 @@ export default function AddIncomeCommit(props) {
 <Form onSubmit={handleSubmit}>
 
     <Form.Group as={Row} className="mb-1">
-        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Fecha Compromiso </Form.Label>
-        <Col sm="4"> </Col>
-        <Col sm="4">
+        <Form.Label column sm="5"><h1 style={{"fontSize": "18px", "color":"#0084d2" }}>Fecha Compromiso </h1></Form.Label>
+        <Col sm="2"> </Col>
+        <Col sm="5">
         <InputGroup hasValidation>
-        <Form.Control type="date" size="lg" id="dateCommit" name="dateCommit" 
+        <Form.Control type="date" size="xs" id="dateCommit" name="dateCommit" 
             value={values.dateCommit} onChange={handleChange} onBlur={handleBlur} disabled
             />
         </InputGroup>
@@ -65,10 +65,10 @@ export default function AddIncomeCommit(props) {
 
 
     <Form.Group as={Row} className="mb-2">
-        <Form.Label column sm="12" style={{"fontSize": "12px !important"}}>Nombre Compromiso</Form.Label>
+        <Form.Label column sm="12"><span style={{fontSize: "16px"}}>Nombre Compromiso</span></Form.Label>
         <Col md={12}>
             <InputGroup hasValidation>
-                    <Form.Control type="text" placeholder="Cuenta con afiliación al SGSSS" size="lg" id="name" name="name" 
+                    <Form.Control type="text" placeholder="Cuenta con afiliación al SGSSS" size="xs" id="name" name="name" 
                     value={values.name} onChange={handleChange} onBlur={handleBlur} style={{"fontWeight": "bold"}} disabled
                 />
             </InputGroup>
@@ -76,10 +76,10 @@ export default function AddIncomeCommit(props) {
     </Form.Group>
 
     <Form.Group as={Row} className="mb-3">
-        <Form.Label column sm="12" style={{"fontSize": "12px !important"}}>Descripción</Form.Label>
+        <Form.Label column sm="12"> <span style={{fontSize: "16px"}}>Descripción </span></Form.Label>
         <Col md={12}>
             <InputGroup hasValidation>
-                    <Form.Control as="textarea" aria-label="With textarea" type="text" placeholder="Descripción del Compromiso" size="lg" id="description" name="description" 
+                    <Form.Control as="textarea" aria-label="With textarea" type="text" placeholder="Descripción del Compromiso" size="xs" id="description" name="description" 
                     value={values.description} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.description && touched.description}
                     isValid={!errors.description && touched.description}
                 />
@@ -91,18 +91,18 @@ export default function AddIncomeCommit(props) {
             </Col>
     </Form.Group>
 
-    <Form.Group as={Row} className="mb-3">
-        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Fecha Cumplimiento</Form.Label>
-        <Col sm="4"> </Col>
-        <Col sm="4">
+    <Form.Group as={Row} className="mb-1">
+        <Form.Label column sm="5"><h1 style={{"fontSize": "18px", "color":"#0084d2" }}>Fecha Cumplimiento</h1></Form.Label>
+        <Col sm="2"> </Col>
+        <Col sm="5">
         <InputGroup hasValidation>
-        <Form.Control type="date" size="lg" id="dateEnd" name="dateEnd" 
+        <Form.Control type="date" size="xs" id="dateEnd" name="dateEnd" 
             value={values.dateEnd} onChange={handleChange} onBlur={handleBlur} disabled />
         </InputGroup>
         </Col>
     </Form.Group>
 
-    <Form.Group as={Row} className="mb-3">
+    <Form.Group as={Row} className="mb-1">
             <Col sm="3"></Col>
             <Col sm="6">
             <div  as={Row} className="d-grid gap-2">

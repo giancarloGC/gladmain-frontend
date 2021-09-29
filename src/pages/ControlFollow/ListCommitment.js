@@ -100,7 +100,7 @@ const deleteCom = (id) => {
             )}
 
             {listControls.length > 0 && (
-                <Container> 
+                <Container style = {{backgroundColor:"black"}}> 
                 <Row>
                 <Row className="mb-4 mt-3">
                     <Col md={3}> </Col>

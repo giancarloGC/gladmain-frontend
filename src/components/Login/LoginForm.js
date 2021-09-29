@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Row, Image, Form, Button, Modal, Container, InputGroup } from "react-bootstrap";
+import { Col, Row, Image, Form, Button, Modal, Container, InputGroup, Spinner } from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
 import bcrypt from "bcryptjs";
 import Logo from "./../../assets/img/logoGladmain.PNG";
@@ -18,6 +18,7 @@ export default function LoginForm(props) {
   const [ formSend, setFormSend ] = useState(false);
   const [ textFormSend, setTextFormSend ] = useState("");
   const [ rolesApi, setRolesApi ] = useState([]);
+  const [ showSpinner, setShowSpinner ] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -64,6 +65,7 @@ export default function LoginForm(props) {
                           valores.password = hash;
                       });
                   });*/
+                  setShowSpinner(true);
                   loginApi(valores).then(response => {
                     if(response.status === 500){
                       setTextFormSend("¡Usuario o clave incorrectos, intentelo nuevamente!");
@@ -146,9 +148,19 @@ export default function LoginForm(props) {
     </Col>
   </Form.Group>  
   <div className="d-grid gap-2">
-  <Button variant="primary" type="submit" size="lg">
+  {showSpinner || (
+    <Button variant="primary" type="submit" size="lg">
     Iniciar Sesión 
-  </Button>
+    </Button>
+  )
+  }
+  {showSpinner && (
+    <center>
+    <Spinner animation="border" ></Spinner> 
+    </center>
+  )
+  }
+ 
   {formSend && <p className="text-success">{textFormSend}</p>}
   </div>
 </Form>

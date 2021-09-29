@@ -263,7 +263,7 @@ const routes = [
                 component: EditInfantIncome,
             }, 
             {
-                path: "/admin/detailsInfantIncome",
+                path: "/admin/detailsInfantIncome/:idSeg/:idInc",
                 exact: true,
                 component: DetailsInfantIncome,
             }, 
