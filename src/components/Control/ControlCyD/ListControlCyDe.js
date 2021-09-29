@@ -71,7 +71,11 @@ export default function ListControlCyDe(props){
                  <Col md={3}> </Col>
              </Row>
             
-             <Row className="mb-3 mt-4 justify-content-center">
+             
+             <Col sm={12} >
+             <Container style={{backgroundColor: '#f1f1f1', borderRadius:'5px'}} >
+            <Row>
+             <Form.Group as={Row} className="mt-2 mb-2 justify-content-center">
                     <Form.Label column sm={3} >
                         Fecha Ultimo Control
                     </Form.Label>
@@ -86,7 +90,11 @@ export default function ListControlCyDe(props){
                     <Form.Control type="date" size="l" id="proximoControl" name="proximoControl" value={dateFormat(lastControls.proximoControl)}
                     />
                     </Col>
-             </Row>
+            </Form.Group> 
+            </Row>
+            </Container>
+            </Col>
+             
              <Col sm={12} >
            <ListGroup className="mt-3 mb-3">
            {listControls.map((item, index) => (
