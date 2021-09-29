@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import swal from 'sweetalert';
 import { faPlus, faPrint, faFileMedicalAlt } from '@fortawesome/free-solid-svg-icons';
-import ListControlR from "../../components/Control/ControlFollow/ListControlR";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link} from "react-router-dom";
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { useParams } from "react-router-dom";
@@ -80,16 +79,16 @@ const deleteCom = (id) => {
 }
     return(
         <Container>
-            
             <h1 className="text-center mb-4">Compromisos de {infoUser ? infoUser.nombre : "Anonimo"}
               <Link to={`/admin/addCommitment/${idSeg}/${documento}`}>
-                    <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton" />
+                    <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton" />
                     <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Compromiso </ReactTooltip>
               </Link>
               
-              <FontAwesomeIcon icon={faPrint} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton2" />
+              <FontAwesomeIcon icon={faPrint} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton2" />
               <ReactTooltip id="boton2" place="bottom" type="dark" effect="float"> Imprimir </ReactTooltip>
             </h1>
+            
             {listControls.length === 0 && (
                 <>
                 <p style={{"color": "#2D61A4", "fontSize": 27}}>No se encontraron registros</p>
@@ -98,11 +97,11 @@ const deleteCom = (id) => {
                 />
                 </>
             )}
-
+            
             {listControls.length > 0 && (
-                <Container style = {{backgroundColor:"black"}}> 
+                <Container className="mt-4"> 
                 <Row>
-                <Row className="mb-4 mt-3">
+                <Row className="mb-2 mt-3">
                     <Col md={3}> </Col>
                     <Col md={6}>
                        <InputGroup hasValidation>
@@ -112,59 +111,58 @@ const deleteCom = (id) => {
                     </Col>
                     <Col md={3}> </Col>
                 </Row>
-   
-              <ListGroup >
+
+                <Col sm={12} >
+              <ListGroup className="mt-3 mb-3">
                 {listControls.map((item, index) => (
                     <ListGroup.Item className="shadow border mt-2 mb-3">
+
                    <Container>
                    <Row >
-                       <Col md={2} className="align-self-center">
-                           <p style={{"color": "#2D61A4", "fontSize": 22}}><b>Fecha Inicio</b> <br/>{dateFormat(item.fechaCompromiso)}</p>
+                       <Col sm={3} className="align-self-center">
+                           <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Inicio</b> <br/>{dateFormat(item.fechaCompromiso)}</p>
                        </Col>
-                       <Col md={2} className="row justify-content-center align-self-center">
-                           <p style={{"color": "#2D61A4", "fontSize": 22}}><b>Nombre Compromiso</b> <br/>{item.nombre}</p>
+                       <Col sm={3} className="align-self-center">
+                           <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Nombre </b> <br/>{item.nombre}</p>
                        </Col>
-                       <Col md={2} className="row justify-content-center align-self-center">
-                           <p style={{"color": "#2D61A4", "fontSize": 22}}><b>Nuevo Compromiso</b> <br/>{item.nuevoCompromiso}</p>
+                       <Col sm={3} className="align-self-center">
+                           <p style={{"color": "#2D61A4", "fontSize": 19.2}}><b>Fin</b> <br/>{dateFormat(item.fechaCumplimiento)}</p>
                        </Col>
-                       <Col md={3} className="row justify-content-center align-self-center">
-                           <p style={{"color": "#2D61A4", "fontSize": 22}}><b>Fecha Fin</b> <br/>{dateFormat(item.fechaCumplimiento)}</p>
-                       </Col>
-                       <Col md={3} className="align-self-center">
-                            <p style={{"color": "#2D61A4", "fontSize": 23}}><b>Acciones</b> <br/>
+                       <Col sm={3} className="align-self-right">
+                            <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Acciones</b> <br/>
                                 <Link to={`/admin/detailCommitment/${idSeg}/${item.id}`} className="btn btn-primary">
-                                <FontAwesomeIcon icon={faEye} size="l" data-tip data-for = "boton1" 
-                                /> <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Ver </ReactTooltip>
+                                <FontAwesomeIcon icon={faEye} size="xs" data-tip data-for = "boton3" 
+                                /> <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Ver </ReactTooltip>
                                 </Link>
-                                <Link to={`/admin/editCommitment/${idSeg}/${item.id}/${documento}`} className="btn btn-primary">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-pen-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-tip data-for = "boton2">
+                                <Link to={`/admin/editCommitment/${idSeg}/${item.id}/${documento}`} className="btn btn-warning mx-1">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-pen-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-tip data-for = "boton4">
                                         <path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
                                     </svg>
-                                    <ReactTooltip id="boton2" place="bottom" type="dark" effect="float"> Editar </ReactTooltip>
+                                    <ReactTooltip id="boton4" place="bottom" type="dark" effect="float"> Editar </ReactTooltip>
                                 </Link>
-                                <Link className="btn btn-secondary text-center mx-3" onClick={() => confirmDeleteCom(item.id)}>
-                                <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" className="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-tip data-for = "boton3">
+                                <Link className="enlace btn btn-primary" onClick={() => confirmDeleteCom(item.id)}>
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-tip data-for = "boton5">
                                     <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
                                 </svg>
-                                <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Eliminar </ReactTooltip>
+                                <ReactTooltip id="boton5" place="bottom" type="dark" effect="float"> Eliminar </ReactTooltip>
                                 </Link> 
-                                <Link className="btn btn-secondary text-center mx-0 ">
-                                   <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-print-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-tip data-for = "boton4">
+                                <Link className="btn btn-secondary text-center mx-1">
+                                   <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-print-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-tip data-for = "boton6">
                                    <FontAwesomeIcon icon={faPrint}
                                    />
                                </svg>
-                               <ReactTooltip id="boton4" place="bottom" type="dark" effect="float"> Imprimir </ReactTooltip>
+                               <ReactTooltip id="boton6" place="bottom" type="dark" effect="float"> Imprimir </ReactTooltip>
                                </Link > 
                             </p>                     
                         </Col>
                     </Row>
-                    
-                    </Container>
-                    
+                </Container>
                 </ListGroup.Item>
                 ))}
                 </ListGroup>   
-                </Row>                   
+                </Col> 
+                </Row>     
+
             </Container>
             )}
         </Container>

@@ -183,7 +183,7 @@ export default function EditInfantInc(){
                        <h5 style={{"fontSize": "16px", "fontWeight":"bold"}} className="mt-1">Cuenta con afiliación al SGSSS</h5></Form.Label>
                         <Col class="mid">
                         <InputGroup hasValidation>
-                          <label class="rocker rocker-small" size="lg" name="afiliacionSgsss" >
+                          <label class="rocker rocker-small" size="xs" name="afiliacionSgsss" >
                             {/* invertir el save data */}
                           <input type="checkbox" checked={showCommit || !saveData ? false : true } onChange={(e) => setShowCommit(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
@@ -202,7 +202,7 @@ export default function EditInfantInc(){
                         <h5 style={{"fontSize": "16px", "fontWeight":"bold" }} className="mt-2">Cuenta con valoración y controles en salud oral</h5></Form.Label>
                         <Col  class="mid">
                         <InputGroup hasValidation className="mt-2">
-                          <label class="rocker rocker-small" size="lg" name="saludOral">
+                          <label class="rocker rocker-small" size="xs" name="saludOral">
                           <input type="checkbox" checked={showCommit2 || !saveData2 ? true : false } onChange={(e) => setShowCommit2(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
@@ -220,7 +220,7 @@ export default function EditInfantInc(){
                        <h5 style={{"fontSize": "16px", "fontWeight":"bold"}} className="mt-2">Conoce la red de salud o a quien acudir en caso de urgencia</h5></Form.Label>
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-1">
-                          <label class="rocker rocker-small" size="lg" name="conoceUrgencias">
+                          <label class="rocker rocker-small" size="xs" name="conoceUrgencias">
                           <input type="checkbox" checked={showCommit3 || !saveData3 ? true : false } onChange={(e) => setShowCommit3(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
@@ -238,7 +238,7 @@ export default function EditInfantInc(){
                         <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>Identifican signos de alarmas de enfermedades prevalentes de la primera infancia (que ponen en peligro de muerte a niños y niñas)</h5></Form.Label>
                         <Col class="mid" >
                         <InputGroup hasValidation className="mt-2">
-                          <label class="rocker rocker-small" size="lg" name="alarmaPreventiva">
+                          <label class="rocker rocker-small" size="xs" name="alarmaPreventiva">
                           <input type="checkbox" checked={showCommit4 || !saveData4 ? true : false } onChange={(e) => setShowCommit4(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
@@ -257,7 +257,7 @@ export default function EditInfantInc(){
                        <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>En niñas y menores de un mes se realizó validación médica</h5></Form.Label>
                         <Col class="mid">
                         <InputGroup hasValidation >
-                          <label class="rocker rocker-small" size="lg" name="valoracionMedica">
+                          <label class="rocker rocker-small" size="xs" name="valoracionMedica">
                           <input type="checkbox" checked={showCommit5 || !saveData5 ? true : false } onChange={(e) => setShowCommit5(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
@@ -275,7 +275,7 @@ export default function EditInfantInc(){
                         <h5 style={{"fontSize": "16px", "fontWeight":"bold" }} className="mt-2">Las niñas y niños cuentan con controles de Crecimiento y Desarrollo</h5></Form.Label>
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-2">
-                          <label class="rocker rocker-small" size="lg" name="controlCyD">
+                          <label class="rocker rocker-small" size="xs" name="controlCyD">
                           <input type="checkbox" checked={showCommit6 || !saveData6 ? true : false } onChange={(e) => setShowCommit6(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
@@ -293,7 +293,7 @@ export default function EditInfantInc(){
                        <h5 style={{"fontSize": "16px", "fontWeight":"bold" }} className="mt-2">Presenta una patología asociada identificada por el SGSSS</h5></Form.Label>
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-2">
-                          <label class="rocker rocker-small" size="lg" name="patologiaIdentificadaSgsss">
+                          <label class="rocker rocker-small" size="xs" name="patologiaIdentificadaSgsss">
                           <input type="checkbox" checked={showCommit7 || !saveData7 ? true : false } onChange={(e) => setShowCommit7(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
@@ -311,7 +311,7 @@ export default function EditInfantInc(){
                     <h5 style={{"fontSize": "16px", "fontWeight":"bold" }} className="mt-2">¿Cuál?</h5></Form.Label>
                     <Col sm="9" class="mid">
                         <InputGroup hasValidation>
-                               <Form.Control type="text" placeholder="Nombre Patología" size="lg" id="nombrePatologia" name="nombrePatologia" 
+                               <Form.Control type="text" placeholder="Nombre Patología" size="xs" id="nombrePatologia" name="nombrePatologia" 
                                value={values.nombrePatologia} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
                                isValid={!errors.nombrePatologia && touched.nombrePatologia}
                             />
@@ -328,7 +328,7 @@ export default function EditInfantInc(){
                         <h5 style={{"fontSize": "16px", "fontWeight":"bold" }} className="mt-2">Recibe medicamentos formulados por el SGSSS para alguna patología</h5></Form.Label>
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-2">
-                          <label class="rocker rocker-small" size="lg" name="recibeMedFormulada">
+                          <label class="rocker rocker-small" size="xs" name="recibeMedFormulada">
                           <input type="checkbox" checked={showCommit8 || !saveData8 ? true : false } onChange={(e) => setShowCommit8(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
@@ -347,7 +347,7 @@ export default function EditInfantInc(){
                     <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>¿Cuál?</h5></Form.Label>
                     <Col md="9" class="mid" >
                         <InputGroup hasValidation>
-                               <Form.Control type="text" placeholder="Nombre Medicamento Formulado" size="lg" id="nombreMedFormulada" name="nombreMedFormulada" 
+                               <Form.Control type="text" placeholder="Nombre Medicamento Formulado" size="xs" id="nombreMedFormulada" name="nombreMedFormulada" 
                                value={values.nombreMedFormulada} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
                                isValid={!errors.nombreMedFormulada && touched.nombreMedFormulada}
                             />
@@ -364,7 +364,7 @@ export default function EditInfantInc(){
                      <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>EAPB</h5></Form.Label>
                      <Col md="4" class="mid" >
                         <InputGroup hasValidation>
-                               <Form.Control type="text" placeholder="Nombre EAPB" size="lg" id="eapb" name="eapb" 
+                               <Form.Control type="text" placeholder="Nombre EAPB" size="xs" id="eapb" name="eapb" 
                                value={values.eapb} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.eapb && touched.eapb}
                                isValid={!errors.eapb && touched.eapb}
                             />
@@ -379,7 +379,7 @@ export default function EditInfantInc(){
                         <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>IPS</h5></Form.Label>
                         <Col sm="4" >
                         <InputGroup hasValidation>
-                               <Form.Control type="text" placeholder="Nombre IPS" size="lg" id="ips" name="ips" 
+                               <Form.Control type="text" placeholder="Nombre IPS" size="xs" id="ips" name="ips" 
                                value={values.ips} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.ips && touched.ips}
                                isValid={!errors.ips && touched.ips}
                             />
@@ -397,7 +397,7 @@ export default function EditInfantInc(){
                        <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>El usuario fue remitido a SGSSS </h5></Form.Label>
                         <Col class="mid">
                         <InputGroup hasValidation>
-                          <label class="rocker rocker-small" size="lg" name="usuarioRemitido">
+                          <label class="rocker rocker-small" size="xs" name="usuarioRemitido">
                           <input type="checkbox" checked={showCommit9 || !saveData9 ? true : false } onChange={(e) => setShowCommit9(!e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
@@ -415,7 +415,7 @@ export default function EditInfantInc(){
                     <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>¿Por qué?</h5></Form.Label>
                     <Col sm="9">
                         <InputGroup hasValidation>
-                               <Form.Control type="text" placeholder="Escriba la causa" size="lg" id="causa" name="causa" 
+                               <Form.Control type="text" placeholder="Escriba la causa" size="xs" id="causa" name="causa" 
                                value={values.causa} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.causa && touched.causa}
                                isValid={!errors.causa && touched.causa}
                             />
