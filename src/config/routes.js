@@ -279,7 +279,7 @@ const routes = [
                 component: AddControlRemission,
             },
             {
-                path: "/admin/editControlRemission",
+                path: "/admin/editControlRemission/:idSeg/:idRemi/:documento",
                 exact: true,
                 component: EditControlRemission,
             }, 

@@ -1,6 +1,5 @@
 import { urlBackend } from "./config";
 
-
 export function insertInfantIncomeApi(data, token){
     const url = `/api/control_seguimiento/REGISTRAR_INGRESO_INFANTE`;
     const params = {
