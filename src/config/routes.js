@@ -1,5 +1,4 @@
 import Welcome from "../pages/Welcome/Welcome";
-
 import LayoutAdmin from "../layouts/LayoutAdmin";
 import Login from "../pages/Login/Login";
 import Home from "../pages/Home/Home";
@@ -27,6 +26,7 @@ import EditControlVac from "../pages/ControlVac/EditControlVac";
 import EditControlVacMadre from "../pages/ControlVac/EditControlVacMadre";
 import AddControlFollow from "../pages/ControlFollow/AddControlFollow";
 import AddInfantIncome from "../pages/ControlFollow/AddInfantIncome";
+import AddMotherIncome from "../pages/ControlFollow/AddMotherIncome";
 import EditControlFollow from "../pages/ControlFollow/EditControlFollow";
 import EditInfantIncome from "../pages/ControlFollow/EditInfantIncome";
 import DetailsInfantIncome from "../pages/ControlFollow/DetailsInfantIncome";
@@ -272,6 +272,11 @@ const routes = [
                 path: "/admin/detailsInfantIncome/:idSeg/:idInc",
                 exact: true,
                 component: DetailsInfantIncome,
+            }, 
+            {
+                path: "/admin/addMotherIncome",
+                exact: true,
+                component: AddMotherIncome,
             }, 
             {
                 path: "/admin/addControlRemission/:idSeg/:documento",
