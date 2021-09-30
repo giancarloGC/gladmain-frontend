@@ -2,8 +2,6 @@ import React, { useState, useEffect} from "react";
 import { Container, Form } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
 import { lineasGraphics } from "../Control/ControlNutri/LabelsAndLineas";
-import moment from 'moment';
-import { getControlByIdApi } from "../../api/controls"; 
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 
 import "./StatisticNutri.scss";
@@ -33,7 +31,6 @@ const dateFormat = (date) => {
   return dateFormated[0];
   }
 }
-
 
 const generateCoordenadas = () => {
   let coordenadas = [];
