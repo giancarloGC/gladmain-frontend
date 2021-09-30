@@ -17,13 +17,14 @@ export function insertSegApi(data, token){
             .catch(err => {return err});
 }
 
-export function updateSegApi(data){
-    const url = `${urlBackend}control_seguimiento/ACTUALIZAR_SEGUIMIENTO`;
+export function updateSegApi(data, token){
+    const url = `/api/control_seguimiento/ACTUALIZAR_SEGUIMIENTO`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
-        method: "PUT",
+        method: "POST",
         body: JSON.stringify(data)
     };
 

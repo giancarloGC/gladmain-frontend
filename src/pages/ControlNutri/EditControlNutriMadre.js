@@ -1,39 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "react-bootstrap";
-import EditControlF from "../../components/Control/ControlFollow/EditControlF";
+import EditControlNMadre from "../../components/Control/ControlNutri/EditControlNMadre";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
-import { getSegByIdApi } from "../../api/follow-up";
 import { getUserByIdApi } from "../../api/user";
+import { getControlByIdApi } from "../../api/controls";
 import { TOKEN } from "../../utils/constans";
 
-export default function EditControlFollow(){
-    const { idSeg, documento } = useParams();
-    const [infoSeg, setInfoSeg] = useState({});
+export default function EditControlNutriMadre(){
+    const { id, documento, rolUser } = useParams();
+    const [infoControl, setInfoControl] = useState({});
     const [userControl, setUser] = useState({});
-    const [ segLoaded, setSegLoaded ] = useState({});
-    const [ userLoaded, setUserLoaded ] = useState({});
     const token = localStorage.getItem(TOKEN);
+    const [ userLoaded, setUserLoaded ] = useState({});
     const [ componentLoaded, setComponentLoaded ] = useState(false);   
     var loading = true;
 
+    console.log(rolUser);
+    
     useEffect(() => {
         loading = false;
         if(!loading){ 
-            getUserByIdApi(documento, token).then(response => {
-                setUser(response);
-            });
-            getSegByIdApi(idSeg, token).then(responseComp => {
-                setInfoSeg(responseComp);
-            setComponentLoaded(true); 
+        getUserByIdApi(documento, token).then(response => {
+            setUser(response);
         });
-        setSegLoaded(infoSeg);
+        getControlByIdApi(id, token).then(responseControl => {
+           setInfoControl(responseControl);
+           setComponentLoaded(true); 
+        });
+        //setComponentLoaded(true); 
         setUserLoaded(userControl);
         }
       }, []);
 
     return(
         <Container>
-            <h1 className="text-center">Editar Seguimiento</h1>
+            <h1 className="text-center">Editar Control Nutricional</h1>
         {!componentLoaded ? (
             <Row className="justify-content-md-center text-center">
               <Col md={1} className="justify-content-center">
@@ -44,7 +45,7 @@ export default function EditControlFollow(){
           )
         :
         (
-            <EditControlF infoSeg={infoSeg} userControl={userControl}/>
+            <EditControlNMadre userControl={userControl} infoControl={infoControl} rolUser={rolUser}/>
         )
         }
         </Container>

@@ -13,7 +13,6 @@ import { TOKEN } from "../../utils/constans";
 import "./StatisticHome.scss";
 
 export default function StatisticHomeMadre(){
-
     const { documento, rolUser } = useParams();
     const token = localStorage.getItem(TOKEN);
     const [ listControls, setListControls ] = useState([]);
@@ -26,7 +25,6 @@ export default function StatisticHomeMadre(){
     }, []);
 
     return(
-
         <>
             <Container>
             <h1 className="text-center">IMC para la Edad Gestacional
@@ -37,9 +35,8 @@ export default function StatisticHomeMadre(){
             </h1>
         {listControls.length > 0 ? (
         <>
-          <StatisticMadreGestante listControls={listControls} documento={documento}/>
+          <StatisticMadreGestante listControls={listControls} token={token} documento={documento}/>
         </>
-
         )
         :
         (

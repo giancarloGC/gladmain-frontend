@@ -10,16 +10,15 @@ import SuccessAnimation from "../../../assets/animations/control/successNew.json
 import swal from 'sweetalert';
 import Lottie from 'react-lottie';
 import { Line } from "react-chartjs-2";
-import { insertControlApi } from "../../../api/controls";
+import { updateControlApi } from "../../../api/controls";
 import { labelsMadre, lineasGraphicsMadre } from "./LabelsAndLineasMadre";
 import "./GraphicAddNutri.scss";
 import moment from 'moment';
 import { faAddressCard }  from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function AddControlN(props){
-    const { userControl } = props;
-    const { rolUser } = useParams();
+export default function EditControlNMadre(props){
+    const { userControl, infoControl, rolUser } = props;
     const { user } = AuthContext();
     const token = localStorage.getItem(TOKEN);
     const [show, setShow] = useState(false);
@@ -87,7 +86,7 @@ export default function AddControlN(props){
 
     const data = {
       labels: labelsMadre,
-      datasets: [ {
+      datasets: [{
         label: 'Nuevo Control',
         type: "bubble",
         pointStyle: "bubble",
@@ -95,7 +94,7 @@ export default function AddControlN(props){
         borderColor: '#0559B7',
         backgroundColor: '#0559B7',
       },
-        {
+          {
             data: lineasGraphicsMadre.LineaAbajo,
             fill: true,
             borderColor: '#FA2E7F',
@@ -148,10 +147,10 @@ export default function AddControlN(props){
               )}
               <Formik
                 initialValues={{ 
-                    tension: '',
-                    edadGestacional: '',
-                    peso: '',
-                    talla: '',
+                    tension: infoControl.tension,
+                    edadGestacional: infoControl.edadGestacional,
+                    peso: infoControl.peso,
+                    talla: infoControl.talla,
                     imc: '',
                     estadoNutricional: '',
                 }}
@@ -216,9 +215,10 @@ export default function AddControlN(props){
                   
                   var documertParse = parseInt( documentoLogin[0]);
                   const formData = {
+                    id: infoControl.id,
                     idUsuario: userControl.documento,
                     idUsuarioNutricionista: documertParse,
-                    fechaControl: moment().format("YYYY-MM-DD"),
+                    fechaControl: infoControl.fechaControl,
                     peso: valores.peso,
                     talla: valores.talla,
 
@@ -234,10 +234,11 @@ export default function AddControlN(props){
                 }
 
                   console.log(formData);
-                  insertControlApi(formData, token, true).then(response => {
+                  formData.token = token;
+                  updateControlApi(formData, token).then(response => {
                       if(response === true){
                         swal({
-                          title: `¡El control fue almacenado correctamente!`,
+                          title: `¡El control fue actualizado correctamente!`,
                           icon: 'success'
                         }).then((value) => {
                           setGoRedirect(true);
@@ -362,7 +363,7 @@ export default function AddControlN(props){
                         <Col sm="8">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaControl" name="fechaControl" 
-                                 value={moment().format("YYYY-MM-DD")} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaControl && touched.fechaControl}
+                                 value={dateFormat(infoControl.fechaControl)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaControl && touched.fechaControl}
                                  isValid={!errors.fechaControl && touched.fechaControl} disabled
                               />
                               <Form.Control.Feedback type="invalid">
@@ -380,7 +381,7 @@ export default function AddControlN(props){
                         <Col sm="8">
                           <InputGroup hasValidation>
                               <Form.Control type="text" placeholder="Peso en Kg" size="lg" id="peso" name="peso" 
-                               value={values.peso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.peso && touched.peso}
+                               defaultValue={infoControl.peso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.peso && touched.peso}
                                isValid={!errors.peso && touched.peso}
                               />
                               <Form.Control.Feedback type="invalid">
@@ -398,7 +399,7 @@ export default function AddControlN(props){
                         <Col sm="8">
                           <InputGroup hasValidation>
                               <Form.Control type="text" placeholder="Talla en cm" size="lg" id="talla" name="talla" 
-                               value={values.talla} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.talla && touched.talla}
+                               defaultValue={infoControl.talla} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.talla && touched.talla}
                               isValid={!errors.talla && touched.talla}
                               />
                               <Form.Control.Feedback type="invalid">
@@ -416,7 +417,7 @@ export default function AddControlN(props){
                               <Col sm="8">
                                   <InputGroup hasValidation>
                                   <Form.Control type="number" placeholder="Dígita aquí la tensión" size="lg" id="tension" name="tension" 
-                                     value={values.tension} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.tension && touched.tension}
+                                     defaultValue={infoControl.tension} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.tension && touched.tension}
                                      isValid={!errors.tension && touched.tension} 
                                   />
                                   <Form.Control.Feedback type="invalid">
@@ -430,7 +431,7 @@ export default function AddControlN(props){
                               <Col sm="8" className="mt-3">
                                   <InputGroup hasValidation>
                                   <Form.Control type="number" placeholder="Edad Gestacional en semanas" size="lg" id="edadGestacional" name="edadGestacional" 
-                                     value={values.edadGestacional} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edadGestacional && touched.edadGestacional}
+                                     defaultValue={infoControl.edadGestacional} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edadGestacional && touched.edadGestacional}
                                      isValid={!errors.edadGestacional && touched.edadGestacional} 
                                   />
                                   <Form.Control.Feedback type="invalid">
@@ -496,7 +497,7 @@ export default function AddControlN(props){
 
                             <div className="d-grid gap-2">
                             <Button variant="primary" type="submit" size="lg">
-                                Añadir control   <FontAwesomeIcon data-tip data-for="boton1" icon={faAddressCard} size="lg" color="#FFF" />
+                                Actualizar control   <FontAwesomeIcon data-tip data-for="boton1" icon={faAddressCard} size="lg" color="#FFF" />
                             </Button>
                         </div>
                   </Col>

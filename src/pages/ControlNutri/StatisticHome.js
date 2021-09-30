@@ -19,7 +19,6 @@ import Lottie from 'react-lottie';
 import NotResults from "../../assets/animations/notResults.json";
 import { getControlNutriApi } from "../../api/controls";
 import { TOKEN } from "../../utils/constans";
-
 import "./StatisticHome.scss";
 
 export default function StatisticHome(){
@@ -82,7 +81,7 @@ export default function StatisticHome(){
                     <StatisticPesoTalla2a5 listControls={listControls} sexo={sexo} token={token} documento={documento}/>
                 )}
                 {edad >= 60 && edad < 204 && (
-                    <StatisticPesoTalla2a5 listControls={listControls} sexo={sexo} documento={documento}/>
+                    <StatisticPesoTalla2a5 listControls={listControls} sexo={sexo} token={token} documento={documento}/>
                 )}
             </>
         

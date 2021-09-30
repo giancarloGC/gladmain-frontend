@@ -15,8 +15,10 @@ import ListVac from "../pages/ControlVac/ListVac";
 import ListVacMadre from "../pages/ControlVac/ListVacMadre";
 import ListControlNutri from "../pages/ControlNutri/ListControlNutri";
 import DetailControlNutri from "../pages/ControlNutri/DetailControlNutri";
+import DetailControlNutriMadre from "../pages/ControlNutri/DetailControlNutriMadre";
 import AddControlNutri from "../pages/ControlNutri/AddControlNutri";
 import EditControlNutri from "../pages/ControlNutri/EditControlNutri";
+import EditControlNutriMadre from "../pages/ControlNutri/EditControlNutriMadre";
 import AddControlNutriMadre from "../pages/ControlNutri/AddControlNutriMadre";
 import AddControlCyD from "../pages/ControlCyD/AddControlCyD";
 import EditControlCD from "../pages/ControlCyD/EditControlCD";
@@ -129,6 +131,11 @@ const routes = [
                 component: EditControlNutri,
             },
             {
+                path: "/admin/editControlNutriMadre/:id/:documento/:rolUser",
+                exact: true,
+                component: EditControlNutriMadre,
+            },
+            {
                 path: "/admin/AddControlNutriMadre/:documento/:rolUser",
                 exact: true,
                 component: AddControlNutriMadre,
@@ -234,6 +241,11 @@ const routes = [
                 component: DetailControlNutri,
             }, 
             {
+                path: "/admin/DetailControlNutriMadre/:id/:documento/:rolUser",
+                exact: true,
+                component: DetailControlNutriMadre,
+            }, 
+            {
                 path: "/admin/listControlCyD/:documento",
                 exact: true,
                 component: ListControlCyD,
@@ -254,7 +266,7 @@ const routes = [
                 component: AddControlFollow,
             },
             {
-                path: "/admin/editControlFollow",
+                path: "/admin/editControlFollow/:idSeg/:documento",
                 exact: true,
                 component: EditControlFollow,
             },

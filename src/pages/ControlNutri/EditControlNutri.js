@@ -15,8 +15,6 @@ export default function EditControlNutri(){
     const [ userLoaded, setUserLoaded ] = useState({});
     const [ componentLoaded, setComponentLoaded ] = useState(false);   
     var loading = true;
-
-    console.log(rolUser);
     
     useEffect(() => {
         loading = false;

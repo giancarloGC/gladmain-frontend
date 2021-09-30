@@ -7,7 +7,7 @@ import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from 
 import "./GraphicAddNutri.scss";
 import moment from 'moment';
 
-export default function DetailControlN(props){
+export default function DetailControlNMadre(props){
     const { userControl, control, nombreNutricionista } = props;
     const { rolUser } = useParams();
     const { user } = AuthContext();
@@ -156,6 +156,25 @@ export default function DetailControlN(props){
                       </Col>
                   </Form.Group> 
 
+                  <Form.Group as={Row} className="mt-2">
+                      <Form.Label column sm="3"><h5 style={{fontSize: "16px"}}>Tensión</h5></Form.Label>
+                      <Col sm="3">
+                        <InputGroup hasValidation>
+                            <Form.Control type="text" size="xs" id="tension" name="tension" 
+                                Value={control.tension} onChange={handleChange} onBlur={handleBlur} disabled
+                            />
+                        </InputGroup>
+                      </Col>
+                      <Form.Label column sm="2"><h5 style={{fontSize: "16px"}}>Edad Gestacional</h5></Form.Label>
+                        <Col sm="4">
+                          <InputGroup hasValidation>
+                              <Form.Control type="text" size="xs" id="edadGestacional" name="edadGestacional" 
+                               value={`${control.edadGestacional} semanas`} onChange={handleChange} onBlur={handleBlur} disabled
+                              />
+                          </InputGroup>
+                      </Col>
+                  </Form.Group> 
+
                   <Form.Group as={Row} className="mt-2 mb-3">
                         <Form.Label column sm="1"><h5 style={{fontSize: "16px"}}>Sexo</h5></Form.Label>
                         <Col sm="3">
@@ -205,14 +224,14 @@ export default function DetailControlN(props){
                     </Col>
                     </Form.Group>
 
-                    <Form.Group as={Row} className="justify-content-center" >
-                    <Col md="8"> 
-                    <div  className="row justify-content mb-5">
-                      <Button variant="primary" type="submit" size="lg" href={`/admin/editControlNutri/${control.id}/${userControl.documento}/${rolUser}`}> Editar Control </Button>
-                    </div>
-                    </Col>
-                  </Form.Group>
-
+                        <Form.Group as={Row} className="justify-content-center" >
+                            <Col md="8"> 
+                            <div  className="row justify-content mb-5">
+                            <Button variant="primary" type="submit" size="lg" href={`/admin/editControlNutriMadre/${control.id}/${userControl.documento}/${rolUser}`}> Editar Control </Button>
+                            </div>
+                            </Col>
+                        </Form.Group>
+                   
                   </Col>
                   <Col sm={1}></Col>
                 </Row>
