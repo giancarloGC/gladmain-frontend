@@ -7,7 +7,6 @@ export const AuthContext = createContext();
 export default function AuthProvider(props){
     const { children } = props;
     const [ user, setUser ] = useState({ user: null, isLoading: true});
-    console.log("en authprovider");
     useEffect(() => {
         checkUserLogin(setUser);
     }, []);
@@ -18,13 +17,10 @@ export default function AuthProvider(props){
 function checkUserLogin(setUser){
     const token = localStorage.getItem(TOKEN);
     if(!token){
-        console.log("no hay token");
         logout();
         setUser({ user: null, isLoading: false});
     }else{
-        console.log("si hay");
         let tokenDecoded = jwt_decode(token);
-        console.log(tokenDecoded);
         setUser({ user: tokenDecoded, isLoading: false});
     };
 }

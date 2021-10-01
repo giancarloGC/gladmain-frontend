@@ -29,7 +29,6 @@ export default function AddControlCD(props){
       control: responseControl
     }
     if(result.user === true && result.control === true){
-      console.log("entro");
       swal("¡Excelente, registro exitoso!, El control fue almacenado correctamente", {
         icon: "success",
       })
@@ -38,7 +37,6 @@ export default function AddControlCD(props){
         }); 
       setShow(true);
   }else{
-    console.log("rarisimo");
     swal("Opss! Ocurrió un error!", {
       icon: "error",
   });
@@ -73,7 +71,7 @@ export default function AddControlCD(props){
 
   const calculateIMC = (kg, metros) => {
     const imc = kg / (metros * metros);
-    return imc;
+    return imc.toFixed(2);
   }
 
   const updateAgeUser = async (dataUser) => {
@@ -99,9 +97,8 @@ export default function AddControlCD(props){
 
     return(
         <Container className="b">
-            <Row  style={{backgroundColor: '#f1f1f1'}}>
-              <Col sm={1}> </Col>
-                <Col sm={10}> 
+            <Row className="justify-content-center">
+              <Col sm={10}>
                 <Formik 
                 initialValues={{ 
                     documento: '',
@@ -121,7 +118,6 @@ export default function AddControlCD(props){
                 
                 validate={(valores) => {
                   let errores = {};
-
                   if(!valores.edad){
                     errores.edad = 'Por favor, ingresa números';
                   }else if(!/^([0-9])*$/.test(valores.edad)){
@@ -129,11 +125,6 @@ export default function AddControlCD(props){
                   }else if(valores.edad <= 0 || valores.edad > 90){
                     errores.edad = 'Edad invalida, intente con otra';
                   }  
-                  
-                  if(!valores.proximoControl){
-                    errores.proximoControl = 'Asegurese de selecionar una fecha';
-                  }
-
                   const dateCurrently = moment();
                   if(!valores.fechaControl){
                     errores.fechaControl = 'Asegurese de selecionar una fecha';
@@ -143,7 +134,6 @@ export default function AddControlCD(props){
                         errores.fechaControl = 'Seleccione una fecha valida, no mayor a hoy';
                   }
                   }
-
                   if(!valores.peso){
                     errores.peso = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9-.])*$/.test(valores.peso)){
@@ -161,7 +151,6 @@ export default function AddControlCD(props){
                       errores.peso = 'el peso debe ser menor ó igual a 32 kg';
                     }
                   }
-
                   if(!valores.talla){
                     errores.talla = 'Por favor, ingresa solo números';
                   }else if(!/^([0-9-.])*$/.test(valores.talla)){
@@ -179,14 +168,12 @@ export default function AddControlCD(props){
                       errores.talla = 'La talla debe ser menor ó igual a 120 cm';
                     }
                   }
-
                   if(valores.talla && valores.peso){
-                    let tal = parseInt(calculateIMC(valores.peso, convertCmToM(valores.talla)))
+                    let tal = calculateIMC(valores.peso, convertCmToM(valores.talla))
                     setImc(tal);
                   }else{
                     setImc(null);
                   }
-                  
                   return errores;
                 }}
 
@@ -198,14 +185,14 @@ export default function AddControlCD(props){
                     idUsuario: userControl.documento,
                     idUsuarioNutricionista: documertParse,
                     fechaControl: valores.fechaControl,
-                    peso: convertKgToG(valores.peso),
+                    peso: valores.peso,
                     talla: valores.talla,
                     imc: imc,
                     estadoNutricional: "",
                     tension: null,
                     edadGestacional: null,
                     ultimoControl: valores.ultimoControl,
-                    proximoControl: valores.proximoControl,
+                    proximoControl: 0,
                     vigente: false,
                     meses: valores.edad,
                 }
@@ -242,132 +229,9 @@ export default function AddControlCD(props){
                             </p>
                         </Alert>
                      )}
-
-                    <Form.Group as={Row} className="mb-3 mt-5">
-                        <Form.Label column md={2} style={{"fontSize": "12px !important"}} >Número documento</Form.Label>
-                        <Col md={4}>
-                            <InputGroup hasValidation>
-                            <Form.Control type="number" placeholder="Dígita el documento" size="lg" id="documento" name="documento" style={{marginLeft:10}}
-                               value={userControl.documento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.documento && touched.documento}
-                               isValid={!errors.documento && touched.documento} disabled
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.documento}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                        </Col>
-
-                        <Form.Label column md={2} style={{"fontSize": "12px !important"}}>Nombre</Form.Label>
-                        <Col md={4}>
-                        <InputGroup hasValidation>
-                            <Form.Control type="text" placeholder="Dígita aquí el nombre" size="lg" id="nombre" name="nombre" 
-                               value={userControl.nombre} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombre && touched.nombre}
-                               isValid={!errors.nombre && touched.nombre} disabled
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.nombre}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                        </Col>
-                        </Form.Group>
-
-                        <Form.Group as={Row} className="mb-3 mt-4">
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Fecha nacimiento</Form.Label>
-                        <Col sm="4">
-                          <InputGroup hasValidation>
-                              <Form.Control type="date" size="lg" id="fechaNacimiento" name="fechaNacimiento" 
-                                 value={dateFormat(userControl.fechaNacimiento)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaNacimiento && touched.fechaNacimiento}
-                                 isValid={!errors.fechaNacimiento && touched.fechaNacimiento} disabled
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.fechaNacimiento}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                        </Col>
-
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Sexo</Form.Label>
-                        <Col sm="4">
-                          <InputGroup hasValidation>
-                          <Form.Select name="sexo" onChange={handleChange} onBlur={handleBlur}
-                                value={userControl.sexo} isValid={!errors.sexo && touched.sexo} isInvalid={!!errors.sexo && touched.sexo} disabled
-                              >
-                              <option disabled>Selecciona el sexo</option>
-                              <option value="FEMENINO">FEMENINO</option>
-                              <option value="MASCULINO">MASCULINO</option>
-
-                              </Form.Select>
-                              <Form.Control.Feedback type="invalid">
-                                          {errors.sexo}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                          </Col>
-
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Edad </Form.Label>
-                        <Col sm="4">
-                        <InputGroup hasValidation>
-                              <Form.Control type="text" placeholder="Dígita aquí la edad" size="lg" id="edad" name="edad" 
-                              value={`${userControl.edad} meses`} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
-                               isValid={!errors.edad && touched.edad} disabled
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.edad}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                        </Col>
-                       
-
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Peso (kg)</Form.Label>
-                        <Col sm="4">
-                          <InputGroup hasValidation>
-                              <Form.Control type="number" placeholder="Peso en (Kg)" size="lg" id="peso" name="peso" 
-                               defaultValue={convertKgToG(values.peso)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.peso && touched.peso}
-                               isValid={!errors.peso && touched.peso}
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.peso}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                        </Col>
-                        </Form.Group> 
-
-                        <Form.Group as={Row} className="mb-3 mt-4">
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Talla (cm)</Form.Label>
-                        <Col sm="4">
-                          <InputGroup hasValidation>
-                              <Form.Control type="number" placeholder="Talla en (m)" size="lg" id="talla" name="talla" 
-                               defaultValue={values.talla} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.talla && touched.talla}
-                              isValid={!errors.talla && touched.talla}
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.talla}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                        </Col>
-
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>IMC calculado</Form.Label>
-                        <Col sm="4">
-                          <InputGroup hasValidation>
-                              <Form.Control className="mt-2" type="text" placeholder="Valor de IMC" size="lg" id="imc" name="imc" 
-                               value={imc ? imc : ''} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.imc && touched.imc}
-                               isValid={!errors.imc && touched.imc} disabled
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.imc}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                        </Col>
-                        </Form.Group> 
-
-                        <Form.Group as={Row} className="mb-3 mt-4">
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Fecha control</Form.Label>
+                
+                <Form.Group as={Row} className="mt-2">
+                        <Form.Label column sm="2"><h1 style={{fontSize: "20px", color:"#0084d2" }} className="mt-2">Fecha control</h1></Form.Label>
                         <Col sm="4">
                           <InputGroup hasValidation>
                               <Form.Control className="mt-2" type="date" size="lg" id="fechaControl" name="fechaControl" 
@@ -380,36 +244,113 @@ export default function AddControlCD(props){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
+                </Form.Group> 
 
-                        <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Fecha prox. control</Form.Label>
-                        <Col sm="4">
+              <Row className="justify-content-center">
+              <Col sm={12} className="mt-3 mb-4" style={{backgroundColor: '#f1f1f1', borderRadius:'5px'}}> 
+
+                    <Form.Group as={Row} className="mt-3">
+                        <Form.Label column sm={2}> <h5 style={{fontSize: "16px"}}> Número documento</h5></Form.Label>
+                        <Col sm={4}>
+                            <InputGroup hasValidation>
+                            <Form.Control type="number" placeholder="Dígita el documento" size="l" id="documento" name="documento"
+                               value={userControl.documento} onChange={handleChange} onBlur={handleBlur} disabled
+                            />
+                        </InputGroup>
+                        </Col>
+
+                        <Form.Label column sm={2}> <h5 style={{fontSize: "16px"}} className="mt-1">Nombre</h5></Form.Label>
+                        <Col sm={4}>
+                        <InputGroup hasValidation>
+                            <Form.Control type="text" placeholder="Dígita aquí el nombre" size="l" id="nombre" name="nombre" 
+                               value={userControl.nombre} onChange={handleChange} onBlur={handleBlur} disabled
+                            />
+                        </InputGroup>
+                        </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row} className="mt-3">
+                        <Form.Label column sm={2}> <h5 style={{fontSize: "16px"}}>Fecha nacimiento</h5></Form.Label>
+                        <Col sm={4}>
                           <InputGroup hasValidation>
-                              <Form.Control  className="mt-2" type="date" size="lg" id="proximoControl" name="proximoControl" 
-                                 value={values.proximoControl} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.proximoControl && touched.proximoControl}
-                                 isValid={!errors.proximoControl && touched.proximoControl}
+                              <Form.Control type="date" size="l" id="fechaNacimiento" name="fechaNacimiento" 
+                                 value={dateFormat(userControl.fechaNacimiento)} onChange={handleChange} onBlur={handleBlur} disabled
+                              />
+                          </InputGroup>
+                        </Col>
+
+                        <Form.Label column sm={2}> <h5 style={{fontSize: "16px"}} className="mt-1"> Edad </h5> </Form.Label>
+                        <Col sm={4}>
+                        <InputGroup hasValidation>
+                              <Form.Control type="text" placeholder="Dígita aquí la edad" size="l" id="edad" name="edad" 
+                              value={`${userControl.edad} meses`} onChange={handleChange} onBlur={handleBlur}  disabled
+                              />
+                          </InputGroup>
+                      </Col>
+                      </Form.Group> 
+
+                      <Form.Group as={Row} className="mt-2 mb-2">
+                        <Form.Label column sm={2}> <h5 style={{fontSize: "16px"}} className="mt-1"> Sexo </h5></Form.Label>
+                        <Col sm={2}>
+                          <InputGroup hasValidation>
+                          <Form.Select name="sexo" onChange={handleChange} onBlur={handleBlur} size="l"
+                                value={userControl.sexo} disabled
+                              >
+                              <option disabled>Selecciona el sexo</option>
+                              <option value="FEMENINO">FEMENINO</option>
+                              <option value="MASCULINO">MASCULINO</option>
+                              </Form.Select>
+                          </InputGroup>
+                          </Col>
+
+
+                        <Form.Label column sm="2"> <h5 style={{fontSize: "16px"}} className="mt-1"> Peso (kg) </h5></Form.Label>
+                        <Col sm="2">
+                          <InputGroup hasValidation>
+                              <Form.Control type="number" placeholder="Peso en (Kg)" size="l" id="peso" name="peso" 
+                               defaultValue={values.peso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.peso && touched.peso}
+                               isValid={!errors.peso && touched.peso}
                               />
                               <Form.Control.Feedback type="invalid">
-                                  {errors.proximoControl}
+                                  {errors.peso}
                               </Form.Control.Feedback>
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
-                        </Form.Group> 
 
-                        <Row >
-                        <div  className="row justify-content mb-5">
+                        <Form.Label column sm="2"><h5 style={{fontSize: "16px"}} className="mt-1">Talla (cm) </h5></Form.Label>
+                        <Col sm="2">
+                          <InputGroup hasValidation>
+                              <Form.Control type="number" placeholder="Talla en (m)" size="l" id="talla" name="talla" 
+                               defaultValue={values.talla} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.talla && touched.talla}
+                              isValid={!errors.talla && touched.talla}
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                  {errors.talla}
+                              </Form.Control.Feedback>
+                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          </InputGroup>
+                        </Col>
+                        </Form.Group>
+                        </Col>
+                    </Row >
+
+                    <Form.Group as={Row} className="justify-content-center">
+                        <Alert variant="warning">
+                          <Alert.Heading className="text-center" style={{fontSize: "18px"}}>IMC Calculado: {imc ? imc : ''}</Alert.Heading>
+                        </Alert>
+                    </Form.Group> 
+
+                    <Form.Group as={Row} className="mt-1 justify-content-center">
                             <Button variant="primary" type="submit" size="lg">
                                 Guardar
                             </Button>
-                        </div>
-                        </Row >
-
-                    </Form>
+                    </Form.Group> 
+                  </Form>
                             );
                         }}
                       </Formik> 
-                </Col>
-                <Col sm={1}> </Col>  
+              </Col>
             </Row>
         </Container>
     )

@@ -63,17 +63,17 @@ export default function AddControlN(props){
 
       // de 0 A 2 AÑOS
       const indexToFind = (element) => element > talla -1;
-      let indexEjex = userControl.edad > 0 && userControl.edad <= 24 ? labels.findIndex(indexToFind) : labels2_5.findIndex(indexToFind)
+      let indexEjex = userControl.edad >= 0 && userControl.edad <= 24 ? labels.findIndex(indexToFind) : labels2_5.findIndex(indexToFind)
       
       //Recorrer cada linea para saber si el numero es mayor o menor a cada linea
       // de 0 A 2 AÑOS
       //Recorrer cada linea para saber si el numero es mayor o menor a cada linea
-      let valueXlineMasTres = userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMasTres[indexEjex] : lineasGraphics2_5.lineMasTres[indexEjex];
-      let valueXlineMasDos = userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMasDos[indexEjex] : lineasGraphics2_5.lineMasDos[indexEjex];
-      let valueXlineMasUno = userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMasUno[indexEjex] : lineasGraphics2_5.lineMasUno[indexEjex];
-      let valueXlineMenosUno = userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosUno[indexEjex] : lineasGraphics2_5.lineMenosUno[indexEjex];
-      let valueXlineMenosDos = userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosDos[indexEjex] : lineasGraphics2_5.lineMenosDos[indexEjex];
-      let valueXLineMenosTres = userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosTres[indexEjex] : lineasGraphics2_5.lineMenosTres[indexEjex];
+      let valueXlineMasTres = userControl.edad >= 0 && userControl.edad <= 24 ? lineasGraphics.lineMasTres[indexEjex] : lineasGraphics2_5.lineMasTres[indexEjex];
+      let valueXlineMasDos = userControl.edad >= 0 && userControl.edad <= 24 ? lineasGraphics.lineMasDos[indexEjex] : lineasGraphics2_5.lineMasDos[indexEjex];
+      let valueXlineMasUno = userControl.edad >= 0 && userControl.edad <= 24 ? lineasGraphics.lineMasUno[indexEjex] : lineasGraphics2_5.lineMasUno[indexEjex];
+      let valueXlineMenosUno = userControl.edad >= 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosUno[indexEjex] : lineasGraphics2_5.lineMenosUno[indexEjex];
+      let valueXlineMenosDos = userControl.edad >= 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosDos[indexEjex] : lineasGraphics2_5.lineMenosDos[indexEjex];
+      let valueXLineMenosTres = userControl.edad >= 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosTres[indexEjex] : lineasGraphics2_5.lineMenosTres[indexEjex];
 
       
       
@@ -109,17 +109,25 @@ export default function AddControlN(props){
     }
 
     const data = {
-      labels: userControl.edad > 0 && userControl.edad <= 24 ? labels : labels2_5,
+      labels: userControl.edad >= 0 && userControl.edad <= 24 ? labels : labels2_5,
       datasets: [{
+        label: 'Nuevo Control',
+        type: "bubble",
+        pointStyle: "bubble",
+        data: [graphicValues],
+        borderColor: userControl.sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
+        backgroundColor: userControl.sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',       
+      },
+        {
           label: '- 3',
-          data: userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosTres : lineasGraphics2_5.lineMenosTres,
+          data: userControl.edad >= 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosTres : lineasGraphics2_5.lineMenosTres,
           fill: false,
           borderColor: userControl.sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1,
         },
         {
           label: '- 2',
-          data: userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosDos : lineasGraphics2_5.lineMenosDos,
+          data: userControl.edad >= 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosDos : lineasGraphics2_5.lineMenosDos,
           fill: false,
           borderColor: userControl.sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1,
@@ -127,28 +135,28 @@ export default function AddControlN(props){
         },
         {
           label: '- 1',
-          data: userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosUno : lineasGraphics2_5.lineMenosUno,
+          data: userControl.edad >= 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosUno : lineasGraphics2_5.lineMenosUno,
           fill: false,
           borderColor: userControl.sexo !== "FEMENINO" ? '#E3B402' : '#E3B402',
           tension: 0.1
         },
         {
           label: '0',
-          data: userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineCero : lineasGraphics2_5.lineCero,
+          data: userControl.edad >= 0 && userControl.edad <= 24 ? lineasGraphics.lineCero : lineasGraphics2_5.lineCero,
           fill: false,
           borderColor: userControl.sexo !== "FEMENINO" ? '#127D30' : '#127D30',
           tension: 0.1
         },
         {
           label: '+ 1',
-          data: userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMasUno : lineasGraphics2_5.lineMasUno,
+          data: userControl.edad >= 0 && userControl.edad <= 24 ? lineasGraphics.lineMasUno : lineasGraphics2_5.lineMasUno,
           fill: false,
           borderColor: userControl.sexo !== "FEMENINO" ? '#E3B402' : '#E3B402',
           tension: 0.1
         },
         {
           label: '+ 2',
-          data: userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMasDos : lineasGraphics2_5.lineMasDos,
+          data: userControl.edad >= 0 && userControl.edad <= 24 ? lineasGraphics.lineMasDos : lineasGraphics2_5.lineMasDos,
           fill: false,
           borderColor: userControl.sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1,
@@ -156,18 +164,10 @@ export default function AddControlN(props){
         },
         {
           label: '+ 3',
-          data: userControl.edad > 0 && userControl.edad <= 24 ? lineasGraphics.lineMasTres : lineasGraphics2_5.lineMasTres,
+          data: userControl.edad >= 0 && userControl.edad <= 24 ? lineasGraphics.lineMasTres : lineasGraphics2_5.lineMasTres,
           fill: false,
           borderColor: userControl.sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1
-        },
-        {
-          label: 'Nuevo Control',
-          type: "bubble",
-          pointStyle: "bubble",
-          data: [graphicValues],
-          borderColor: userControl.sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',
-          backgroundColor: userControl.sexo !== "FEMENINO" ? '#0559B7' : '#0559B7',       
         },
       ]
     };
@@ -450,7 +450,7 @@ export default function AddControlN(props){
                 <Row className="mt-3">
                  <Col md={8}>
                   <center>
-                  <Form.Label column sm="12" style={{"font-size": "12px !important" }}>Puntuación Z ({userControl.edad > 0 && userControl.edad <= 24 ? "0 a 2 años" : "2 a 5 años"})</Form.Label>
+                  <Form.Label column sm="12" style={{"font-size": "12px !important" }}>Puntuación Z ({userControl.edad >= 0 && userControl.edad <= 24 ? "0 a 2 años" : "2 a 5 años"})</Form.Label>
                   </center>
                       <div >
                         <Line 
@@ -464,7 +464,7 @@ export default function AddControlN(props){
                                 x: {
                                   type: 'linear',
                                   position: 'bottom',
-                                  min: userControl.edad > 0 && userControl.edad <= 24 ? 45 : 65 //45 = 0-2 años    65 = 2-5 años
+                                  min: userControl.edad >= 0 && userControl.edad <= 24 ? 45 : 65 //45 = 0-2 años    65 = 2-5 años
                                 }
                               }
                             }}

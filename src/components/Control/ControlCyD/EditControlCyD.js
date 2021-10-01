@@ -27,10 +27,10 @@ export default function EditControlCyD(props){
     return resultado;
   }
 
-  const convertGToKg = (kg) => {
+  /*const convertGToKg = (kg) => {
     let resultado = kg / 1000;
     return resultado;
-  }
+  }*/
     
   const convertCmToM = (cm) => {
     let resultado = cm / 100;
@@ -39,13 +39,12 @@ export default function EditControlCyD(props){
 
   const calculateIMC = (kg, metros) => {
     const imc = kg / (metros * metros);
-    return imc;
+    return imc.toFixed(2);
   }
 
   return (
     <Container className="b">
-      <Row  style={{backgroundColor: '#f1f1f1'}}>
-        <Col sm={1}> </Col>
+      <Row  className="justify-content-center">
           <Col sm={10}> 
           <Formik
             initialValues={{ 
@@ -67,15 +66,39 @@ export default function EditControlCyD(props){
               let errores = {};
 
               if(!valores.peso){
-                errores.peso = 'Por favor, ingresa números';
-              }else if(!/^([0-9])*$/.test(valores.peso)){
+                errores.peso = 'Por favor, ingresa solo números';
+              }else if(!/^([0-9-.])*$/.test(valores.peso)){
                 errores.peso = 'Solo puedes escribir números';
+              }else if(userControl.edad >= 0 && userControl.edad <= 24){
+                if(valores.peso < 1){
+                  errores.peso = 'el peso debe ser debe ser mayor a 1 kg';
+                }else if(valores.peso > 26){
+                  errores.peso = 'el peso debe ser menor ó igual a 26 kg';
+                }
+              }else{
+                if(valores.peso < 5){
+                  errores.peso = 'el peso debe ser debe ser mayor a 5 kg';
+                }else if(valores.peso > 32){
+                  errores.peso = 'el peso debe ser menor ó igual a 32 kg';
+                }
               }
 
               if(!valores.talla){
-                errores.talla = 'Por favor, ingresa números';
-              }else if(!/^([0-9])*$/.test(valores.talla)){
+                errores.talla = 'Por favor, ingresa solo números';
+              }else if(!/^([0-9-.])*$/.test(valores.talla)){
                 errores.talla = 'Solo puedes escribir números';
+              }else if(userControl.edad >= 0 && userControl.edad <= 24){
+                if(valores.talla < 45){
+                  errores.talla = 'La talla debe ser mayor a 45 cm';
+                }else if(valores.talla > 110){
+                  errores.talla = 'La talla debe ser menor ó igual a 110 cm';
+                }
+              }else{
+                if(valores.talla < 65){
+                  errores.talla = 'La talla debe ser mayor a 65 cm';
+                }else if(valores.talla > 120){
+                  errores.talla = 'La talla debe ser menor ó igual a 120 cm';
+                }
               }
 
               const dateCurrently = moment();
@@ -105,9 +128,9 @@ export default function EditControlCyD(props){
                 idUsuario: userControl.documento,
                 idUsuarioNutricionista: documertParse,
                 fechaControl: valores.fechaControl,
-                peso: convertKgToG(valores.peso),
+                peso: valores.peso,
                 talla: valores.talla,
-                imc: parseInt(calculateIMC(valores.peso, convertCmToM(valores.talla))),
+                imc: calculateIMC(valores.peso, convertCmToM(valores.talla)),
                 estadoNutricional: "",
                 tension: null,
                 edadGestacional: null,
@@ -152,121 +175,102 @@ export default function EditControlCyD(props){
                     </Alert>
                   )}
 
-                  <Form.Group as={Row} className="mb-3 mt-5">
-                    <Form.Label column md={2} style={{"font-size": "12px !important"}} >Número documento</Form.Label>
-                    <Col md={4}>
+
+                  <Form.Group as={Row} className="mt-2">
+                    <Form.Label column sm="2"><h1 style={{fontSize: "20px", color:"#0084d2" }} className="mt-2">Fecha control</h1></Form.Label>
+                    <Col sm="4">
                       <InputGroup hasValidation>
-                        <Form.Control type="number" placeholder="Dígita el documento" size="lg" id="documento" name="documento" style={{marginLeft:10}}
-                               value={userControl.documento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.documento && touched.documento}
-                               isValid={!errors.documento && touched.documento} disabled />
-                        <Form.Control.Feedback type="invalid"> {errors.documento} </Form.Control.Feedback>
+                        <Form.Control className="mt-2" type="date" size="lg" id="fechaControl" name="fechaControl" 
+                          defaultValue={dateFormat(control.fechaControl)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaControl && touched.fechaControl}
+                          isValid={!errors.fechaControl && touched.fechaControl} />
+                        <Form.Control.Feedback type="invalid"> 
+                        {errors.fechaControl} 
+                        </Form.Control.Feedback>
                         <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                       </InputGroup>
                     </Col>
+                    </Form.Group>
 
-                    <Form.Label column md={2} style={{"font-size": "12px !important"}}>Nombre</Form.Label>
+                  <Row className="justify-content-center">
+                  <Col sm={12} className="mt-3 mb-4" style={{backgroundColor: '#f1f1f1', borderRadius:'5px'}}> 
+                  
+                  <Form.Group as={Row} className="mt-3">
+                    <Form.Label column sm={2}> <h5 style={{fontSize: "16px"}}> Número documento </h5></Form.Label>
+                    <Col sm={4}>
+                      <InputGroup hasValidation>
+                        <Form.Control type="number" placeholder="Dígita el documento" size="l" id="documento" name="documento"
+                               value={userControl.documento} onChange={handleChange} onBlur={handleBlur} disabled />
+                      </InputGroup>
+                    </Col>
+
+                    <Form.Label column md={2}><h5 style={{fontSize: "16px"}} className="mt-1">Nombre</h5></Form.Label>
                     <Col md={4}>
                       <InputGroup hasValidation>
-                        <Form.Control type="text" placeholder="Dígita aquí el nombre" size="lg" id="nombre" name="nombre" 
-                          value={userControl.nombre} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombre && touched.nombre}
-                          isValid={!errors.nombre && touched.nombre} disabled />
-                        <Form.Control.Feedback type="invalid"> {errors.nombre} </Form.Control.Feedback>
-                        <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                        <Form.Control type="text" placeholder="Dígita aquí el nombre" size="l" id="nombre" name="nombre" 
+                          value={userControl.nombre} onChange={handleChange} onBlur={handleBlur} disabled />
                       </InputGroup>
                     </Col>
                   </Form.Group>
 
-                  <Form.Group as={Row} className="mb-3 mt-4">
-                    <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Fecha nacimiento</Form.Label>
-                    <Col sm="4">
+                  <Form.Group as={Row} className="mt-3">
+                    <Form.Label column sm={2}><h5 style={{fontSize: "16px"}}>Fecha nacimiento</h5></Form.Label>
+                    <Col sm={4}>
                       <InputGroup hasValidation>
-                        <Form.Control type="date" size="lg" id="fechaNacimiento" name="fechaNacimiento" 
-                          value={dateFormat(userControl.fechaNacimiento)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaNacimiento && touched.fechaNacimiento}
-                          isValid={!errors.fechaNacimiento && touched.fechaNacimiento} disabled />
-                        <Form.Control.Feedback type="invalid"> {errors.fechaNacimiento} </Form.Control.Feedback>
-                        <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                      </InputGroup>
+                        <Form.Control type="date" size="l" id="fechaNacimiento" name="fechaNacimiento" 
+                          value={dateFormat(userControl.fechaNacimiento)} onChange={handleChange} onBlur={handleBlur} disabled />
+                       </InputGroup>
                     </Col>
 
-                    <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Sexo</Form.Label>
-                    <Col sm="4">
+                    <Form.Label column sm={2}><h5 style={{fontSize: "16px"}} className="mt-1">Sexo</h5></Form.Label>
+                    <Col sm={4}>
                       <InputGroup hasValidation>
                         <Form.Select name="sexo" onChange={handleChange} onBlur={handleBlur}
-                          value={userControl.sexo} isValid={!errors.sexo && touched.sexo} 
-                          isInvalid={!!errors.sexo && touched.sexo} disabled >
+                          value={userControl.sexo} disabled >
                           <option disabled>Selecciona el sexo</option>
                           <option value="FEMENINO">FEMENINO</option>
                           <option value="MASCULINO">MASCULINO</option>
                         </Form.Select>
-                        <Form.Control.Feedback type="invalid">{errors.sexo} </Form.Control.Feedback>
-                        <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                      </InputGroup>
+                        </InputGroup>
                     </Col>
+                    </Form.Group>
 
-                    <Form.Label column sm="1" style={{"font-size": "12px !important"}}>Peso (kg)</Form.Label>
-                    <Col sm="2">
+                    <Form.Group as={Row} className="mt-2 mb-2">
+                    <Form.Label column sm={2}><h5 style={{fontSize: "16px"}} className="mt-1">Peso (kg)</h5></Form.Label>
+                    <Col sm={4}>
                       <InputGroup hasValidation>
-                        <Form.Control type="number" placeholder="Peso (kg)" size="lg" id="peso" name="peso" 
-                          defaultValue={convertGToKg(control.peso)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.peso && touched.peso}
+                        <Form.Control type="text" placeholder="Peso (kg)" size="l" id="peso" name="peso" 
+                          defaultValue={control.peso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.peso && touched.peso}
                           isValid={!errors.peso && touched.peso} />
                         <Form.Control.Feedback type="invalid"> {errors.peso} </Form.Control.Feedback>
                         <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                       </InputGroup>
                     </Col>
                         
-                    <Form.Label column sm="1" style={{"font-size": "12px !important"}}>Talla (cm)</Form.Label>
-                    <Col sm="2">
+                    <Form.Label column sm="2"><h5 style={{fontSize: "16px"}} className="mt-1">Talla (cm)</h5></Form.Label>
+                    <Col sm="4">
                       <InputGroup hasValidation>
-                        <Form.Control type="number" placeholder="Talla (cm)" size="lg" id="talla" name="talla" 
+                        <Form.Control type="text" placeholder="Talla (cm)" size="l" id="talla" name="talla" 
                           defaultValue={control.talla} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.talla && touched.talla}
                           isValid={!errors.talla && touched.talla} />
                         <Form.Control.Feedback type="invalid"> {errors.talla} </Form.Control.Feedback>
                         <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                       </InputGroup>
                     </Col>
-
-                    <Form.Label column sm="2" style={{"font-size": "12px !important"}}>IMC calculado</Form.Label>
-                    <Col sm="4">
-                      <InputGroup hasValidation>
-                        <Form.Control className="mt-2" type="text" placeholder="Valor de IMC" size="lg" id="imc" name="imc" 
-                          value={calculateIMC(values.peso, convertCmToM(values.talla))} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.imc && touched.imc}
-                          isValid={!errors.imc && touched.imc} disabled />
-                        <Form.Control.Feedback type="invalid"> {errors.imc} </Form.Control.Feedback>
-                        <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                      </InputGroup>
+                    </Form.Group>
                     </Col>
-                  </Form.Group> 
+                    </Row >
 
-                  <Form.Group as={Row} className="mb-3 mt-4">
-                    <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Fecha control</Form.Label>
-                    <Col sm="4">
-                      <InputGroup hasValidation>
-                        <Form.Control className="mt-2" type="date" size="lg" id="fechaControl" name="fechaControl" 
-                          defaultValue={dateFormat(control.fechaControl)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaControl && touched.fechaControl}
-                          isValid={!errors.fechaControl && touched.fechaControl} />
-                        <Form.Control.Feedback type="invalid"> {errors.fechaControl} </Form.Control.Feedback>
-                        <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                      </InputGroup>
-                    </Col>
+                    <Form.Group as={Row} className="justify-content-center">
+                        <Alert variant="warning">
+                          <Alert.Heading className="text-center" style={{fontSize: "18px"}}>IMC Calculado: {calculateIMC(values.peso, convertCmToM(values.talla))}</Alert.Heading>
+                        </Alert>
+                    </Form.Group> 
 
-                    <Form.Label column sm="2" style={{"font-size": "12px !important"}}>Fecha prox. control</Form.Label>
-                    <Col sm="4">
-                      <InputGroup hasValidation>
-                        <Form.Control  className="mt-2" type="date" size="lg" id="proximoControl" name="proximoControl" 
-                          defaultValue={dateFormat(control.proximoControl)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.proximoControl && touched.proximoControl}
-                          isValid={!errors.proximoControl && touched.proximoControl} />
-                        <Form.Control.Feedback type="invalid"> {errors.proximoControl} </Form.Control.Feedback>
-                        <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                      </InputGroup>
-                    </Col>
-                  </Form.Group> 
-
-                  <Row >
-                    <div  className="row justify-content mb-5">
-                      <Button variant="primary" type="submit" size="lg"> Guardar </Button>
-                    </div>
-                  </Row >
-
+                <Form.Group as={Row} className="mt-1 justify-content-center">
+                      <Button variant="primary" type="submit" size="lg"> 
+                      Guardar 
+                      </Button>
+                </Form.Group> 
                 </Form>
               );
             }}

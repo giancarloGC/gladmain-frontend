@@ -17,13 +17,14 @@ export function insertSegApi(data, token){
             .catch(err => {return err});
 }
 
-export function updateSegApi(data){
-    const url = `${urlBackend}control_seguimiento/ACTUALIZAR_SEGUIMIENTO`;
+export function updateSegApi(data, token){
+    const url = `/api/control_seguimiento/ACTUALIZAR_SEGUIMIENTO`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
-        method: "PUT",
+        method: "POST",
         body: JSON.stringify(data)
     };
 
@@ -40,6 +41,22 @@ export function deleteSegApi(id){
             "Content-Type": "application/json"
         },
         method: "DELETE"
+    };
+
+    return fetch(url, params)
+            .then(response => {return response.json()})
+            .then(result => {return result})
+            .catch(err => {return err});
+}
+
+export function getSegApi(documento, token){
+    const url = `/api/control_seguimiento/LISTAR_SEGUIMIENTOS/${documento}`;
+    const params = {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": token
+        },
+        method: "GET"
     };
 
     return fetch(url, params)

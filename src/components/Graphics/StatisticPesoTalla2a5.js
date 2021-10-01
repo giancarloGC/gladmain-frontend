@@ -2,11 +2,35 @@ import React, { useState, useEffect} from "react";
 import { Container, Form } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
 import { lineasGraphics2_5 } from "../Control/ControlNutri/LabelsAndLineas2-5";
+import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import "./StatisticNutri.scss";
 import moment from 'moment';
 
 export default function StatisticPesoTalla2a5(props){
-  const { sexo, listControls } = props;
+  const { sexo, listControls, token, documento } = props;
+  const { rolUser } = useParams();
+  const [ goRedirect, setGoRedirect ] = useState(false);
+  const [ idControl, setIdControl ] = useState(0);
+
+  const getDatasetAtEvent = async (dataset) => {
+    if (!dataset.length) return;
+  
+    const datasetIndex = dataset[0].datasetIndex;
+    //setClickedDataset(data.datasets[datasetIndex].label);
+    const infoSelected = data.datasets[datasetIndex].label.split(" ");
+    const id = infoSelected[1];
+    setIdControl(id);
+    setGoRedirect(true);
+    /*const response = await getControlByIdApi(id, token);
+    console.log(response);*/
+  };
+  
+  const dateFormat = (date) => {
+    if(date){
+    let dateFormated = date.split('T');
+    return dateFormated[0];
+    }
+  }
 
   const generateCoordenadas = () => {
     let coordenadas = [];
@@ -14,7 +38,7 @@ export default function StatisticPesoTalla2a5(props){
   
     listControls.map((item, index) => {
       var coor = {
-        label: `Control ${item.id} - ${moment(item.fechaControl).format("DD-MM-YYYY")}`,
+        label: `Control ${item.id} - ${dateFormat(item.fechaControl)}`,
         data: [{
           y: item.peso,
           x: item.talla,
@@ -41,6 +65,9 @@ const data = {
   };
     return(
         <Container>
+             {goRedirect && (
+                  <Redirect to={`/admin/DetailControlNutri/${idControl}/${documento}/${rolUser}`} />
+              )}
              {sexo === "MASCULINO" ?
                 <h2 className="text-center">Peso para la Talla Niños </h2>
               : 
@@ -68,6 +95,7 @@ const data = {
                         }
                       }
                     }}
+                    getDatasetAtEvent={getDatasetAtEvent}
                 />
                 </div>
               </div>

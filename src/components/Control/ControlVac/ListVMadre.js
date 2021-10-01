@@ -10,7 +10,7 @@ import { TOKEN } from "../../../utils/constans";
 import { deleteContVaccApi } from "../../../api/vaccination";
 
 export default function ListVMadre(props){
-    const { listControls, lastControls } = props;
+    const { listControls } = props;
     const { documento } = useParams();
     const token = localStorage.getItem(TOKEN);
 

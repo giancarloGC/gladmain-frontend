@@ -4,15 +4,12 @@ import { Formik } from "formik";
 import { TOKEN } from "../../../utils/constans";
 import  AuthContext  from "../../../hooks/useAuth";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
-import swal from 'sweetalert';
-import Lottie from 'react-lottie';
-import { getUserByIdApi } from "../../../api/user";
-
 import "./GraphicAddNutri.scss";
 import moment from 'moment';
 
 export default function DetailControlN(props){
     const { userControl, control, nombreNutricionista } = props;
+    const { rolUser } = useParams();
     const { user } = AuthContext();
     const token = localStorage.getItem(TOKEN);
     const [show, setShow] = useState(false);
@@ -21,7 +18,6 @@ export default function DetailControlN(props){
     const [ stateNutrition, setStateNutrition ] = useState({ color: "", text: "", animation: null});
     const [ imc, setImc ] = useState(0);
     const [ graphicValues, setGraphicValues] = useState({ x: 0, y: 0, r: 10});
-    const rolUser = "madre";
     const [ goRedirect, setGoRedirect ] = useState(false);
 
     let dateFechaNaci = moment(userControl.fechaNacimiento);
@@ -207,16 +203,20 @@ export default function DetailControlN(props){
                       <Alert.Heading className="text-center" style={{fontSize: "18px"}}>Estado nutricional: {control.estadoNutricional}</Alert.Heading>
                     </Alert>
                     </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row} className="justify-content-center" >
+                    <Col md="8"> 
+                    <div  className="row justify-content mb-5">
+                      <Button variant="primary" type="submit" size="lg" href={`/admin/editControlNutri/${control.id}/${userControl.documento}/${rolUser}`}> Editar Control </Button>
+                    </div>
+                    </Col>
                   </Form.Group>
 
                   </Col>
                   <Col sm={1}></Col>
                 </Row>
-               
-              {rolUser === "MADRE_GESTANTE" && ( 
-                <p>Campo de mamita TENSION</p>
-              )}   
-                
+
                     </Form>
                             );
                         }}

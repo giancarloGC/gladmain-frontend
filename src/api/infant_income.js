@@ -1,6 +1,5 @@
 import { urlBackend } from "./config";
 
-
 export function insertInfantIncomeApi(data, token){
     const url = `/api/control_seguimiento/REGISTRAR_INGRESO_INFANTE`;
     const params = {
@@ -50,15 +49,15 @@ export function getInfantIncomeApi(documento, token){
             .catch(err => {return err});
 }
 
-export function getInfantIncomeXIdApi(id){
-    const url = `${urlBackend}control_seguimiento/CONSULTAR_INGRESO_INFANTE${id}`;
+export function getInfantIncomeXIdApi(idInc, token){
+    const url = `/api/control_seguimiento/CONSULTAR_INGRESO_INFANTE/${idInc}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET"
     };
-
     return fetch(url, params)
             .then(response => {return response.json()})
             .then(result => {return result})

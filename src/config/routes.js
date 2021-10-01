@@ -1,5 +1,4 @@
 import Welcome from "../pages/Welcome/Welcome";
-
 import LayoutAdmin from "../layouts/LayoutAdmin";
 import Login from "../pages/Login/Login";
 import Home from "../pages/Home/Home";
@@ -7,6 +6,7 @@ import ListRol from "../pages/Rol/ListRol";
 import AddRol from "../pages/Rol/AddRol";
 import EditRol from "../pages/Rol/EditRol";
 import ListUsers from "../pages/Users/ListUsers";
+import ListUserDesnutrition from "../pages/Users/ListUserDesnutrition";
 import AddUser from "../pages/Users/AddUser";
 import EditUser from "../pages/Users/EditUser";
 import User from "../pages/Users/User";
@@ -14,7 +14,10 @@ import ListVac from "../pages/ControlVac/ListVac";
 import ListVacMadre from "../pages/ControlVac/ListVacMadre";
 import ListControlNutri from "../pages/ControlNutri/ListControlNutri";
 import DetailControlNutri from "../pages/ControlNutri/DetailControlNutri";
+import DetailControlNutriMadre from "../pages/ControlNutri/DetailControlNutriMadre";
 import AddControlNutri from "../pages/ControlNutri/AddControlNutri";
+import EditControlNutri from "../pages/ControlNutri/EditControlNutri";
+import EditControlNutriMadre from "../pages/ControlNutri/EditControlNutriMadre";
 import AddControlNutriMadre from "../pages/ControlNutri/AddControlNutriMadre";
 import AddControlCyD from "../pages/ControlCyD/AddControlCyD";
 import EditControlCD from "../pages/ControlCyD/EditControlCD";
@@ -25,6 +28,7 @@ import EditControlVac from "../pages/ControlVac/EditControlVac";
 import EditControlVacMadre from "../pages/ControlVac/EditControlVacMadre";
 import AddControlFollow from "../pages/ControlFollow/AddControlFollow";
 import AddInfantIncome from "../pages/ControlFollow/AddInfantIncome";
+import AddMotherIncome from "../pages/ControlFollow/AddMotherIncome";
 import EditControlFollow from "../pages/ControlFollow/EditControlFollow";
 import EditInfantIncome from "../pages/ControlFollow/EditInfantIncome";
 import DetailsInfantIncome from "../pages/ControlFollow/DetailsInfantIncome";
@@ -35,7 +39,8 @@ import ListControlRemission from "../pages/ControlFollow/ListControlRemission";
 import AddCommitment from "../pages/ControlFollow/AddCommitment";
 import ListCommitment from "../pages/ControlFollow/ListCommitment";
 import EditCommitment from "../pages/ControlFollow/EditCommitment";
-import ListFollowUpChecks from "../pages/ControlFollow/ListFollowUpChecks";
+import DetailCommitment from "../pages/ControlFollow/DetailCommitment";
+import ListFollow from "../pages/ControlFollow/ListFollow";
 import StatisticNutri from "../components/Graphics/StatisticNutri";
 import StatisticTallaEdad from "../components/Graphics/StatisticTallaEdad";
 import StatisticPesoEdad from "../components/Graphics/StatisticPesoEdad";
@@ -96,6 +101,11 @@ const routes = [
                 component: ListUsers,
             },  
             {
+                path: "/admin/usersDesnutrition",
+                exact: true,
+                component: ListUserDesnutrition,
+            },
+            {
                 path: "/admin/addUser",
                 exact: true,
                 component: AddUser,
@@ -115,6 +125,16 @@ const routes = [
                 exact: true,
                 component: AddControlNutri,
             },    
+            {
+                path: "/admin/editControlNutri/:id/:documento/:rolUser",
+                exact: true,
+                component: EditControlNutri,
+            },
+            {
+                path: "/admin/editControlNutriMadre/:id/:documento/:rolUser",
+                exact: true,
+                component: EditControlNutriMadre,
+            },
             {
                 path: "/admin/AddControlNutriMadre/:documento/:rolUser",
                 exact: true,
@@ -216,9 +236,14 @@ const routes = [
                 component: ListControlNutri,
             }, 
             {
-                path: "/admin/DetailControlNutri/:id/:documento",
+                path: "/admin/DetailControlNutri/:id/:documento/:rolUser",
                 exact: true,
                 component: DetailControlNutri,
+            }, 
+            {
+                path: "/admin/DetailControlNutriMadre/:id/:documento/:rolUser",
+                exact: true,
+                component: DetailControlNutriMadre,
             }, 
             {
                 path: "/admin/listControlCyD/:documento",
@@ -241,7 +266,7 @@ const routes = [
                 component: AddControlFollow,
             },
             {
-                path: "/admin/editControlFollow",
+                path: "/admin/editControlFollow/:idSeg/:documento",
                 exact: true,
                 component: EditControlFollow,
             },
@@ -256,49 +281,59 @@ const routes = [
                 component: EditInfantIncome,
             }, 
             {
-                path: "/admin/detailsInfantIncome",
+                path: "/admin/detailsInfantIncome/:idSeg/:idInc",
                 exact: true,
                 component: DetailsInfantIncome,
             }, 
             {
-                path: "/admin/addControlRemission/:idSeg",
+                path: "/admin/addMotherIncome",
+                exact: true,
+                component: AddMotherIncome,
+            }, 
+            {
+                path: "/admin/addControlRemission/:idSeg/:documento",
                 exact: true,
                 component: AddControlRemission,
             },
             {
-                path: "/admin/editControlRemission",
+                path: "/admin/editControlRemission/:idSeg/:idRemi/:documento",
                 exact: true,
                 component: EditControlRemission,
             }, 
             {
-                path: "/admin/detailsControlRemission",
+                path: "/admin/detailsControlRemission/:idSeg/:idRemi",
                 exact: true,
                 component: DetailsControlRemission,
             }, 
             {
-                path: "/admin/listControlRemission/:documento/:idSeguimiento",
+                path: "/admin/listControlRemission/:idSeg/:documento",
                 exact: true,
                 component: ListControlRemission,
             },   
             {
-                path: "/admin/addCommitment/:idSeg",
+                path: "/admin/addCommitment/:idSeg/:documento",
                 exact: true,
                 component: AddCommitment,
             },
             {
-                path: "/admin/commitments/:documento/:idSeguimiento",
+                path: "/admin/commitments/:idSeg/:documento",
                 exact: true,
-                component: ListCommitment
+                component: ListCommitment,
             }, 
             {
-                path: "/admin/editCommitment",
+                path: "/admin/editCommitment/:idSeg/:idComp/:documento",
                 exact: true,
                 component: EditCommitment,
             }, 
             {
-                path: "/admin/ListFollowUpChecks/:documento",
+                path: "/admin/detailCommitment/:idSeg/:idComp",
                 exact: true,
-                component: ListFollowUpChecks,
+                component: DetailCommitment,
+            },
+            {
+                path: "/admin/ListFollowUp/:documento",
+                exact: true,
+                component: ListFollow,
             },
             {
                 path: "/admin/EditProfileUser/:documento",

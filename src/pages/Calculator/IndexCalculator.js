@@ -37,12 +37,13 @@ export default function IndexCalculator(){
                 
                 validate={(valores) => {
                   let errores = {};
+                  
                   if(!valores.edad){
                     errores.edad = 'Por favor, no dejar campos vacios';
                   }else if(!/^([0-9])*$/.test(valores.edad)){
                     errores.edad = 'Edad incorrecta, solo puedes escribir números';
-                  }else if(valores.edad < 0 && valores.edad > 72){
-                    errores.edad = 'Edad invalida, solo edad entre 0 y 72 meses';
+                  }else if(valores.edad < 0 || valores.edad > 72){
+                    errores.edad = 'Edad invalida, solo edad entre 0 y 72 meses (6 años)';
                   } 
 
                     if(!valores.sexo){
@@ -52,7 +53,7 @@ export default function IndexCalculator(){
                   return errores;
                 }}
                 
-                initialValues={{ edad: 0, sexo: '' }}
+                initialValues={{ edad: '', sexo: '' }}
                 onSubmit={(valores, {resetForm}) => {
                     setGoCalculate({edad: valores.edad, sexo: valores.sexo});
                 }}
@@ -69,9 +70,9 @@ export default function IndexCalculator(){
                         <Col md={6}>
 
                         <Row>
-                          <Col md={5}>
+                          <Col md={5} className="mt-3">
                           <InputGroup hasValidation>
-                              <Form.Control type="number" placeholder="Edad en meses" size="lg" id="edad" name="edad" 
+                              <Form.Control type="text" placeholder="Edad en meses" size="lg" id="edad" name="edad" 
                                 onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
                                isValid={!errors.edad && touched.edad}
                               />
@@ -83,7 +84,7 @@ export default function IndexCalculator(){
                           </Col>
 
 
-                          <Col md={5}>
+                          <Col md={5} className="mt-3">
                           <InputGroup hasValidation>
                         <Form.Select size="lg" name="sexo" onChange={handleChange} onBlur={handleBlur}
                                     isValid={!errors.sexo && touched.sexo} isInvalid={!!errors.sexo && touched.sexo}

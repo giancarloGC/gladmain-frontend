@@ -10,7 +10,7 @@ import moment from 'moment';
 import "./Switch.scss";
 
 export default function AddCommit(props){
-  const { controlSeguimiento } = props;
+  const { controlSeguimiento, documento } = props;
   const token = localStorage.getItem(TOKEN);
   const [ checkeds, setCheckeds ] = useState({ radio1: true, radio: false });
   console.log(checkeds);
@@ -83,19 +83,17 @@ export default function AddCommit(props){
                       swal({
                         title: `¡El compromiso fue almacenado correctamente!`,
                         icon: 'success'
-                      });
-                      /*.then((value) => {
-                        setGoRedirect(true);
-                      });*/
+                      }).then((value) => {
+                        window.location.replace(`/admin/commitments/${controlSeguimiento.id}/${documento}`);
+                    }); 
                     }else{
                       console.log("no resgistro remi");
                       swal({
                         title: `¡Opss, ocurrió un error!`,
                         icon: 'danger'
-                      });
-                      /*.then((value) => {
-                        setGoRedirect(true);
-                      });*/
+                      }).then((value) => {
+                        window.location.replace(`/admin/commitments/${controlSeguimiento.id}/${documento}`);
+                    }); 
                     }
                   });
                 }}
@@ -129,6 +127,9 @@ export default function AddCommit(props){
                     
                     <Container style={{backgroundColor: '#f1f1f1', borderRadius:'5px'}}><br/>
                     <Form.Group as={Row} className="mb-1 ">
+                    <center>
+                    <Form.Label column sm="3"><b style={{fontSize: "16px"}}>Seleccione una opción</b></Form.Label>
+                    </center>
                     <div class="middle">
                       <label>
                       <input type="radio" name="radio1" checked={checkeds.radio1} onChange={e => onChangeChecked(e)}/>

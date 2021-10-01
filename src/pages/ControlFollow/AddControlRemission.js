@@ -6,7 +6,7 @@ import { TOKEN } from "../../utils/constans";
 import AddControlR from "../../components/Control/ControlFollow/AddControlR";
 
 export default function AddControlRemission(){
-    const { idSeg } = useParams();
+    const { idSeg, documento } = useParams();
     const [controlSeguimiento, setControl] = useState({});
     const token = localStorage.getItem(TOKEN);
     const [ componentLoaded, setComponentLoaded ] = useState(false); 
@@ -38,7 +38,7 @@ export default function AddControlRemission(){
         )
         :
         (
-            <AddControlR controlSeguimiento={controlSeguimiento}/>
+            <AddControlR controlSeguimiento={controlSeguimiento} documento={documento}/>
         )
         }
         </Container>

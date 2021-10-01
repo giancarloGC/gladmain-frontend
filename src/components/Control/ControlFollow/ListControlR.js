@@ -1,16 +1,18 @@
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button, Form, InputGroup, ListGroup} from "react-bootstrap";
+import {BrowserRouter as Router, Route, Switch, Redirect, Link} from "react-router-dom";
+import swal from 'sweetalert';
 import { faPrint, faEye } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Formik, Field, ErrorMessage } from "formik";
-import { faFileMedicalAlt } from '@fortawesome/free-solid-svg-icons';
-import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
+import { TOKEN } from "../../../utils/constans";
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
+import { deleteRemisApi } from "../../../api/remission";
 
 export default function ListControlR(props){
-    const {listControls, idSeguimiento} = props;
-    console.log(listControls); 
+    const {listRemis, idSeg, documento} = props;
+    const token = localStorage.getItem(TOKEN);
     
-    let remisionesBySeguimiento = listControls.filter(remission => remission.idSeguimiento === parseInt(idSeguimiento));
+    let remisionesBySeguimiento = listRemis.filter(remission => remission.idSeguimiento === parseInt(idSeg));
     console.log(remisionesBySeguimiento);
 
     const dateFormat = (date) => {
@@ -20,18 +22,55 @@ export default function ListControlR(props){
         }
       };
  
+      const confirmDeleteControl = (id) => {
+        swal({
+            title: "¿Estás seguro de eliminar la Remisión?",
+            text: "¡Una vez eliminado no se podrá recuperar!",
+            icon: "warning",
+            buttons: ['Cancelar', 'Sí, eliminar'],
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                deleteControl(id);
+            }
+          });
+    }
+
+    const deleteControl = (id) => {
+        deleteRemisApi(id, token).then(response => {
+            if(response === true){
+                swal("Excelente! remisión eliminado!", {
+                    icon: "success",
+                })
+                .then((value) => {
+                    window.location.replace(`/admin/listControlRemission/${idSeg}/${documento}`);
+                  });                      
+            }else{
+                swal("Opss! Ocurrió un error al eliminar la remisión!", {
+                    icon: "error",
+                })
+                .then((value) => {
+                    window.location.replace(`/admin/listControlRemission/${idSeg}/${documento}`);
+                  });                  
+            }
+        })
+    }
+
      return(
          <Container className="mt-4"> 
              <Row> 
-             <Row className="mb-4 mt-3">
-                 <Col md={3}> </Col>
-                 <Col md={5}>
-                    <InputGroup hasValidation className="mt-3">
-                        <Form.Control type="search" placeholder="Buscar Control" size="l" id="busqueda" name="busqueda" />  
-                    </InputGroup>
-                 </Col>
-                 <Col md={4}> <Button class="btn btn-outline-success" type="submit" size="l">Buscar</Button></Col>
-             </Row>
+             <Row className="mb-2 mt-3">
+                    <Col md={3}> </Col>
+                    <Col md={6}>
+                       <InputGroup hasValidation>
+                           <Form.Control type="search" placeholder="Buscar Control" size="lg" id="busqueda" name="busqueda" />
+                           <Button className="btn btn-outline-success" type="submit">Buscar</Button>
+                       </InputGroup>
+                    </Col>
+                    <Col md={3}> </Col>
+            </Row>
+            
              <Col sm={12} >
            <ListGroup className="mt-3 mb-3">
            {remisionesBySeguimiento.map((item, index) => (
@@ -51,17 +90,23 @@ export default function ListControlR(props){
                     <Col sm={3} className="align-self-right">
                          <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Acciones</b> <br/>
                         
-                            <Link className="enlace" to="#" className="btn btn-primary mx-0">
-                                <FontAwesomeIcon icon={faEye} size="l" color="white" data-tip data-for = "boton3" 
+                            <Link className="enlace" to={`/admin/detailsControlRemission/${idSeg}/${item.id}`} className="btn btn-primary">
+                                <FontAwesomeIcon icon={faEye} size="xs" color="white" data-tip data-for = "boton3" 
                                 /> <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Ver </ReactTooltip>
                             </Link>
-                             <Link href="#" className="btn btn-warning mx-3">
+                             <Link className="enlace" to={`/admin/editControlRemission/${idSeg}/${item.id}/${documento}`} className="btn btn-warning mx-3">
                                  <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-pen-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-tip data-for = "boton4" >
                                      <path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
                                  </svg>
                                  <ReactTooltip id="boton4" place="bottom" type="dark" effect="float"> Editar </ReactTooltip>
                              </Link>
-                             <Link className="btn btn-secondary text-center mx-0">
+                             <a className="enlace btn btn-primary" onClick={() => confirmDeleteControl(item.id)}>
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path data-tip data-for = "boton5" fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                                </svg>
+                                <ReactTooltip id="boton5" place="bottom" type="dark" effect="float"> Eliminar </ReactTooltip>
+                            </a > 
+                             <Link className="btn btn-secondary text-center mx-1">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-print-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <FontAwesomeIcon icon={faPrint} size="lg" color="white" data-tip data-for = "boton5"
                                 />

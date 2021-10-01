@@ -2,14 +2,13 @@ import React, { useState, useEffect} from "react";
 import { Container, Form } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
 import { lineasGraphics } from "../Control/ControlNutri/LabelsAndLineas";
-import moment from 'moment';
-import { getControlByIdApi } from "../../api/controls"; 
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 
 import "./StatisticNutri.scss";
 
 export default function StatisticNutri(props){
 const { sexo, listControls, token, documento } = props;
+const { rolUser } = useParams();
 const [ goRedirect, setGoRedirect ] = useState(false);
 const [ idControl, setIdControl ] = useState(0);
 
@@ -26,7 +25,12 @@ const getDatasetAtEvent = async (dataset) => {
   console.log(response);*/
 };
 
-
+const dateFormat = (date) => {
+  if(date){
+  let dateFormated = date.split('T');
+  return dateFormated[0];
+  }
+}
 
 const generateCoordenadas = () => {
   let coordenadas = [];
@@ -34,7 +38,7 @@ const generateCoordenadas = () => {
 
   listControls.map((item, index) => {
     var coor = {
-      label: `Control ${item.id} - ${moment(item.fechaControl).format("DD-MM-YYYY")}`,
+      label: `Control ${item.id} - ${dateFormat(item.fechaControl)}`,
       data: [{
         y: item.peso,
         x: item.talla,
@@ -70,7 +74,7 @@ const data = {
     return(
         <Container>
               {goRedirect && (
-                  <Redirect to={`/admin/DetailControlNutri/${idControl}/${documento}`} />
+                  <Redirect to={`/admin/DetailControlNutri/${idControl}/${documento}/${rolUser}`} />
               )}
           
              {sexo === "MASCULINO" ?

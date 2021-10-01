@@ -31,13 +31,13 @@ export default function ListVac(){
 
     return(
         <Container>
-             <h1 className="text-center">Control de Vacunas de {infoUser ? infoUser.nombre : "Anonimo"} 
+             <h1 className="text-center mb-4">Control de Vacunas de {infoUser ? infoUser.nombre : "Anonimo"}
              <Link to={`/admin/addControlVac/${documento}`} >
-                    <FontAwesomeIcon icon={faMarker} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton1" />
+                    <FontAwesomeIcon icon={faMarker} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton1" />
                     <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Editar Control </ReactTooltip>
                 </Link>
                 <Link to="/" >
-                    <FontAwesomeIcon icon={faPrint} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton2" />
+                    <FontAwesomeIcon icon={faPrint} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton2" />
                     <ReactTooltip id="boton2" place="bottom" type="dark" effect="float"> Imprimir </ReactTooltip>
                 </Link>
              </h1>

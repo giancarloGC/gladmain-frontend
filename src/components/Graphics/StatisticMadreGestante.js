@@ -2,35 +2,60 @@ import React, { useState, useEffect} from "react";
 import { Container, Form } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
 import moment from 'moment';
+import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
+
 import "./StatisticNutri.scss";
 
 export default function StatisticMadreGestante(props){
-const { listControls, documento } = props;
+  const { listControls, token, documento } = props;
+  const { rolUser } = useParams();
+  const [ goRedirect, setGoRedirect ] = useState(false);
+  const [ idControl, setIdControl ] = useState(0);
 
-const generateCoordenadas = () => {
-  let coordenadas = [];
-  let lineasArray = lineas();
+  const getDatasetAtEvent = async (dataset) => {
+    if (!dataset.length) return;
 
-  listControls.map((item, index) => {
-    var coor = {
-      label: `Control ${item.id} - ${moment(item.fechaControl).format("DD-MM-YYYY")}`,
-      data: [{
-        y: item.imc,
-        x: item.edadGestacional,
-        r: 4
-      }],
-      fill: true,
-      borderColor: '#ffffff',
-      backgroundColor: '#ffffff',
-      type: "bubble",
-      pointStyle: "bubble", 
+    const datasetIndex = dataset[0].datasetIndex;
+    //setClickedDataset(data.datasets[datasetIndex].label);
+    const infoSelected = data.datasets[datasetIndex].label.split(" ");
+    const id = infoSelected[1];
+    setIdControl(id);
+    setGoRedirect(true);
+    /*const response = await getControlByIdApi(id, token);
+    console.log(response);*/
+  };
+
+  const dateFormat = (date) => {
+    if(date){
+    let dateFormated = date.split('T');
+    return dateFormated[0];
     }
-    coordenadas.push(coor);
-  });
+  }
 
-  const allCoordenadas = [...coordenadas, ...lineasArray];
-  return allCoordenadas;
-} 
+  const generateCoordenadas = () => {
+    let coordenadas = [];
+    let lineasArray = lineas();
+
+    listControls.map((item, index) => {
+      var coor = {
+        label: `Control ${item.id} - ${dateFormat(item.fechaControl)}`,
+        data: [{
+          y: item.imc,
+          x: item.edadGestacional,
+          r: 4
+        }],
+        fill: true,
+        borderColor: '#ffffff',
+        backgroundColor: '#ffffff',
+        type: "bubble",
+        pointStyle: "bubble", 
+      }
+      coordenadas.push(coor);
+    });
+
+    const allCoordenadas = [...coordenadas, ...lineasArray];
+    return allCoordenadas;
+  } 
 
 const data = {
 
@@ -40,6 +65,10 @@ const data = {
   };
     return(
         <Container>
+              {goRedirect && (
+                  <Redirect to={`/admin/DetailControlNutriMadre/${idControl}/${documento}/${rolUser}`} />
+              )}
+
               <h2 className="text-center">Estado Nutricional Madre Gestante</h2>
                 <div className="containerGraphic"> 
                   <p className="ejey">IMC</p>
@@ -60,6 +89,7 @@ const data = {
                           }
                         }
                       }}
+                      getDatasetAtEvent={getDatasetAtEvent}
                   />
                 </div>
                 </div>

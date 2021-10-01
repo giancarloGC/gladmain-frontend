@@ -175,6 +175,7 @@ $orange: #fd650d;
     display: none;
     &:checked {
       + .box {
+        border: 2px solid #eee;
         background-color: $orange;
         span {
           color: white;
@@ -188,6 +189,7 @@ $orange: #fd650d;
     }
   }
   .box {
+    border: 2px solid #eee;
     width: 250px;
     height: 72px;
     background-color: $white;

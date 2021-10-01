@@ -17,7 +17,7 @@ export default function DetailControlNutri(){
     const [ controlLoaded, setControlLoaded ] = useState(false);
     const [ nombreNutricionista, setNombreNutricionista ] = useState("");
     var loading = true;
-
+    
         useEffect(() => {
         loading = false;
         getUserByIdApi(documento, token).then(response => {

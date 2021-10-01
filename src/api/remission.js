@@ -17,13 +17,14 @@ export function insertRemisApi(data, token){
             .catch(err => {return err});
 }
 
-export function updateRemisApi(data){
-    const url = `${urlBackend}control_seguimiento/ACTUALIZAR_REMICION`;
+export function updateRemisApi(data, token){
+    const url = `/api/control_seguimiento/ACTUALIZAR_REMICION`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
-        method: "PUT",
+        method: "POST",
         body: JSON.stringify(data)
     };
 
@@ -33,13 +34,14 @@ export function updateRemisApi(data){
             .catch(err => {return err});
 }
 
-export function deleteRemisApi(id){
-    const url = `${urlBackend}control_seguimiento/ELIMINAR_REMICION/${id}`;
+export function deleteRemisApi(id, token){
+    const url = `/api/control_seguimiento/ELIMINAR_REMICION/${id}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
-        method: "DELETE"
+        method: "GET"
     };
 
     return fetch(url, params)
@@ -63,11 +65,12 @@ export function getRemisByUserApi(documento, token){
             .catch(err => {return err});
 }
 
-export function getRemisByIdApi(id){
-    const url = `${urlBackend}control_seguimiento/CONSULTAR_REMICION/${id}`;
+export function getRemisByIdApi(id, token){
+    const url = `/api/control_seguimiento/CONSULTAR_REMICION/${id}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET"
     };
