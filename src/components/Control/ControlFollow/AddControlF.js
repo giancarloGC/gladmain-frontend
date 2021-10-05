@@ -4,15 +4,16 @@ import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from 
 import { Formik, Field, ErrorMessage } from "formik";
 import  AuthContext  from "../../../hooks/useAuth";
 import { TOKEN } from "../../../utils/constans";
-import { insertSegApi } from "../../../api/follow-up";
+import { insertSegApi, getSegApi } from "../../../api/follow-up";
 import moment from 'moment';
+import swal from 'sweetalert';
 
 export default function AddControlF(props){
   const { userControl } = props;
   const token = localStorage.getItem(TOKEN);
   const { user } = AuthContext();
   const documentoLogin = user.sub.split('-');
-  const [ goRedirect, setGoRedirect ] = useState(false);
+  const [ goRedirect, setGoRedirect ] = useState(0);
 
     return(
         <Container>
@@ -62,20 +63,34 @@ export default function AddControlF(props){
                     idUsuarioNutricionista: documertParse,
                     nombreAcudiente: valores.nombreAcudiente,
                     tipoDocAcudiente: valores.tipoDocAcudiente,
-                    numeroDocAcudiente: valores.numeroDocAcudiente,
+                    numeroDocAcudiente: parseInt(valores.numeroDocAcudiente),
                     fecha: moment().format("YYYY-MM-DD")
                 }
-                console.log(formData);
                 //resetForm();
                   valores.token = token;
                   insertSegApi(formData, token).then(response => {
                     console.log(response);
+
                     if(response === true){
-                      console.log("registro Seguimiento");
-                      setGoRedirect(true);
+                      getSegApi(userControl.documento, token).then(responseSegs => {
+                        if(response.status === 403){
+                          swal("¡No tienes autorización para realizar esta acción, comunícate con el Admin!", {
+                            icon: "warning",
+                          });
+                        }else{
+                          var positionLastSeg = responseSegs.length - 1;
+                          var lastSeg = responseSegs[positionLastSeg];
+                          setGoRedirect(lastSeg.id);
+                        }      
+                      });
+                    }else if(response.status === 403){
+                      swal("¡No tienes autorización para realizar esta acción, comunícate con el Admin!", {
+                        icon: "warning",
+                      });
                     }else{
-                      console.log("No registro Seguimiento");
-                      //setGoRedirect(true);
+                      swal("Opss! Ocurrió un error!", {
+                        icon: "error",
+                      });
                     }
                   });
                 }}
@@ -201,7 +216,7 @@ export default function AddControlF(props){
                     </Form.Group>           
 
                     {goRedirect && (
-                      <Redirect to={`/admin/addInfantIncome`} />
+                      <Redirect to={`/admin/addInfantIncome/${goRedirect}`} />
                     )}            
                         <div className="d-grid gap-2 mb-3">
                             <Button variant="primary" type="submit" size="lg" >

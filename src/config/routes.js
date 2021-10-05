@@ -271,7 +271,7 @@ const routes = [
                 component: EditControlFollow,
             },
             {
-                path: "/admin/addInfantIncome",
+                path: "/admin/addInfantIncome/:idSeg",
                 exact: true,
                 component: AddInfantIncome,
             }, 
