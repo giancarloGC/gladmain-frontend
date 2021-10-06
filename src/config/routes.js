@@ -276,7 +276,7 @@ const routes = [
                 component: AddInfantIncome,
             }, 
             {
-                path: "/admin/editInfantIncome",
+                path: "/admin/editInfantIncome/:idSeg/:documento",
                 exact: true,
                 component: EditInfantIncome,
             }, 

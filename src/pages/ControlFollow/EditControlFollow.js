@@ -44,7 +44,7 @@ export default function EditControlFollow(){
           )
         :
         (
-            <EditControlF infoSeg={infoSeg} userControl={userControl}/>
+            <EditControlF infoSeg={infoSeg} documento={documento} userControl={userControl}/>
         )
         }
         </Container>
