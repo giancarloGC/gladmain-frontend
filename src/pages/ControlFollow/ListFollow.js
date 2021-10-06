@@ -45,34 +45,34 @@ export default function ListFollow(){
                 console.log(ingresoBySeg[0]);
                 let totalOptions = 10;
                 let optionsSelected = 0;
-                if(ingresoBySeg[0].ingreso.afiliacionSgsss === "NO"){
+                if(ingresoBySeg[0].ingreso.afiliacionSgsss === "SI"){
                     optionsSelected += 1;
                 };
-                if(ingresoBySeg[0].ingreso.conoceUrgencias === "NO"){
+                if(ingresoBySeg[0].ingreso.conoceUrgencias === "SI"){
                     optionsSelected += 1;
                 };
-                if(ingresoBySeg[0].ingreso.patologiaIdentificadaSgsss === false){
+                if(ingresoBySeg[0].ingreso.patologiaIdentificadaSgsss === true){
                     optionsSelected += 1;
                 };
-                if(ingresoBySeg[0].ingreso.recibeMedFormulada === false){
+                if(ingresoBySeg[0].ingreso.recibeMedFormulada === true){
                     optionsSelected += 1;
                 };
-                if(ingresoBySeg[0].ingreso.saludOral === "NO"){
+                if(ingresoBySeg[0].ingreso.saludOral === "SI"){
                     optionsSelected += 1;
                 };
-                if(ingresoBySeg[0].ingreso.usuarioRemitido === "0"){
+                if(ingresoBySeg[0].ingreso.usuarioRemitido === "1"){
                     optionsSelected += 1;
                 };
-                if(ingresoBySeg[0].ingresoInfante.alarmaPreventiva === "NO"){
+                if(ingresoBySeg[0].ingresoInfante.alarmaPreventiva === "SI"){
                     optionsSelected += 1;
                 };
-                if(ingresoBySeg[0].ingresoInfante.controlCyD === "NO"){
+                if(ingresoBySeg[0].ingresoInfante.controlCyD === "SI"){
                     optionsSelected += 1;
                 };
-                if(ingresoBySeg[0].ingresoInfante.recibeSuplementos === "NO"){
+                if(ingresoBySeg[0].ingresoInfante.recibeSuplementos === "SI"){
                     optionsSelected += 1;
                 };
-                if(ingresoBySeg[0].ingresoInfante.valoracionMedica === "NO"){
+                if(ingresoBySeg[0].ingresoInfante.valoracionMedica === "SI"){
                     optionsSelected += 1;
                 };
                 let percentageCompleted = (optionsSelected / totalOptions) * 100;
