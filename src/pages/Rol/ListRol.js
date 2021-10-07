@@ -50,24 +50,6 @@ function DocumentPdf({rolesApi, setLoadedSonPDF}){
         
           </View>
         </Page>
-      
-
-   
-           {/* <ListGroup.Item className="shadow border mt-2 mb-3">
-            <Container>
-            <Row>
-                <Col md={4} className="align-self-center">
-                    <p style={{"color": "#2D61A4", "fontSize": 23}}><b>Código </b> <br/> {rol.idRol}</p>
-                </Col>
-                <Col md={4} className="align-self-center">
-                    <p style={{"color": "#2D61A4", "fontSize": 23}}><b>Titulo </b> <br/> {rol.nombre}</p>
-                </Col>
-            </Row>
-            </Container>
-        </ListGroup.Item>
-            ))}
-        </ListGroup>
-  </Container>*/}
   </Document>
     )
 }

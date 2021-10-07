@@ -18,12 +18,32 @@ import AddIncomeCommit9 from "./AddIncomeCommit/AddIncomeCommit9";
 export default function AddInfantInc(props){
   const { controlSeguimiento } = props;
   const token = localStorage.getItem(TOKEN);
+
+  const [ showPatologia, setShowPatologia ] = useState(true);
+  const [ showMedicamentos, setShowMedicamentos ] = useState(true);
+  const [ showRemitido, setRemitido ] = useState(true);
+
+  
+
   /*const [ checkeds, setCheckeds ] = useState({ atendido: false, hospitalizado: false, fallecido: false });
   console.log(checkeds);
 
   const onChangeChecked = (e) => {
       setCheckeds({...checkeds, [e.target.name]: e.target.checked});
   }*/
+
+  const onChangeChecked = (e) => {
+    if(e.target.name === "showPatologia"){
+      setShowPatologia(!showPatologia);
+      setShowCommit7(!e.target.checked);
+    }else if(e.target.name === "showMedicamentos"){
+      setShowMedicamentos(!showMedicamentos);
+      setShowCommit8(!e.target.checked);
+    }else if(e.target.name === "showRemitido"){
+      setRemitido(!showRemitido);
+      setShowCommit9(!e.target.checked);
+    }
+}
 
   const [showCommit, setShowCommit] = useState(false);
   const [dataCommit, setDataCommit] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
@@ -61,6 +81,10 @@ export default function AddInfantInc(props){
   const [dataCommit9, setDataCommit9] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
   const [ saveData9, setSaveData9] = useState(true);
 
+  /*if(!showCommit7){
+    setShowPatologia(true);
+  }*/
+
     return(
         <Container>
           <AddIncomeCommit showCommit={showCommit} setShowCommit={setShowCommit} setDataCommit={setDataCommit} dataCommit={dataCommit} 
@@ -81,13 +105,13 @@ export default function AddInfantInc(props){
           <AddIncomeCommit6 showCommit6={showCommit6} setShowCommit6={setShowCommit6} setDataCommit6={setDataCommit6} dataCommit6={dataCommit6} 
             setSaveData6={setSaveData6}
           />
-          <AddIncomeCommit7 showCommit7={showCommit7} setShowCommit7={setShowCommit7} setDataCommit7={setDataCommit7} dataCommit7={dataCommit7} 
+          <AddIncomeCommit7 setShowPatologia={setShowPatologia} showCommit7={showCommit7} setShowCommit7={setShowCommit7} setDataCommit7={setDataCommit7} dataCommit7={dataCommit7} 
             setSaveData7={setSaveData7}
           />
-          <AddIncomeCommit8 showCommit8={showCommit8} setShowCommit8={setShowCommit8} setDataCommit8={setDataCommit8} dataCommit8={dataCommit8} 
+          <AddIncomeCommit8 setShowMedicamentos={setShowMedicamentos} showCommit8={showCommit8} setShowCommit8={setShowCommit8} setDataCommit8={setDataCommit8} dataCommit8={dataCommit8} 
             setSaveData8={setSaveData8}
           />
-          <AddIncomeCommit9 showCommit9={showCommit9} setShowCommit9={setShowCommit9} setDataCommit9={setDataCommit9} dataCommit9={dataCommit9} 
+          <AddIncomeCommit9 setRemitido={setRemitido} showCommit9={showCommit9} setShowCommit9={setShowCommit9} setDataCommit9={setDataCommit9} dataCommit9={dataCommit9} 
             setSaveData9={setSaveData9}
           />
               <Row >
@@ -326,7 +350,7 @@ export default function AddInfantInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="xs" name="patologiaIdentificadaSgsss">
-                          <input type="checkbox" checked={showCommit7 || !saveData7 ? false : true } onChange={(e) => setShowCommit7(!e.target.checked)}></input>
+                          <input type="checkbox" name="showPatologia" checked={showCommit7 || !saveData7 ? false : true } onChange={(e) => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -338,6 +362,7 @@ export default function AddInfantInc(props){
                         </Col>
                         </Form.Group>
 
+                    {showPatologia && (
                     <Form.Group as={Row} style={{ "marginLeft":"43px"}} className="mt-3">
                     <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>
                     <h5 style={{"fontSize": "16px", "fontWeight":"bold" }} className="mt-2">¿Cuál?</h5></Form.Label>
@@ -353,7 +378,8 @@ export default function AddInfantInc(props){
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                     </Col>
-                    </Form.Group>
+                    </Form.Group>  
+                  )}
 
                         <Form.Group as={Row} style={{ "marginLeft":"43px"}} className="mt-2 mb-2">
                         <Form.Label column sm="9" >
@@ -361,7 +387,7 @@ export default function AddInfantInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="xs" name="recibeMedFormulada">
-                          <input type="checkbox" checked={showCommit8 || !saveData8 ? false : true } onChange={(e) => setShowCommit8(!e.target.checked)}></input>
+                          <input type="checkbox" name="showMedicamentos" checked={showCommit8 || !saveData8 ? false : true } onChange={(e) => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -373,7 +399,7 @@ export default function AddInfantInc(props){
                         </Col>
                     </Form.Group>
   
-                
+                    {showMedicamentos && (
                     <Form.Group as={Row} style={{ "marginLeft":"43px"}} className="mt-3">
                     <Form.Label column sm="2">
                     <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>¿Cuál?</h5></Form.Label>
@@ -390,6 +416,7 @@ export default function AddInfantInc(props){
                         </InputGroup>
                       </Col>
                     </Form.Group>
+                    )}
 
                     <Form.Group as={Row} style={{ "marginLeft":"43px"}}  className="mt-3">
                      <Form.Label column sm="2">
@@ -430,7 +457,7 @@ export default function AddInfantInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="xs" name="usuarioRemitido">
-                          <input type="checkbox" checked={showCommit9 || !saveData9 ? false : true } onChange={(e) => setShowCommit9(!e.target.checked)}></input>
+                          <input type="checkbox" name="showRemitido" checked={showCommit9 || !saveData9 ? false : true } onChange={(e) => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -442,6 +469,7 @@ export default function AddInfantInc(props){
                         </Col>
                     </Form.Group>
 
+                      {showRemitido && (
                     <Form.Group as={Row} style={{ "marginLeft":"43px"}} className="mt-3 mb-3">
                     <Form.Label column sm="2">
                     <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>¿Por qué?</h5></Form.Label>
@@ -458,6 +486,8 @@ export default function AddInfantInc(props){
                         </InputGroup>
                     </Col>
                     </Form.Group>
+                      )}
+
                     <center>
                         <Col sm={10}> 
                         <div className="d-grid gap-2 mb-3">

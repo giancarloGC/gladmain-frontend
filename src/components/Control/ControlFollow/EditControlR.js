@@ -11,6 +11,9 @@ import "./Switch.scss";
 export default function EditControlR(props){
   const token = localStorage.getItem(TOKEN);
   const { idSeg, infoRemi, documento, checkeds, setCheckeds } = props;
+  console.log(infoRemi);
+  const [ showHospitalizacion, setShowHospitalizacion ] = useState(infoRemi.hospitalizado ? true : false);
+  const [ showFallecimiento, setShowFallecimiento ] = useState(infoRemi.fallecido ? true : false);
  
   const dateFormat = (date) => {
     if(date){
@@ -20,6 +23,12 @@ export default function EditControlR(props){
   }
 
   const onChangeChecked = (e) => {
+    if(e.target.name === "radio1"){
+      setShowHospitalizacion(!showHospitalizacion);
+  }else if(e.target.name === "radio2"){
+    setShowFallecimiento(!showFallecimiento);
+  }
+
     setCheckeds({...checkeds, [e.target.name]: e.target.checked});
 }
     return(
@@ -66,19 +75,26 @@ export default function EditControlR(props){
                         errores.fechaAtencion = 'Seleccione una fecha valida';
                     }
                   }
-                  if(!valores.fechaIngreso){
-                    errores.fechaIngreso = 'Asegurese de selecionar una fecha';
-                  }else{
-                    let ingreso = moment(valores.fechaIngreso);
-                    if(ingreso.diff(dateCurrently, 'hours') > 0){
-                        errores.fechaIngreso = 'Seleccione una fecha valida';
+
+                  if(showHospitalizacion){
+                    if(!valores.fechaIngreso){
+                      errores.fechaIngreso = 'Asegurese de selecionar una fecha';
+                    }else{
+                      let ingreso = moment(valores.fechaIngreso);
+                      if(ingreso.diff(dateCurrently, 'hours') > 0){
+                          errores.fechaIngreso = 'Seleccione una fecha valida';
+                      }
                     }
                   }
-                  if(!valores.razonFallecimiento){
-                    errores.razonFallecimiento = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ.,:; ]+$/g.test(valores.razonFallecimiento)){
-                    errores.razonFallecimiento = 'Solo puedes escribir letras';
+
+                  if(showFallecimiento){
+                    if(!valores.razonFallecimiento){
+                      errores.razonFallecimiento = 'No se permiten campos vacíos'
+                    }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ.,:; ]+$/g.test(valores.razonFallecimiento)){
+                      errores.razonFallecimiento = 'Solo puedes escribir letras';
+                    }
                   }
+                  
                   if(!valores.seguimiento){
                     errores.seguimiento = 'No se permiten campos vacíos'
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ.,;: ]+$/g.test(valores.seguimiento)){
@@ -248,6 +264,8 @@ export default function EditControlR(props){
                         </InputGroup>
                         </Col>
 
+                        {showHospitalizacion && (
+                        <>
                         <Form.Label column sm="3">
                         <h5 style={{fontSize: "16px"}}>Fecha Ingreso</h5></Form.Label>
                         <Col sm="4">
@@ -262,8 +280,11 @@ export default function EditControlR(props){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
+                        </>
+                        )}
                     </Form.Group>
 
+                    {showHospitalizacion && (
                     <Form.Group as={Row} style={{ "marginLeft":"6px"}}>
                         <Form.Label column sm="3">
                         <h5 style={{fontSize: "16px"}}>¿Falleció durante el proceso de atención en salud?</h5></Form.Label>
@@ -292,7 +313,9 @@ export default function EditControlR(props){
                           </InputGroup>
                         </Col>
                     </Form.Group>
-                    
+                    )}
+
+                    {showFallecimiento && (
                     <Form.Group as={Row} style={{ "marginLeft":"6px"}}>
                     <Form.Label column sm="5">
                     <h5 style={{fontSize: "16px"}} className="mt-2">Razón del Fallecimiento</h5></Form.Label>
@@ -309,6 +332,7 @@ export default function EditControlR(props){
                         </InputGroup>
                      </Col>
                     </Form.Group>
+                    )}
  
                     <Form.Group as={Row} className="mt-4" style={{ "marginLeft":"6px"}}>
                         <Form.Label column sm="5" >

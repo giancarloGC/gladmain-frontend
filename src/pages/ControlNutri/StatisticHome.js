@@ -24,7 +24,7 @@ import "./StatisticHome.scss";
 export default function StatisticHome(){
     const { edad, sexo, documento, rolUser } = useParams();
     const token = localStorage.getItem(TOKEN);
-    const [ optionsGraphics, setOptionsGraphics] = useState({ check1: true, check2: edad > 60 ? true : false, check3: false, check4: false });
+    const [ optionsGraphics, setOptionsGraphics] = useState({ check1: true, check2: false, check3: false, check4: false }); /*check2: edad > 60 ? true : false*/
     const [ listControls, setListControls ] = useState([]);
 
     useEffect(() => {

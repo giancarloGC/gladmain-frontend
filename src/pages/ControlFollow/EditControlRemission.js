@@ -19,6 +19,7 @@ export default function EditControlRemission(){
         loading = false;
         if(!loading){ 
             getRemisByIdApi(idRemi, token).then(responseComp => {
+                console.log(responseComp);
                 setCheckeds({
                     radio: responseComp.atendido === true ? true : false,
                     radio1: responseComp.hospitalizado === true ? true : false, 
