@@ -32,6 +32,7 @@ import AddMotherIncome from "../pages/ControlFollow/AddMotherIncome";
 import EditControlFollow from "../pages/ControlFollow/EditControlFollow";
 import EditInfantIncome from "../pages/ControlFollow/EditInfantIncome";
 import DetailsInfantIncome from "../pages/ControlFollow/DetailsInfantIncome";
+import DetailMotherIncome from "../pages/ControlFollow/DetailsMotherIncome";
 import AddControlRemission from "../pages/ControlFollow/AddControlRemission";
 import EditControlRemission from "../pages/ControlFollow/EditControlRemission";
 import DetailsControlRemission from "../pages/ControlFollow/DetailsControlRemission";
@@ -284,6 +285,11 @@ const routes = [
                 path: "/admin/detailsInfantIncome/:idSeg/:idInc",
                 exact: true,
                 component: DetailsInfantIncome,
+            }, 
+            {
+                path: "/admin/detailMotherIncome/:idSeg/:idInc",
+                exact: true,
+                component: DetailMotherIncome,
             }, 
             {
                 path: "/admin/addMotherIncome",

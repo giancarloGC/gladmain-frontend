@@ -50,11 +50,12 @@ export function getMotIncomeByUserApi(data){
             .catch(err => {return err});
 }
 
-export function getMotIncomeByIdApi(id){
-    const url = `${urlBackend}control_seguimiento/CONSULTAR_INGRESO_MADRE/${id}`;
+export function getMotIncomeByIdApi(id, token){
+    const url = `/api/control_seguimiento/CONSULTAR_INGRESO_MADRE/${id}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET"
     };
