@@ -261,7 +261,7 @@ const routes = [
                 component: AddControlVac,
             },
             {
-                path: "/admin/addControlFollow/:documento",
+                path: "/admin/addControlFollow/:documento/:rolUser",
                 exact: true,
                 component: AddControlFollow,
             },
@@ -331,7 +331,7 @@ const routes = [
                 component: DetailCommitment,
             },
             {
-                path: "/admin/ListFollowUp/:documento",
+                path: "/admin/ListFollowUp/:documento/:rolUser",
                 exact: true,
                 component: ListFollow,
             },

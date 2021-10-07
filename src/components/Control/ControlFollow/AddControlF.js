@@ -8,7 +8,7 @@ import { insertSegApi } from "../../../api/follow-up";
 import moment from 'moment';
 
 export default function AddControlF(props){
-  const { userControl } = props;
+  const { userControl, rolUser } = props;
   const token = localStorage.getItem(TOKEN);
   const { user } = AuthContext();
   const documentoLogin = user.sub.split('-');
@@ -198,11 +198,22 @@ export default function AddControlF(props){
                             />
                         </InputGroup>
                         </Col>
-                    </Form.Group>           
+                    </Form.Group>  
 
-                    {goRedirect && (
-                      <Redirect to={`/admin/addInfantIncome`} />
-                    )}            
+                             
+                      {/*rolUser === "INFANTE" ? (
+                        {goRedirect && (
+                          <Redirect to={`/admin/addInfantIncome`} />
+                        )}
+                      )
+                      :
+                      (
+                        {goRedirect && (
+                          <Redirect to={`/admin/addMotherIncome`} />
+                        )}  
+                        )*/}
+                      
+                      
                         <div className="d-grid gap-2 mb-3">
                             <Button variant="primary" type="submit" size="lg" >
                                Siguiente

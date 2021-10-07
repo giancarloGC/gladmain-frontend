@@ -6,7 +6,7 @@ import { TOKEN } from "../../utils/constans";
 import AddControlF from "../../components/Control/ControlFollow/AddControlF";
 
 export default function AddControlFollow(){
-    const { documento } = useParams();
+    const { documento, rolUser } = useParams();
     const [userControl, setUser] = useState({});
     const token = localStorage.getItem(TOKEN);
     const [ componentLoaded, setComponentLoaded ] = useState(false); 
@@ -37,7 +37,7 @@ export default function AddControlFollow(){
             )
             :
             (
-                <AddControlF userControl={userControl}/>
+                <AddControlF userControl={userControl} rolUser={rolUser}/>
             )
             }
         </Container>

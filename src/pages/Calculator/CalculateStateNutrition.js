@@ -98,14 +98,14 @@ export default function CalculateStateNutrition(){
       },
         {
           label: '- 3',
-          data: edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosTres : lineasGraphics2_5.lineMenosTres,
+          data: sexo === "MASCULINO" ? edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosTres : lineasGraphics2_5.lineMenosTres : edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosTresNi : lineasGraphics2_5.lineMenosTresNi,
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1,
         },
         {
           label: '- 2',
-          data: edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosDos : lineasGraphics2_5.lineMenosDos,
+          data: sexo === "MASCULINO" ? edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosDos : lineasGraphics2_5.lineMenosDos : edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosDosNi : lineasGraphics2_5.lineMenosDosNi,
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1,
@@ -113,28 +113,28 @@ export default function CalculateStateNutrition(){
         },
         {
           label: '- 1',
-          data: edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosUno : lineasGraphics2_5.lineMenosUno,
+          data: sexo === "MASCULINO" ? edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosUno : lineasGraphics2_5.lineMenosUno : edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosUnoNi : lineasGraphics2_5.lineMenosUnoNi,
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#E3B402' : '#E3B402',
           tension: 0.1
         },
         {
           label: '0',
-          data: edad >= 0 && edad <= 24 ? lineasGraphics.lineCero : lineasGraphics2_5.lineCero,
+          data: sexo === "MASCULINO" ? edad >= 0 && edad <= 24 ? lineasGraphics.lineCero : lineasGraphics2_5.lineCero : edad >= 0 && edad <= 24 ? lineasGraphics.lineCeroNi : lineasGraphics2_5.lineCeroNi,
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#127D30' : '#127D30',
           tension: 0.1
         },
         {
           label: '+ 1',
-          data: edad >= 0 && edad <= 24 ? lineasGraphics.lineMasUno : lineasGraphics2_5.lineMasUno,
+          data: sexo === "MASCULINO" ? edad >= 0 && edad <= 24 ? lineasGraphics.lineMasUno : lineasGraphics2_5.lineMasUno : edad >= 0 && edad <= 24 ? lineasGraphics.lineMasUnoNi : lineasGraphics2_5.lineMasUnoNi,
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#E3B402' : '#E3B402',
           tension: 0.1
         },
         {
           label: '+ 2',
-          data: edad >= 0 && edad <= 24 ? lineasGraphics.lineMasDos : lineasGraphics2_5.lineMasDos,
+          data: sexo === "MASCULINO" ? edad >= 0 && edad <= 24 ? lineasGraphics.lineMasDos : lineasGraphics2_5.lineMasDos : edad >= 0 && edad <= 24 ? lineasGraphics.lineMasDosNi : lineasGraphics2_5.lineMasDosNi,
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1,
@@ -142,7 +142,7 @@ export default function CalculateStateNutrition(){
         },
         {
           label: '+ 3',
-          data: edad >= 0 && edad <= 24 ? lineasGraphics.lineMasTres : lineasGraphics2_5.lineMasTres,
+          data: sexo === "MASCULINO" ? edad >= 0 && edad <= 24 ? lineasGraphics.lineMasTres : lineasGraphics2_5.lineMasTres : edad >= 0 && edad <= 24 ? lineasGraphics.lineMasTresNi : lineasGraphics2_5.lineMasTresNi,
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1
