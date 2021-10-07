@@ -4,9 +4,15 @@ import { Formik, Field, ErrorMessage } from "formik";
 import moment from 'moment';
 
 export default function AddIncomeCommit(props) {
-  const {showCommit9, setShowCommit9, setDataCommit9, dataCommit9, setSaveData9} = props;
-    return(
-      <Modal show={showCommit9 ? true : false} size="xs"  onHide={() => setShowCommit9(false)}  centered aria-labelledby="example-custom-modal-styling-title">
+  const { setRemitido, showCommit9, setShowCommit9, setDataCommit9, dataCommit9, setSaveData9} = props;
+  
+  const closemodal = () => {
+    setShowCommit9(false);
+    setRemitido(true);
+  }
+
+  return(
+      <Modal show={showCommit9 ? true : false} size="xs"  onHide={() => closemodal()}  centered aria-labelledby="example-custom-modal-styling-title">
         <Modal.Header closeButton>
           <Modal.Title id="example-custom-modal-styling-title"  style={{fontSize: "14px"}}> Agregar Compromiso </Modal.Title>
         </Modal.Header>

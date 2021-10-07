@@ -15,7 +15,17 @@ export default function AddControlR(props){
   const [ checkeds, setCheckeds ] = useState({ atendido: false, hospitalizado: false, fallecido: false });
   console.log(checkeds);
 
+  const [ showHospitalizacion, setShowHospitalizacion ] = useState(false);
+  const [ showFallecimiento, setShowFallecimiento ] = useState(false);
+
+
   const onChangeChecked = (e) => {
+      if(e.target.name === "hospitalizado"){
+          setShowHospitalizacion(!showHospitalizacion);
+      }else if(e.target.name === "fallecido"){
+        setShowFallecimiento(!showFallecimiento);
+      }
+
       setCheckeds({...checkeds, [e.target.name]: e.target.checked});
   }
 
@@ -55,27 +65,35 @@ export default function AddControlR(props){
                     errores.entidadRemitida = 'Solo puedes escribir letras';
                   }
                   const dateCurrently = moment();
-                  if(!valores.fechaAtencion){
-                    errores.fechaAtencion = 'Asegurese de selecionar una fecha';
-                  }else{
-                    let atencion = moment(valores.fechaAtencion);
-                    if(atencion.diff(dateCurrently, 'hours') > 0){
-                        errores.fechaAtencion = 'Seleccione una fecha valida';
-                    }
+                      if(!valores.fechaAtencion){
+                        errores.fechaAtencion = 'Asegurese de selecionar una fecha';
+                      }else{
+                        let atencion = moment(valores.fechaAtencion);
+                        if(atencion.diff(dateCurrently, 'hours') > 0){
+                            errores.fechaAtencion = 'Seleccione una fecha valida';
+                        }
+                      }
+                  
+
+                  if(showHospitalizacion){
+                      if(!valores.fechaIngreso){
+                        errores.fechaIngreso = 'Asegurese de selecionar una fecha';
+                      }else{
+                        let ingreso = moment(valores.fechaIngreso);
+                        if(ingreso.diff(dateCurrently, 'hours') > 0){
+                            errores.fechaIngreso = 'Seleccione una fecha valida';
+                        }
+                      }
                   }
-                  if(!valores.fechaIngreso){
-                    errores.fechaIngreso = 'Asegurese de selecionar una fecha';
-                  }else{
-                    let ingreso = moment(valores.fechaIngreso);
-                    if(ingreso.diff(dateCurrently, 'hours') > 0){
-                        errores.fechaIngreso = 'Seleccione una fecha valida';
-                    }
+                  
+                  if(showFallecimiento){
+                      if(!valores.razonFallecimiento){
+                        errores.razonFallecimiento = 'No se permiten campos vacíos'
+                      }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ.,:; ]+$/g.test(valores.razonFallecimiento)){
+                        errores.razonFallecimiento = 'Solo puedes escribir letras';
+                      }
                   }
-                  if(!valores.razonFallecimiento){
-                    errores.razonFallecimiento = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ.,:; ]+$/g.test(valores.razonFallecimiento)){
-                    errores.razonFallecimiento = 'Solo puedes escribir letras';
-                  }
+                  
                   if(!valores.seguimiento){
                     errores.seguimiento = 'No se permiten campos vacíos'
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ.,;: ]+$/g.test(valores.seguimiento)){
@@ -96,13 +114,13 @@ export default function AddControlR(props){
                     fechaRemision: moment().format("YYYY-MM-DD"),
                     entidadRemitida: valores.entidadRemitida,
                     atendido: checkeds.atendido ? 1 : 0,
-                    fechaAtencion: valores.fechaAtencion,
+                    fechaAtencion: valores.fechaAtencion ? valores.fechaAtencion : new Date(),
                     motivo: valores.motivo,
                     hospitalizado: checkeds.hospitalizado ? 1 : 0,
-                    fechaIngreso: valores.fechaIngreso,
-                    fechaSalida: valores.fechaSalida,
+                    fechaIngreso: valores.fechaIngreso ? valores.fechaIngreso : null,
+                    fechaSalida: valores.fechaSalida ? valores.fechaSalida : null,
                     fallecido: checkeds.fallecido ? 1 : 0,
-                    razonFallecimiento: valores.razonFallecimiento,
+                    razonFallecimiento: valores.razonFallecimiento ? valores.razonFallecimiento : null,
                     seguimiento: valores.seguimiento,
                     nombreAuxEnfermero: valores.nombreAuxEnfermero,
                   }
@@ -111,6 +129,7 @@ export default function AddControlR(props){
                   //resetForm();
                   formData.token = token;
                   insertRemisApi(formData, token).then(response => {
+                    console.log(response);
                     if(response === true){
                       swal({
                         title: `¡La remisión fue almacenada correctamente!`,
@@ -225,7 +244,7 @@ export default function AddControlR(props){
                               </Form.Control.Feedback>
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
-                        </Col>
+                        </Col>                     
                       </Form.Group>
 
                      <Col md={1}></Col>
@@ -243,23 +262,28 @@ export default function AddControlR(props){
                         </InputGroup>
                         </Col>
 
-                        <Form.Label column sm="3">
-                        <h5 style={{fontSize: "16px"}}>Fecha Ingreso</h5></Form.Label>
-                        <Col sm="4">
-                          <InputGroup hasValidation>
-                              <Form.Control type="date" size="xs" id="fechaIngreso" name="fechaIngreso" 
-                                 value={values.fechaIngreso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaIngreso && touched.fechaIngreso}
-                                 isValid={!errors.fechaIngreso && touched.fechaIngreso}
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.fechaIngreso}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                        </Col>
+                        {showHospitalizacion && (
+                          <>
+                          <Form.Label column sm="3">
+                          <h5 style={{fontSize: "16px"}}>Fecha Ingreso</h5></Form.Label>
+                          <Col sm="4">
+                            <InputGroup hasValidation>
+                                <Form.Control type="date" size="xs" id="fechaIngreso" name="fechaIngreso" 
+                                  value={values.fechaIngreso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaIngreso && touched.fechaIngreso}
+                                  isValid={!errors.fechaIngreso && touched.fechaIngreso}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.fechaIngreso}
+                                </Form.Control.Feedback>
+                                <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                            </InputGroup>
+                          </Col>
+                          </>
+                        )}
                     </Form.Group>
 
-                    <Form.Group as={Row} style={{ "marginLeft":"6px"}}>
+                    {showHospitalizacion && (
+                      <Form.Group as={Row} style={{ "marginLeft":"6px"}}>
                         <Form.Label column sm="3">
                         <h5 style={{fontSize: "16px"}}>¿Falleció durante el proceso de atención en salud?</h5></Form.Label>
                         <Col class="mid">
@@ -287,23 +311,27 @@ export default function AddControlR(props){
                           </InputGroup>
                         </Col>
                     </Form.Group>
+                    )}
                     
-                    <Form.Group as={Row} style={{ "marginLeft":"6px"}}>
-                    <Form.Label column sm="5">
-                    <h5 style={{fontSize: "16px"}} className="mt-2">Razón del Fallecimiento</h5></Form.Label>
-                    <Col >
-                        <InputGroup hasValidation>
-                               <Form.Control as="textarea" aria-label="With textarea" placeholder="Describir Motivo Fallecimiento" size="xs" id="razonFallecimiento" name="razonFallecimiento" 
-                               value={values.razonFallecimiento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.razonFallecimiento && touched.razonFallecimiento}
-                               isValid={!errors.razonFallecimiento && touched.razonFallecimiento}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.razonFallecimiento}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                     </Col>
-                    </Form.Group>
+                    {showFallecimiento && (
+                      <Form.Group as={Row} style={{ "marginLeft":"6px"}}>
+                      <Form.Label column sm="5">
+                      <h5 style={{fontSize: "16px"}} className="mt-2">Razón del Fallecimiento</h5></Form.Label>
+                      <Col >
+                          <InputGroup hasValidation>
+                                <Form.Control as="textarea" aria-label="With textarea" placeholder="Describir Motivo Fallecimiento" size="xs" id="razonFallecimiento" name="razonFallecimiento" 
+                                value={values.razonFallecimiento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.razonFallecimiento && touched.razonFallecimiento}
+                                isValid={!errors.razonFallecimiento && touched.razonFallecimiento}
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                  {errors.razonFallecimiento}
+                              </Form.Control.Feedback>
+                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          </InputGroup>
+                      </Col>
+                      </Form.Group>
+                    )}
+                    
  
                     <Form.Group as={Row} className="mt-4" style={{ "marginLeft":"6px"}}>
                         <Form.Label column sm="5" >
