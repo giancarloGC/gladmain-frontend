@@ -9,16 +9,32 @@
 .navbar-light .navbar-nav .nav-link {
 	color: rgb(255, 255, 255);
 }
-
+@media screen and (max-width: 520px){
+h1{
+	font-size:25px;
+}
+}
+@media screen and (max-width: 450px){
+	h1{
+		font-size:18px;
+	}
+	}
+@media screen and (max-width: 400px){
+	h1{
+	font-size:15px;
+	}
+	}
 #portada{
 	background-image: url(./../../assets/img/index.png); 
 	background-repeat: no-repeat;
 	width:100% !important;
 	min-width: 20% !important;
-	max-width: 100% !important;
 	height: auto;
-	background-size: cover;
+	background-size: 100%;
+	max-width: 100%;
 }
+
+
 
 #fondoGallery{
 	background-image: url(./../../assets/img/FondoGaleria.png); 
