@@ -17,13 +17,14 @@ export function insertInfantIncomeApi(data, token){
             .catch(err => {return err});
 }
 
-export function updateInfantIncomeApi(data){
-    const url = `${urlBackend}control_seguimiento/ACTUALIZAR_INGRESO_INFANTE`;
+export function updateInfantIncomeApi(data, token){
+    const url = `/api/control_seguimiento/ACTUALIZAR_INGRESO_INFANTE`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
-        method: "PUT",
+        method: "POST",
         body: JSON.stringify(data)
     };
 

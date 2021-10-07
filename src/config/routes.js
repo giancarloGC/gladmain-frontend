@@ -271,12 +271,12 @@ const routes = [
                 component: EditControlFollow,
             },
             {
-                path: "/admin/addInfantIncome",
+                path: "/admin/addInfantIncome/:idSeg",
                 exact: true,
                 component: AddInfantIncome,
             }, 
             {
-                path: "/admin/editInfantIncome",
+                path: "/admin/editInfantIncome/:idSeg/:documento",
                 exact: true,
                 component: EditInfantIncome,
             }, 

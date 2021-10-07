@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
 import swal from 'sweetalert';
+import { TOKEN } from "../../../utils/constans";
+import { updateInfantIncomeApi } from "../../../api/infant_income";
 import "./Switch.scss";
 import AddIncomeCommit from "./AddIncomeCommit/AddIncomeCommit";
 import AddIncomeCommit2 from "./AddIncomeCommit/AddIncomeCommit2";
@@ -13,43 +15,47 @@ import AddIncomeCommit7 from "./AddIncomeCommit/AddIncomeCommit7";
 import AddIncomeCommit8 from "./AddIncomeCommit/AddIncomeCommit8";
 import AddIncomeCommit9 from "./AddIncomeCommit/AddIncomeCommit9";
 
-export default function EditInfantInc(){
-  
+export default function EditInfantInc({ingreso}){
+  const token = localStorage.getItem(TOKEN);
+
+  /*const onChangeChecked = (e) => {
+    setCheckeds({...checkeds, [e.target.name]: e.target.checked});
+}*/
   const [showCommit, setShowCommit] = useState(false);
   const [dataCommit, setDataCommit] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
-  const [ saveData, setSaveData ] = useState(true); //Pasar el estado a true
+  const [ saveData, setSaveData ] = useState(ingreso.ingreso.afiliacionSgsss === "SI" ? true : false); //Pasar el estado a true
   
   const [showCommit2, setShowCommit2] = useState(false);
   const [dataCommit2, setDataCommit2] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
-  const [ saveData2, setSaveData2] = useState(false);
+  const [ saveData2, setSaveData2] = useState(ingreso.ingreso.saludOral === "SI" ? true : false);
   
   const [showCommit3, setShowCommit3] = useState(false);
   const [dataCommit3, setDataCommit3] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
-  const [ saveData3, setSaveData3] = useState(false);
+  const [ saveData3, setSaveData3] = useState(ingreso.ingreso.conoceUrgencias === "SI" ? true : false);
   
   const [showCommit4, setShowCommit4] = useState(false);
   const [dataCommit4, setDataCommit4] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
-  const [ saveData4, setSaveData4] = useState(false);
+  const [ saveData4, setSaveData4] = useState(ingreso.ingresoInfante.alarmaPreventiva === "SI" ? true : false);
   
   const [showCommit5, setShowCommit5] = useState(false);
   const [dataCommit5, setDataCommit5] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
-  const [ saveData5, setSaveData5] = useState(false);
+  const [ saveData5, setSaveData5] = useState(ingreso.ingresoInfante.valoracionMedica === "SI" ? true : false);
   
   const [showCommit6, setShowCommit6] = useState(false);
   const [dataCommit6, setDataCommit6] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
-  const [ saveData6, setSaveData6] = useState(false);
+  const [ saveData6, setSaveData6] = useState(ingreso.ingresoInfante.controlCyD === "SI" ? true : false);
   
   const [showCommit7, setShowCommit7] = useState(false);
   const [dataCommit7, setDataCommit7] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
-  const [ saveData7, setSaveData7] = useState(false);
+  const [ saveData7, setSaveData7] = useState(ingreso.ingreso.patologiaIdentificadaSgsss === true ? true : false);
   
   const [showCommit8, setShowCommit8] = useState(false);
   const [dataCommit8, setDataCommit8] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
-  const [ saveData8, setSaveData8] = useState(false);
+  const [ saveData8, setSaveData8] = useState(ingreso.ingreso.recibeMedFormulada === true ? true : false);
   
   const [showCommit9, setShowCommit9] = useState(false);
   const [dataCommit9, setDataCommit9] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
-  const [ saveData9, setSaveData9] = useState(false);
+  const [ saveData9, setSaveData9] = useState(ingreso.ingreso.usuarioRemitido === "1" ? true : false);
 
     return(
         <Container>
@@ -85,24 +91,24 @@ export default function EditInfantInc(){
                 <Col sm={8} className="mt-2 mb-4" style={{backgroundColor: '#f1f1f1', "border-radius":'10px'}}> 
                 <Formik
                   initialValues={{ 
-                    idIngreso: '',
+                    idIngreso: ingreso.ingreso.id,
                     alarmaPreventiva: '',
                     controlCyD: '',
                     recibeSuplementos: '',
                     valoracionMedica: '',
 
-                      idSeguimiento: '',
+                      idSeguimiento: ingreso.ingreso.idSeguimiento,
                       afiliacionSgsss: '',
                       saludOral: '',
                       conoceUrgencias: '',
                       patologiaIdentificadaSgsss: '',
-                      nombrePatologia: '',
+                      nombrePatologia: ingreso.ingreso.nombrePatologia,
                       recibeMedFormulada: '',
-                      nombreMedFormululada: '',
-                      eapb: '',
-                      ips: '',
+                      nombreMedFormululada: ingreso.ingreso.nombreMedFormululada,
+                      eapb: ingreso.ingreso.eapb,
+                      ips: ingreso.ingreso.ips,
                       usuarioRemitido: '',
-                      causa: '',
+                      causa: ingreso.ingreso.causa,
                   }}
                 
                 validate={(valores) => {
@@ -111,8 +117,8 @@ export default function EditInfantInc(){
                   if(!valores.nombrePatologia){
                     errores.nombrePatologia = 'No se permiten campos vacíos'
                   }
-                  if(!valores.nombreMedFormulada){
-                    errores.nombreMedFormulada = 'No se permiten campos vacíos'
+                  if(!valores.nombreMedFormululada){
+                    errores.nombreMedFormululada = 'No se permiten campos vacíos'
                   }
                   if(!valores.eapb){
                     errores.eapb = 'No se permiten campos vacíos'
@@ -136,26 +142,54 @@ export default function EditInfantInc(){
                 onSubmit={(valores, {resetForm}) => {
 
                   const formData ={
-                    idIngreso: '',
-                    alarmaPreventiva: saveData4 ? "SI" : "NO",
-                    controlCyD: saveData6 ? "SI" : "NO",
-                    recibeSuplementos: saveData8 ? "SI" : "NO",
-                    valoracionMedica: saveData5 ? "SI" : "NO",
-
-                    idSeguimiento: 8,
-                    afiliacionSgsss: saveData ? "SI" : "NO",
-                    saludOral: saveData2 ? "SI" : "NO",
-                    conoceUrgencias: saveData3 ? "SI" : "NO",
-                    patologiaIdentificadaSgsss: saveData7 ? "SI" : "NO",
-                    nombrePatologia: valores.nombrePatologia,
-                    recibeMedFormulada: saveData8 ? "SI" : "NO",
-                    nombreMedFormululada: valores.nombreMedFormululada,
-                    eapb: valores.eapb,
-                    ips: valores.ips,
-                    usuarioRemitido: saveData9 ? "SI" : "NO",
-                    causa: valores.causa,
-                  }
+                      ingresoInfante: {
+                          id: ingreso.ingresoInfante.id,
+                          idIngreso: ingreso.ingreso.id,
+                          alarmaPreventiva: saveData4 ? "SI" : "NO",
+                          controlCyD: saveData6 ? "SI" : "NO",
+                          recibeSuplementos: saveData8 ? "SI" : "NO",
+                          valoracionMedica: saveData5 ? "SI" : "NO",
+                      },
+                      ingresoMadre: null,
+                      ingreso: {
+                          id: ingreso.ingreso.id,
+                          idSeguimiento: ingreso.ingreso.idSeguimiento,
+                          afiliacionSgsss: saveData ? "SI" : "NO",
+                          saludOral: saveData2 ? "SI" : "NO",
+                          conoceUrgencias: saveData3 ? "SI" : "NO",
+                          patologiaIdentificadaSgsss: saveData7 ? true : false,
+                          nombrePatologia: valores.nombrePatologia,
+                          recibeMedFormulada: saveData8 ? 1 : 0,
+                          nombreMedFormululada: valores.nombreMedFormululada,
+                          eapb: valores.eapb,
+                          ips: valores.ips,
+                          usuarioRemitido: saveData9 ? 1 : 0, //1,
+                          causa: valores.causa
+                      }
+                  } 
+                  
+                  updateInfantIncomeApi(formData, token).then(response => {
+                    console.log(response);
+                    if(response === true){
+                      swal({
+                        title: `¡El ingreso fue actualizado correctamente!`,
+                        icon: 'success'
+                      });
+                      /*.then((value) => {
+                        setGoRedirect(true);
+                      });*/
+                    }else{
+                      swal({
+                        title: `¡Opss, ocurrió un error!`,
+                        icon: 'danger'
+                      });
+                      /*.then((value) => {
+                        setGoRedirect(true);
+                      });*/
+                    }
+                  });
                   console.log(formData);
+                  console.log(ingreso);
                 }}
                 >
 
@@ -185,7 +219,7 @@ export default function EditInfantInc(){
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="xs" name="afiliacionSgsss" >
                             {/* invertir el save data */}
-                          <input type="checkbox" checked={showCommit || !saveData ? false : true } onChange={(e) => setShowCommit(!e.target.checked)}></input>
+                          <input type="checkbox" checked={showCommit || !saveData ? false : true } onChange={(e) => saveData ? setShowCommit(!e.target.checked) : setSaveData(!saveData)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -203,7 +237,7 @@ export default function EditInfantInc(){
                         <Col  class="mid">
                         <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="xs" name="saludOral">
-                          <input type="checkbox" checked={showCommit2 || !saveData2 ? true : false } onChange={(e) => setShowCommit2(!e.target.checked)}></input>
+                          <input type="checkbox" checked={showCommit2 || !saveData2 ? false : true } onChange={(e) => saveData2 ? setShowCommit2(!e.target.checked) : setSaveData2(!saveData2)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -221,7 +255,7 @@ export default function EditInfantInc(){
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-1">
                           <label class="rocker rocker-small" size="xs" name="conoceUrgencias">
-                          <input type="checkbox" checked={showCommit3 || !saveData3 ? true : false } onChange={(e) => setShowCommit3(!e.target.checked)}></input>
+                          <input type="checkbox" checked={showCommit3 || !saveData3 ? false : true } onChange={(e) => saveData3 ? setShowCommit3(!e.target.checked) : setSaveData3(!saveData3)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -239,7 +273,7 @@ export default function EditInfantInc(){
                         <Col class="mid" >
                         <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="xs" name="alarmaPreventiva">
-                          <input type="checkbox" checked={showCommit4 || !saveData4 ? true : false } onChange={(e) => setShowCommit4(!e.target.checked)}></input>
+                          <input type="checkbox" checked={showCommit4 || !saveData4 ? false : true } onChange={(e) => saveData4 ? setShowCommit4(!e.target.checked) : setSaveData4(!saveData4)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -258,7 +292,7 @@ export default function EditInfantInc(){
                         <Col class="mid">
                         <InputGroup hasValidation >
                           <label class="rocker rocker-small" size="xs" name="valoracionMedica">
-                          <input type="checkbox" checked={showCommit5 || !saveData5 ? true : false } onChange={(e) => setShowCommit5(!e.target.checked)}></input>
+                          <input type="checkbox" checked={showCommit5 || !saveData5 ? false : true } onChange={(e) => saveData5 ? setShowCommit5(!e.target.checked) : setSaveData5(!saveData5)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -276,7 +310,7 @@ export default function EditInfantInc(){
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="xs" name="controlCyD">
-                          <input type="checkbox" checked={showCommit6 || !saveData6 ? true : false } onChange={(e) => setShowCommit6(!e.target.checked)}></input>
+                          <input type="checkbox" checked={showCommit6 || !saveData6 ? false : true } onChange={(e) => saveData6 ? setShowCommit6(!e.target.checked) : setSaveData6(!saveData6)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -294,7 +328,7 @@ export default function EditInfantInc(){
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="xs" name="patologiaIdentificadaSgsss">
-                          <input type="checkbox" checked={showCommit7 || !saveData7 ? true : false } onChange={(e) => setShowCommit7(!e.target.checked)}></input>
+                          <input type="checkbox" checked={showCommit7 || !saveData7 ? false : true } onChange={(e) => saveData7 ? setShowCommit7(!e.target.checked) : setSaveData7(!saveData7)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -312,7 +346,7 @@ export default function EditInfantInc(){
                     <Col sm="9" class="mid">
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre Patología" size="xs" id="nombrePatologia" name="nombrePatologia" 
-                               value={values.nombrePatologia} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
+                               value={values.nombrePatologia} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombrePatologia && touched.nombrePatologia}
                                isValid={!errors.nombrePatologia && touched.nombrePatologia}
                             />
                             <Form.Control.Feedback type="invalid">
@@ -329,7 +363,7 @@ export default function EditInfantInc(){
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="xs" name="recibeMedFormulada">
-                          <input type="checkbox" checked={showCommit8 || !saveData8 ? true : false } onChange={(e) => setShowCommit8(!e.target.checked)}></input>
+                          <input type="checkbox" checked={showCommit8 || !saveData8 ? false : true } onChange={(e) => saveData8 ? setShowCommit8(!e.target.checked) : setSaveData8(!saveData8)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -347,12 +381,12 @@ export default function EditInfantInc(){
                     <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>¿Cuál?</h5></Form.Label>
                     <Col md="9" class="mid" >
                         <InputGroup hasValidation>
-                               <Form.Control type="text" placeholder="Nombre Medicamento Formulado" size="xs" id="nombreMedFormulada" name="nombreMedFormulada" 
-                               value={values.nombreMedFormulada} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
-                               isValid={!errors.nombreMedFormulada && touched.nombreMedFormulada}
+                               <Form.Control type="text" placeholder="Nombre Medicamento Formulado" size="xs" id="nombreMedFormululada" name="nombreMedFormululada" 
+                               value={values.nombreMedFormululada} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormululada && touched.nombreMedFormululada}
+                               isValid={!errors.nombreMedFormululada && touched.nombreMedFormululada}
                             />
                             <Form.Control.Feedback type="invalid">
-                                {errors.nombreMedFormulada}
+                                {errors.nombreMedFormululada}
                             </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
@@ -398,7 +432,7 @@ export default function EditInfantInc(){
                         <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="xs" name="usuarioRemitido">
-                          <input type="checkbox" checked={showCommit9 || !saveData9 ? true : false } onChange={(e) => setShowCommit9(!e.target.checked)}></input>
+                          <input type="checkbox" checked={showCommit9 || !saveData9 ? false : true } onChange={(e) => saveData9 ? setShowCommit9(!e.target.checked) : setSaveData9(!saveData9)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>

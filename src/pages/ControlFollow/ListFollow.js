@@ -11,6 +11,7 @@ import { TOKEN } from "../../utils/constans";
 import Lottie from 'react-lottie';
 import NotResults from "../../assets/animations/notResults.json";
 import { getUserByIdApi } from "../../api/user";
+import { getInfantIncomeApi } from "../../api/infant_income";
 
 
 export default function ListFollow(){
@@ -25,9 +26,62 @@ export default function ListFollow(){
             setInfoUser(responseUser);
         });
         getSegApi(documento, token).then(response => {
-            setListSeg(response);
+            if(response.length > 0){
+                (async () => {
+                    let newData = [];
+                    let infoCompleted = await calculateProgress(response, newData);                              
+                    console.log(infoCompleted);
+                    console.log("siuuuuu");
+                    setListSeg(infoCompleted);
+                })()
+            }
         });
     }, []);
+
+    const calculateProgress = async (response, newData) => {
+        await Promise.all(response.map(async (item, index) => {
+            let listIngresos = await getInfantIncomeApi(documento, token);
+                let ingresoBySeg = listIngresos.filter(registro => registro.ingreso.idSeguimiento === item.id);
+                console.log(ingresoBySeg[0]);
+                let totalOptions = 10;
+                let optionsSelected = 0;
+                if(ingresoBySeg[0].ingreso.afiliacionSgsss === "SI"){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingreso.conoceUrgencias === "SI"){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingreso.patologiaIdentificadaSgsss === true){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingreso.recibeMedFormulada === true){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingreso.saludOral === "SI"){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingreso.usuarioRemitido === "1"){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingresoInfante.alarmaPreventiva === "SI"){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingresoInfante.controlCyD === "SI"){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingresoInfante.recibeSuplementos === "SI"){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingresoInfante.valoracionMedica === "SI"){
+                    optionsSelected += 1;
+                };
+                let percentageCompleted = (optionsSelected / totalOptions) * 100;
+                item.estado = percentageCompleted.toString();
+                newData.push(item);
+        }));
+        console.log("espero padre");
+        return newData;
+    }
 
     return(
         <Container>

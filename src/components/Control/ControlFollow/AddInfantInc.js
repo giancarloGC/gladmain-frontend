@@ -168,8 +168,7 @@ export default function AddInfantInc(props){
                     causa: valores.causa,
                   }
                   console.log(formData);
-                  formData.token = token;
-                  insertInfantIncomeApi(formData).then(response => {
+                  insertInfantIncomeApi(formData, token).then(response => {
                     console.log(response);
                     if(response === true){
                       swal({
