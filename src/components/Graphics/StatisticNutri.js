@@ -116,14 +116,14 @@ const data = {
     function lineas(){
       return   [{
         label: '- 3',
-        data: lineasGraphics.lineMenosTres,
+        data: sexo === "MASCULINO" ? lineasGraphics.lineMenosTres : lineasGraphics.lineMenosTresNi,
         fill: false,
         borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
         tension: 0.1,
       },
       {
         label: '- 2',
-        data: lineasGraphics.lineMenosDos,
+        data: sexo === "MASCULINO" ? lineasGraphics.lineMenosDos : lineasGraphics.lineMenosDosNi,
         fill: false,
         borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
         tension: 0.1,
@@ -131,28 +131,28 @@ const data = {
       },
       {
         label: '- 1',
-        data: lineasGraphics.lineMenosUno,
+        data: sexo === "MASCULINO" ? lineasGraphics.lineMenosUno : lineasGraphics.lineMenosUnoNi,
         fill: false,
         borderColor: sexo !== "FEMENINO" ? '#E3B402' : '#E3B402',
         tension: 0.1
       },
       {
         label: '0',
-        data: lineasGraphics.lineCero,
+        data: sexo === "MASCULINO" ? lineasGraphics.lineCero : lineasGraphics.lineCeroNi,
         fill: false,
         borderColor: sexo !== "FEMENINO" ? '#127D30' : '#127D30',
         tension: 0.1
       },
       {
         label: '+ 1',
-        data: lineasGraphics.lineMasUno,
+        data: sexo === "MASCULINO" ? lineasGraphics.lineMasUno : lineasGraphics.lineMasUnoNi,
         fill: false,
         borderColor: sexo !== "FEMENINO" ? '#E3B402' : '#E3B402',
         tension: 0.1
       },
       {
         label: '+ 2',
-        data: lineasGraphics.lineMasDos,
+        data: sexo === "MASCULINO" ? lineasGraphics.lineMasDos : lineasGraphics.lineMasDosNi,
         fill: false,
         borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
         tension: 0.1,
@@ -160,7 +160,7 @@ const data = {
       },
       {
         label: '+ 3',
-        data: lineasGraphics.lineMasTres,
+        data:  sexo === "MASCULINO" ? lineasGraphics.lineMasTres : lineasGraphics.lineMasTresNi,
         fill: false,
         borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
         tension: 0.1

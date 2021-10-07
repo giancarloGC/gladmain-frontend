@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner } from "react-bootstrap";
 import { Formik } from "formik";
 import { TOKEN } from "../../../utils/constans";
 import  AuthContext  from "../../../hooks/useAuth";
@@ -30,6 +30,7 @@ export default function AddControlN(props){
     const [ showButtonAdd, setShowButtonAdd ] = useState(false);
     const [ graphicValues, setGraphicValues] = useState({ r: 3, x: 0, y: 0 });
     const [ goRedirect, setGoRedirect ] = useState(false);
+    const [ showSpinner, setShowSpinner ] = useState(false);
 
     let dateFechaNaci = moment(userControl.fechaNacimiento);
     let dateCurrent = moment();
@@ -273,6 +274,7 @@ export default function AddControlN(props){
                 }
 
                   console.log(formData);
+                  setShowSpinner(true);
                   insertControlApi(formData, token, true).then(response => {
                       if(response === true){
                         swal({
@@ -495,9 +497,18 @@ export default function AddControlN(props){
                             </Form.Group> 
 
                             <div className="d-grid gap-2">
+                            {showSpinner || (
                             <Button variant="primary" type="submit" size="lg">
                                 Añadir control   <FontAwesomeIcon data-tip data-for="boton1" icon={faAddressCard} size="lg" color="#FFF" />
                             </Button>
+                             )
+                            }
+                             {showSpinner && (
+                              <center>
+                              <Spinner animation="border" ></Spinner> 
+                              </center>
+                            )
+                            }
                         </div>
                   </Col>
                 </Row>

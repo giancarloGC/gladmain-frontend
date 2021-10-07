@@ -9,7 +9,7 @@ import moment from 'moment';
 import swal from 'sweetalert';
 
 export default function AddControlF(props){
-  const { userControl } = props;
+  const { userControl, rolUser } = props;
   const token = localStorage.getItem(TOKEN);
   const { user } = AuthContext();
   const documentoLogin = user.sub.split('-');

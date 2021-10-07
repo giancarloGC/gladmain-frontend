@@ -98,14 +98,14 @@ export default function CalculateStateNutrition(){
       },
         {
           label: '- 3',
-          data: edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosTres : lineasGraphics2_5.lineMenosTres,
+          data: sexo === "MASCULINO" ? edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosTres : lineasGraphics2_5.lineMenosTres : edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosTresNi : lineasGraphics2_5.lineMenosTresNi,
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1,
         },
         {
           label: '- 2',
-          data: edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosDos : lineasGraphics2_5.lineMenosDos,
+          data: sexo === "MASCULINO" ? edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosDos : lineasGraphics2_5.lineMenosDos : edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosDosNi : lineasGraphics2_5.lineMenosDosNi,
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1,
@@ -113,28 +113,28 @@ export default function CalculateStateNutrition(){
         },
         {
           label: '- 1',
-          data: edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosUno : lineasGraphics2_5.lineMenosUno,
+          data: sexo === "MASCULINO" ? edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosUno : lineasGraphics2_5.lineMenosUno : edad >= 0 && edad <= 24 ? lineasGraphics.lineMenosUnoNi : lineasGraphics2_5.lineMenosUnoNi,
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#E3B402' : '#E3B402',
           tension: 0.1
         },
         {
           label: '0',
-          data: edad >= 0 && edad <= 24 ? lineasGraphics.lineCero : lineasGraphics2_5.lineCero,
+          data: sexo === "MASCULINO" ? edad >= 0 && edad <= 24 ? lineasGraphics.lineCero : lineasGraphics2_5.lineCero : edad >= 0 && edad <= 24 ? lineasGraphics.lineCeroNi : lineasGraphics2_5.lineCeroNi,
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#127D30' : '#127D30',
           tension: 0.1
         },
         {
           label: '+ 1',
-          data: edad >= 0 && edad <= 24 ? lineasGraphics.lineMasUno : lineasGraphics2_5.lineMasUno,
+          data: sexo === "MASCULINO" ? edad >= 0 && edad <= 24 ? lineasGraphics.lineMasUno : lineasGraphics2_5.lineMasUno : edad >= 0 && edad <= 24 ? lineasGraphics.lineMasUnoNi : lineasGraphics2_5.lineMasUnoNi,
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#E3B402' : '#E3B402',
           tension: 0.1
         },
         {
           label: '+ 2',
-          data: edad >= 0 && edad <= 24 ? lineasGraphics.lineMasDos : lineasGraphics2_5.lineMasDos,
+          data: sexo === "MASCULINO" ? edad >= 0 && edad <= 24 ? lineasGraphics.lineMasDos : lineasGraphics2_5.lineMasDos : edad >= 0 && edad <= 24 ? lineasGraphics.lineMasDosNi : lineasGraphics2_5.lineMasDosNi,
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1,
@@ -142,7 +142,7 @@ export default function CalculateStateNutrition(){
         },
         {
           label: '+ 3',
-          data: edad >= 0 && edad <= 24 ? lineasGraphics.lineMasTres : lineasGraphics2_5.lineMasTres,
+          data: sexo === "MASCULINO" ? edad >= 0 && edad <= 24 ? lineasGraphics.lineMasTres : lineasGraphics2_5.lineMasTres : edad >= 0 && edad <= 24 ? lineasGraphics.lineMasTresNi : lineasGraphics2_5.lineMasTresNi,
           fill: false,
           borderColor: sexo !== "FEMENINO" ? '#E51A1A' : '#E51A1A',
           tension: 0.1
@@ -166,39 +166,6 @@ export default function CalculateStateNutrition(){
                 
                 validate={(valores) => {
                   let errores = {};
-
-                  /*if(!valores.documento){
-                    errores.documento = 'Por favor, ingresa números';
-                  }else if(!/^([0-9])*$/.test(valores.documento)){
-                    errores.documento = 'Documento incorrecto, solo puedes escribir números';
-                  }
-                  let docuemnt = toString(valores.documento);
-                  if(docuemnt.length <= 0 || docuemnt.length > 15){
-                    errores.documento = 'Documento invalido, intente con otro';
-                  }      
-
-                  if(!valores.nombre){
-                    errores.nombre = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.nombre)){
-                    errores.nombre = 'Nombre incorrecto, solo puedes escribir letras';
-                  }
-                  const dateCurrently = new Date();
-                  if(!valores.fechaNacimiento){
-                    errores.fechaNacimiento = 'Asegurese de selecionar una fecha';
-                  }else if(dateCurrently <= valores.fechaNacimiento){
-                    errores.fechaNacimiento = 'Seleccione una fecha valida';
-                  }
-                  if(!valores.sexo){
-                    errores.sexo = 'Asegurese de selecionar una opción';
-                  }   
-
-                  if(!valores.edad){
-                    errores.edad = 'Por favor, ingresa números';
-                  }else if(!/^([0-9])*$/.test(valores.edad)){
-                    errores.edad = 'Edad incorrecta, solo puedes escribir números enteros';
-                  }else if(valores.edad < 0 && valores.edad > 72){
-                    errores.edad = 'Edad invalida, solo edad entre 0 y 72 meses';
-                  } */ 
 
                   const dateCurrently2 = new Date();
                   
@@ -259,63 +226,13 @@ export default function CalculateStateNutrition(){
                       setGraphicValues({x: 0, y: 0, r: 3});
                     }
                   }
-                  /*if(!valores.imc){
-                    errores.imc = 'Por favor, ingresa solo números';
-                  }else if(!/^([0-9])*$/.test(valores.imc)){
-                    errores.imc = 'Solo puedes escribir números';
-                  }
-                  if(!valores.estadoNutricional){
-                    errores.estadoNutricional = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.estadoNutricional)){
-                    errores.estadoNutricional = 'Solo puedes escribir letras';
-                  }*/
                   return errores;
                 }}
 
                 onSubmit={(valores, {resetForm}) => {
                   var tension = null;
                   var edadGestacional = null;
-                  /*if(parametro === "mamita"){
-                    tension = valores.tension;
-                    edadGestacional = valores.edadGestacional;
-                  }*/
-
-                  //var documertParse = parseInt( documentoLogin[0]);
-                  /*const formData = {
-                    idUsuario: userControl.documento,
-                    idUsuarioNutricionista: documertParse,
-                    fechaControl: valores.fechaControl,
-                    peso: valores.peso,
-                    talla: valores.talla,
-
-                    imc: 54,
-                    estadoNutricional: "tagoldo",
-
-                    tension: null,
-                    edadGestacional: null,
-                    proximoControl: null,
-                    ultimoControl: null,
-                    vigente: false,
-                    meses: userControl.edad
-                }
-
-                  console.log(formData);
-                  valores.token = token;
-                  insertControlApi(formData, token).then(response => {
-                      if(response === true){
-                          setTextFormSend({
-                            variant: "success", heading: "¡Excelente, registro exitoso!",
-                            message: `El control ${valores.name} fue almacenado correctamente`
-                          });
-                          setShow(true);
-                      }else{
-                          setTextFormSend({
-                              variant: "danger", heading: "¡Opss, ocurrió un error!",
-                              message: "Revisaremos lo ocurrido, inténtalo nuevamente"
-                          });
-                          setShow(true);
-                      }
-                });*/
+                  
                 setTimeout(() => {
                   setShow(false);
                 }, 5000);

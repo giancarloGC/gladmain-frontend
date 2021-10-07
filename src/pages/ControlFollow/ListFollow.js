@@ -15,7 +15,7 @@ import { getInfantIncomeApi } from "../../api/infant_income";
 
 
 export default function ListFollow(){
-    const { documento } = useParams();
+    const { documento, rolUser } = useParams();
     const token = localStorage.getItem(TOKEN);
     const [ infoUser, setInfoUser ] = useState(null);
     const [ listSeg, setListSeg ] = useState([]);
@@ -86,7 +86,7 @@ export default function ListFollow(){
     return(
         <Container>
             <h1 className="text-center mb-4">Seguimientos de {infoUser ? infoUser.nombre : "Anonimo"}
-              <Link to={`/admin/addControlFollow/${documento}`}>
+              <Link to={`/admin/addControlFollow/${documento}/${rolUser}`}>
                     <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton" />
                     <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Seguimiento </ReactTooltip>
               </Link>
@@ -103,7 +103,7 @@ export default function ListFollow(){
                 </>
             )}
             {listSeg.length > 0 && (
-             <ListFollowUp  listSeg={listSeg} documento={documento} listInc={listInc}/>
+             <ListFollowUp  listSeg={listSeg} documento={documento} listInc={listInc} />
             )}
         </Container>
     )

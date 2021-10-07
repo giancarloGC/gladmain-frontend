@@ -148,6 +148,7 @@ export default function LoginForm(props) {
     </Col>
   </Form.Group>  
   <div className="d-grid gap-2">
+    
   {showSpinner || (
     <Button variant="primary" type="submit" size="lg">
     Iniciar Sesión 
