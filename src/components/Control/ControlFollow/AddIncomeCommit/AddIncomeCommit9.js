@@ -4,7 +4,7 @@ import { Formik, Field, ErrorMessage } from "formik";
 import moment from 'moment';
 
 export default function AddIncomeCommit(props) {
-  const { setRemitido, showCommit9, setShowCommit9, setDataCommit9, dataCommit9, setSaveData9} = props;
+  const { edit, setRemitido, showCommit9, setShowCommit9, setDataCommit9, dataCommit9, setSaveData9} = props;
   
   const closemodal = () => {
     setShowCommit9(false);
@@ -98,7 +98,7 @@ export default function AddIncomeCommit(props) {
         <Col sm="5">
         <InputGroup hasValidation>
         <Form.Control type="date" size="xs" id="dateEnd" name="dateEnd" 
-            value={values.dateEnd} onChange={handleChange} onBlur={handleBlur} disabled />
+            value={values.dateEnd} onChange={handleChange} onBlur={handleBlur} disabled={edit ? false : true} />
         </InputGroup>
         </Col>
     </Form.Group>

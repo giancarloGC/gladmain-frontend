@@ -2,10 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Col, Row, Image, Form, Button, Modal, Container, InputGroup } from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
 import moment from 'moment';
+import swal from 'sweetalert';
+
+import { TOKEN } from "../../../../utils/constans";
+import { insertCompApi } from "../../../../api/commitment";
 
 export default function AddIncomeCommit(props) {
-  const { showCommit3, setShowCommit3, setDataCommit3, dataCommit3, setSaveData3,} = props;
-    return(
+  const { edit, showCommit3, setShowCommit3, setDataCommit3, dataCommit3, setSaveData3,} = props;
+  const token = localStorage.getItem(TOKEN);
+  
+  return(
       <Modal show={showCommit3 ? true : false} size="xs"  onHide={() => setShowCommit3(false)}  centered aria-labelledby="example-custom-modal-styling-title">
         <Modal.Header closeButton>
           <Modal.Title id="example-custom-modal-styling-title" style={{fontSize: "14px"}}> Agregar Compromiso </Modal.Title>
@@ -34,8 +40,40 @@ export default function AddIncomeCommit(props) {
                   return errores;
                 }}
                 onSubmit={(valores, {resetForm}) => {
-                    setDataCommit3({title: "data"});
-                    setSaveData3(false);
+                  const formData={
+                    id: 1,
+                    idSeguimientoSalud: parseInt(dataCommit3.idSeg),
+                    fechaCompromiso: moment().format("YYYY-MM-DD"),
+                    nombre: valores.name,
+                    nuevoCompromiso: valores.description,
+                    fechaCumplimiento: edit ? valores.dateEnd : null,
+                    nombreAuxiliarEnfermeria: null,
+                    tipo: null
+                  };
+
+                  insertCompApi(formData, token).then(response => {
+                    if(response === true){
+                      setDataCommit3({name: "titulooo", description: "ejemplo description"});
+                      setSaveData3(false); //PASARLO A FALSE
+                      swal({
+                        title: `¡El compromiso fue almacenado correctamente!`,
+                        icon: 'success'
+                      }).then((value) => {
+                        setShowCommit3(false);
+                      });
+                    }else if(response.status === 403){
+                      swal("¡No tienes autorización para realizar esta acción, comunícate con el Admin!", {
+                        icon: "warning",
+                      }).then((value) => {
+                        localStorage.removeItem(TOKEN);
+                        window.location.replace("/");
+                      });
+                    }else{
+                      swal("Opss! Ocurrió un error!", {
+                        icon: "error",
+                      });
+                    }
+                  })
                 }}
     
                 >
@@ -92,7 +130,7 @@ export default function AddIncomeCommit(props) {
         <Col sm="5">
         <InputGroup hasValidation>
         <Form.Control type="date" size="xs" id="dateEnd" name="dateEnd" 
-            value={values.dateEnd} onChange={handleChange} onBlur={handleBlur} disabled />
+            value={values.dateEnd} onChange={handleChange} onBlur={handleBlur} disabled={edit ? false : true} />
         </InputGroup>
         </Col>
     </Form.Group>

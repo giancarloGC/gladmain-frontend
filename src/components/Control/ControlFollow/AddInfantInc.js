@@ -16,7 +16,7 @@ import AddIncomeCommit8 from "./AddIncomeCommit/AddIncomeCommit8";
 import AddIncomeCommit9 from "./AddIncomeCommit/AddIncomeCommit9";
 
 export default function AddInfantInc(props){
-  const { controlSeguimiento } = props;
+  const { idSeg, controlSeguimiento } = props;
   const token = localStorage.getItem(TOKEN);
 
   const [ showPatologia, setShowPatologia ] = useState(true);
@@ -35,50 +35,56 @@ export default function AddInfantInc(props){
   const onChangeChecked = (e) => {
     if(e.target.name === "showPatologia"){
       setShowPatologia(!showPatologia);
-      setShowCommit7(!e.target.checked);
+      setDataCommit7({name: "titulooo", description: "ejemplo description"});
+      setSaveData7(!saveData7); 
+      //setShowCommit7(!e.target.checked);
     }else if(e.target.name === "showMedicamentos"){
       setShowMedicamentos(!showMedicamentos);
-      setShowCommit8(!e.target.checked);
+      setDataCommit8({name: "titulooo", description: "ejemplo description"});
+      setSaveData8(!saveData8);
+      //setShowCommit8(!e.target.checked);
     }else if(e.target.name === "showRemitido"){
       setRemitido(!showRemitido);
-      setShowCommit9(!e.target.checked);
+      setDataCommit9({name: "titulooo", description: "ejemplo description"});
+      setSaveData9(!saveData9);
+      //setShowCommit9(!e.target.checked);
     }
 }
 
   const [showCommit, setShowCommit] = useState(false);
-  const [dataCommit, setDataCommit] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit, setDataCommit] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData, setSaveData ] = useState(true); //Pasar el estado a true
   
   const [showCommit2, setShowCommit2] = useState(false);
-  const [dataCommit2, setDataCommit2] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit2, setDataCommit2] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData2, setSaveData2] = useState(true);
   
   const [showCommit3, setShowCommit3] = useState(false);
-  const [dataCommit3, setDataCommit3] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit3, setDataCommit3] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData3, setSaveData3] = useState(true);
   
   const [showCommit4, setShowCommit4] = useState(false);
-  const [dataCommit4, setDataCommit4] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit4, setDataCommit4] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData4, setSaveData4] = useState(true);
   
   const [showCommit5, setShowCommit5] = useState(false);
-  const [dataCommit5, setDataCommit5] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit5, setDataCommit5] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData5, setSaveData5] = useState(true);
   
   const [showCommit6, setShowCommit6] = useState(false);
-  const [dataCommit6, setDataCommit6] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit6, setDataCommit6] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData6, setSaveData6] = useState(true);
   
   const [showCommit7, setShowCommit7] = useState(false);
-  const [dataCommit7, setDataCommit7] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit7, setDataCommit7] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData7, setSaveData7] = useState(true);
   
   const [showCommit8, setShowCommit8] = useState(false);
-  const [dataCommit8, setDataCommit8] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit8, setDataCommit8] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData8, setSaveData8] = useState(true);
   
   const [showCommit9, setShowCommit9] = useState(false);
-  const [dataCommit9, setDataCommit9] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit9, setDataCommit9] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData9, setSaveData9] = useState(true);
 
   /*if(!showCommit7){
@@ -87,31 +93,31 @@ export default function AddInfantInc(props){
 
     return(
         <Container>
-          <AddIncomeCommit showCommit={showCommit} setShowCommit={setShowCommit} setDataCommit={setDataCommit} dataCommit={dataCommit} 
+          <AddIncomeCommit edit={false} showCommit={showCommit} setShowCommit={setShowCommit} setDataCommit={setDataCommit} dataCommit={dataCommit} 
             setSaveData={setSaveData} //Entrar al componente
           />
-          <AddIncomeCommit2 showCommit2={showCommit2} setShowCommit2={setShowCommit2} setDataCommit2={setDataCommit2} dataCommit2={dataCommit2} 
+          <AddIncomeCommit2 edit={false} showCommit2={showCommit2} setShowCommit2={setShowCommit2} setDataCommit2={setDataCommit2} dataCommit2={dataCommit2} 
             setSaveData2={setSaveData2}
           />
-          <AddIncomeCommit3 showCommit3={showCommit3} setShowCommit3={setShowCommit3} setDataCommit3={setDataCommit3} dataCommit3={dataCommit3} 
+          <AddIncomeCommit3 edit={false} showCommit3={showCommit3} setShowCommit3={setShowCommit3} setDataCommit3={setDataCommit3} dataCommit3={dataCommit3} 
             setSaveData3={setSaveData3}
           />
-          <AddIncomeCommit4 showCommit4={showCommit4} setShowCommit4={setShowCommit4} setDataCommit4={setDataCommit4} dataCommit4={dataCommit4} 
+          <AddIncomeCommit4 edit={false} showCommit4={showCommit4} setShowCommit4={setShowCommit4} setDataCommit4={setDataCommit4} dataCommit4={dataCommit4} 
             setSaveData4={setSaveData4}
           />
-          <AddIncomeCommit5 showCommit5={showCommit5} setShowCommit5={setShowCommit5} setDataCommit5={setDataCommit5} dataCommit5={dataCommit5} 
+          <AddIncomeCommit5 edit={false} showCommit5={showCommit5} setShowCommit5={setShowCommit5} setDataCommit5={setDataCommit5} dataCommit5={dataCommit5} 
             setSaveData5={setSaveData5}
           />
-          <AddIncomeCommit6 showCommit6={showCommit6} setShowCommit6={setShowCommit6} setDataCommit6={setDataCommit6} dataCommit6={dataCommit6} 
+          <AddIncomeCommit6 edit={false} showCommit6={showCommit6} setShowCommit6={setShowCommit6} setDataCommit6={setDataCommit6} dataCommit6={dataCommit6} 
             setSaveData6={setSaveData6}
           />
-          <AddIncomeCommit7 setShowPatologia={setShowPatologia} showCommit7={showCommit7} setShowCommit7={setShowCommit7} setDataCommit7={setDataCommit7} dataCommit7={dataCommit7} 
+          <AddIncomeCommit7 edit={false} setShowPatologia={setShowPatologia} showCommit7={showCommit7} setShowCommit7={setShowCommit7} setDataCommit7={setDataCommit7} dataCommit7={dataCommit7} 
             setSaveData7={setSaveData7}
           />
-          <AddIncomeCommit8 setShowMedicamentos={setShowMedicamentos} showCommit8={showCommit8} setShowCommit8={setShowCommit8} setDataCommit8={setDataCommit8} dataCommit8={dataCommit8} 
+          <AddIncomeCommit8 edit={false} setShowMedicamentos={setShowMedicamentos} showCommit8={showCommit8} setShowCommit8={setShowCommit8} setDataCommit8={setDataCommit8} dataCommit8={dataCommit8} 
             setSaveData8={setSaveData8}
           />
-          <AddIncomeCommit9 setRemitido={setRemitido} showCommit9={showCommit9} setShowCommit9={setShowCommit9} setDataCommit9={setDataCommit9} dataCommit9={dataCommit9} 
+          <AddIncomeCommit9 edit={false} setRemitido={setRemitido} showCommit9={showCommit9} setShowCommit9={setShowCommit9} setDataCommit9={setDataCommit9} dataCommit9={dataCommit9} 
             setSaveData9={setSaveData9}
           />
               <Row >
@@ -141,13 +147,18 @@ export default function AddInfantInc(props){
                 
                 validate={(valores) => {
                   let errores = {};
+                  if(showPatologia){
+                    if(!valores.nombrePatologia){
+                      errores.nombrePatologia = 'No se permiten campos vacíos'
+                    }
+                  }
 
-                  if(!valores.nombrePatologia){
-                    errores.nombrePatologia = 'No se permiten campos vacíos'
+                  if(showMedicamentos){
+                    if(!valores.nombreMedFormulada){
+                      errores.nombreMedFormulada = 'No se permiten campos vacíos'
+                    }
                   }
-                  if(!valores.nombreMedFormulada){
-                    errores.nombreMedFormulada = 'No se permiten campos vacíos'
-                  }
+                  
                   if(!valores.eapb){
                     errores.eapb = 'No se permiten campos vacíos'
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.eapb)){
@@ -158,10 +169,13 @@ export default function AddInfantInc(props){
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.ips)){
                     errores.ips = 'Solo puedes escribir letras';
                   }
-                  if(!valores.causa){
-                    errores.causa = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.causa)){
-                    errores.causa = 'Solo puedes escribir letras';
+
+                  if(showRemitido){
+                    if(!valores.causa){
+                      errores.causa = 'No se permiten campos vacíos'
+                    }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.causa)){
+                      errores.causa = 'Solo puedes escribir letras';
+                    }
                   }
                   
                   return errores;
@@ -177,19 +191,19 @@ export default function AddInfantInc(props){
                     recibeSuplementos: saveData8 ? "SI" : "NO",
                     valoracionMedica: saveData5 ? "SI" : "NO",
 
-                    id: '',
-                    idSeguimiento: 8,
+                    id: 1,
+                    idSeguimiento: parseInt(idSeg),
                     afiliacionSgsss: saveData ? "SI" : "NO",
                     saludOral: saveData2 ? "SI" : "NO",
                     conoceUrgencias: saveData3 ? "SI" : "NO",
                     patologiaIdentificadaSgsss: saveData7 ? "SI" : "NO",
-                    nombrePatologia: valores.nombrePatologia,
+                    nombrePatologia: showPatologia ? valores.nombrePatologia : "",
                     recibeMedFormulada: saveData8 ? "SI" : "NO",
-                    nombreMedFormululada: valores.nombreMedFormululada,
+                    nombreMedFormululada: showMedicamentos ? valores.nombreMedFormululada : "",
                     eapb: valores.eapb,
                     ips: valores.ips,
                     usuarioRemitido: saveData9 ? "SI" : "NO",
-                    causa: valores.causa,
+                    causa: showRemitido ? valores.causa : "",
                   }
                   console.log(formData);
                   insertInfantIncomeApi(formData, token).then(response => {

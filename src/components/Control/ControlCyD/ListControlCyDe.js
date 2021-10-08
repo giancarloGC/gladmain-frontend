@@ -11,7 +11,7 @@ import { deleteControlApi } from "../../../api/controls";
 
 
 export default function ListControlCyDe(props){
-    const { listControls, lastControls } = props;
+    const { infoUser, listControls, lastControls } = props;
     const { documento } = useParams();
     const token = localStorage.getItem(TOKEN);
 

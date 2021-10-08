@@ -38,7 +38,7 @@ export default function AddInfantIncome(){
         )
         :
         (
-            <AddInfantInc controlSeguimiento={controlSeguimiento}/>
+            <AddInfantInc idSeg={idSeg} controlSeguimiento={controlSeguimiento}/>
         )
         }
         </Container>
