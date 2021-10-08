@@ -1,5 +1,5 @@
 import React,{ Fragment, useState } from 'react';
-import { Container, Row, Col, Navbar, Nav  } from 'react-bootstrap';
+import { Container, Row, Col, Navbar, Nav } from 'react-bootstrap';
 import moment from 'moment';
 
 import Lottie from 'react-lottie';
@@ -35,7 +35,7 @@ export default function Welcome(){
             <header >
             <Row>
             <Col>
-            <Container  id="portada" >
+            <Container id="portada">
               <Navbar variant="light" collapseOnSelect expand="lg">
                 <Container >
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -52,14 +52,11 @@ export default function Welcome(){
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-            
                 <LoginForm showLogin={showLogin} setShowLogin={setShowLogin} />
-                
-                    <Row>
-                        <Col  className="justify-content-center align-content-center text-center mb-5 mt-5 tituloGladMaIn" >
-                            <p></p> <p></p> <p></p> <p></p> <p></p> <p></p> <p></p> <p></p>
+                    <Row style={{marginTop:"22%"}}>
+                        <Col style={{marginBottom:"8%"}} className="justify-content-center align-content-center text-center tituloGladMaIn" > 
                             <h1>Programa mis primeros años con</h1>
-                            <h1>COMFAORIENTE</h1>
+                            <h1 >COMFAORIENTE</h1>
                         </Col>
                     </Row>
                     </Container>
@@ -69,7 +66,7 @@ export default function Welcome(){
             <content>
                     <Container  fluid>                                 
                     <Row className="justify-content-md-center" id="about-we" className="pt-1 pb-3">
-                        <Col sm={6} className="mt-5 mb-5" >
+                        <Col sm={6} className="mt-4 mb-5" >
                             <div > 
                             <center>
                              <img src={Mision} alt="img" style={{"width": "50%"}}/>
