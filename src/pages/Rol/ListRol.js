@@ -123,6 +123,7 @@ function DocumentPdf({rolesApi, setLoadedSonPDF}){
   </Document>
     )
 }
+
 export default function ListRol(){
     const token = localStorage.getItem(TOKEN);
     const [ rolesApi, setRolesApi ] = useState([]);
