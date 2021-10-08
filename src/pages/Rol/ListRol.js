@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { PDFDownloadLink, Document, Page, View, Text, StyleSheet, Image } from '@react-pdf/renderer';
+import { PDFDownloadLink, Document, Page, View, Text, StyleSheet, Image, Font } from '@react-pdf/renderer';
 import { Container, ListGroup, Col, Row, Spinner, Button } from "react-bootstrap";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,25 +8,95 @@ import swal from 'sweetalert';
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { getRolesApi, deleteRolApi } from "../../api/rol";
 import { TOKEN } from "../../utils/constans";
+import moment from 'moment';
 import Logo from "../../assets/img/logocomfaoriente.png";
+import GladMaIn from "../../assets/img/logoGladmain.PNG";
+import fuente from "../../assets/fontPDF/Amaranth-Bold.ttf";
+import fuente2 from "../../assets/fontPDF/Amaranth-Regular.ttf";
+
+Font.register({ family: 'Amaranth', src: fuente});
+Font.register({ family: 'Amaranth2', src: fuente2});
 
 function DocumentPdf({rolesApi, setLoadedSonPDF}){
     useEffect(() => {
         setLoadedSonPDF(true);
     }, [])
+
     return(
         <Document>
         <Page style={styles.body}>
-            <View style={styles.viewImage}>
-                <Image 
-                style={styles.image}
-                src={Logo}
-                /*src={{ uri: //"https://th.bing.com/th/id/R.10e4609dc75f8aecc031e8bc373e7fb2?rik=j0rsh%2ffAUQ1mKA&riu=http%3a%2f%2fepsonline.comfaoriente.com%2fepss%2fimages%2fLogoComfao.jpeg&ehk=uTbwjGo1dF6DJWrg5mW%2fpTPkvoAnA4aNomU3Epx9JXs%3d&risl=&pid=ImgRaw&r=0", 
-                    method: 'GET', headers: {}, body: '' }}*/
-                />
-            </View>
-            <Text style={{fontSize: 20, color: "#2D61A4", textAlign: "center", fontWeight: "bold", marginBottom: 10, marginTop: 20}}>Listado de roles</Text>
+        <View style={styles.table2}> 
+            <View style={styles.tableRow2}> 
+                <View style={styles.tableCol2}> 
+                    <View style={styles.viewImage}>
+                        <Image 
+                        style={styles.image}
+                        src={Logo}
+                        />                
+                    </View>
+                </View>
+                <View style={styles.tableCol3}> 
+                    <Text style={{fontSize: 24, color: "#2D61A4", textAlign: "center", fontFamily: 'Amaranth'}}>Listado de roles</Text>
+                    <Text style={{fontSize: 16, color: "#2D61A4", textAlign: "center", fontFamily: 'Amaranth2'}}>Fecha: {moment().format("DD-MM-YYYY")}</Text>
+                </View>
+                <View style={styles.tableCol2}> 
+                    <View style={styles.viewImage2}>
+                        <Image 
+                        style={styles.image}
+                        src={GladMaIn}
+                        />             
+                    </View>
+                </View>
+            </View> 
+        </View> 
 
+        <Text style={{fontSize: 10, textAlign: "center"}}>-------------------------------------------------------------------------------------------------------------------------------------------------------</Text>
+
+       {/*{rolesApi.map((rol, index) => (*/}
+            <View style={styles.tableUser}> 
+            <View style={styles.tableRowUser}> 
+              <View style={styles.tableColHeaderUser}> 
+                <Text style={styles.tableCellHeaderUser}>Documento:</Text> 
+              </View> 
+                    <View style={styles.tableColUser}> 
+                        <Text style={styles.tableCell}>hgfhfhf</Text> 
+                    </View> 
+              <View style={styles.tableColHeaderUser}> 
+                <Text style={styles.tableCellHeaderUser}>Usuario:</Text> 
+              </View> 
+                    <View style={styles.tableColUser}> 
+                        <Text style={styles.tableCell}>dfgdg</Text> 
+                    </View> 
+              <View style={styles.tableColHeaderUser}> 
+                <Text style={styles.tableCellHeaderUser}>Fecha Nacimiento:</Text> 
+              </View> 
+                    <View style={styles.tableColUser}> 
+                        <Text style={styles.tableCell}>fgfdgfg</Text> 
+                    </View> 
+            </View>
+            <View style={styles.tableRowUser}> 
+              <View style={styles.tableColHeaderUser}> 
+                <Text style={styles.tableCellHeaderUser}>Telefono:</Text> 
+              </View> 
+                    <View style={styles.tableColUser}> 
+                        <Text style={styles.tableCell}>dfgfdg</Text> 
+                    </View> 
+              <View style={styles.tableColHeaderUser}> 
+                <Text style={styles.tableCellHeaderUser}>Municipio:</Text> 
+              </View> 
+                    <View style={styles.tableColUser}> 
+                        <Text style={styles.tableCell}>dgdfgfg</Text> 
+                    </View> 
+              <View style={styles.tableColHeaderUser}> 
+                <Text style={styles.tableCellHeaderUser}>Dirección:</Text> 
+              </View> 
+                    <View style={styles.tableColUser}> 
+                        <Text style={styles.tableCell}>gdfgfgd</Text> 
+                    </View> 
+            </View>
+            </View>
+            {/*))}*/}
+         
           <View style={styles.table}> 
             <View style={styles.tableRow}> 
               <View style={styles.tableColHeader}> 
@@ -186,56 +256,101 @@ function ListRolSon({rolesApi, confirmDeleteRol}){
 
 const styles = StyleSheet.create({
     body: {
-      padding: 10
+      paddingTop: 10,
+      paddingRight: 50,
+      paddingLeft: 50,
+      paddingBottom: 50,
     },
     image: {
         objectFit: 'cover',
     },
     viewImage: {
-        width: 270,
-        height: 80,
+        width: 100,
+        height: 'auto',
         padding: 0,
         backgroundColor: 'white',
+        margin:'auto'
+    },
+    viewImage2: {
+        width: 80,
+        height: 'auto',
+        backgroundColor: 'white',
+        margin:'auto'
     },
     table: { 
       display: "table", 
       width: "auto", 
-      borderStyle: "solid", 
-      borderColor: '#bfbfbf',
-      borderWidth: 1, 
-      borderRightWidth: 0, 
-      borderBottomWidth: 0 
+      marginTop: 10
     }, 
     tableRow: { 
       margin: "auto", 
       flexDirection: "row" 
     }, 
+    table2: { 
+        display: "table", 
+        width: "auto", 
+      }, 
+      tableRow2: { 
+        margin: "auto", 
+        flexDirection: "row" 
+      }, 
+      tableCol2: { 
+        width: "25%"
+      }, 
+      tableCol3: { 
+        width: "50%",
+        marginTop: 20
+      },
     tableColHeader: { 
       width: "25%", 
-      borderStyle: "solid", 
-      borderColor: '#bfbfbf',
-      borderBottomColor: '#000',
-      borderWidth: 1, 
-      borderLeftWidth: 0, 
-      borderTopWidth: 0
     },   
     tableCol: { 
       width: "25%", 
-      borderStyle: "solid", 
-      borderColor: '#bfbfbf',
-      borderWidth: 1, 
-      borderLeftWidth: 0, 
-      borderTopWidth: 0 
     }, 
     tableCellHeader: {
       margin: "auto", 
       margin: 5, 
-      fontSize: 12,
+      fontSize: 10,
       fontWeight: 500
     },  
     tableCell: { 
       margin: "auto", 
       margin: 5, 
       fontSize: 10 
-    }
+    },
+    tableRow: {
+        flexDirection: "row" 
+      }, 
+    tableUser: { 
+        display: "table", 
+        width: "auto", 
+        borderStyle: "solid",
+        borderColor:"black",
+        borderWidth: 1.5,
+        borderRadius: 4,
+        textAlign: "left"
+    }, 
+    tableRowUser: { 
+        flexDirection: "row",
+        textAlign: "left",
+        margin: "auto"
+    }, 
+    tableColHeaderUser: { 
+        width: "12%", 
+        textAlign: "left",
+        marginLeft: 4,
+    },   
+        tableColUser: { 
+        width: "21.3%", 
+        textAlign: "left"
+    }, 
+        tableCellHeaderUser: {
+        fontSize: 10,
+        textAlign: "left",
+        marginTop: 4
+    }, 
+        tableCellUser: { 
+        fontSize: 10,
+        textAlign: "left"
+    },
   });
