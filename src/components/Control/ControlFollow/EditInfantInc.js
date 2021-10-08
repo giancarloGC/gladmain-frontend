@@ -59,7 +59,7 @@ export default function EditInfantInc({ingreso}){
 
     return(
         <Container>
-          <AddIncomeCommit showCommit={showCommit} setShowCommit={setShowCommit} setDataCommit={setDataCommit} dataCommit={dataCommit} 
+          <AddIncomeCommit edit={true} showCommit={showCommit} setShowCommit={setShowCommit} setDataCommit={setDataCommit} dataCommit={dataCommit} 
             setSaveData={setSaveData} //Entrar al componente
           />
           <AddIncomeCommit2 showCommit2={showCommit2} setShowCommit2={setShowCommit2} setDataCommit2={setDataCommit2} dataCommit2={dataCommit2} 
