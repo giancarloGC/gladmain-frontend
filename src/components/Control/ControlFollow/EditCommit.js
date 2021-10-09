@@ -104,7 +104,7 @@ export default function EditCommit(props){
                     return (
                     <Form onSubmit={handleSubmit}>
                     <Form.Group as={Row} className="mb-1 mt-3">
-                        <Form.Label column sm="2"><h1 style={{fontSize: "20px", color:"#0084d2" }} >No. Seguimiento</h1></Form.Label>
+                        <Form.Label column sm="3"><h1 style={{fontSize: "20px", color:"#0084d2" }} >No. Seguimiento</h1></Form.Label>
                         <Col sm="2">
                             <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="01" size="xs" id="idSeguimientoSalud" name="idSeguimientoSalud" 
@@ -113,8 +113,8 @@ export default function EditCommit(props){
                         </InputGroup>
                         </Col>
                         <Col sm=""></Col>
-                        <Form.Label column sm="2"><h1 style={{fontSize: "20px", color:"#0084d2" }} >Fecha Compromiso</h1></Form.Label>
-                        <Col sm="3">
+                        <Form.Label column sm="3"><h1 style={{fontSize: "20px", color:"#0084d2" }} >Fecha Compromiso</h1></Form.Label>
+                        <Col >
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="xs" id="fechaCompromiso" name="fechaCompromiso" 
                                  defaultValue={dateFormat(control.fechaCompromiso)} onChange={handleChange} onBlur={handleBlur} disabled
@@ -183,8 +183,8 @@ export default function EditCommit(props){
                     </Form.Group>
 
                     <Form.Group as={Row} className="mt-4">
-                    <Form.Label column sm="2"><h5 style={{fontSize: "16px"}}>Fecha Cumplimiento </h5></Form.Label>
-                        <Col sm="3">
+                    <Form.Label column sm="4"><h5 style={{fontSize: "16px"}}>Fecha Cumplimiento </h5></Form.Label>
+                        <Col>
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="xs" id="fechaCumplimiento" name="fechaCumplimiento" 
                                  defaultValue={dateFormat(control.fechaCumplimiento)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaCumplimiento && touched.fechaCumplimiento}
@@ -196,11 +196,11 @@ export default function EditCommit(props){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
+                        </Form.Group>
 
-                        <Col sm={1}></Col>
-
-                        <Form.Label column sm="2"><h5 style={{fontSize: "16px"}}>Nombre Aux. Enfermero(a)</h5></Form.Label>
-                        <Col md={4}>
+                        <Form.Group as={Row} className="mt-4">
+                        <Form.Label column sm="4"><h5 style={{fontSize: "16px"}}>Nombre Aux. Enfermero(a)</h5></Form.Label>
+                        <Col>
                         <InputGroup hasValidation>
                         <Form.Control type="text" placeholder="nombre Auxiliar enfermero(a)" size="xs" id="nombreAuxiliarEnfermeria" name="nombreAuxiliarEnfermeria" 
                                defaultValue={control.nombreAuxiliarEnfermeria} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreAuxiliarEnfermeria && touched.nombreAuxiliarEnfermeria}

@@ -72,8 +72,7 @@ export default function AddControlR(props){
                         if(atencion.diff(dateCurrently, 'hours') > 0){
                             errores.fechaAtencion = 'Seleccione una fecha valida';
                         }
-                      }
-                  
+                      }                 
 
                   if(showHospitalizacion){
                       if(!valores.fechaIngreso){
@@ -93,7 +92,7 @@ export default function AddControlR(props){
                         errores.razonFallecimiento = 'Solo puedes escribir letras';
                       }
                   }
-                  
+                 
                   if(!valores.seguimiento){
                     errores.seguimiento = 'No se permiten campos vacíos'
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ.,;: ]+$/g.test(valores.seguimiento)){
@@ -159,7 +158,7 @@ export default function AddControlR(props){
                     <Form.Group as={Row} className="mt-2 " style={{ "marginLeft":"6px"}}>
                         <Form.Label column sm="3">
                         <h1 style={{fontSize: "20px", color:"#0084d2" }} className="mt-2">No. Seguimiento</h1></Form.Label>
-                        <Col sm="2">
+                        <Col >
                             <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="01" size="lg" id="idSeguimiento" name="idSeguimiento" 
                                value={controlSeguimiento.id} onChange={handleChange} onBlur={handleBlur}disabled
@@ -168,8 +167,8 @@ export default function AddControlR(props){
                         </Col>
 
                         <Form.Label column sm="3" className="mt-2 ">
-                        <h1 style={{fontSize: "20px", color:"#0084d2" }} >Fecha Remisión</h1></Form.Label>
-                        <Col sm="4">
+                        <h1 style={{fontSize: "20px", color:"#0084d2" }} >Fecha Remisión </h1></Form.Label>
+                        <Col>
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaRemision" name="fechaRemision" 
                                  value={moment().format("YYYY-MM-DD")} onChange={handleChange} onBlur={handleBlur} disabled
@@ -216,24 +215,24 @@ export default function AddControlR(props){
                         </Col>
                         </Form.Group>
 
-                        <Col md={1}></Col>
-
-                    <Form.Group as={Row} className="mt-3" style={{ "marginLeft":"6px"}}>
-                     <Form.Label column sm="3">
-                     <h5 style={{fontSize: "16px"}} className="mt-1">¿Fue Atendido?</h5></Form.Label>
-                     <Col class="mid">
-                        <InputGroup hasValidation>
+                    <Form.Group as={Row} className="mt-4 " style={{ "marginLeft":"6px"}}>
+                    <Form.Label column sm="6">
+                    <h5 style={{fontSize: "16px"}} className="mt-1">¿Fue Atendido?</h5></Form.Label>
+                        <Col>
+                        <InputGroup hasValidation style={{ justifyContent :"center"}}>
                           <label class="rocker rocker-small" size="xs" name="atendido" id="atendido" on>
                           <input type="checkbox" name="atendido" onChange={e => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>   
                         </InputGroup>
-                      </Col>
+                        </Col>
+                      </Form.Group>
 
-                      <Form.Label column sm="3">
+                    <Form.Group as={Row} className="mt-3" style={{ "marginLeft":"6px"}}>
+                      <Form.Label column sm="5" >
                       <h5 style={{fontSize: "16px"}}> Fecha de atención</h5></Form.Label>
-                        <Col sm="4">
+                        <Col >
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="xs" id="fechaAtencion" name="fechaAtencion" 
                                  value={values.fechaAtencion} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaAtencion && touched.fechaAtencion}
@@ -244,16 +243,14 @@ export default function AddControlR(props){
                               </Form.Control.Feedback>
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
-                        </Col>                     
+                        </Col> 
                       </Form.Group>
 
-                     <Col md={1}></Col>
-
                      <Form.Group as={Row} className="mt-3" style={{ "marginLeft":"6px"}}>
-                     <Form.Label column sm="3">
+                     <Form.Label column sm="6" >
                      <h5 style={{fontSize: "16px"}}>¿Requirio Hospitalización?</h5></Form.Label>
                      <Col class="mid">
-                        <InputGroup hasValidation>
+                        <InputGroup hasValidation style={{ justifyContent :"center"}}>
                           <label class="rocker rocker-small" size="xs" name="hospitalizado" id="hospitalizado">
                           <input type="checkbox"  name="hospitalizado" onChange={e => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
@@ -261,60 +258,45 @@ export default function AddControlR(props){
                           </label>   
                         </InputGroup>
                         </Col>
-
-                        {showHospitalizacion && (
-                          <>
-                          <Form.Label column sm="3">
-                          <h5 style={{fontSize: "16px"}}>Fecha Ingreso</h5></Form.Label>
-                          <Col sm="4">
-                            <InputGroup hasValidation>
-                                <Form.Control type="date" size="xs" id="fechaIngreso" name="fechaIngreso" 
-                                  value={values.fechaIngreso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaIngreso && touched.fechaIngreso}
-                                  isValid={!errors.fechaIngreso && touched.fechaIngreso}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    {errors.fechaIngreso}
-                                </Form.Control.Feedback>
-                                <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                            </InputGroup>
-                          </Col>
-                          </>
-                        )}
                     </Form.Group>
 
                     {showHospitalizacion && (
-                      <Form.Group as={Row} style={{ "marginLeft":"6px"}}>
-                        <Form.Label column sm="3">
-                        <h5 style={{fontSize: "16px"}}>¿Falleció durante el proceso de atención en salud?</h5></Form.Label>
-                        <Col class="mid">
-                        <InputGroup hasValidation>
+                     <Form.Group as={Row} className="mt-3" style={{ "marginLeft":"6px"}}>
+                     <Form.Label column sm="5">
+                     <h5 style={{fontSize: "16px"}}>Fecha Ingreso</h5></Form.Label>
+                     <Col >
+                       <InputGroup hasValidation style={{ justifyContent :"Right"}}>
+                           <Form.Control type="date" size="xs" id="fechaIngreso" name="fechaIngreso" 
+                             value={values.fechaIngreso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaIngreso && touched.fechaIngreso}
+                             isValid={!errors.fechaIngreso && touched.fechaIngreso}
+                           />
+                           <Form.Control.Feedback type="invalid">
+                               {errors.fechaIngreso}
+                           </Form.Control.Feedback>
+                           <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                       </InputGroup>
+                     </Col>
+                     </Form.Group>
+                    )}  
+
+                    {showHospitalizacion && (
+                    <Form.Group as={Row} className="mt-3" style={{ "marginLeft":"6px"}} >
+                    <Form.Label column sm="6">
+                    <h5 style={{fontSize: "16px"}} column sm="9">¿Falleció durante el proceso de atención en salud?</h5></Form.Label>
+                    <Col >
+                      <InputGroup hasValidation style={{ justifyContent :"center"}}>
                           <label class="rocker rocker-small" size="xs" name="fallecido" id="fallecido">
                           <input type="checkbox" name="fallecido" onChange={e => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>  
-                        </InputGroup>
-                        </Col>
-                        
-                        <Form.Label column sm="3">
-                        <h5 style={{fontSize: "16px"}}>Fecha Egreso</h5></Form.Label>
-                        <Col sm="4">
-                          <InputGroup hasValidation>
-                              <Form.Control type="date" size="xs" id="fechaSalida" name="fechaSalida" 
-                                 value={values.fechaSalida} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaSalida && touched.fechaSalida}
-                                 isValid={!errors.fechaSalida && touched.fechaSalida}
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.fechaSalida}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                        </Col>
-                    </Form.Group>
+                      </InputGroup>
+                    </Col>
+                    </Form.Group>                      
                     )}
                     
                     {showFallecimiento && (
-                      <Form.Group as={Row} style={{ "marginLeft":"6px"}}>
+                      <Form.Group as={Row} style={{ "marginLeft":"6px"}} className="mt-4">
                       <Form.Label column sm="5">
                       <h5 style={{fontSize: "16px"}} className="mt-2">Razón del Fallecimiento</h5></Form.Label>
                       <Col >
@@ -332,6 +314,25 @@ export default function AddControlR(props){
                       </Form.Group>
                     )}
                     
+                    {showHospitalizacion && !showFallecimiento && (
+                      <Form.Group as={Row} className="mt-3" style={{ "marginLeft":"6px"}}>
+                      <Form.Label column sm="5">
+                      <h5 style={{fontSize: "16px"}}>Fecha Egreso</h5></Form.Label>
+                      <Col >
+                      <InputGroup hasValidation>
+                                <Form.Control type="date" size="xs" id="fechaSalida" name="fechaSalida" 
+                                  value={values.fechaSalida} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaSalida && touched.fechaSalida}
+                                  isValid={!errors.fechaSalida && touched.fechaSalida}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.fechaSalida}
+                                </Form.Control.Feedback>
+                                <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                            </InputGroup>
+                      </Col>
+                      </Form.Group>
+                        
+                      )} 
  
                     <Form.Group as={Row} className="mt-4" style={{ "marginLeft":"6px"}}>
                         <Form.Label column sm="5" >

@@ -138,7 +138,7 @@ let dateFechaNaci = moment(user.fechaNacimiento);
             <Form onSubmit={handleSubmit}>
             
             <center>
-            <Card style={{width: '600px'}} className='mt-3' >
+            <Card style={{width: 'auto', height: 'auto'}} className='mt-3' >
             {user.edad > 216 ? 
                             <Card.Img variant="top" src={user.sexo === "FEMENINO" ? ImageWomen : ImageMen} style={{"max-width": "200px"}} roundedCircle className="row justify-content-center align-self-center mt-3"/>
                         :
@@ -152,32 +152,135 @@ let dateFechaNaci = moment(user.fechaNacimiento);
             </Card>
             </center>
 
-            <Row className='mb-3'>
+            <Row>
             <Col md={1}> </Col>
             <Col md={5} className='mt-2'>
             <ListGroup className="list-group-flush ">
               <ListGroupItem style={{"fontSize": "16px", "color":"#0084d2", "fontWeight":"bold" }}>Tipo de Documento:</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem style={{"fontSize": "16px", "fontWeight":"bold"}}>{user.tipoDocumento}</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={1}> </Col>
+            </Row>
+
+            <Row>
+            <Col md={1}> </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
               <ListGroupItem className='mt-1' style={{"fontSize": "16px", "color":"#0084d2", "fontWeight":"bold" }}>Numero de Documento:</ListGroupItem>
-              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "color":"#0084d2", "fontWeight":"bold" }}>Sexo:</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+            <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{user.documento}</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={1}> </Col>
+            </Row>
+
+            <Row>
+            <Col md={1}> </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+               <ListGroupItem className='mt-1' style={{"fontSize": "16px", "color":"#0084d2", "fontWeight":"bold" }}>Sexo:</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{user.sexo}</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={1}> </Col>
+            </Row>
+
+            <Row>
+            <Col md={1}> </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
               <ListGroupItem className='mt-1' style={{"fontSize": "16px", "color":"#0084d2", "fontWeight":"bold" }}>Fecha de Nacimiento:</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{formatedDate(user.fechaNacimiento)}</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={1}> </Col>
+            </Row>
+
+            <Row>
+            <Col md={1}> </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
               <ListGroupItem className='mt-1' style={{"fontSize": "16px", "color":"#0084d2", "fontWeight":"bold" }}>Edad:</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+               <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{`${user.edad} meses`}</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={1}> </Col>
+            </Row>
+
+            <Row>
+            <Col md={1}> </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
               <ListGroupItem className='mt-1' style={{"fontSize": "16px", "color":"#0084d2", "fontWeight":"bold" }}>Celular:</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{user.celular}</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={1}> </Col>
+            </Row>
+
+            <Row>
+            <Col md={1}> </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
               <ListGroupItem className='mt-1' style={{"fontSize": "16px", "color":"#0084d2", "fontWeight":"bold" }}>Municipio:</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{user.municipio}</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={1}> </Col>
+            </Row>
+
+            <Row>
+            <Col md={1}> </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
               <ListGroupItem className='mt-1' style={{"fontSize": "16px", "color":"#0084d2", "fontWeight":"bold" }}>Dirección:</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{user.direccion}</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={1}> </Col>
+            </Row>
+
+            <Row className='mb-3'>
+            <Col md={1}> </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
               <ListGroupItem className='mt-1' style={{"fontSize": "16px", "color":"#0084d2", "fontWeight":"bold" }}>Correo Electronico:</ListGroupItem>
             </ListGroup>
             </Col>
-
             <Col md={5} className='mt-2'>
-            <ListGroup className="list-group-flush">
-            <ListGroupItem style={{"fontSize": "16px", "fontWeight":"bold"}}>{user.tipoDocumento}</ListGroupItem>
-            <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{user.documento}</ListGroupItem>
-              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{user.sexo}</ListGroupItem>
-              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{formatedDate(user.fechaNacimiento)}</ListGroupItem>
-              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{`${user.edad} meses`}</ListGroupItem>
-              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{user.celular}</ListGroupItem>
-              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{user.municipio}</ListGroupItem>
-              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{user.direccion}</ListGroupItem>
+            <ListGroup className="list-group-flush ">
               <ListGroupItem className='mt-1'style={{"fontSize": "16px", "fontWeight":"bold"}}>{user.correoElectronico}</ListGroupItem>
             </ListGroup>
             </Col>

@@ -13,7 +13,7 @@ export default function AddControlF(props){
   const token = localStorage.getItem(TOKEN);
   const { user } = AuthContext();
   const documentoLogin = user.sub.split('-');
-  const [ goRedirect, setGoRedirect ] = useState(0);
+  const [ goRedirect, setGoRedirect ] = useState();
 
     return(
         <Container>
@@ -102,24 +102,29 @@ export default function AddControlF(props){
                     } = props;
                     return (   
                     <Form onSubmit={handleSubmit}>
-                    <Form.Group as={Row} className="mb-1 mt-3">
-                        <Form.Label column sm="1" className="mt-1"> <h1 style={{fontSize: "20px", color:"#0084d2" }}> Fecha </h1></Form.Label>
+                    
+                    <Form.Group className="mt-3">
+                      <Row>
+                     <Form.Label column className="mt-1"> <h1 style={{fontSize: "20px", color:"#0084d2" }}> Fecha </h1></Form.Label>
                         <Col md="4">
                           <InputGroup hasValidation>
-                              <Form.Control type="date" size="lg" id="fechaSeg" name="fechaSeg" 
+                              <Form.Control type="text" size="lg" id="fechaSeg" name="fechaSeg" 
                                  value={moment().format("YYYY-MM-DD")} onChange={handleChange} onBlur={handleBlur} disabled
                               />
                           </InputGroup>
                         </Col>
+                      <Col md="6"> </Col>
+                      </Row>
                     </Form.Group>
+                    
 
                     <center>
-                    <Form.Label column sm="4" className="align-self-center justify-content-around mb-4 mt-2"> 
+                    <Form.Label column sm="10" className="align-self-center justify-content-around mb-4 mt-2"> 
                     <u><h1 style={{fontSize: "20px", color:"#0084d2" }}>INFORMACIÓN DEL ACUDIENTE</h1></u> </Form.Label>
                     </center>
 
                     <Form.Group as={Row} className="mb-3">
-                     <Form.Label column sm="2"> <h5 style={{fontSize:"17px"}}>Tipo de Documento</h5></Form.Label>
+                     <Form.Label column> <h5 style={{fontSize:"17px"}}>Tipo de Documento</h5></Form.Label>
                         <Col md={4}>
                         <InputGroup hasValidation>
                             <Form.Select  size="xs" name="tipoDocAcudiente" id="tipoDocAcudiente" onChange={handleChange} onBlur={handleBlur}
@@ -137,7 +142,7 @@ export default function AddControlF(props){
                         </InputGroup>
                         </Col>
 
-                        <Form.Label column sm="2"><h5 style={{fontSize:"17px"}}>Número Documento</h5></Form.Label>
+                        <Form.Label column><h5 style={{fontSize:"17px"}}>Número Documento</h5></Form.Label>
                         <Col md={4}>
                         <InputGroup hasValidation>
                             <Form.Control type="text" placeholder="documento acudiente" size="xs" id="numeroDocAcudiente" name="numeroDocAcudiente" 
@@ -155,7 +160,7 @@ export default function AddControlF(props){
 
                     <Form.Group as={Row} className="mb-3 mt-3">
                     <Form.Label column sm="2"><h5 style={{fontSize:"17px"}}>Nombre</h5></Form.Label>
-                    <Col md={10}>
+                    <Col>
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre del Acudiente" size="xs" id="nombreAcudiente" name="nombreAcudiente" 
                                value={values.nombreAcudiente} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreAcudiente && touched.nombreAcudiente}
@@ -170,12 +175,12 @@ export default function AddControlF(props){
                     </Form.Group>
 
                     <center>
-                    <Form.Label column sm="4" className="align-self-center justify-content-around mb-4"> 
+                    <Form.Label column sm="10" className="align-self-center justify-content-around mb-4"> 
                     <u><h1 style={{fontSize: "20px", color:"#0084d2" }}>INFORMACIÓN DEL USUARIO </h1></u> </Form.Label>
                     </center>
 
                     <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="2"><h5 style={{fontSize:"17px"}}> Tipo de Documento </h5></Form.Label>
+                        <Form.Label column ><h5 style={{fontSize:"17px"}}> Tipo de Documento </h5></Form.Label>
                         <Col md={4}>
                         <InputGroup hasValidation>
                                <Form.Control type="text" size="xs" id="nombreAcudiente" name="tipoDocumento" 
@@ -184,7 +189,7 @@ export default function AddControlF(props){
                         </InputGroup>
                      </Col>
                        
-                        <Form.Label column sm="2"> <h5 style={{fontSize:"17px"}}> Número Documento </h5></Form.Label>
+                        <Form.Label column > <h5 style={{fontSize:"17px"}}> Número Documento </h5></Form.Label>
                             <Col md={4}>
                             <InputGroup hasValidation>
                             <Form.Control  type="text" placeholder="Número documento" size="xs" id="idUsuario" name="idUsuario" 
@@ -195,7 +200,7 @@ export default function AddControlF(props){
                     </Form.Group>
 
                     <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="2"><h5 style={{fontSize:"17px"}}> Nombre </h5></Form.Label>
+                        <Form.Label column><h5 style={{fontSize:"17px"}}> Nombre </h5></Form.Label>
                         <Col md={4}>
                         <InputGroup hasValidation>
                         <Form.Control type="text" placeholder="nombre usuario" size="xs" id="nombre" name="nombre" 
@@ -205,7 +210,7 @@ export default function AddControlF(props){
                         </Col>
 
                         
-                        <Form.Label column sm="2"> <h5 style={{fontSize:"17px"}}> Celular </h5></Form.Label>
+                        <Form.Label column> <h5 style={{fontSize:"17px"}}> Celular </h5></Form.Label>
                         <Col md={4}>
                         <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="Dígita aquí Teléfono" size="xs" id="celular" name="celular" 
@@ -213,11 +218,12 @@ export default function AddControlF(props){
                             />
                         </InputGroup>
                         </Col>
-                    </Form.Group>           
+                    </Form.Group>    
 
                     {goRedirect && (
                       <Redirect to={`/admin/addInfantIncome/${goRedirect}`} />
-                    )}            
+                    )}      
+                            
                         <div className="d-grid gap-2 mb-3">
                             <Button variant="primary" type="submit" size="lg" >
                                Siguiente

@@ -36,10 +36,6 @@ export default function ListVac(){
                     <FontAwesomeIcon icon={faMarker} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton1" />
                     <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Editar Control </ReactTooltip>
                 </Link>
-                <Link to="/" >
-                    <FontAwesomeIcon icon={faPrint} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton2" />
-                    <ReactTooltip id="boton2" place="bottom" type="dark" effect="float"> Imprimir </ReactTooltip>
-                </Link>
              </h1>
              {listControls.length === 0 && (
                 <>

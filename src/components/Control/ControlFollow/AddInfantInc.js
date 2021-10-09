@@ -235,18 +235,22 @@ export default function AddInfantInc(props){
                     } = props;
                     return (   
                     <Form onSubmit={handleSubmit}>
-                        
+                     
                     <Form.Group as={Row} className="mt-2 " style={{ "marginLeft":"6px"}}>
-                        <Form.Label column sm="3"><h1 style={{"fontSize": "22px", "color":"#0084d2" }} className="mt-2">No. Seguimiento </h1></Form.Label>
-                          <Col sm="2">
-                            <InputGroup hasValidation>
+                      <Row>
+                      <Form.Label column sm="4"><h1 style={{"fontSize": "22px", "color":"#0084d2" }} className="mt-2">No. Seguimiento </h1></Form.Label>
+                        <Col md="2">
+                        <InputGroup hasValidation>
                             <Form.Control
                             type="number" className="text-center" placeholder="01" size="lg" id="idSeguimiento" name="idSeguimiento" 
                                value={controlSeguimiento.id} onChange={handleChange} onBlur={handleBlur} disabled
                             />
                           </InputGroup>
-                      </Col>
+                        </Col>
+                      <Col md="6"> </Col>
+                      </Row>
                     </Form.Group>
+
 
                     <Form.Group as={Row} style={{ "marginLeft":"43px"}} className="mt-1">
                        <Form.Label column sm="9"  > 

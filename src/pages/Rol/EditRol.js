@@ -135,7 +135,7 @@ export default function EditRol(){
                         <fieldset>
                             <legend>Seleccione las funciones que tendrá el rol</legend>
                             <Row className="mb-3" style={{backgroundColor: '#f1f1f1', borderRadius:'5px'}}>
-                            <Col md={4}>
+                            <Col>
                                 {listPrivilegios.map((item, index) => (
                                     index <= 18 && (
                                         checkPrivilegio(item)
@@ -143,7 +143,7 @@ export default function EditRol(){
                                 ))}
                             </Col>
 
-                            <Col md={4}>
+                            <Col>
                                 {listPrivilegios.map((item, index) => (
                                     index > 18 && index <= 37 && (
                                         checkPrivilegio(item)
@@ -151,7 +151,7 @@ export default function EditRol(){
                                 ))}
                             </Col>
 
-                            <Col md={4}>
+                            <Col>
                                 {listPrivilegios.map((item, index) => (
                                     index > 37 && index <= 55 && (
                                         checkPrivilegio(item)                                    

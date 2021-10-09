@@ -54,17 +54,17 @@ export default function DetailsCommit(props){
                     return (   
                     <Form onSubmit={handleSubmit}>
                     <Form.Group as={Row} className="mb-1 mt-3">
-                        <Form.Label column sm="2"><h1 style={{fontSize: "20px", color:"#0084d2" }}> No. Seguimiento </h1></Form.Label>
+                        <Form.Label column sm="3"><h1 style={{fontSize: "20px", color:"#0084d2" }}> No. Seguimiento </h1></Form.Label>
                         <Col sm="2">
                             <InputGroup hasValidation>
-                            <Form.Control type="number" placeholder="01" size="xs" id="idSeguimientoSalud" name="idSeguimientoSalud" 
+                            <Form.Control type="text" placeholder="01" size="xs" id="idSeguimientoSalud" name="idSeguimientoSalud" 
                                value={segControl.id} onChange={handleChange} onBlur={handleBlur} disabled
                             />
                         </InputGroup>
                         </Col>
                         <Col sm=""> </Col>
-                        <Form.Label column sm="2"><h1 style={{fontSize: "20px", color:"#0084d2" }}> Fecha Compromiso </h1></Form.Label>
-                        <Col sm="3">
+                        <Form.Label column sm="3"><h1 style={{fontSize: "20px", color:"#0084d2" }}> Fecha Compromiso </h1></Form.Label>
+                        <Col>
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="lg" id="fechaCompromiso" name="fechaCompromiso" 
                                  value={dateFormat(control.fechaCompromiso)} onChange={handleChange} onBlur={handleBlur} disabled
@@ -75,18 +75,19 @@ export default function DetailsCommit(props){
 
                     <Container style={{border:'2px solid #eee', borderRadius:'5px'}}><br/>      
                     <Form.Group as={Row} className="mb-1 ">
+                      
                     <div class="middle">
                     {control.tipo === "Compromiso cumplido que no se mantuvo" ? 
                       <label >
                       <input type="radio" name="radio1"  checked={true}/>
-                      <div class="box" style={{width:"700px", height:"40px"}}>
+                      <div class="box">
                         <span>Compromiso cumplido que no se mantuvo</span>
                       </div>
                       </label>
                       :
                       <label>
                       <input type="radio" name="radio" checked={true} />
-                      <div class="box" style={{width:"700px", height:"40px"}}>
+                      <div class="box">
                         <span>Compromiso por nuevo factor de riesgo</span>
                       </div>
                       </label>
@@ -121,16 +122,15 @@ export default function DetailsCommit(props){
                     </Form.Group>
 
                     <Form.Group as={Row} className="mt-4">
-                    <Form.Label column sm="2"><h5 style={{fontSize: "16px"}}>Fecha Cumplimiento </h5></Form.Label>
-                         <Col sm="3">
+                    <Form.Label column sm="3"><h5 style={{fontSize: "16px"}}>Fecha Cumplimiento </h5></Form.Label>
+                         <Col>
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="xs" id="fechaCumplimiento" name="fechaCumplimiento" 
                                  value={dateFormat(control.fechaCumplimiento)} onChange={handleChange} onBlur={handleBlur} disabled
                               /> </InputGroup>
                         </Col>
-                        <Col sm={1}></Col>
-                        <Form.Label column sm="2"><h5 style={{fontSize: "16px"}}>Nombre Aux. Enfermero(a)</h5></Form.Label>
-                        <Col md={4}>
+                        <Form.Label column sm="3"><h5 style={{fontSize: "16px"}}>Nombre Aux. Enfermero(a)</h5></Form.Label>
+                        <Col>
                         <InputGroup hasValidation>
                         <Form.Control type="text" placeholder="nombre Auxiliar enfermero(a)" size="xs" id="nombreAuxiliarEnfermeria" name="nombreAuxiliarEnfermeria" 
                                value={control.nombreAuxiliarEnfermeria} onChange={handleChange} onBlur={handleBlur} disabled

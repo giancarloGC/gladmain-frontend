@@ -107,16 +107,16 @@ export default function AddCommit(props){
                     <Form onSubmit={handleSubmit}>
                     <Form.Group as={Row} className="mb-1 mt-3">
                         <Form.Label column sm="2"><h1 style={{fontSize: "20px", color:"#0084d2" }} >No. Seguimiento</h1></Form.Label>
-                        <Col sm="2">
+                        <Col>
                             <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="01" size="xs" id="idSeguimientoSalud" name="idSeguimientoSalud" 
                                value={controlSeguimiento.id} onChange={handleChange} onBlur={handleBlur} disabled
                             />
                         </InputGroup>
                         </Col>
-                        <Col sm=""></Col>
+                        <Col sm="3"></Col>
                         <Form.Label column sm="2"><h1 style={{fontSize: "20px", color:"#0084d2" }} >Fecha Compromiso</h1></Form.Label>
-                        <Col sm="3">
+                        <Col>
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="xs" id="fechaCompromiso" name="fechaCompromiso" 
                                  value={moment().format("YYYY-MM-DD")} onChange={handleChange} onBlur={handleBlur} disabled
@@ -183,9 +183,10 @@ export default function AddCommit(props){
                      </Col>
                     </Form.Group>
 
-                    <Form.Group as={Row} className="mt-4">
-                    <Form.Label column sm="2"><h5 style={{fontSize: "16px"}}>Fecha Cumplimiento </h5></Form.Label>
-                        <Col sm="3">
+                    <Form.Group className="mt-4">
+                      <Row>
+                    <Form.Label column sm="3"><h5 style={{fontSize: "16px"}}>Fecha Cumplimiento </h5></Form.Label>
+                        <Col >
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="xs" id="fechaCumplimiento" name="fechaCumplimiento" 
                                  value={values.fechaCumplimiento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaCumplimiento && touched.fechaCumplimiento}
@@ -197,8 +198,6 @@ export default function AddCommit(props){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
-
-                        <Col sm={1}></Col>
 
                         <Form.Label column sm="2"><h5 style={{fontSize: "16px"}}>Nombre Aux. Enfermero(a)</h5></Form.Label>
                         <Col md={4}>
@@ -213,6 +212,7 @@ export default function AddCommit(props){
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                         </Col>
+                        </Row>
                     </Form.Group>
 
                     <div className="d-grid gap-2">

@@ -128,7 +128,7 @@ export default function AddRol(){
                         <fieldset >
                             <legend>Seleccione las funciones que tendrá el rol</legend>
                             <Row className="mb-3">
-                            <Col md={4}>
+                            <Col>
                                 {listPrivilegios.map((item, index) => (
                                     index <= 18 && (
                                         <Form.Check type="checkbox" label={item.nombre} onChange={(e) => handleCheck(e, item)}/>
@@ -136,7 +136,7 @@ export default function AddRol(){
                                 ))}
                             </Col>
 
-                            <Col md={4}>
+                            <Col>
                                 {listPrivilegios.map((item, index) => (
                                     index > 18 && index <= 37 && (
                                         <Form.Check type="checkbox" label={item.nombre} onChange={(e) => handleCheck(e, item)}/>
@@ -144,7 +144,7 @@ export default function AddRol(){
                                 ))}
                             </Col>
 
-                            <Col md={4}>
+                            <Col >
                                 {listPrivilegios.map((item, index) => (
                                     index > 37 && index <= 55 && (
                                         <Form.Check type="checkbox" label={item.nombre} onChange={(e) => handleCheck(e, item)}/>
