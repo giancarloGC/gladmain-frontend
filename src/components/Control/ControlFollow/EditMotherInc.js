@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
 import { TOKEN } from "../../../utils/constans";
-import { insertMotIncomeApi } from "../../../api/mother_income";
+import { updateMotIncomeApi } from "../../../api/mother_income";
 import swal from 'sweetalert';
 import "./Switch.scss";
 import AddMotherCommit from "./AddMotherComit/AddMotherCommit";
@@ -18,25 +18,25 @@ import AddMotherCommit10 from "./AddMotherComit/AddMotherCommit10";
 import AddMotherCommit11 from "./AddMotherComit/AddMotherCommit11";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 
-export default function AddMotherInc(props){
-  const { idSeg, documento, controlSeguimiento } = props;
+export default function EditMotherInc(props){
+  const { idSeg, documento, ingreso } = props;
   const token = localStorage.getItem(TOKEN);
   const [ checkeds, setCheckeds ] = useState({ 
-      vomitoControlado: "NO",
-      dolorCabeza: "NO",
-      fiebre: "NO",
-      ardorOrinar: "NO",
-      hinchamiento: "NO",
-      dolorBocaEstomago: "NO",
-      sangrado: "NO",
-      movimientoFetal: "NO"
+      vomitoControlado: ingreso.ingresoMadre.vomitoControlado,
+      dolorCabeza: ingreso.ingresoMadre.dolorCabeza,
+      fiebre: ingreso.ingresoMadre.fiebre,
+      ardorOrinar: ingreso.ingresoMadre.ardorOrinar,
+      hinchamiento: ingreso.ingresoMadre.hinchamiento,
+      dolorBocaEstomago: ingreso.ingresoMadre.dolorBocaEstomago,
+      sangrado: ingreso.ingresoMadre.sangrado,
+      movimientoFetal: ingreso.ingresoMadre.movimientoFetal
     //atendido: false, hospitalizado: false, fallecido: false 
   });
   const [ goRedirect, setGoRedirect ] = useState(0);
-  console.log(idSeg);
-  const [ showPatologia, setShowPatologia ] = useState(true);
-  const [ showMedicamentos, setShowMedicamentos ] = useState(true);
-  const [ showRemitido, setRemitido ] = useState(true);
+  console.log(ingreso);
+  const [ showPatologia, setShowPatologia ] = useState(ingreso.ingreso.patologiaIdentificadaSgsss);
+  const [ showMedicamentos, setShowMedicamentos ] = useState(ingreso.ingreso.recibeMedFormulada);
+  const [ showRemitido, setRemitido ] = useState(ingreso.ingreso.usuarioRemitido === "1" ? true : false);
 
 
   const onChangeChecked = (e) => {
@@ -65,47 +65,47 @@ export default function AddMotherInc(props){
 
   const [showCommit, setShowCommit] = useState(false);
   const [dataCommit, setDataCommit] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
-  const [ saveData, setSaveData ] = useState(true); //Pasar el estado a true
+  const [ saveData, setSaveData ] = useState(ingreso.ingreso.afiliacionSgsss === "SI" ? true : false); //Pasar el estado a true
   
   const [showCommit2, setShowCommit2] = useState(false);
   const [dataCommit2, setDataCommit2] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
-  const [ saveData2, setSaveData2] = useState(true);
+  const [ saveData2, setSaveData2] = useState(ingreso.ingreso.saludOral === "SI" ? true : false);
   
   const [showCommit3, setShowCommit3] = useState(false);
   const [dataCommit3, setDataCommit3] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
-  const [ saveData3, setSaveData3] = useState(true);
+  const [ saveData3, setSaveData3] = useState(ingreso.ingreso.conoceUrgencias === "SI" ? true : false);
   
   const [showCommit4, setShowCommit4] = useState(false);
   const [dataCommit4, setDataCommit4] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
-  const [ saveData4, setSaveData4] = useState(true);
+  const [ saveData4, setSaveData4] = useState(ingreso.ingresoMadre.controlPrenatal === "SI" ? true : false);
   
   const [showCommit5, setShowCommit5] = useState(false);
   const [dataCommit5, setDataCommit5] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
-  const [ saveData5, setSaveData5] = useState(true);
+  const [ saveData5, setSaveData5] = useState(ingreso.ingresoMadre.cuentaMicro === "SI" ? true : false);
   
   const [showCommit6, setShowCommit6] = useState(false);
   const [dataCommit6, setDataCommit6] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
-  const [ saveData6, setSaveData6] = useState(true);
+  const [ saveData6, setSaveData6] = useState(ingreso.ingresoMadre.examenMedico === "SI" ? true : false);
   
   const [showCommit7, setShowCommit7] = useState(false);
   const [dataCommit7, setDataCommit7] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
-  const [ saveData7, setSaveData7] = useState(true);
+  const [ saveData7, setSaveData7] = useState(ingreso.ingresoMadre.senalPeligro === "SI" ? true : false);
   
   const [showCommit8, setShowCommit8] = useState(false);
   const [dataCommit8, setDataCommit8] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
-  const [ saveData8, setSaveData8] = useState(true);
+  const [ saveData8, setSaveData8] = useState(ingreso.ingresoMadre.metodoPlanificacion === "SI" ? true : false);
   
   const [showCommit9, setShowCommit9] = useState(false);
   const [dataCommit9, setDataCommit9] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
-  const [ saveData9, setSaveData9] = useState(true);
+  const [ saveData9, setSaveData9] = useState(ingreso.ingreso.patologiaIdentificadaSgsss);
 
   const [showCommit10, setShowCommit10] = useState(false);
   const [dataCommit10, setDataCommit10] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
-  const [ saveData10, setSaveData10] = useState(true);
+  const [ saveData10, setSaveData10] = useState(ingreso.ingreso.recibeMedFormulada);
 
   const [showCommit11, setShowCommit11] = useState(false);
   const [dataCommit11, setDataCommit11] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
-  const [ saveData11, setSaveData11] = useState(true);
+  const [ saveData11, setSaveData11] = useState(ingreso.ingreso.usuarioRemitido === "1" ? true : false);
 
     return(
         <Container>
@@ -150,7 +150,7 @@ export default function AddMotherInc(props){
                 <Formik
                 initialValues={{ 
                   controlPrenatal: "asd",
-                      cantidadSemanas: 0,
+                      cantidadSemanas: ingreso.ingresoMadre.cantidadSemanas,
                       cuentaMicro: "",
                       examenMedico: "",
                       senalPeligro: "",
@@ -170,13 +170,13 @@ export default function AddMotherInc(props){
                     saludOral: '',
                     conoceUrgencias: '',
                     patologiaIdentificadaSgsss: '',
-                    nombrePatologia: '',
+                    nombrePatologia: ingreso.ingreso.nombrePatologia,
                     recibeMedFormulada: '',
-                    nombreMedFormululada: '',
-                    eapb: '',
-                    ips: '',
+                    nombreMedFormululada: ingreso.ingreso.nombreMedFormululada,
+                    eapb: ingreso.ingreso.eapb,
+                    ips: ingreso.ingreso.ips,
                     usuarioRemitido: '',
-                    causa: '',
+                    causa: ingreso.ingreso.causa,
                 }}
                 
                 validate={(valores) => {
@@ -187,8 +187,8 @@ export default function AddMotherInc(props){
                     }
                   }
                   if(showMedicamentos){
-                    if(!valores.nombreMedFormulada){
-                      errores.nombreMedFormulada = 'No se permiten campos vacíos'
+                    if(!valores.nombreMedFormululada){
+                      errores.nombreMedFormululada = 'No se permiten campos vacíos'
                     }
                   }
 
@@ -218,8 +218,8 @@ export default function AddMotherInc(props){
                   const formData = {
                     ingresoInfante: null,
                     ingresoMadre: {
-                      id: 1,
-                      idIngreso: 1,
+                      id: ingreso.ingresoMadre.id,
+                      idIngreso:ingreso.ingresoMadre.idIngreso,
                       controlPrenatal: saveData4 ? "SI" : "NO",
                       cantidadSemanas: valores.cantidadSemanas,
                       cuentaMicro: saveData5 ? "SI" : "NO",
@@ -237,7 +237,7 @@ export default function AddMotherInc(props){
                       movimientoFetal: checkeds.movimientoFetal
                     },
                     ingreso: {
-                      id: 1,
+                      id: ingreso.ingreso.id,
                       idSeguimiento: parseInt(idSeg),
                       afiliacionSgsss: saveData ? "SI" : "NO",
                       saludOral: saveData2 ? "SI" : "NO",
@@ -245,7 +245,7 @@ export default function AddMotherInc(props){
                       patologiaIdentificadaSgsss: saveData9 ? true : false,
                       nombrePatologia: showPatologia ? valores.nombrePatologia : "",
                       recibeMedFormulada: saveData10 ? true : false,
-                      nombreMedFormululada: showMedicamentos ? valores.nombreMedFormululada : "",
+                      nombreMedFormululada: valores.nombreMedFormululada,
                       eapb: valores.eapb,
                       ips: valores.ips,
                       usuarioRemitido: saveData11 ? "1" : "0",
@@ -253,11 +253,11 @@ export default function AddMotherInc(props){
                     }
                   }
                   console.log(formData);
-                  insertMotIncomeApi(formData, token).then(response => {
+                  updateMotIncomeApi(formData, token).then(response => {
                     console.log(response);
                     if(response === true){
                       swal({
-                        title: `¡El ingreso fue almacenado correctamente!`,
+                        title: `¡El ingreso fue actualizado correctamente!`,
                         icon: 'success'
                       }).then((value) => {
                         setGoRedirect(1);
@@ -294,7 +294,7 @@ export default function AddMotherInc(props){
                             <InputGroup hasValidation>
                             <Form.Control
                             type="number" className="text-center" placeholder="01" size="lg" id="idSeguimiento" name="idSeguimiento" 
-                               value={controlSeguimiento.id} onChange={handleChange} onBlur={handleBlur} disabled
+                               value={ingreso.ingreso.idSeguimiento} onChange={handleChange} onBlur={handleBlur} disabled
                             />
                           </InputGroup>
                         </Col>
@@ -496,7 +496,7 @@ export default function AddMotherInc(props){
                       <Col sm="9" class="mid" style={{marginLeft:"7px"}}>
                           <InputGroup hasValidation>
                                 <Form.Control type="text" placeholder="Nombre Patología" size="xs" id="nombrePatologia" name="nombrePatologia" 
-                                value={values.nombrePatologia} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
+                                value={values.nombrePatologia} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombrePatologia && touched.nombrePatologia}
                                 isValid={!errors.nombrePatologia && touched.nombrePatologia}
                               />
                               <Form.Control.Feedback type="invalid">
@@ -532,12 +532,12 @@ export default function AddMotherInc(props){
                       <h5 style={{"fontSize": "16px"}}>¿Cuál?</h5></Form.Label>
                       <Col md="9" class="mid" style={{marginLeft:"7px"}}>
                           <InputGroup hasValidation>
-                                <Form.Control type="text" placeholder="Nombre Medicamento Formulado" size="xs" id="nombreMedFormulada" name="nombreMedFormulada" 
-                                value={values.nombreMedFormulada} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
-                                isValid={!errors.nombreMedFormulada && touched.nombreMedFormulada}
+                                <Form.Control type="text" placeholder="Nombre Medicamento Formulado" size="xs" id="nombreMedFormululada" name="nombreMedFormululada" 
+                                value={values.nombreMedFormululada} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormululada && touched.nombreMedFormululada}
+                                isValid={!errors.nombreMedFormululada && touched.nombreMedFormululada}
                               />
                               <Form.Control.Feedback type="invalid">
-                                  {errors.nombreMedFormulada}
+                                  {errors.nombreMedFormululada}
                               </Form.Control.Feedback>
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
@@ -633,7 +633,7 @@ export default function AddMotherInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="xs" name="vomitoControlado" id="vomitoControlado">
-                          <input type="checkbox" name="vomitoControlado" onChange={e => onChangeChecked(e)}></input>
+                          <input type="checkbox" name="vomitoControlado" checked={checkeds.vomitoControlado === "SI" ? true : false} onChange={e => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>  
@@ -647,7 +647,7 @@ export default function AddMotherInc(props){
                         <Col  class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="xs" name="dolorCabeza" id="dolorCabeza">
-                          <input type="checkbox" name="dolorCabeza" onChange={e => onChangeChecked(e)}></input>
+                          <input type="checkbox" name="dolorCabeza" checked={checkeds.dolorCabeza === "SI" ? true : false} onChange={e => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>  
@@ -661,7 +661,7 @@ export default function AddMotherInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="xs" name="fiebre" id="fiebre">
-                          <input type="checkbox" name="fiebre" onChange={e => onChangeChecked(e)}></input>
+                          <input type="checkbox" name="fiebre" checked={checkeds.fiebre === "SI" ? true : false}  onChange={e => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>  
@@ -675,7 +675,7 @@ export default function AddMotherInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="xs" name="dolorBocaEstomago" id="dolorBocaEstomago">
-                          <input type="checkbox" name="dolorBocaEstomago" onChange={e => onChangeChecked(e)}></input>
+                          <input type="checkbox" name="dolorBocaEstomago" checked={checkeds.dolorBocaEstomago === "SI" ? true : false}   onChange={e => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>  
@@ -689,7 +689,7 @@ export default function AddMotherInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation>
                          <label class="rocker rocker-small" size="xs" name="ardorOrinar" id="ardorOrinar">
-                          <input type="checkbox" name="ardorOrinar" onChange={e => onChangeChecked(e)}></input>
+                          <input type="checkbox" name="ardorOrinar" checked={checkeds.ardorOrinar === "SI" ? true : false}  onChange={e => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>  
@@ -703,7 +703,7 @@ export default function AddMotherInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation>
                          <label class="rocker rocker-small" size="xs" name="sangrado" id="sangrado">
-                          <input type="checkbox" name="sangrado" onChange={e => onChangeChecked(e)}></input>
+                          <input type="checkbox" name="sangrado" checked={checkeds.sangrado === "SI" ? true : false} onChange={e => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label> 
@@ -717,7 +717,7 @@ export default function AddMotherInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="xs" name="hinchamiento" id="hinchamiento">
-                          <input type="checkbox" name="hinchamiento" onChange={e => onChangeChecked(e)}></input>
+                          <input type="checkbox" name="hinchamiento" checked={checkeds.hinchamiento === "SI" ? true : false} onChange={e => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>  
@@ -731,7 +731,7 @@ export default function AddMotherInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="xs" name="movimientoFetal" id="movimientoFetal">
-                          <input type="checkbox" name="movimientoFetal" onChange={e => onChangeChecked(e)}></input>
+                          <input type="checkbox" name="movimientoFetal" checked={checkeds.movimientoFetal === "SI" ? true : false}  onChange={e => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>  
@@ -744,7 +744,7 @@ export default function AddMotherInc(props){
                         <Col sm={10}> 
                         <div className="d-grid gap-2 mb-3">
                             <Button variant="primary" type="submit" size="lg">
-                               Guardar
+                               Actualizar
                             </Button>
                         </div>
                         </Col>

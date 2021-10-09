@@ -1,10 +1,11 @@
 import { urlBackend } from "./config";
 
-export function insertMotIncomeApi(data){
-    const url = `${urlBackend}control_seguimiento/REGISTRAR_INGRESO_MADRE`;
+export function insertMotIncomeApi(data, token){
+    const url = `/api/control_seguimiento/REGISTRAR_INGRESO_MADRE`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "POST",
         body: JSON.stringify(data)
@@ -16,13 +17,14 @@ export function insertMotIncomeApi(data){
             .catch(err => {return err});
 }
 
-export function updateMotIncomeApi(data){
-    const url = `${urlBackend}control_seguimiento/ACTUALIZAR_INGRESO_MADRE`;
+export function updateMotIncomeApi(data, token){
+    const url = `/api/control_seguimiento/ACTUALIZAR_INGRESO_MADRE`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
-        method: "PUT",
+        method: "POST",
         body: JSON.stringify(data)
     };
 

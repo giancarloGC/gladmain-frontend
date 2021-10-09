@@ -84,8 +84,9 @@ export default function ListFollow(){
 
             }else if(rolUser === "MADRE_GESTANTE"){
                 let listIngresos = await getMotIncomeByUserApi(documento, token);
-                let ingresoBySeg = listIngresos.filter(registro => registro.ingreso.idSeguimiento === item.id);
                 console.log(listIngresos);
+                let ingresoBySeg = listIngresos.filter(registro => registro.ingreso.idSeguimiento === item.id);
+                console.log(ingresoBySeg);
                 let totalOptions = 10;
                 let optionsSelected = 0;
 
@@ -119,6 +120,7 @@ export default function ListFollow(){
                 if(ingresoBySeg[0].ingresoInfante.valoracionMedica === "SI"){
                     optionsSelected += 1;
                 };*/
+                
                 let percentageCompleted = (optionsSelected / totalOptions) * 100;
                 item.estado = percentageCompleted.toString();
                 newData.push(item);

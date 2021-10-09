@@ -9,7 +9,7 @@ import swal from 'sweetalert';
 import moment from 'moment';
 
 export default function EditControlF(props){
-  const { infoSeg, userControl, documento } = props;
+  const { infoSeg, userControl, documento, rolUser } = props;
   const token = localStorage.getItem(TOKEN);
   const { user } = AuthContext();
   const documentoLogin = user.sub.split('-');
@@ -281,9 +281,17 @@ export default function EditControlF(props){
                       </Col>
                       <Col md={6}> 
                         <div className="d-grid gap-2 mt-3">
+                          {rolUser === "INFANTE" ? (
                             <Button variant="primary" size="lg" href={`/admin/editInfantIncome/${infoSeg.id}/${documento}`}>
                                Editar Ingreso
                             </Button>
+                          )
+                        :
+                          (
+                            <Button variant="primary" size="lg" href={`/admin/editMotherIncome/${infoSeg.id}/${documento}`}>
+                               Editar Ingreso
+                            </Button>
+                          )}
                         </div>
                         </Col>
                       </Form.Group>  
