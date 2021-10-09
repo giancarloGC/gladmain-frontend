@@ -54,8 +54,6 @@ export default function StatisticHome(){
         })();       
     }, []);
 
-    console.log(infoUser);
-
     const handleCheck = (e, item) => {
         if(e.target.checked){
             if(item === "check1"){
@@ -81,7 +79,7 @@ export default function StatisticHome(){
             </Link>
             
                 {loadedPDF && (
-                    <PDFDownloadLink document={<DocumentPdf listControls={listControls} setLoadedSonPDF={setLoadedSonPDF} infoUser={infoUser}/>} fileName={`ControlNutri_${infoUser.documento}`}>
+                    <PDFDownloadLink document={<DocumentPdf listControls={listControls} setLoadedSonPDF={setLoadedSonPDF} infoUser={infoUser}/>} fileName={`ControlNutrición_${infoUser.documento}`}>
                     {({ blob, url, loading, error }) =>
                         loading ? '' : <Button style={styles.boton}>
                         Descargar PDF <FontAwesomeIcon icon={faPrint} size="lg" color="white" />

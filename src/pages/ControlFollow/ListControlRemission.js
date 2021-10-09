@@ -330,20 +330,22 @@ export default function ListControlRemission(){
             )}
             
             <Container className="mt-4"> 
-            <Row className="mb-2 mt-3">
-                    <Col md={3}> </Col>
-                    <Col md={6}>
-                    <Form.Group as={Row} className="mt-2 " style={{ "marginLeft":"6px"}}>
+            <Row className="mt-3 justify-content-center">
+                    <Col md={5}>
+                    <Form.Group as={Row} >
+                    <Col md={5}>
                         <Form.Label>
-                        <h1 style={{fontSize: "20px", color:"#0084d2" }} className="mt-2">Buscar Remisiones</h1></Form.Label>
-                       <InputGroup hasValidation>
+                        <h1 style={{fontSize: "20px", color:"#0084d2" }} >Buscar Remisiones</h1></Form.Label>
+                    </Col>
+                    <Col md={7}> 
+                    <InputGroup hasValidation>
                            <Form.Control type="date" size="sm" id="busqueda" name="busqueda" 
                                 onChange={(e) => onChangeBusqueda(e)}
                            />
                        </InputGroup>
-                       </Form.Group>
                     </Col>
-                    <Col md={3}> </Col>
+                       </Form.Group>                    
+                    </Col>
             </Row>
             </Container>
 

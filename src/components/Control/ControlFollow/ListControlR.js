@@ -83,7 +83,7 @@ export default function ListControlR(props){
 
 
                 {listRemis.length > 0 && (
-                <ListGroup className="mt-3 mb-3">
+                <ListGroup className=" mb-3">
                 {listRemis.map((item, index) => (
                         <ListGroup.Item className="shadow border mt-2 mb-3">
                         
