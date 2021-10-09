@@ -339,7 +339,7 @@ export default function ListControlRemission(){
                     </Col>
                     <Col md={7}> 
                     <InputGroup hasValidation>
-                           <Form.Control type="date" size="sm" id="busqueda" name="busqueda" 
+                           <Form.Control type="date" size="l" id="busqueda" name="busqueda" 
                                 onChange={(e) => onChangeBusqueda(e)}
                            />
                        </InputGroup>
