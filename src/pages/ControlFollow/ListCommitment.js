@@ -18,6 +18,7 @@ import Logo from "../../assets/img/logocomfaoriente.png";
 import GladMaIn from "../../assets/img/logoGladmain.PNG";
 import fuente from "../../assets/fontPDF/Amaranth-Bold.ttf";
 import fuente2 from "../../assets/fontPDF/Amaranth-Regular.ttf";
+import AnimationNotFindSearch from "../../assets/animations/notFindSearch.json";
 
 export default function ListCommitment(){
 
@@ -27,6 +28,7 @@ export default function ListCommitment(){
   const [ infoUser, setInfoUser ] = useState({});
   const [ loadedPDF, setLoadedSonPDF ] = useState(false); 
   const [ loading, setLoading ] = useState(true);  
+  const [ listCommit, setListComit ] = useState([]);
   
   /*useEffect(() => {
       getUserByIdApi(documento, token).then(responseUser => {
@@ -48,14 +50,13 @@ export default function ListCommitment(){
         const response = await getCompByUserApi(documento, token);
         setLoading(false);
         if(response.length > 0){
-            console.log(idSeg);
             let compromisosBySegui = response.filter(comp => comp.idSeguimientoSalud.toString() === idSeg );
-          console.log(compromisosBySegui);
             setListControls(compromisosBySegui);
+            setListComit(compromisosBySegui);
         }
         const responseUser = await getUserByIdApi(documento, token);
-        setLoading(false);
         console.log(responseUser);
+        setLoading(false);
         setInfoUser(responseUser);
         setLoadedSonPDF(true);
     })();       
@@ -102,6 +103,12 @@ const deleteCom = (id) => {
         }
     })
 }
+
+const onChangeBusqueda = (e) => {
+    var commitFiltred = listCommit.filter(user => dateFormat(user.fechaCompromiso) === e.target.value);
+    setListControls(commitFiltred);
+}
+
     return(
         <Container>
             <h1 className="text-center mb-4">Compromisos de {infoUser ? infoUser.nombre : "Anonimo"}
@@ -121,6 +128,27 @@ const deleteCom = (id) => {
                 )}
 
             </h1>
+
+            <Container className="mt-4"> 
+            <Row className="mt-3 justify-content-center">
+                    <Col md={6}>
+                    <Form.Group as={Row} >
+                    <Col md={5}>
+                        <Form.Label>
+                        <h1 style={{fontSize: "20px", color:"#2D61A4" }} >Buscar Compromisos</h1></Form.Label>
+                    </Col>
+                    <Col md={7}> 
+                    <InputGroup hasValidation>
+                           <Form.Control type="date" size="l" id="busqueda" name="busqueda" 
+                                onChange={(e) => onChangeBusqueda(e)}
+                           />
+                       </InputGroup>
+                    </Col>
+                       </Form.Group>                    
+                    </Col>
+            </Row>
+            </Container>
+
             
             {listControls.length === 0 && (
                 <>
@@ -130,22 +158,34 @@ const deleteCom = (id) => {
                 />
                 </>
             )}
-            
-            {listControls.length > 0 && (
-                <Container className="mt-4"> 
-                <Row>
-                <Row className="mb-2 mt-3">
-                    <Col md={3}> </Col>
-                    <Col md={6}>
-                       <InputGroup hasValidation>
-                           <Form.Control type="search" placeholder="Buscar Control" size="lg" id="busqueda" name="busqueda" />
-                           <Button className="btn btn-outline-success" type="submit">Buscar</Button>
-                       </InputGroup>
-                    </Col>
-                    <Col md={3}> </Col>
-                </Row>
 
-                <Col sm={12} >
+                
+            <Container> 
+            <Row>
+
+            {listCommit.length === 0 && (
+                <>
+                    <p style={{"color": "#2D61A4", "fontSize": 27}}>No se encontraron registros que coincidan</p>
+                    <Lottie height={400} width={750}
+                        options={{ loop: true, autoplay: true, animationData: AnimationNotFindSearch, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                    />
+                </>
+            )}
+
+
+            {listCommit.length > 0 && (
+             <Col sm={12} >
+                {listControls.length === 0 && (
+                <>
+                    <p style={{"color": "#2D61A4", "fontSize": 27}}>No se encontraron registros que coincidan</p>
+                    <Lottie height={400} width={750}
+                        options={{ loop: true, autoplay: true, animationData: AnimationNotFindSearch, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                    />
+                </>
+                )}
+
+
+            {listControls.length > 0 && (
               <ListGroup className="mt-3 mb-3">
                 {listControls.map((item, index) => (
                     <ListGroup.Item className="shadow border mt-2 mb-3">
@@ -192,15 +232,17 @@ const deleteCom = (id) => {
                 </Container>
                 </ListGroup.Item>
                 ))}
-                </ListGroup>   
-                </Col> 
+                </ListGroup> 
+                )}
+                </Col>
+               
+                )}
                 </Row>     
-
             </Container>
-            )}
-        </Container>
+            </Container> 
     )
 }
+
 
 
 Font.register({ family: 'Amaranth', src: fuente});

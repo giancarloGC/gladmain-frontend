@@ -335,11 +335,11 @@ export default function ListControlRemission(){
                     <Form.Group as={Row} >
                     <Col md={5}>
                         <Form.Label>
-                        <h1 style={{fontSize: "20px", color:"#0084d2" }} >Buscar Remisiones</h1></Form.Label>
+                        <h1 style={{fontSize: "20px", color:"#2D61A4" }} >Buscar Remisiones</h1></Form.Label>
                     </Col>
                     <Col md={7}> 
                     <InputGroup hasValidation>
-                           <Form.Control type="date" size="sm" id="busqueda" name="busqueda" 
+                           <Form.Control type="date" size="l" id="busqueda" name="busqueda" 
                                 onChange={(e) => onChangeBusqueda(e)}
                            />
                        </InputGroup>
