@@ -2,9 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Col, Row, Image, Form, Button, Modal, Container, InputGroup } from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
 import moment from 'moment';
+import swal from 'sweetalert';
+
+import { TOKEN } from "../../../../utils/constans";
+import { insertCompApi } from "../../../../api/commitment";
 
 export default function AddMotherCommit6(props) {
-  const { showCommit6, setShowCommit6, setDataCommit6, dataCommit6, setSaveData6} = props;
+  const { edit, showCommit6, setShowCommit6, setDataCommit6, dataCommit6, setSaveData6} = props;
+  const token = localStorage.getItem(TOKEN);
 
     return(
       <Modal show={showCommit6 ? true : false} size="xs"  onHide={() => setShowCommit6(false)}  centered aria-labelledby="example-custom-modal-styling-title">
@@ -35,8 +40,41 @@ export default function AddMotherCommit6(props) {
                   return errores;
                 }}
                 onSubmit={(valores, {resetForm}) => {
-                    setDataCommit6({title: "data"});
-                    setSaveData6(false);
+                  const formData={
+                    id: 1,
+                    idSeguimientoSalud: parseInt(dataCommit6.idSeg),
+                    fechaCompromiso: moment().format("YYYY-MM-DD"),
+                    nombre: valores.name,
+                    nuevoCompromiso: valores.description,
+                    fechaCumplimiento: edit ? valores.dateEnd : null,
+                    nombreAuxiliarEnfermeria: null,
+                    tipo: null
+                  };
+                  console.log(formData);
+                  insertCompApi(formData, token).then(response => {
+                    console.log(response);
+                    if(response === true){
+                      setDataCommit6({name: "titulooo", description: "ejemplo description"});
+                      setSaveData6(false); //PASARLO A FALSE
+                      swal({
+                        title: `¡El compromiso fue almacenado correctamente!`,
+                        icon: 'success'
+                      }).then((value) => {
+                        setShowCommit6(false);
+                      });
+                    }else if(response.status === 403){
+                      swal("¡No tienes autorización para realizar esta acción, comunícate con el Admin!", {
+                        icon: "warning",
+                      }).then((value) => {
+                        localStorage.removeItem(TOKEN);
+                        window.location.replace("/");
+                      });
+                    }else{
+                      swal("Opss! Ocurrió un error!", {
+                        icon: "error",
+                      });
+                    }
+                  })
                 }}
     
                 >
@@ -93,7 +131,7 @@ export default function AddMotherCommit6(props) {
         <Col sm="5">
         <InputGroup hasValidation>
         <Form.Control type="date" size="lg" id="dateEnd" name="dateEnd" 
-            value={values.dateEnd} onChange={handleChange} onBlur={handleBlur} disabled />
+            value={values.dateEnd} onChange={handleChange} onBlur={handleBlur} disabled={edit ? false : true} />
         </InputGroup>
         </Col>
     </Form.Group>

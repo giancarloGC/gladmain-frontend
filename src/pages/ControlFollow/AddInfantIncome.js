@@ -6,7 +6,7 @@ import { TOKEN } from "../../utils/constans";
 import AddInfantInc from "../../components/Control/ControlFollow/AddInfantInc";
 
 export default function AddInfantIncome(){
-    const { idSeg } = useParams();
+    const { idSeg, documento } = useParams();
     const [controlSeguimiento, setControl] = useState({});
     const token = localStorage.getItem(TOKEN);
     const [ componentLoaded, setComponentLoaded ] = useState(false); 
@@ -38,7 +38,7 @@ export default function AddInfantIncome(){
         )
         :
         (
-            <AddInfantInc idSeg={idSeg} controlSeguimiento={controlSeguimiento}/>
+            <AddInfantInc idSeg={idSeg} documento={documento} controlSeguimiento={controlSeguimiento}/>
         )
         }
         </Container>

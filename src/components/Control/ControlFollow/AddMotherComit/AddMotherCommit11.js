@@ -4,7 +4,7 @@ import { Formik, Field, ErrorMessage } from "formik";
 import moment from 'moment';
 
 export default function AddMotherCommit11 (props) {
-  const {showCommit11, setShowCommit11, setDataCommit11, dataCommit11, setSaveData11} = props;
+  const { edit, showCommit11, setShowCommit11, setDataCommit11, dataCommit11, setSaveData11} = props;
     return(
       <Modal show={showCommit11 ? true : false} size="xs"  onHide={() => setShowCommit11(false)}  centered aria-labelledby="example-custom-modal-styling-title">
         <Modal.Header closeButton>
@@ -92,7 +92,7 @@ export default function AddMotherCommit11 (props) {
         <Col sm="5">
         <InputGroup hasValidation>
         <Form.Control type="date" size="xs" id="dateEnd" name="dateEnd" 
-            value={values.dateEnd} onChange={handleChange} onBlur={handleBlur} disabled />
+            value={values.dateEnd} onChange={handleChange} onBlur={handleBlur} disabled={edit ? false : true} />
         </InputGroup>
         </Col>
     </Form.Group>
