@@ -48,7 +48,7 @@ function DocumentPdf({infoUser, listRemis, setLoadedSonPDF}){
                     </View>
                 </View>
                 <View style={styles.tableCol3}> 
-                    <Text style={{fontSize: 24, color: "#2D61A4", textAlign: "center", fontFamily: 'Amaranth'}}>Controles Crecimiento y Desarrollo</Text>
+                    <Text style={{fontSize: 24, color: "#2D61A4", textAlign: "center", fontFamily: 'Amaranth'}}>Listado de Remisiones</Text>
                     <Text style={{fontSize: 16, color: "#2D61A4", textAlign: "center", fontFamily: 'Amaranth2'}}>Fecha: {moment().format("DD-MM-YYYY")}</Text>
                 </View>
                 <View style={styles.tableCol2}> 

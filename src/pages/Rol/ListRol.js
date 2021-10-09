@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { PDFDownloadLink, Document, Page, View, Text, StyleSheet, Image, Font } from '@react-pdf/renderer';
 import { Container, ListGroup, Col, Row, Spinner, Button } from "react-bootstrap";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,128 +7,13 @@ import swal from 'sweetalert';
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { getRolesApi, deleteRolApi } from "../../api/rol";
 import { TOKEN } from "../../utils/constans";
-import moment from 'moment';
-import Logo from "../../assets/img/logocomfaoriente.png";
-import GladMaIn from "../../assets/img/logoGladmain.PNG";
-import fuente from "../../assets/fontPDF/Amaranth-Bold.ttf";
-import fuente2 from "../../assets/fontPDF/Amaranth-Regular.ttf";
-
-Font.register({ family: 'Amaranth', src: fuente});
-Font.register({ family: 'Amaranth2', src: fuente2});
-
-function DocumentPdf({rolesApi, setLoadedSonPDF}){
-    useEffect(() => {
-        setLoadedSonPDF(true);
-    }, [])
-
-    return(
-        <Document>
-        <Page style={styles.body}>
-        <View style={styles.table2}> 
-            <View style={styles.tableRow2}> 
-                <View style={styles.tableCol2}> 
-                    <View style={styles.viewImage}>
-                        <Image 
-                        style={styles.image}
-                        src={Logo}
-                        />                
-                    </View>
-                </View>
-                <View style={styles.tableCol3}> 
-                    <Text style={{fontSize: 24, color: "#2D61A4", textAlign: "center", fontFamily: 'Amaranth'}}>Listado de roles</Text>
-                    <Text style={{fontSize: 16, color: "#2D61A4", textAlign: "center", fontFamily: 'Amaranth2'}}>Fecha: {moment().format("DD-MM-YYYY")}</Text>
-                </View>
-                <View style={styles.tableCol2}> 
-                    <View style={styles.viewImage2}>
-                        <Image 
-                        style={styles.image}
-                        src={GladMaIn}
-                        />             
-                    </View>
-                </View>
-            </View> 
-        </View> 
-
-        <Text style={{fontSize: 10, textAlign: "center"}}>-------------------------------------------------------------------------------------------------------------------------------------------------------</Text>
-
-       {/*{rolesApi.map((rol, index) => (*/}
-            <View style={styles.tableUser}> 
-            <View style={styles.tableRowUser}> 
-              <View style={styles.tableColHeaderUser}> 
-                <Text style={styles.tableCellHeaderUser}>Documento:</Text> 
-              </View> 
-                    <View style={styles.tableColUser}> 
-                        <Text style={styles.tableCell}>hgfhfhf</Text> 
-                    </View> 
-              <View style={styles.tableColHeaderUser}> 
-                <Text style={styles.tableCellHeaderUser}>Usuario:</Text> 
-              </View> 
-                    <View style={styles.tableColUser}> 
-                        <Text style={styles.tableCell}>dfgdg</Text> 
-                    </View> 
-              <View style={styles.tableColHeaderUser}> 
-                <Text style={styles.tableCellHeaderUser}>Fecha Nacimiento:</Text> 
-              </View> 
-                    <View style={styles.tableColUser}> 
-                        <Text style={styles.tableCell}>fgfdgfg</Text> 
-                    </View> 
-            </View>
-            <View style={styles.tableRowUser}> 
-              <View style={styles.tableColHeaderUser}> 
-                <Text style={styles.tableCellHeaderUser}>Telefono:</Text> 
-              </View> 
-                    <View style={styles.tableColUser}> 
-                        <Text style={styles.tableCell}>dfgfdg</Text> 
-                    </View> 
-              <View style={styles.tableColHeaderUser}> 
-                <Text style={styles.tableCellHeaderUser}>Municipio:</Text> 
-              </View> 
-                    <View style={styles.tableColUser}> 
-                        <Text style={styles.tableCell}>dgdfgfg</Text> 
-                    </View> 
-              <View style={styles.tableColHeaderUser}> 
-                <Text style={styles.tableCellHeaderUser}>Dirección:</Text> 
-              </View> 
-                    <View style={styles.tableColUser}> 
-                        <Text style={styles.tableCell}>gdfgfgd</Text> 
-                    </View> 
-            </View>
-            </View>
-            {/*))}*/}
-         
-          <View style={styles.table}> 
-            <View style={styles.tableRow}> 
-              <View style={styles.tableColHeader}> 
-                <Text style={styles.tableCellHeader}>Código</Text> 
-              </View> 
-              <View style={styles.tableColHeader}> 
-                <Text style={styles.tableCellHeader}>Titulo</Text> 
-              </View>  
-            </View>
-
-            {rolesApi.map((rol, index) => (
-                <View style={styles.tableRow}> 
-                    <View style={styles.tableCol}> 
-                        <Text style={styles.tableCell}>{rol.idRol}</Text> 
-                    </View> 
-                    <View style={styles.tableCol}> 
-                        <Text style={styles.tableCell}>{rol.nombre}</Text> 
-                    </View> 
-                </View> 
-            ))}
-        
-          </View>
-        </Page>
-  </Document>
-    )
-}
 
 export default function ListRol(){
     const token = localStorage.getItem(TOKEN);
     const [ rolesApi, setRolesApi ] = useState([]);
     const [ latestRol, setLatestRol ] = useState(0);
     const [ loading, setLoading ] = useState(true);
-    const [ loadedPDF, setLoadedSonPDF ] = useState(false);
+
     useEffect(() => {
         (async () => {
             const response = await getRolesApi();
@@ -139,7 +23,6 @@ export default function ListRol(){
                 return (b.idRol - a.idRol)
             });
             setLatestRol(rolesDesc[0].idRol);
-            setLoadedSonPDF(true);
         })();       
     }, []);
 
@@ -185,18 +68,7 @@ export default function ListRol(){
                     data-tip data-for = "boton1" onClick={() => window.location.replace(`/admin/addRol/${latestRol}`)}
                 /> {` `}
                 <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Agregar Nuevo Rol </ReactTooltip>
-                
-                {loadedPDF && (
-                    <PDFDownloadLink document={<DocumentPdf rolesApi={rolesApi} setLoadedSonPDF={setLoadedSonPDF}/>} fileName="somename.pdf">
-                    {({ blob, url, loading, error }) =>
-                        loading ? 'Loading document...' : <Button>
-                        Descargar PDF <FontAwesomeIcon icon={faPrint} size="lg" color="white" />
-                    </Button>
-                    }
-                    </PDFDownloadLink>  
-                )} 
             </h1> 
-   
 
             {loading && (
                 <Row className="justify-content-md-center text-center">
@@ -252,106 +124,3 @@ function ListRolSon({rolesApi, confirmDeleteRol}){
         </Container>
     )
 }
-
-
-
-const styles = StyleSheet.create({
-    body: {
-      paddingTop: 10,
-      paddingRight: 50,
-      paddingLeft: 50,
-      paddingBottom: 50,
-    },
-    image: {
-        objectFit: 'cover',
-    },
-    viewImage: {
-        width: 100,
-        height: 'auto',
-        padding: 0,
-        backgroundColor: 'white',
-        margin:'auto'
-    },
-    viewImage2: {
-        width: 80,
-        height: 'auto',
-        backgroundColor: 'white',
-        margin:'auto'
-    },
-    table: { 
-      display: "table", 
-      width: "auto", 
-      marginTop: 10
-    }, 
-    tableRow: { 
-      margin: "auto", 
-      flexDirection: "row" 
-    }, 
-    table2: { 
-        display: "table", 
-        width: "auto", 
-      }, 
-      tableRow2: { 
-        margin: "auto", 
-        flexDirection: "row" 
-      }, 
-      tableCol2: { 
-        width: "25%"
-      }, 
-      tableCol3: { 
-        width: "50%",
-        marginTop: 20
-      },
-    tableColHeader: { 
-      width: "25%", 
-    },   
-    tableCol: { 
-      width: "25%", 
-    }, 
-    tableCellHeader: {
-      margin: "auto", 
-      margin: 5, 
-      fontSize: 10,
-      fontWeight: 500
-    },  
-    tableCell: { 
-      margin: "auto", 
-      margin: 5, 
-      fontSize: 10 
-    },
-    tableRow: {
-        flexDirection: "row" 
-      }, 
-    tableUser: { 
-        display: "table", 
-        width: "auto", 
-        borderStyle: "solid",
-        borderColor:"black",
-        borderWidth: 1.5,
-        borderRadius: 4,
-        textAlign: "left"
-    }, 
-    tableRowUser: { 
-        flexDirection: "row",
-        textAlign: "left",
-        margin: "auto"
-    }, 
-    tableColHeaderUser: { 
-        width: "12%", 
-        textAlign: "left",
-        marginLeft: 4,
-    },   
-        tableColUser: { 
-        width: "21.3%", 
-        textAlign: "left"
-    }, 
-        tableCellHeaderUser: {
-        fontSize: 10,
-        textAlign: "left",
-        marginTop: 4
-    }, 
-        tableCellUser: { 
-        fontSize: 10,
-        textAlign: "left"
-    },
-  });
