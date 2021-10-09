@@ -7,7 +7,7 @@ import { getUserByIdApi } from "../../api/user";
 import { TOKEN } from "../../utils/constans";
 
 export default function EditControlFollow(){
-    const { idSeg, documento } = useParams();
+    const { idSeg, documento, rolUser } = useParams();
     const [infoSeg, setInfoSeg] = useState({});
     const [userControl, setUser] = useState({});
     const [ segLoaded, setSegLoaded ] = useState({});
@@ -44,7 +44,7 @@ export default function EditControlFollow(){
           )
         :
         (
-            <EditControlF infoSeg={infoSeg} documento={documento} userControl={userControl}/>
+            <EditControlF rolUser={rolUser} infoSeg={infoSeg} documento={documento} userControl={userControl}/>
         )
         }
         </Container>

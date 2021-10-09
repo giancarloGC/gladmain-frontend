@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
+import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import swal from 'sweetalert';
 import { TOKEN } from "../../../utils/constans";
 import { updateInfantIncomeApi } from "../../../api/infant_income";
@@ -15,75 +16,106 @@ import AddIncomeCommit7 from "./AddIncomeCommit/AddIncomeCommit7";
 import AddIncomeCommit8 from "./AddIncomeCommit/AddIncomeCommit8";
 import AddIncomeCommit9 from "./AddIncomeCommit/AddIncomeCommit9";
 
-export default function EditInfantInc({ingreso}){
+export default function EditInfantInc(props){
   const token = localStorage.getItem(TOKEN);
+  const { idSeg, documento, ingreso } = props;
 
+  const [ goRedirect, setGoRedirect ] = useState(0);
+
+  const [ showPatologia, setShowPatologia ] = useState(ingreso.ingreso.patologiaIdentificadaSgsss);
+  const [ showMedicamentos, setShowMedicamentos ] = useState(ingreso.ingreso.recibeMedFormulada);
+  const [ showRemitido, setRemitido ] = useState(ingreso.ingreso.usuarioRemitido === "1" ? true : false);
+  console.log(ingreso);
   /*const onChangeChecked = (e) => {
     setCheckeds({...checkeds, [e.target.name]: e.target.checked});
 }*/
+
+const onChangeChecked = (e) => {
+  if(e.target.name === "showPatologia"){
+    setShowPatologia(!showPatologia);
+    setDataCommit7({name: "titulooo", description: "ejemplo description"});
+    setSaveData7(!saveData7); 
+    //saveData7 ? setShowCommit7(!e.target.checked) : setSaveData7(!saveData7);
+    //setShowCommit7(!e.target.checked);
+  }else if(e.target.name === "showMedicamentos"){
+    setShowMedicamentos(!showMedicamentos);
+    setDataCommit8({name: "titulooo", description: "ejemplo description"});
+    setSaveData8(!saveData8);
+    //setShowCommit8(!e.target.checked);
+  }else if(e.target.name === "showRemitido"){
+    setRemitido(!showRemitido);
+    setDataCommit9({name: "titulooo", description: "ejemplo description"});
+    setSaveData9(!saveData9);
+    //setShowCommit9(!e.target.checked);
+  }
+}
+
   const [showCommit, setShowCommit] = useState(false);
-  const [dataCommit, setDataCommit] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit, setDataCommit] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData, setSaveData ] = useState(ingreso.ingreso.afiliacionSgsss === "SI" ? true : false); //Pasar el estado a true
   
   const [showCommit2, setShowCommit2] = useState(false);
-  const [dataCommit2, setDataCommit2] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit2, setDataCommit2] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData2, setSaveData2] = useState(ingreso.ingreso.saludOral === "SI" ? true : false);
   
   const [showCommit3, setShowCommit3] = useState(false);
-  const [dataCommit3, setDataCommit3] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit3, setDataCommit3] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData3, setSaveData3] = useState(ingreso.ingreso.conoceUrgencias === "SI" ? true : false);
   
   const [showCommit4, setShowCommit4] = useState(false);
-  const [dataCommit4, setDataCommit4] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit4, setDataCommit4] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData4, setSaveData4] = useState(ingreso.ingresoInfante.alarmaPreventiva === "SI" ? true : false);
   
   const [showCommit5, setShowCommit5] = useState(false);
-  const [dataCommit5, setDataCommit5] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit5, setDataCommit5] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData5, setSaveData5] = useState(ingreso.ingresoInfante.valoracionMedica === "SI" ? true : false);
   
   const [showCommit6, setShowCommit6] = useState(false);
-  const [dataCommit6, setDataCommit6] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit6, setDataCommit6] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData6, setSaveData6] = useState(ingreso.ingresoInfante.controlCyD === "SI" ? true : false);
   
   const [showCommit7, setShowCommit7] = useState(false);
-  const [dataCommit7, setDataCommit7] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit7, setDataCommit7] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData7, setSaveData7] = useState(ingreso.ingreso.patologiaIdentificadaSgsss === true ? true : false);
   
   const [showCommit8, setShowCommit8] = useState(false);
-  const [dataCommit8, setDataCommit8] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit8, setDataCommit8] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData8, setSaveData8] = useState(ingreso.ingreso.recibeMedFormulada === true ? true : false);
   
   const [showCommit9, setShowCommit9] = useState(false);
-  const [dataCommit9, setDataCommit9] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit9, setDataCommit9] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData9, setSaveData9] = useState(ingreso.ingreso.usuarioRemitido === "1" ? true : false);
 
     return(
         <Container>
+          {goRedirect && (
+              <Redirect to={`/admin/ListFollowUp/${documento}/INFANTE`} />
+          )} 
           <AddIncomeCommit edit={true} showCommit={showCommit} setShowCommit={setShowCommit} setDataCommit={setDataCommit} dataCommit={dataCommit} 
             setSaveData={setSaveData} //Entrar al componente
           />
-          <AddIncomeCommit2 showCommit2={showCommit2} setShowCommit2={setShowCommit2} setDataCommit2={setDataCommit2} dataCommit2={dataCommit2} 
+          <AddIncomeCommit2 edit={true} showCommit2={showCommit2} setShowCommit2={setShowCommit2} setDataCommit2={setDataCommit2} dataCommit2={dataCommit2} 
             setSaveData2={setSaveData2}
           />
-          <AddIncomeCommit3 showCommit3={showCommit3} setShowCommit3={setShowCommit3} setDataCommit3={setDataCommit3} dataCommit3={dataCommit3} 
+          <AddIncomeCommit3 edit={true} showCommit3={showCommit3} setShowCommit3={setShowCommit3} setDataCommit3={setDataCommit3} dataCommit3={dataCommit3} 
             setSaveData3={setSaveData3}
           />
-          <AddIncomeCommit4 showCommit4={showCommit4} setShowCommit4={setShowCommit4} setDataCommit4={setDataCommit4} dataCommit4={dataCommit4} 
+          <AddIncomeCommit4 edit={true} showCommit4={showCommit4} setShowCommit4={setShowCommit4} setDataCommit4={setDataCommit4} dataCommit4={dataCommit4} 
             setSaveData4={setSaveData4}
           />
-          <AddIncomeCommit5 showCommit5={showCommit5} setShowCommit5={setShowCommit5} setDataCommit5={setDataCommit5} dataCommit5={dataCommit5} 
+          <AddIncomeCommit5 edit={true} showCommit5={showCommit5} setShowCommit5={setShowCommit5} setDataCommit5={setDataCommit5} dataCommit5={dataCommit5} 
             setSaveData5={setSaveData5}
           />
-          <AddIncomeCommit6 showCommit6={showCommit6} setShowCommit6={setShowCommit6} setDataCommit6={setDataCommit6} dataCommit6={dataCommit6} 
+          <AddIncomeCommit6 edit={true} showCommit6={showCommit6} setShowCommit6={setShowCommit6} setDataCommit6={setDataCommit6} dataCommit6={dataCommit6} 
             setSaveData6={setSaveData6}
           />
-          <AddIncomeCommit7 showCommit7={showCommit7} setShowCommit7={setShowCommit7} setDataCommit7={setDataCommit7} dataCommit7={dataCommit7} 
+          <AddIncomeCommit7 edit={true} showCommit7={showCommit7} setShowCommit7={setShowCommit7} setDataCommit7={setDataCommit7} dataCommit7={dataCommit7} 
             setSaveData7={setSaveData7}
           />
-          <AddIncomeCommit8 showCommit8={showCommit8} setShowCommit8={setShowCommit8} setDataCommit8={setDataCommit8} dataCommit8={dataCommit8} 
+          <AddIncomeCommit8 edit={true} showCommit8={showCommit8} setShowCommit8={setShowCommit8} setDataCommit8={setDataCommit8} dataCommit8={dataCommit8} 
             setSaveData8={setSaveData8}
           />
-          <AddIncomeCommit9 showCommit9={showCommit9} setShowCommit9={setShowCommit9} setDataCommit9={setDataCommit9} dataCommit9={dataCommit9} 
+          <AddIncomeCommit9 edit={true} showCommit9={showCommit9} setShowCommit9={setShowCommit9} setDataCommit9={setDataCommit9} dataCommit9={dataCommit9} 
             setSaveData9={setSaveData9}
           />
               <Row >
@@ -328,7 +360,7 @@ export default function EditInfantInc({ingreso}){
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="xs" name="patologiaIdentificadaSgsss">
-                          <input type="checkbox" checked={showCommit7 || !saveData7 ? false : true } onChange={(e) => saveData7 ? setShowCommit7(!e.target.checked) : setSaveData7(!saveData7)}></input>
+                          <input type="checkbox" name="showPatologia" checked={showCommit7 || !saveData7 ? false : true } onChange={(e) => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -340,6 +372,7 @@ export default function EditInfantInc({ingreso}){
                         </Col>
                         </Form.Group>
 
+                        {showPatologia && (
                     <Form.Group as={Row} style={{ "marginLeft":"43px"}} className="mt-3">
                     <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>
                     <h5 style={{"fontSize": "16px", "fontWeight":"bold" }} className="mt-2">¿Cuál?</h5></Form.Label>
@@ -356,6 +389,7 @@ export default function EditInfantInc({ingreso}){
                         </InputGroup>
                     </Col>
                     </Form.Group>
+                        )}
 
                         <Form.Group as={Row} style={{ "marginLeft":"43px"}} className="mt-2 mb-2">
                         <Form.Label column sm="9" >
@@ -363,7 +397,7 @@ export default function EditInfantInc({ingreso}){
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="xs" name="recibeMedFormulada">
-                          <input type="checkbox" checked={showCommit8 || !saveData8 ? false : true } onChange={(e) => saveData8 ? setShowCommit8(!e.target.checked) : setSaveData8(!saveData8)}></input>
+                          <input type="checkbox" name="showMedicamentos" checked={showCommit8 || !saveData8 ? false : true } onChange={(e) => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -375,7 +409,7 @@ export default function EditInfantInc({ingreso}){
                         </Col>
                     </Form.Group>
   
-                
+                    {showMedicamentos && (
                     <Form.Group as={Row} style={{ "marginLeft":"43px"}} className="mt-3">
                     <Form.Label column sm="2">
                     <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>¿Cuál?</h5></Form.Label>
@@ -392,6 +426,7 @@ export default function EditInfantInc({ingreso}){
                         </InputGroup>
                       </Col>
                     </Form.Group>
+                    )}
 
                     <Form.Group as={Row} style={{ "marginLeft":"43px"}}  className="mt-3">
                      <Form.Label column sm="2">
@@ -432,7 +467,7 @@ export default function EditInfantInc({ingreso}){
                         <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="xs" name="usuarioRemitido">
-                          <input type="checkbox" checked={showCommit9 || !saveData9 ? false : true } onChange={(e) => saveData9 ? setShowCommit9(!e.target.checked) : setSaveData9(!saveData9)}></input>
+                          <input type="checkbox" name="showRemitido" checked={showCommit9 || !saveData9 ? false : true } onChange={(e) => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -443,7 +478,8 @@ export default function EditInfantInc({ingreso}){
                         </InputGroup>
                         </Col>
                     </Form.Group>
-
+                    
+                    {showRemitido && (
                     <Form.Group as={Row} style={{ "marginLeft":"43px"}} className="mt-3 mb-3">
                     <Form.Label column sm="2">
                     <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>¿Por qué?</h5></Form.Label>
@@ -460,6 +496,7 @@ export default function EditInfantInc({ingreso}){
                         </InputGroup>
                     </Col>
                     </Form.Group>
+                    )}
                     <center>
                         <Col sm={10}> 
                         <div className="d-grid gap-2 mb-3">

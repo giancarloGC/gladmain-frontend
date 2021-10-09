@@ -153,6 +153,7 @@ export default function ListVacMadre(){
     const [ listControls, setListControls ] = useState([]);
     const [loaded, setLoaded] = useState(true); 
     const [ loadedPDF, setLoadedSonPDF ] = useState(false);
+    const [ allControlSaved, setAllControl ] = useState([]);
 
     useEffect(() => {
         (async () => {
@@ -163,11 +164,23 @@ export default function ListVacMadre(){
             const response2 = await getContVaccApi(documento, token);
             setLoaded(false);
             setListControls(response2);
-            
+
+            setAllControl(response2);
             setLoadedSonPDF(true);
         })();       
     }, []);
 
+    const dateFormat = (date) => {
+        if(date){
+        let dateFormated = date.split('T');
+        return dateFormated[0];
+        }
+      };
+  
+      const onChangeBusqueda = (e) => {
+        var controlFiltred = allControlSaved.filter(user => dateFormat(user.fechaAplicacion) === e.target.value);
+        setListControls(controlFiltred);
+    }
     
     return(
         <Container>
@@ -187,6 +200,26 @@ export default function ListVacMadre(){
                 )}
             </h1>
 
+            <Container className="mt-4"> 
+            <Row className="mt-3 justify-content-center">
+                    <Col md={5}>
+                    <Form.Group as={Row} >
+                    <Col md={5}>
+                        <Form.Label>
+                        <h1 style={{fontSize: "20px", color:"#2D61A4" }} >Buscar Control </h1></Form.Label>
+                    </Col>
+                    <Col md={7}> 
+                    <InputGroup hasValidation>
+                           <Form.Control type="date" size="sm" id="busqueda" name="busqueda" 
+                                onChange={(e) => onChangeBusqueda(e)}
+                           />
+                       </InputGroup>
+                    </Col>
+                       </Form.Group>                    
+                    </Col>
+            </Row>
+            </Container>
+
             {loaded && (
                 <Row className="justify-content-md-center text-center">
                     <Col md={1} className="justify-content-center">
@@ -197,7 +230,7 @@ export default function ListVacMadre(){
             )}
 
             {listControls.length > 0 && (
-                <ListVMadre listControls={listControls}/>
+                <ListVMadre listControls={listControls} allControlSaved={allControlSaved}  setAllControl={setAllControl}/>
              )
             }
 

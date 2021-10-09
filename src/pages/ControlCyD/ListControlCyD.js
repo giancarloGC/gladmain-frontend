@@ -181,6 +181,7 @@ export default function ListControlCyD(){
     const [ infoUser, setInfoUser ] = useState({});
     const [ listControls, setListControls ] = useState([]);
     const [ lastControls, setLastControls ] = useState({});
+    const [ allControlSaved, setAllControl ] = useState([]);
     const [loaded, setLoaded] = useState(true); 
     const [ loadedPDF, setLoadedSonPDF ] = useState(false);
 
@@ -197,11 +198,23 @@ export default function ListControlCyD(){
             const response3 = await getControlCyDApi(documento, token);
             setLoaded(false);
             setListControls(response3);
+            setAllControl(response3);
             
             setLoadedSonPDF(true);
         })();       
     }, []);
 
+    const dateFormat = (date) => {
+      if(date){
+      let dateFormated = date.split('T');
+      return dateFormated[0];
+      }
+    };
+
+    const onChangeBusqueda = (e) => {
+      var controlFiltred = allControlSaved.filter(user => dateFormat(user.fechaControl) === e.target.value);
+      setListControls(controlFiltred);
+  }
 
     return(
         <Container>
@@ -213,7 +226,7 @@ export default function ListControlCyD(){
 
                 {loadedPDF && (
                     <PDFDownloadLink document={<DocumentPdf infoUser={infoUser} listControls={listControls} lastControls={lastControls} 
-                        setLoadedSonPDF={setLoadedSonPDF}/>} fileName="controlesCyD.pdf">
+                        allControlSaved={allControlSaved} setLoadedSonPDF={setLoadedSonPDF}/>} fileName="controlesCyD.pdf">
                     {({ blob, url, loaded, error }) =>
                         loaded ? 'Cargando Documento...' : <Button style={styles.boton}>
                         Descargar PDF <FontAwesomeIcon icon={faPrint} style = {{marginLeft:2}} size="lg" color="white" />
@@ -232,8 +245,29 @@ export default function ListControlCyD(){
                 </Row>
             )}
 
+            <Container className="mt-4"> 
+            <Row className="mt-3 justify-content-center">
+                    <Col md={5}>
+                    <Form.Group as={Row} >
+                    <Col md={5}>
+                        <Form.Label>
+                        <h1 style={{fontSize: "20px", color:"#2D61A4" }} >Buscar Control </h1></Form.Label>
+                    </Col>
+                    <Col md={7}> 
+                    <InputGroup hasValidation>
+                           <Form.Control type="date" size="sm" id="busqueda" name="busqueda" 
+                                onChange={(e) => onChangeBusqueda(e)}
+                           />
+                       </InputGroup>
+                    </Col>
+                       </Form.Group>                    
+                    </Col>
+            </Row>
+            </Container>
+
+              
              {listControls.length > 0 &&  (
-                <ListControlCyDe infoUser={infoUser} lastControls={lastControls} listControls={listControls} />
+                <ListControlCyDe infoUser={infoUser} lastControls={lastControls} listControls={listControls} allControlSaved={allControlSaved}  setAllControl={setAllControl}/>
              )
             }
             

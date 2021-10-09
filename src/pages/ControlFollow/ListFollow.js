@@ -19,6 +19,7 @@ import GladMaIn from "../../assets/img/logoGladmain.PNG";
 import fuente from "../../assets/fontPDF/Amaranth-Bold.ttf";
 import fuente2 from "../../assets/fontPDF/Amaranth-Regular.ttf";
 
+import { getMotIncomeByUserApi } from "../../api/mother_income";
 
 export default function ListFollow(){
     const { documento, rolUser } = useParams();
@@ -39,7 +40,7 @@ export default function ListFollow(){
                 (async () => {
                     let newData = [];
                     let infoCompleted = await calculateProgress(response, newData);                              
-                    console.log(infoCompleted);
+                    console.log(response);
                     console.log("siuuuuu");
                     setListSeg(infoCompleted);
                 })()
@@ -79,11 +80,14 @@ export default function ListFollow(){
 
     const calculateProgress = async (response, newData) => {
         await Promise.all(response.map(async (item, index) => {
-            let listIngresos = await getInfantIncomeApi(documento, token);
+            if(rolUser === "INFANTE"){
+                let listIngresos = await getInfantIncomeApi(documento, token);
+                console.log(listIngresos);
                 let ingresoBySeg = listIngresos.filter(registro => registro.ingreso.idSeguimiento === item.id);
-                console.log(ingresoBySeg[0]);
+                console.log(listIngresos);
                 let totalOptions = 10;
                 let optionsSelected = 0;
+
                 if(ingresoBySeg[0].ingreso.afiliacionSgsss === "SI"){
                     optionsSelected += 1;
                 };
@@ -117,6 +121,50 @@ export default function ListFollow(){
                 let percentageCompleted = (optionsSelected / totalOptions) * 100;
                 item.estado = percentageCompleted.toString();
                 newData.push(item);
+
+            }else if(rolUser === "MADRE_GESTANTE"){
+                let listIngresos = await getMotIncomeByUserApi(documento, token);
+                console.log(listIngresos);
+                let ingresoBySeg = listIngresos.filter(registro => registro.ingreso.idSeguimiento === item.id);
+                console.log(ingresoBySeg);
+                let totalOptions = 10;
+                let optionsSelected = 0;
+
+                if(ingresoBySeg[0].ingreso.afiliacionSgsss === "SI"){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingreso.conoceUrgencias === "SI"){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingreso.patologiaIdentificadaSgsss === true){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingreso.recibeMedFormulada === true){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingreso.saludOral === "SI"){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingreso.usuarioRemitido === "1"){
+                    optionsSelected += 1;
+                };
+                /*if(ingresoBySeg[0].ingresoInfante.alarmaPreventiva === "SI"){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingresoInfante.controlCyD === "SI"){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingresoInfante.recibeSuplementos === "SI"){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingresoInfante.valoracionMedica === "SI"){
+                    optionsSelected += 1;
+                };*/
+                
+                let percentageCompleted = (optionsSelected / totalOptions) * 100;
+                item.estado = percentageCompleted.toString();
+                newData.push(item);
+            }
         }));
         console.log("espero padre");
         return newData;
@@ -149,7 +197,7 @@ export default function ListFollow(){
                 </>
             )}
             {listSeg.length > 0 && (
-             <ListFollowUp  listSeg={listSeg} documento={documento} listInc={listInc} />
+             <ListFollowUp  listSeg={listSeg} documento={documento} listInc={listInc} rolUser={rolUser}/>
             )}
         </Container>
     )

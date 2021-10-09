@@ -113,12 +113,18 @@ export default function FormEditProfile(props){
                         if(response === true){
                           swal("¡Excelente, actualización exitosa!, Sus datos fueron actualizados correctamente", {
                             icon: "success",
+                          })
+                          .then((value) => {
+                              window.location.replace(`/admin`);
                           });
                           setShow(true);
                         }else{
                           swal("Opss! Ocurrió un error!", {
                             icon: "error",
-                          });
+                          })
+                          .then((value) => {
+                              window.location.replace(`/admin`);
+                          }); 
                             setShow(true);
                         }
                       });

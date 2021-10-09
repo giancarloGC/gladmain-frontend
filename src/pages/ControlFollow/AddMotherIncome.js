@@ -6,7 +6,7 @@ import { TOKEN } from "../../utils/constans";
 import AddMotherInc from "../../components/Control/ControlFollow/AddMotherInc";
 
 export default function AddMotherIncome(){
-    const { idSeg } = useParams();
+    const { idSeg, documento } = useParams();
     const [controlSeguimiento, setControl] = useState({});
     const token = localStorage.getItem(TOKEN);
     const [ componentLoaded, setComponentLoaded ] = useState(false); 
@@ -38,7 +38,7 @@ export default function AddMotherIncome(){
         )
         :
         (
-            <AddMotherInc controlSeguimiento={controlSeguimiento}/>
+            <AddMotherInc idSeg={idSeg} documento={documento} controlSeguimiento={controlSeguimiento}/>
         )
         }
         </Container>

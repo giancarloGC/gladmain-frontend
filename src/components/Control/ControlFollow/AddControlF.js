@@ -9,7 +9,7 @@ import moment from 'moment';
 import swal from 'sweetalert';
 
 export default function AddControlF(props){
-  const { userControl, rolUser } = props;
+  const { userControl, rolUser, documento } = props;
   const token = localStorage.getItem(TOKEN);
   const { user } = AuthContext();
   const documentoLogin = user.sub.split('-');
@@ -221,9 +221,14 @@ export default function AddControlF(props){
                     </Form.Group>    
 
                     {goRedirect && (
-                      <Redirect to={`/admin/addInfantIncome/${goRedirect}`} />
-                    )}      
-                            
+                      rolUser === "INFANTE" ? (
+                        <Redirect to={`/admin/addInfantIncome/${goRedirect}/${documento}`} />
+                      )
+                      :
+                      (
+                        <Redirect to={`/admin/addMotherIncome/${goRedirect}/${documento}`} />
+                      )
+                    )}            
                         <div className="d-grid gap-2 mb-3">
                             <Button variant="primary" type="submit" size="lg" >
                                Siguiente
