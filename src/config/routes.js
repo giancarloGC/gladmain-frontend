@@ -272,7 +272,7 @@ const routes = [
                 component: EditControlFollow,
             },
             {
-                path: "/admin/addInfantIncome/:idSeg",
+                path: "/admin/addInfantIncome/:idSeg/:documento",
                 exact: true,
                 component: AddInfantIncome,
             }, 
@@ -292,7 +292,7 @@ const routes = [
                 component: DetailMotherIncome,
             }, 
             {
-                path: "/admin/addMotherIncome",
+                path: "/admin/addMotherIncome/:idSeg/:documento",
                 exact: true,
                 component: AddMotherIncome,
             }, 

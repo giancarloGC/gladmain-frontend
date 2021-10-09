@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
+import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import { TOKEN } from "../../../utils/constans";
 import { insertInfantIncomeApi } from "../../../api/infant_income";
 import swal from 'sweetalert';
@@ -16,8 +17,9 @@ import AddIncomeCommit8 from "./AddIncomeCommit/AddIncomeCommit8";
 import AddIncomeCommit9 from "./AddIncomeCommit/AddIncomeCommit9";
 
 export default function AddInfantInc(props){
-  const { idSeg, controlSeguimiento } = props;
+  const { idSeg, documento, controlSeguimiento } = props;
   const token = localStorage.getItem(TOKEN);
+  const [ goRedirect, setGoRedirect ] = useState(0);
 
   const [ showPatologia, setShowPatologia ] = useState(true);
   const [ showMedicamentos, setShowMedicamentos ] = useState(true);
@@ -93,6 +95,10 @@ export default function AddInfantInc(props){
 
     return(
         <Container>
+          {goRedirect && (
+              <Redirect to={`/admin/ListFollowUp/${documento}/INFANTE`} />
+          )} 
+
           <AddIncomeCommit edit={false} showCommit={showCommit} setShowCommit={setShowCommit} setDataCommit={setDataCommit} dataCommit={dataCommit} 
             setSaveData={setSaveData} //Entrar al componente
           />
@@ -183,27 +189,31 @@ export default function AddInfantInc(props){
 
                 onSubmit={(valores, {resetForm}) => {
 
-                  const formData ={
-                    id: '',
-                    idIngreso: '',
-                    alarmaPreventiva: saveData4 ? "SI" : "NO",
-                    controlCyD: saveData6 ? "SI" : "NO",
-                    recibeSuplementos: saveData8 ? "SI" : "NO",
-                    valoracionMedica: saveData5 ? "SI" : "NO",
-
-                    id: 1,
-                    idSeguimiento: parseInt(idSeg),
-                    afiliacionSgsss: saveData ? "SI" : "NO",
-                    saludOral: saveData2 ? "SI" : "NO",
-                    conoceUrgencias: saveData3 ? "SI" : "NO",
-                    patologiaIdentificadaSgsss: saveData7 ? "SI" : "NO",
-                    nombrePatologia: showPatologia ? valores.nombrePatologia : "",
-                    recibeMedFormulada: saveData8 ? "SI" : "NO",
-                    nombreMedFormululada: showMedicamentos ? valores.nombreMedFormululada : "",
-                    eapb: valores.eapb,
-                    ips: valores.ips,
-                    usuarioRemitido: saveData9 ? "SI" : "NO",
-                    causa: showRemitido ? valores.causa : "",
+                  const formData = {
+                    ingresoInfante: {
+                      id: 1,
+                      idIngreso: 1,
+                      alarmaPreventiva: saveData4 ? "SI" : "NO",
+                      controlCyD: saveData6 ? "SI" : "NO",
+                      recibeSuplementos: saveData8 ? "SI" : "NO",
+                      valoracionMedica: saveData5 ? "SI" : "NO",
+                    },
+                    ingresoMadre: null,
+                    ingreso: {
+                      id: 1,
+                      idSeguimiento: parseInt(idSeg),
+                      afiliacionSgsss: saveData ? "SI" : "NO",
+                      saludOral: saveData2 ? "SI" : "NO",
+                      conoceUrgencias: saveData3 ? "SI" : "NO",
+                      patologiaIdentificadaSgsss: saveData7 ? 1 : 0,
+                      nombrePatologia: showPatologia ? valores.nombrePatologia : "",
+                      recibeMedFormulada: saveData8 ? 1 : 0,
+                      nombreMedFormululada: showMedicamentos ? valores.nombreMedFormululada : "",
+                      eapb: valores.eapb,
+                      ips: valores.ips,
+                      usuarioRemitido: saveData9 ? 1 : 0,
+                      causa: showRemitido ? valores.causa : "",
+                    }
                   }
                   console.log(formData);
                   insertInfantIncomeApi(formData, token).then(response => {
@@ -212,18 +222,23 @@ export default function AddInfantInc(props){
                       swal({
                         title: `¡El ingreso fue almacenado correctamente!`,
                         icon: 'success'
+                      }).then((value) => {
+                        setGoRedirect(1);
                       });
-                      /*.then((value) => {
-                        setGoRedirect(true);
-                      });*/
+                    }else if(response.status === 403){
+                      swal("¡No tienes autorización para realizar esta acción, comunícate con el Admin!", {
+                        icon: "warning",
+                      }).then((value) => {
+                        localStorage.removeItem(TOKEN);
+                        window.location.replace("/");
+                      });
                     }else{
                       swal({
                         title: `¡Opss, ocurrió un error!`,
                         icon: 'danger'
+                      }).then((value) => {
+                        setGoRedirect(1);
                       });
-                      /*.then((value) => {
-                        setGoRedirect(true);
-                      });*/
                     }
                   });
                 }}

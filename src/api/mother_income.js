@@ -34,14 +34,14 @@ export function updateMotIncomeApi(data){
 
 
 //preguntar a Danny
-export function getMotIncomeByUserApi(data){
-    const url = `${urlBackend}control_seguimiento/LISTAR_INGRESOS_MADRE`;
+export function getMotIncomeByUserApi(documento, token){
+    const url = `/api/control_seguimiento/LISTAR_INGRESOS_MADRE/${documento}`;
     const params = {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token
         },
         method: "GET",
-        body: JSON.stringify(data)
     };
 
     return fetch(url, params)

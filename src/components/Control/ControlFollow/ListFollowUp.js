@@ -10,7 +10,7 @@ import { TOKEN } from "../../../utils/constans";
 import { deleteContVaccApi } from "../../../api/vaccination";
 
 export default function ListFollowUp(props){
-    const { listSeg, documento } = props;
+    const { listSeg, documento, rolUser } = props;
     const token = localStorage.getItem(TOKEN);
 
     const dateFormat = (date) => {

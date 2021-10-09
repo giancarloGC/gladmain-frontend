@@ -16,110 +16,143 @@ import AddMotherCommit8 from "./AddMotherComit/AddMotherCommit8";
 import AddMotherCommit9 from "./AddMotherComit/AddMotherCommit9";
 import AddMotherCommit10 from "./AddMotherComit/AddMotherCommit10";
 import AddMotherCommit11 from "./AddMotherComit/AddMotherCommit11";
+import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 
 export default function AddMotherInc(props){
-  const { controlSeguimiento } = props;
+  const { idSeg, documento, controlSeguimiento } = props;
   const token = localStorage.getItem(TOKEN);
   const [ checkeds, setCheckeds ] = useState({ atendido: false, hospitalizado: false, fallecido: false });
+  const [ goRedirect, setGoRedirect ] = useState(0);
+  console.log(idSeg);
+  const [ showPatologia, setShowPatologia ] = useState(true);
+  const [ showMedicamentos, setShowMedicamentos ] = useState(true);
+  const [ showRemitido, setRemitido ] = useState(true);
+
 
   const onChangeChecked = (e) => {
-    setCheckeds({...checkeds, [e.target.name]: e.target.checked});
+    if(e.target.name === "showPatologia"){
+      setShowPatologia(!showPatologia);
+      setDataCommit9({name: "titulooo", description: "ejemplo description"});
+      setSaveData9(!saveData9); 
+      //setShowCommit7(!e.target.checked);
+    }else if(e.target.name === "showMedicamentos"){
+      setShowMedicamentos(!showMedicamentos);
+      setDataCommit10({name: "titulooo", description: "ejemplo description"});
+      setSaveData10(!saveData10);
+      //setShowCommit8(!e.target.checked);
+    }else if(e.target.name === "showRemitido"){
+      setRemitido(!showRemitido);
+      setDataCommit11({name: "titulooo", description: "ejemplo description"});
+      setSaveData11(!saveData11);
+      //setShowCommit9(!e.target.checked);
+    }
+    //setCheckeds({...checkeds, [e.target.name]: e.target.checked});
   } 
   /*const [ checkeds, setCheckeds ] = useState({ atendido: false, hospitalizado: false, fallecido: false });
   console.log(checkeds);
-
-  const onChangeChecked = (e) => {
-      setCheckeds({...checkeds, [e.target.name]: e.target.checked});
-  }*/
+*/
 
   const [showCommit, setShowCommit] = useState(false);
-  const [dataCommit, setDataCommit] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit, setDataCommit] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData, setSaveData ] = useState(true); //Pasar el estado a true
   
   const [showCommit2, setShowCommit2] = useState(false);
-  const [dataCommit2, setDataCommit2] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit2, setDataCommit2] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData2, setSaveData2] = useState(true);
   
   const [showCommit3, setShowCommit3] = useState(false);
-  const [dataCommit3, setDataCommit3] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit3, setDataCommit3] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData3, setSaveData3] = useState(true);
   
   const [showCommit4, setShowCommit4] = useState(false);
-  const [dataCommit4, setDataCommit4] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit4, setDataCommit4] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData4, setSaveData4] = useState(true);
   
   const [showCommit5, setShowCommit5] = useState(false);
-  const [dataCommit5, setDataCommit5] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit5, setDataCommit5] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData5, setSaveData5] = useState(true);
   
   const [showCommit6, setShowCommit6] = useState(false);
-  const [dataCommit6, setDataCommit6] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit6, setDataCommit6] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData6, setSaveData6] = useState(true);
   
   const [showCommit7, setShowCommit7] = useState(false);
-  const [dataCommit7, setDataCommit7] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit7, setDataCommit7] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData7, setSaveData7] = useState(true);
   
   const [showCommit8, setShowCommit8] = useState(false);
-  const [dataCommit8, setDataCommit8] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit8, setDataCommit8] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData8, setSaveData8] = useState(true);
   
   const [showCommit9, setShowCommit9] = useState(false);
-  const [dataCommit9, setDataCommit9] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit9, setDataCommit9] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData9, setSaveData9] = useState(true);
 
   const [showCommit10, setShowCommit10] = useState(false);
-  const [dataCommit10, setDataCommit10] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit10, setDataCommit10] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData10, setSaveData10] = useState(true);
 
   const [showCommit11, setShowCommit11] = useState(false);
-  const [dataCommit11, setDataCommit11] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [dataCommit11, setDataCommit11] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData11, setSaveData11] = useState(true);
 
     return(
         <Container>
-          <AddMotherCommit showCommit={showCommit} setShowCommit={setShowCommit} setDataCommit={setDataCommit} dataCommit={dataCommit} 
+          {goRedirect && (
+              <Redirect to={`/admin/ListFollowUp/${documento}/MADRE_GESTANTE`} />
+          )} 
+          <AddMotherCommit edit={false} showCommit={showCommit} setShowCommit={setShowCommit} setDataCommit={setDataCommit} dataCommit={dataCommit} 
             setSaveData={setSaveData} //Entrar al componente
           />
-          <AddMotherCommit2 showCommit2={showCommit2} setShowCommit2={setShowCommit2} setDataCommit2={setDataCommit2} dataCommit2={dataCommit2} 
+          <AddMotherCommit2 edit={false} showCommit2={showCommit2} setShowCommit2={setShowCommit2} setDataCommit2={setDataCommit2} dataCommit2={dataCommit2} 
             setSaveData2={setSaveData2}
           />
-          <AddMotherCommit3 showCommit3={showCommit3} setShowCommit3={setShowCommit3} setDataCommit3={setDataCommit3} dataCommit3={dataCommit3} 
+          <AddMotherCommit3 edit={false} showCommit3={showCommit3} setShowCommit3={setShowCommit3} setDataCommit3={setDataCommit3} dataCommit3={dataCommit3} 
             setSaveData3={setSaveData3}
           />
-          <AddMotherCommit4 showCommit4={showCommit4} setShowCommit4={setShowCommit4} setDataCommit4={setDataCommit4} dataCommit4={dataCommit4} 
+          <AddMotherCommit4 edit={false} showCommit4={showCommit4} setShowCommit4={setShowCommit4} setDataCommit4={setDataCommit4} dataCommit4={dataCommit4} 
             setSaveData4={setSaveData4}
           />
-          <AddMotherCommit5 showCommit5={showCommit5} setShowCommit5={setShowCommit5} setDataCommit5={setDataCommit5} dataCommit5={dataCommit5} 
+          <AddMotherCommit5 edit={false} showCommit5={showCommit5} setShowCommit5={setShowCommit5} setDataCommit5={setDataCommit5} dataCommit5={dataCommit5} 
             setSaveData5={setSaveData5}
           />
-          <AddMotherCommit6 showCommit6={showCommit6} setShowCommit6={setShowCommit6} setDataCommit6={setDataCommit6} dataCommit6={dataCommit6} 
+          <AddMotherCommit6 edit={false} showCommit6={showCommit6} setShowCommit6={setShowCommit6} setDataCommit6={setDataCommit6} dataCommit6={dataCommit6} 
             setSaveData6={setSaveData6}
           />
-          <AddMotherCommit7 showCommit7={showCommit7} setShowCommit7={setShowCommit7} setDataCommit7={setDataCommit7} dataCommit7={dataCommit7} 
+          <AddMotherCommit7 edit={false} showCommit7={showCommit7} setShowCommit7={setShowCommit7} setDataCommit7={setDataCommit7} dataCommit7={dataCommit7} 
             setSaveData7={setSaveData7}
           />
-          <AddMotherCommit8 showCommit8={showCommit8} setShowCommit8={setShowCommit8} setDataCommit8={setDataCommit8} dataCommit8={dataCommit8} 
+          <AddMotherCommit8 edit={false} showCommit8={showCommit8} setShowCommit8={setShowCommit8} setDataCommit8={setDataCommit8} dataCommit8={dataCommit8} 
             setSaveData8={setSaveData8}
           />
-          <AddMotherCommit9 showCommit9={showCommit9} setShowCommit9={setShowCommit9} setDataCommit9={setDataCommit9} dataCommit9={dataCommit9} 
+          <AddMotherCommit9 edit={false} showCommit9={showCommit9} setShowCommit9={setShowCommit9} setDataCommit9={setDataCommit9} dataCommit9={dataCommit9} 
             setSaveData9={setSaveData9}
           />
-           <AddMotherCommit10 showCommit10={showCommit10} setShowCommit10={setShowCommit10} setDataCommit10={setDataCommit10} dataCommit10={dataCommit10} 
+           <AddMotherCommit10 edit={false} showCommit10={showCommit10} setShowCommit10={setShowCommit10} setDataCommit10={setDataCommit10} dataCommit10={dataCommit10} 
             setSaveData10={setSaveData10}
           />
-          <AddMotherCommit11 showCommit11={showCommit11} setShowCommit11={setShowCommit11} setDataCommit11={setDataCommit11} dataCommit11={dataCommit11} 
+          <AddMotherCommit11 edit={false} showCommit11={showCommit11} setShowCommit11={setShowCommit11} setDataCommit11={setDataCommit11} dataCommit11={dataCommit11} 
             setSaveData11={setSaveData11}
           />
               <Row >
               <Col sm={2}> </Col>
                 <Formik
                 initialValues={{ 
-                  idIngreso: '',
-                  alarmaPreventiva: '',
-                  controlCyD: '',
-                  recibeSuplementos: '',
-                  valoracionMedica: '',
+                  controlPrenatal: "asd",
+                      cantidadSemanas: 0,
+                      cuentaMicro: "",
+                      examenMedico: "",
+                      senalPeligro: "",
+                      metodoPlanificacion: "",
+                      vomitoControlado: "",
+                      dolorCabeza: "",
+                      fiebre: "",
+                      ardorOrinar: "",
+                      hinchamiento: "",
+                      dolorBocaEstomago: "",
+                      sangrado: "",
+                      movimientoFetal: "",
+                      
 
                     idSeguimiento: '',
                     afiliacionSgsss: '',
@@ -137,13 +170,17 @@ export default function AddMotherInc(props){
                 
                 validate={(valores) => {
                   let errores = {};
+                  if(showPatologia){
+                    if(!valores.nombrePatologia){
+                      errores.nombrePatologia = 'No se permiten campos vacíos'
+                    }
+                  }
+                  if(showMedicamentos){
+                    if(!valores.nombreMedFormulada){
+                      errores.nombreMedFormulada = 'No se permiten campos vacíos'
+                    }
+                  }
 
-                  if(!valores.nombrePatologia){
-                    errores.nombrePatologia = 'No se permiten campos vacíos'
-                  }
-                  if(!valores.nombreMedFormulada){
-                    errores.nombreMedFormulada = 'No se permiten campos vacíos'
-                  }
                   if(!valores.eapb){
                     errores.eapb = 'No se permiten campos vacíos'
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.eapb)){
@@ -154,10 +191,13 @@ export default function AddMotherInc(props){
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.ips)){
                     errores.ips = 'Solo puedes escribir letras';
                   }
-                  if(!valores.causa){
-                    errores.causa = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.causa)){
-                    errores.causa = 'Solo puedes escribir letras';
+
+                  if(showRemitido){
+                    if(!valores.causa){
+                      errores.causa = 'No se permiten campos vacíos'
+                    }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.causa)){
+                      errores.causa = 'Solo puedes escribir letras';
+                    }
                   }
                   
                   return errores;
@@ -165,44 +205,68 @@ export default function AddMotherInc(props){
 
                 onSubmit={(valores, {resetForm}) => {
 
-                 /* const formData ={
-                    id: '',
-                    idIngreso: '',
-                    alarmaPreventiva: saveData4 ? "SI" : "NO",
-                    controlCyD: saveData6 ? "SI" : "NO",
-                    recibeSuplementos: saveData8 ? "SI" : "NO",
-                    valoracionMedica: saveData5 ? "SI" : "NO",
-
-                    id: '',
-                    idSeguimiento: 8,
-                    afiliacionSgsss: saveData ? "SI" : "NO",
-                    saludOral: saveData2 ? "SI" : "NO",
-                    conoceUrgencias: saveData3 ? "SI" : "NO",
-                    patologiaIdentificadaSgsss: saveData7 ? "SI" : "NO",
-                    nombrePatologia: valores.nombrePatologia,
-                    recibeMedFormulada: saveData8 ? "SI" : "NO",
-                    nombreMedFormululada: valores.nombreMedFormululada,
-                    eapb: valores.eapb,
-                    ips: valores.ips,
-                    usuarioRemitido: saveData9 ? "SI" : "NO",
-                    causa: valores.causa,
-                  }*/
-                 /* console.log(formData);
-                  formData.token = token;
-                  insertInfantIncomeApi(formData).then(response => {
+                  const formData = {
+                    ingresoInfante: null,
+                    ingresoMadre: {
+                      id: 1,
+                      idIngreso: 1,
+                      controlPrenatal: saveData4 ? "SI" : "NO",
+                      cantidadSemanas: valores.cantidadSemanas,
+                      cuentaMicro: saveData5 ? "SI" : "NO",
+                      examenMedico: saveData6 ? "SI" : "NO",
+                      senalPeligro: saveData7 ? "SI" : "NO",
+                      metodoPlanificacion: saveData8 ? "SI" : "NO",
+                      vomitoControlado: "sdaf",
+                      dolorCabeza: "dasf",
+                      fiebre: "dsaf",
+                      ardorOrinar: "adsf",
+                      hinchamiento: "dsaf",
+                      dolorBocaEstomago: "sdaf",
+                      sangrado: "asdf",
+                      movimientoFetal: "dasf"
+                    },
+                    ingreso: {
+                      id: 1,
+                      idSeguimiento: parseInt(idSeg),
+                      afiliacionSgsss: saveData ? "SI" : "NO",
+                      saludOral: saveData2 ? "SI" : "NO",
+                      conoceUrgencias: saveData3 ? "SI" : "NO",
+                      patologiaIdentificadaSgsss: saveData9 ? true : false,
+                      nombrePatologia: showPatologia ? valores.nombrePatologia : "",
+                      recibeMedFormulada: saveData10 ? true : false,
+                      nombreMedFormululada: showMedicamentos ? valores.nombreMedFormululada : "",
+                      eapb: valores.eapb,
+                      ips: valores.ips,
+                      usuarioRemitido: saveData11 ? "1" : "0",
+                      causa: showRemitido ? valores.causa : "",
+                    }
+                  }
+                  console.log(formData);
+                  insertInfantIncomeApi(formData, token).then(response => {
                     console.log(response);
                     if(response === true){
                       swal({
                         title: `¡El ingreso fue almacenado correctamente!`,
                         icon: 'success'
+                      }).then((value) => {
+                        setGoRedirect(1);
+                      });
+                    }else if(response.status === 403){
+                      swal("¡No tienes autorización para realizar esta acción, comunícate con el Admin!", {
+                        icon: "warning",
+                      }).then((value) => {
+                        localStorage.removeItem(TOKEN);
+                        window.location.replace("/");
                       });
                     }else{
                       swal({
                         title: `¡Opss, ocurrió un error!`,
                         icon: 'danger'
+                      }).then((value) => {
+                        setGoRedirect(1);
                       });
                     }
-                  });*/
+                  });
                 }}
                 >
 
@@ -402,7 +466,7 @@ export default function AddMotherInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="xs" name="patologiaIdentificadaSgsss">
-                          <input type="checkbox" checked={showCommit9 || !saveData9 ? false : true } onChange={(e) => setShowCommit9(!e.target.checked)}></input>
+                          <input type="checkbox" name="showPatologia" checked={showCommit9 || !saveData9 ? false : true } onChange={(e) => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -413,23 +477,25 @@ export default function AddMotherInc(props){
                         </InputGroup>
                         </Col>
                         </Form.Group>
-
-                    <Form.Group as={Row} style={{ "marginLeft":"6px"}} className="mt-1">
-                    <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>
-                    <h5 style={{"fontSize": "16px", "fontWeight":"bold" }} className="mt-1">¿Cuál?</h5></Form.Label>
-                    <Col sm="9" class="mid" style={{marginLeft:"7px"}}>
-                        <InputGroup hasValidation>
-                               <Form.Control type="text" placeholder="Nombre Patología" size="xs" id="nombrePatologia" name="nombrePatologia" 
-                               value={values.nombrePatologia} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
-                               isValid={!errors.nombrePatologia && touched.nombrePatologia}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.nombrePatologia}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                    </Col>
-                    </Form.Group>
+                    
+                    {showPatologia && (
+                      <Form.Group as={Row} style={{ "marginLeft":"6px"}} className="mt-1">
+                      <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>
+                      <h5 style={{"fontSize": "16px", "fontWeight":"bold" }} className="mt-1">¿Cuál?</h5></Form.Label>
+                      <Col sm="9" class="mid" style={{marginLeft:"7px"}}>
+                          <InputGroup hasValidation>
+                                <Form.Control type="text" placeholder="Nombre Patología" size="xs" id="nombrePatologia" name="nombrePatologia" 
+                                value={values.nombrePatologia} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
+                                isValid={!errors.nombrePatologia && touched.nombrePatologia}
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                  {errors.nombrePatologia}
+                              </Form.Control.Feedback>
+                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          </InputGroup>
+                      </Col>
+                      </Form.Group>
+                    )}
 
                         <Form.Group as={Row} style={{ "marginLeft":"6px"}} className="mt-1">
                         <Form.Label column sm="9" >
@@ -437,7 +503,7 @@ export default function AddMotherInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="xs" name="recibeMedFormulada">
-                          <input type="checkbox" checked={showCommit10 || !saveData10 ? false : true } onChange={(e) => setShowCommit10(!e.target.checked)}></input>
+                          <input type="checkbox" name="showMedicamentos" checked={showCommit10 || !saveData10 ? false : true } onChange={(e) => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -448,23 +514,25 @@ export default function AddMotherInc(props){
                         </InputGroup>
                         </Col>
                     </Form.Group>
-                
-                    <Form.Group as={Row} style={{ "marginLeft":"6px"}} className="mt-1">
-                    <Form.Label column sm="2">
-                    <h5 style={{"fontSize": "16px"}}>¿Cuál?</h5></Form.Label>
-                    <Col md="9" class="mid" style={{marginLeft:"7px"}}>
-                        <InputGroup hasValidation>
-                               <Form.Control type="text" placeholder="Nombre Medicamento Formulado" size="xs" id="nombreMedFormulada" name="nombreMedFormulada" 
-                               value={values.nombreMedFormulada} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
-                               isValid={!errors.nombreMedFormulada && touched.nombreMedFormulada}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.nombreMedFormulada}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                      </Col>
-                    </Form.Group>                   
+                    
+                    {showMedicamentos && (
+                      <Form.Group as={Row} style={{ "marginLeft":"6px"}} className="mt-1">
+                      <Form.Label column sm="2">
+                      <h5 style={{"fontSize": "16px"}}>¿Cuál?</h5></Form.Label>
+                      <Col md="9" class="mid" style={{marginLeft:"7px"}}>
+                          <InputGroup hasValidation>
+                                <Form.Control type="text" placeholder="Nombre Medicamento Formulado" size="xs" id="nombreMedFormulada" name="nombreMedFormulada" 
+                                value={values.nombreMedFormulada} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
+                                isValid={!errors.nombreMedFormulada && touched.nombreMedFormulada}
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                  {errors.nombreMedFormulada}
+                              </Form.Control.Feedback>
+                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          </InputGroup>
+                        </Col>
+                      </Form.Group> 
+                    )}                  
                     </Col>
 
                     <Col sm={6} className="mt-2 mb-2" style={{backgroundColor: '#f1f1f1', "border-radius":'10px'}}>
@@ -510,7 +578,7 @@ export default function AddMotherInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="xs" name="usuarioRemitido">
-                          <input type="checkbox" checked={showCommit11 || !saveData11 ? false : true } onChange={(e) => setShowCommit11(!e.target.checked)}></input>
+                          <input type="checkbox" name="showRemitido" checked={showCommit11 || !saveData11 ? false : true } onChange={(e) => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -522,22 +590,24 @@ export default function AddMotherInc(props){
                         </Col>
                     </Form.Group>
 
-                    <Form.Group as={Row} style={{ "marginLeft":"6px"}} className="mt-2">
-                    <Form.Label column sm="2">
-                    <h5 style={{"fontSize": "16px"}}>¿Por qué?</h5></Form.Label>
-                    <Col sm="9" style={{marginLeft:"7px"}} className="mt-2">                        
-                        <InputGroup hasValidation>
-                               <Form.Control type="text" placeholder="Escriba la causa" size="xs" id="causa" name="causa" 
-                               value={values.causa} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.causa && touched.causa}
-                               isValid={!errors.causa && touched.causa}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.causa}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                    </Col>
-                    </Form.Group>
+                    {showRemitido && (
+                      <Form.Group as={Row} style={{ "marginLeft":"6px"}} className="mt-2">
+                      <Form.Label column sm="2">
+                      <h5 style={{"fontSize": "16px"}}>¿Por qué?</h5></Form.Label>
+                      <Col sm="9" style={{marginLeft:"7px"}} className="mt-2">                        
+                          <InputGroup hasValidation>
+                                <Form.Control type="text" placeholder="Escriba la causa" size="xs" id="causa" name="causa" 
+                                value={values.causa} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.causa && touched.causa}
+                                isValid={!errors.causa && touched.causa}
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                  {errors.causa}
+                              </Form.Control.Feedback>
+                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          </InputGroup>
+                      </Col>
+                      </Form.Group>
+                    )}
 
                     <Col style={{backgroundColor:"white", "border-radius":'5px'}}>
                     <center>

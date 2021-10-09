@@ -37,7 +37,7 @@ export default function AddControlFollow(){
             )
             :
             (
-                <AddControlF userControl={userControl} rolUser={rolUser}/>
+                <AddControlF documento={documento} userControl={userControl} rolUser={rolUser}/>
             )
             }
         </Container>
