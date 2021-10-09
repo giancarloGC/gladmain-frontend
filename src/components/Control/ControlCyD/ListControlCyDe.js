@@ -4,6 +4,8 @@ import {BrowserRouter as Router, Route, Switch, Redirect, Link} from "react-rout
 import swal from 'sweetalert';
 import { faPrint } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import AnimationNotFindSearch from "../../../assets/animations/notFindSearch.json";
+import Lottie from 'react-lottie';
 import { useParams } from "react-router-dom";
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { TOKEN } from "../../../utils/constans";
@@ -11,7 +13,7 @@ import { deleteControlApi } from "../../../api/controls";
 
 
 export default function ListControlCyDe(props){
-    const { listControls, lastControls } = props;
+    const { infoUser, listControls, lastControls, allControlSaved } = props;
     const { documento } = useParams();
     const token = localStorage.getItem(TOKEN);
 
@@ -60,18 +62,7 @@ export default function ListControlCyDe(props){
      return(
          <Container className="mt-4"> 
              <Row> 
-             <Row className="mb-2 mt-3">
-                 <Col md={3}> </Col>
-                 <Col md={6}>
-                    <InputGroup hasValidation>
-                        <Form.Control type="search" placeholder="Buscar Control" size="lg" id="busqueda" name="busqueda" />
-                        <Button class="btn btn-outline-success" type="submit">Buscar</Button>
-                    </InputGroup>
-                 </Col>
-                 <Col md={3}> </Col>
-             </Row>
             
-             
              <Col sm={12} >
              <Container style={{backgroundColor: '#f1f1f1', borderRadius:'5px'}} >
             <Row>
@@ -94,10 +85,30 @@ export default function ListControlCyDe(props){
             </Row>
             </Container>
             </Col>
-             
+
+            {allControlSaved.length === 0 && (
+                <>
+                    <p style={{"color": "#2D61A4", "fontSize": 27}}>No se encontraron registros que coincidan</p>
+                    <Lottie height={400} width={750}
+                        options={{ loop: true, autoplay: true, animationData: AnimationNotFindSearch, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                    />
+                </>
+            )}
+
+            {allControlSaved.length > 0 && (
              <Col sm={12} >
-           <ListGroup className="mt-3 mb-3">
-           {listControls.map((item, index) => (
+                {listControls.length === 0 && (
+                <>
+                    <p style={{"color": "#2D61A4", "fontSize": 27}}>No se encontraron registros que coincidan</p>
+                    <Lottie height={400} width={750}
+                        options={{ loop: true, autoplay: true, animationData: AnimationNotFindSearch, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                    />
+                </>
+                )}
+                
+                {listControls.length > 0 && (
+                <ListGroup className="mt-3 mb-3">
+                 {listControls.map((item, index) => (
                 <ListGroup.Item className="shadow border mt-2 mb-3">
                 <Container>
                 <Row >
@@ -142,9 +153,11 @@ export default function ListControlCyDe(props){
              </ListGroup.Item>
              ))}
              </ListGroup>
-             </Col>  
-             </Row> 
-
-         </Container>
-     )
+             )} 
+          </Col>  
+         )}    
+          </Row> 
+          
+      </Container>
+  )
  }
