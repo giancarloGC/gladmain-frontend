@@ -76,9 +76,11 @@ const data = {
              <center>
              <Form.Label column sm="4" style={{"font-size": "12px !important" }}>Puntuación Z (2 a 5 años)</Form.Label>
              </center>
+             <center>
+             <div>  
              <div className="container1" style={{"backgroundColor": sexo === "FEMENINO" ? "#FF67C6" : "#35B6FE"}}> 
+             <p></p> 
               <div className="containerGraphic"> 
-                    <p className="ejey">Peso(kg)</p>
                 <div style={{"max-width": "800px", "text-align":"center"}} style={{"backgroundColor": "white"}}>
                 <Line 
                     data={data}
@@ -101,6 +103,8 @@ const data = {
               </div>
                 <p className="ejex">Talla(cm)</p>
              </div>
+             </div>
+             </center>
         </Container>
     )
 

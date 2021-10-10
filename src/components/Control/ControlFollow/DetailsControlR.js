@@ -70,7 +70,7 @@ export default function DetailsControlR(props){
                         </Col>
 
                         <Form.Label column md="3" className="mt-2 ">
-                        <h1 style={{fontSize: "20px", color:"#0084d2" }} >Fecha Remisión</h1></Form.Label>
+                        <h1 style={{fontSize: "20px", color:"#0084d2"}} >Fecha Remisión</h1></Form.Label>
                         <Col >
                           <InputGroup hasValidation>
                               <Form.Control type="text" size="lg" id="fechaRemision" name="fechaRemision" 
