@@ -70,7 +70,6 @@ export default function ListFollow(){
 
             const responseIncome = await getInfantIncomeApi(documento, token);
             setLoading(false);
-            console.log(responseIncome[0].ingreso.nombreMedFormululada);
             setListIncome(responseIncome);
             setLoadedSonPDF(true);
         })();       

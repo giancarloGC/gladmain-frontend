@@ -11,7 +11,6 @@ import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { TOKEN } from "../../../utils/constans";
 import { deleteControlApi } from "../../../api/controls";
 
-
 export default function ListControlCyDe(props){
     const { infoUser, listControls, lastControls, allControlSaved } = props;
     const { documento } = useParams();

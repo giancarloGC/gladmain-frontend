@@ -70,8 +70,11 @@ const data = {
               )}
 
               <h2 className="text-center">Estado Nutricional Madre Gestante</h2>
-                <div className="containerGraphic"> 
-                  <p className="ejey">IMC</p>
+              <center>
+              <div>  
+              <p></p> 
+                  <div className="containerGraphic"> 
+                    <center>
                 <div style={{"max-width": "800px", "text-align":"center"}} >
                   <Line 
                       data={data}
@@ -91,9 +94,12 @@ const data = {
                       }}
                       getDatasetAtEvent={getDatasetAtEvent}
                   />
-                </div>
-                </div>
+                 </div>
+                   </center>
+                    </div>
+                  </div>
                 <p className="ejex">Semanas de Gestación</p>
+              </center>
         </Container>
     )
 
