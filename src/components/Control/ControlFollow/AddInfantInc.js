@@ -244,9 +244,6 @@ export default function AddInfantInc(props){
                     }else if(response.status === 403){
                       swal("¡No tienes autorización para realizar esta acción, comunícate con el Admin!", {
                         icon: "warning",
-                      }).then((value) => {
-                        localStorage.removeItem(TOKEN);
-                        window.location.replace("/");
                       });
                     }else{
                       swal({

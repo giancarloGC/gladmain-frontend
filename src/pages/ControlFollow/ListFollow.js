@@ -18,6 +18,8 @@ import Logo from "../../assets/img/logocomfaoriente.png";
 import GladMaIn from "../../assets/img/logoGladmain.PNG";
 import fuente from "../../assets/fontPDF/Amaranth-Bold.ttf";
 import fuente2 from "../../assets/fontPDF/Amaranth-Regular.ttf";
+import useAuth from '../../hooks/useAuth';
+
 
 import { getMotIncomeByUserApi } from "../../api/mother_income";
 
@@ -30,6 +32,8 @@ export default function ListFollow(){
     const [ listIncome, setListIncome ] = useState([]);
     const [ loadedPDF, setLoadedSonPDF ] = useState(false); 
     const [ loading, setLoading ] = useState(true);  
+    const { user } = useAuth();
+
 
     /*useEffect(() => {
         getUserByIdApi(documento, token).then(responseUser => {
@@ -72,10 +76,16 @@ export default function ListFollow(){
             setLoading(false);
             setListIncome(responseIncome);
             setLoadedSonPDF(true);
+            
+
+
         })();       
         }, []);
 
         //console.log(listIncome[0].ingreso.nombreMedFormululada);
+    const validatePrivilegio = (privilegio) => {
+        return user.authorities.filter(priv => priv === privilegio);
+    }
 
     const calculateProgress = async (response, newData) => {
         await Promise.all(response.map(async (item, index) => {
@@ -190,10 +200,12 @@ export default function ListFollow(){
     return(
         <Container>
             <h1 className="text-center mb-4">Seguimientos de {infoUser ? infoUser.nombre : "Anonimo"}
-              <Link to={`/admin/addControlFollow/${documento}/${rolUser}`}>
+                {validatePrivilegio("REGISTRAR_SEGUIMIENTO").length > 0 && (
+                <Link to={`/admin/addControlFollow/${documento}/${rolUser}`}>
                     <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton" />
                     <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Seguimiento </ReactTooltip>
               </Link>
+              )}
 
               {loadedPDF && (
                     <PDFDownloadLink document={<DocumentPdf listSeg={listSeg} listIncome={listIncome} setLoadedSonPDF={setLoadedSonPDF} infoUser={infoUser}/>} fileName={`Ingreso_${infoUser.documento}`}>
@@ -240,7 +252,7 @@ function DocumentPdf({listSeg, listIncome, setLoadedSonPDF, infoUser}){
       
     return(
         <Document>
-        <Page style={styles.body}>
+        {/*<Page style={styles.body}>
         <View style={styles.table2}> 
             <View style={styles.tableRow2}> 
                 <View style={styles.tableCol2}> 
@@ -312,156 +324,9 @@ function DocumentPdf({listSeg, listIncome, setLoadedSonPDF, infoUser}){
             </View>
             
          
-           {/* {listSeg.map((control, index) => (
-                listIncome.map((controlInc, index) => (
-            <View style={styles.table}> 
-                <View style={styles.tableRow}> 
-                    <View style={styles.tableCol}> 
-                        <Text style={styles.tableCellHeader}>Fecha Ingreso:</Text> 
-                    </View> 
-                    <View style={styles.tableCol4}> 
-                        <Text style={styles.tableCell}>{dateFormat (control.fecha)}</Text> 
-                    </View> 
-                </View> 
-
-                {control.tipo !== null &&
-                <View style={styles.tableRow}> 
-                    <View style={styles.tableCol}> 
-                        <Text style={styles.tableCellHeader}>Documento Acudiente:</Text> 
-                    </View> 
-                    <View style={styles.tableCol4}> 
-                        <Text style={styles.tableCell}>{control.numeroDocAcudiente}</Text> 
-                    </View> 
-                </View> 
-                }
-
-                <View style={styles.tableRow}> 
-                    <View style={styles.tableCol}> 
-                        <Text style={styles.tableCellHeader}>Nombre Acudiente:</Text> 
-                    </View> 
-                    <View style={styles.tableCol4}> 
-                        <Text style={styles.tableCell}>{control.nombreAcudiente}</Text> 
-                    </View> 
-                </View> 
-
-                
-                <View style={styles.tableRow}> 
-                    <View style={styles.tableCol}> 
-                        <Text style={styles.tableCellHeader}>Cuenta con afiliación al SGSSS:</Text> 
-                    </View> 
-                    <View style={styles.tableCol4}> 
-                        <Text style={styles.tableCell}>{controlInc.afiliacionSgsss}</Text> 
-                    </View> 
-                </View>
-                <View style={styles.tableRow}> 
-                    <View style={styles.tableCol}> 
-                        <Text style={styles.tableCellHeader}>Cuenta con valoración y controles en salud oral:</Text> 
-                    </View> 
-                    <View style={styles.tableCol4}> 
-                        <Text style={styles.tableCell}>{controlInc.ingreso.saludOral}</Text> 
-                    </View> 
-                </View>
-                <View style={styles.tableRow}> 
-                    <View style={styles.tableCol}> 
-                        <Text style={styles.tableCellHeader}>Conoce la red de salud o a quien acudir en caso de urgencia:</Text> 
-                    </View> 
-                    <View style={styles.tableCol4}>  
-                        <Text style={styles.tableCell}>{controlInc.ingreso.conoceUrgencias}</Text> 
-                    </View> 
-                </View>
-                <View style={styles.tableRow}> 
-                    <View style={styles.tableCol}> 
-                        <Text style={styles.tableCellHeader}>Identifican signos de alarmas de enfermedades prevalentes de la primera infancia (que ponen en peligro de muerte a niños y niñas):</Text> 
-                    </View> 
-                    <View style={styles.tableCol4}>  
-                        <Text style={styles.tableCell}>{controlInc.ingresoInfante.alarmaPreventiva}</Text> 
-                    </View> 
-                </View>
-                <View style={styles.tableRow}> 
-                    <View style={styles.tableCol}> 
-                        <Text style={styles.tableCellHeader}>En niñas y menores de un mes se realizó validación médica: </Text> 
-                    </View> 
-                    <View style={styles.tableCol4}> 
-                        <Text style={styles.tableCell}>{controlInc.ingresoInfante.valoracionMedica}</Text> 
-                    </View> 
-                </View>
-                <View style={styles.tableRow}> 
-                    <View style={styles.tableCol}> 
-                        <Text style={styles.tableCellHeader}>Las niñas y niños cuentan con controles de Crecimiento y Desarrollo: </Text> 
-                    </View> 
-                    <View style={styles.tableCol4}> 
-                        <Text style={styles.tableCell}>{controlInc.ingresoInfante.controlCyD}</Text> 
-                    </View> 
-                </View>
-                <View style={styles.tableRow}> 
-                    <View style={styles.tableCol}> 
-                        <Text style={styles.tableCellHeader}>Presenta una patología asociada identificada por el SGSSS: </Text> 
-                    </View> 
-                    <View style={styles.tableCol4}> 
-                        <Text style={styles.tableCell}>{controlInc.ingreso.patologiaIdentificadaSgsss}</Text> 
-                    </View> 
-                </View>
-                <View style={styles.tableRow}> 
-                    <View style={styles.tableCol}> 
-                        <Text style={styles.tableCellHeader}>¿Cuál?</Text> 
-                    </View> 
-                    <View style={styles.tableCol4}>  
-                        <Text style={styles.tableCell}>{controlInc.ingreso.nombrePatologia}</Text> 
-                    </View> 
-                </View>
-                <View style={styles.tableRow}> 
-                    <View style={styles.tableCol}> 
-                        <Text style={styles.tableCellHeader}>Recibe medicamentos formulados por el SGSSS para alguna patología: </Text> 
-                    </View> 
-                    <View style={styles.tableCol4}> 
-                        <Text style={styles.tableCell}>{controlInc.ingreso.recibeMedFormulada}</Text> 
-                    </View> 
-                </View>
-                <View style={styles.tableRow}> 
-                    <View style={styles.tableCol}> 
-                        <Text style={styles.tableCellHeader}>¿Cuál?</Text> 
-                    </View> 
-                    <View style={styles.tableCol4}> 
-                        <Text style={styles.tableCell}>{controlInc.ingreso.nombreMedFormululada}</Text> 
-                    </View> 
-                </View>
-                <View style={styles.tableRow}> 
-                    <View style={styles.tableCol}> 
-                        <Text style={styles.tableCellHeader}>EAPB: </Text> 
-                    </View> 
-                    <View style={styles.tableCol4}> 
-                        <Text style={styles.tableCell}>{controlInc.ingreso.eapb}</Text> 
-                    </View> 
-                </View>
-                <View style={styles.tableRow}> 
-                    <View style={styles.tableCol}> 
-                        <Text style={styles.tableCellHeader}>IPS: </Text> 
-                    </View> 
-                    <View style={styles.tableCol4}> 
-                        <Text style={styles.tableCell}>{controlInc.ingreso.ips}</Text> 
-                    </View> 
-                </View>
-                <View style={styles.tableRow}> 
-                    <View style={styles.tableCol}> 
-                        <Text style={styles.tableCellHeader}>El usuario fue remitido a SGSSS: </Text> 
-                    </View> 
-                    <View style={styles.tableCol4}> 
-                        <Text style={styles.tableCell}>{controlInc.ingreso.usuarioRemitido}</Text> 
-                    </View> 
-                </View>
-                <View style={styles.tableRow}> 
-                    <View style={styles.tableCol}> 
-                        <Text style={styles.tableCellHeader}>¿Por qué?</Text> 
-                    </View> 
-                    <View style={styles.tableCol4}> 
-                        <Text style={styles.tableCell}>{controlInc.ingreso.causa}</Text> 
-                    </View> 
-                </View>
-            </View>   
-            )) 
-            ))}*/}
+         
           
-        </Page>
+        </Page>*/}
   </Document>
     )
 }
