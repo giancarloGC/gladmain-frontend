@@ -71,14 +71,14 @@ export default function ListControlCyDe(props){
                         Fecha Ultimo Control
                     </Form.Label>
                     <Col sm={3} className="row justify-content-center">
-                    <Form.Control type="date" size="l" id="ultimoControl" name="ultimoControl" value={dateFormat(lastControls.ultimoControl)}/>
+                    <Form.Control type="date" size="l" id="ultimoControl" name="ultimoControl" value={dateFormat(lastControls.ultimoControl)} disabled/>
 
                     </Col>
                     <Form.Label column sm={3} >
                         Fecha Proximo Control
                     </Form.Label>
                     <Col sm={3} className="row justify-content-center">
-                    <Form.Control type="date" size="l" id="proximoControl" name="proximoControl" value={dateFormat(lastControls.proximoControl)}
+                    <Form.Control type="date" size="l" id="proximoControl" name="proximoControl" value={dateFormat(lastControls.proximoControl)} disabled
                     />
                     </Col>
             </Form.Group> 

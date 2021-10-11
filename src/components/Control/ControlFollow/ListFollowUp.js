@@ -10,7 +10,7 @@ import { TOKEN } from "../../../utils/constans";
 import { deleteContVaccApi } from "../../../api/vaccination";
 
 export default function ListFollowUp(props){
-    const { listSeg, documento, rolUser } = props;
+    const { listSeg, documento, listInc, rolUser } = props;
     const token = localStorage.getItem(TOKEN);
 
     const dateFormat = (date) => {
@@ -44,8 +44,7 @@ export default function ListFollowUp(props){
                         </p>
                    </Col>
                    <Col sm={3} className="align-self-right">
-                   <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Acciones</b> <br/>
-                        
+                   <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Acciones</b> <br/>    
                         <Link className="enlace"to={`/admin/detailsInfantIncome/${item.id}/`} className="btn btn-primary mx-0">
                             <FontAwesomeIcon icon={faEye} size="l" color="white" data-tip data-for = "boton3" 
                             /> <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Ver </ReactTooltip>

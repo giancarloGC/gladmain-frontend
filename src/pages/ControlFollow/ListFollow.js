@@ -70,7 +70,6 @@ export default function ListFollow(){
 
             const responseIncome = await getInfantIncomeApi(documento, token);
             setLoading(false);
-            console.log(responseIncome[0].ingreso.nombreMedFormululada);
             setListIncome(responseIncome);
             setLoadedSonPDF(true);
         })();       
@@ -85,13 +84,29 @@ export default function ListFollow(){
                 console.log(listIngresos);
                 let ingresoBySeg = listIngresos.filter(registro => registro.ingreso.idSeguimiento === item.id);
                 console.log(listIngresos);
-                let totalOptions = 10;
+                let totalOptions = 5;
                 let optionsSelected = 0;
 
                 if(ingresoBySeg[0].ingreso.afiliacionSgsss === "SI"){
                     optionsSelected += 1;
                 };
+                if(ingresoBySeg[0].ingreso.saludOral === "SI"){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingresoInfante.valoracionMedica === "SI"){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingresoInfante.controlCyD === "SI"){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingresoInfante.recibeSuplementos === "SI"){
+                    optionsSelected += 1;
+                };
+                /*
                 if(ingresoBySeg[0].ingreso.conoceUrgencias === "SI"){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingresoInfante.alarmaPreventiva === "SI"){
                     optionsSelected += 1;
                 };
                 if(ingresoBySeg[0].ingreso.patologiaIdentificadaSgsss === true){
@@ -100,10 +115,44 @@ export default function ListFollow(){
                 if(ingresoBySeg[0].ingreso.recibeMedFormulada === true){
                     optionsSelected += 1;
                 };
+                if(ingresoBySeg[0].ingreso.usuarioRemitido === "1"){
+                    optionsSelected += 1;
+                };
+                */
+           
+                let percentageCompleted = (optionsSelected / totalOptions) * 100;
+                item.estado = percentageCompleted.toString();
+                newData.push(item);
+
+            }else if(rolUser === "MADRE_GESTANTE"){
+                let listIngresos = await getMotIncomeByUserApi(documento, token);
+                console.log(listIngresos);
+                let ingresoBySeg = listIngresos.filter(registro => registro.ingreso.idSeguimiento === item.id);
+                console.log(ingresoBySeg);
+                let totalOptions = 6;
+                let optionsSelected = 0;
+
+                if(ingresoBySeg[0].ingreso.afiliacionSgsss === "SI"){
+                    optionsSelected += 1;
+                };
                 if(ingresoBySeg[0].ingreso.saludOral === "SI"){
                     optionsSelected += 1;
                 };
-                if(ingresoBySeg[0].ingreso.usuarioRemitido === "1"){
+                if(ingresoBySeg[0].ingresoMadre.controlPrenatal === "SI"){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingresoMadre.cuentaMicro === "SI"){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingresoMadre.examenMedico === "SI"){
+                    optionsSelected += 1;
+                };
+                if(ingresoBySeg[0].ingresoMadre.metodoPlanificacion === "SI"){
+                    optionsSelected += 1;
+                };
+        
+                /*
+                if(ingresoBySeg[0].ingreso.conoceUrgencias === "SI"){
                     optionsSelected += 1;
                 };
                 if(ingresoBySeg[0].ingresoInfante.alarmaPreventiva === "SI"){
@@ -118,48 +167,16 @@ export default function ListFollow(){
                 if(ingresoBySeg[0].ingresoInfante.valoracionMedica === "SI"){
                     optionsSelected += 1;
                 };
-                let percentageCompleted = (optionsSelected / totalOptions) * 100;
-                item.estado = percentageCompleted.toString();
-                newData.push(item);
-
-            }else if(rolUser === "MADRE_GESTANTE"){
-                let listIngresos = await getMotIncomeByUserApi(documento, token);
-                console.log(listIngresos);
-                let ingresoBySeg = listIngresos.filter(registro => registro.ingreso.idSeguimiento === item.id);
-                console.log(ingresoBySeg);
-                let totalOptions = 10;
-                let optionsSelected = 0;
-
-                if(ingresoBySeg[0].ingreso.afiliacionSgsss === "SI"){
-                    optionsSelected += 1;
-                };
-                if(ingresoBySeg[0].ingreso.conoceUrgencias === "SI"){
-                    optionsSelected += 1;
-                };
-                if(ingresoBySeg[0].ingreso.patologiaIdentificadaSgsss === true){
+                 if(ingresoBySeg[0].ingreso.patologiaIdentificadaSgsss === true){
                     optionsSelected += 1;
                 };
                 if(ingresoBySeg[0].ingreso.recibeMedFormulada === true){
                     optionsSelected += 1;
                 };
-                if(ingresoBySeg[0].ingreso.saludOral === "SI"){
-                    optionsSelected += 1;
-                };
                 if(ingresoBySeg[0].ingreso.usuarioRemitido === "1"){
                     optionsSelected += 1;
                 };
-                /*if(ingresoBySeg[0].ingresoInfante.alarmaPreventiva === "SI"){
-                    optionsSelected += 1;
-                };
-                if(ingresoBySeg[0].ingresoInfante.controlCyD === "SI"){
-                    optionsSelected += 1;
-                };
-                if(ingresoBySeg[0].ingresoInfante.recibeSuplementos === "SI"){
-                    optionsSelected += 1;
-                };
-                if(ingresoBySeg[0].ingresoInfante.valoracionMedica === "SI"){
-                    optionsSelected += 1;
-                };*/
+                */
                 
                 let percentageCompleted = (optionsSelected / totalOptions) * 100;
                 item.estado = percentageCompleted.toString();

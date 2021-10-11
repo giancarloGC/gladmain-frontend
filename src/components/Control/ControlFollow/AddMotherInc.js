@@ -32,7 +32,7 @@ export default function AddMotherInc(props){
       movimientoFetal: "NO"
     //atendido: false, hospitalizado: false, fallecido: false 
   });
-  const [ goRedirect, setGoRedirect ] = useState(0);
+  const [ goRedirect, setGoRedirect ] = useState();
   console.log(idSeg);
   const [ showPatologia, setShowPatologia ] = useState(true);
   const [ showMedicamentos, setShowMedicamentos ] = useState(true);

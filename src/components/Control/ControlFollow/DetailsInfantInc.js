@@ -10,7 +10,7 @@ export default function DetailsInfantInc(props){
   const { segControl, control, checkeds, setCheckeds} = props;
   console.log(segControl);
   console.log(control);
-
+  
     return(
         <Container>
             <Row >

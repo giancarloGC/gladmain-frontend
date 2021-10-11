@@ -184,12 +184,11 @@ export default function FormUser(){
                       municipio: valores.municipio,
                       direccion: valores.direccion,
                       correoElectronico: valores.correoElectronico,
-                      clave: valores.clave,
-                      token: token
+                      clave: valores.clave
                     }
                     console.log(data);
                 
-                    insertUserApi(data).then(response => {
+                    insertUserApi(data, token).then(response => {
                       if(response === true){
                           let successs = false;
                           successs = rolesSelected.map((item, index) => {

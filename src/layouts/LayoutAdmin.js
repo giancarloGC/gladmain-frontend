@@ -98,7 +98,7 @@ export default function LayoutAdmin(props){
         const responseControls = await getControlNutriApi(documentoInf, token);
         if(responseControls.length > 0){
             for(var i = 0; i < responseControls.length; i++ ){
-                if(responseControls[i].estadoNutricional === "Riesgo de desnutricion aguda"){
+                if(responseControls[i].estadoNutricional === "Riesgo de Desnutrición Aguda"){
                     return 1;
                 }else{
                     return 0;

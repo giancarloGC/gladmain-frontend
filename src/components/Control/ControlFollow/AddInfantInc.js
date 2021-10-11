@@ -15,15 +15,17 @@ import AddIncomeCommit6 from "./AddIncomeCommit/AddIncomeCommit6";
 import AddIncomeCommit7 from "./AddIncomeCommit/AddIncomeCommit7";
 import AddIncomeCommit8 from "./AddIncomeCommit/AddIncomeCommit8";
 import AddIncomeCommit9 from "./AddIncomeCommit/AddIncomeCommit9";
+import AddIncomeCommit10 from "./AddIncomeCommit/AddIncomeCommit10";
 
 export default function AddInfantInc(props){
   const { idSeg, documento, controlSeguimiento } = props;
   const token = localStorage.getItem(TOKEN);
-  const [ goRedirect, setGoRedirect ] = useState(0);
+  const [ goRedirect, setGoRedirect ] = useState();
 
   const [ showPatologia, setShowPatologia ] = useState(true);
   const [ showMedicamentos, setShowMedicamentos ] = useState(true);
   const [ showRemitido, setRemitido ] = useState(true);
+   const [ showSuplemento, setShowSuplemento ] = useState(true);
 
   
 
@@ -50,6 +52,11 @@ export default function AddInfantInc(props){
       setDataCommit9({name: "titulooo", description: "ejemplo description"});
       setSaveData9(!saveData9);
       //setShowCommit9(!e.target.checked);
+    }else if(e.target.name === "showSuplemento"){
+      setShowSuplemento(!showSuplemento);
+      setDataCommit10({name: "titulooo", description: "ejemplo description"});
+      setSaveData10(!saveData10);
+      //setShowCommit8(!e.target.checked);
     }
 }
 
@@ -89,6 +96,10 @@ export default function AddInfantInc(props){
   const [dataCommit9, setDataCommit9] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData9, setSaveData9] = useState(true);
 
+  const [showCommit10, setShowCommit10] = useState(false);
+  const [dataCommit10, setDataCommit10] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
+  const [ saveData10, setSaveData10] = useState(true);
+
   /*if(!showCommit7){
     setShowPatologia(true);
   }*/
@@ -126,6 +137,10 @@ export default function AddInfantInc(props){
           <AddIncomeCommit9 edit={false} setRemitido={setRemitido} showCommit9={showCommit9} setShowCommit9={setShowCommit9} setDataCommit9={setDataCommit9} dataCommit9={dataCommit9} 
             setSaveData9={setSaveData9}
           />
+           <AddIncomeCommit10 edit={false} setShowSuplemento={setShowSuplemento} showCommit10={showCommit10} setShowCommit10={setShowCommit10} setDataCommit10={setDataCommit10} dataCommit10={dataCommit10} 
+            setSaveData10={setSaveData10}
+          />
+          
               <Row >
               <Col sm={2}> </Col>
                 <Col sm={8} className="mt-2 mb-4" style={{backgroundColor: '#f1f1f1', "border-radius":'10px'}}> 
@@ -165,6 +180,7 @@ export default function AddInfantInc(props){
                     }
                   }
                   
+                  
                   if(!valores.eapb){
                     errores.eapb = 'No se permiten campos vacíos'
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.eapb)){
@@ -195,7 +211,7 @@ export default function AddInfantInc(props){
                       idIngreso: 1,
                       alarmaPreventiva: saveData4 ? "SI" : "NO",
                       controlCyD: saveData6 ? "SI" : "NO",
-                      recibeSuplementos: saveData8 ? "SI" : "NO",
+                      recibeSuplementos: saveData10 ? "SI" : "NO",
                       valoracionMedica: saveData5 ? "SI" : "NO",
                     },
                     ingresoMadre: null,
@@ -366,6 +382,24 @@ export default function AddInfantInc(props){
                         <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="xs" name="controlCyD">
                           <input type="checkbox" checked={showCommit6 || !saveData6 ? false : true } onChange={(e) => setShowCommit6(!e.target.checked)}></input>
+                          <span class="switch-left">Si</span>
+                          <span class="switch-right">No</span>
+                          </label>
+                            <Form.Control.Feedback type="invalid">
+                                        {errors.controlCyD}
+                                        </Form.Control.Feedback>
+                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
+                        </InputGroup>
+                        </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row}  style={{ "marginLeft":"43px"}} className="mt-2">
+                        <Form.Label column sm="9" >
+                        <h5 style={{"fontSize": "16px", "fontWeight":"bold" }} className="mt-2"> La niña o niños recibe suplementación (vitamina A, Zinc, Hierro)</h5></Form.Label>
+                        <Col class="mid">
+                        <InputGroup hasValidation className="mt-2">
+                          <label class="rocker rocker-small" size="xs" name="recibeSuplementos">
+                          <input type="checkbox" name="showSuplemento" checked={showCommit10 || !saveData10 ? false : true } onChange={(e) => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
