@@ -77,7 +77,7 @@ export default function StatisticHomeMadre(){
         (
             <>
             <p style={{"color": "#2D61A4", "font-size": 27}}>No se encontraron registros</p>
-            <Lottie height={400} width={670}
+            <Lottie height={400} width="60%"
                 options={{ loop: true, autoplay: true, animationData: NotResults, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
             />
             </>

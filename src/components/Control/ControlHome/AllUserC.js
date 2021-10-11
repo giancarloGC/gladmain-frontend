@@ -61,7 +61,7 @@ export default function AllUserC (){
             {authorization || (
                 <>
                     <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
-                        <Lottie height={400} width={670}
+                        <Lottie height={500} width="80%"
                         options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
                     />
                 </>
@@ -101,7 +101,7 @@ export default function AllUserC (){
                         <>
                         {console.log("entro3")};
                             <p style={{"color": "#2D61A4", "fontSize": 27}}>No se encontraron registros que coincidan</p>
-                            <Lottie height={400} width={750}options={{ loop: true, autoplay: true, animationData: 
+                            <Lottie height={500} width="80%" options={{ loop: true, autoplay: true, animationData: 
                                 AnimationNotFindSearch, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}/>
                         </>
                     )}

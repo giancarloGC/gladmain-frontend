@@ -63,7 +63,7 @@ export default function ListControlR(props){
             {allRemisionsSaved.length === 0 && (
                 <>
                     <p style={{"color": "#2D61A4", "fontSize": 27}}>No se encontraron registros que coincidan</p>
-                    <Lottie height={400} width={750}
+                    <Lottie height={500} width="80%"
                         options={{ loop: true, autoplay: true, animationData: AnimationNotFindSearch, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
                     />
                 </>
@@ -75,7 +75,7 @@ export default function ListControlR(props){
                 {listRemis.length === 0 && (
                 <>
                     <p style={{"color": "#2D61A4", "fontSize": 27}}>No se encontraron registros que coincidan</p>
-                    <Lottie height={400} width={750}
+                    <Lottie height={500} width="80%"
                         options={{ loop: true, autoplay: true, animationData: AnimationNotFindSearch, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
                     />
                 </>
