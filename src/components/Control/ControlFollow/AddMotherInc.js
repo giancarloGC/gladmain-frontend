@@ -368,7 +368,7 @@ export default function AddMotherInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="xs" name="conoceUrgencias">
-                          <input type="checkbox" checked={showCommit3 || !saveData3 ? false : true } onChange={(e) => setShowCommit3(!e.target.checked)}></input>
+                          <input type="checkbox" checked={showCommit3 || !saveData3 ? false : true } onChange={(e) => setSaveData3(e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -441,7 +441,7 @@ export default function AddMotherInc(props){
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-1">
                           <label class="rocker rocker-small" size="xs" name="senalPeligro">
-                          <input type="checkbox" checked={showCommit7 || !saveData7 ? false : true } onChange={(e) => setShowCommit7(!e.target.checked)}></input>
+                          <input type="checkbox" checked={showCommit7 || !saveData7 ? false : true } onChange={(e) => setSaveData7(e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>

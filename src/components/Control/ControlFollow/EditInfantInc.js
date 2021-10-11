@@ -314,7 +314,7 @@ console.log(ingreso);
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-1">
                           <label class="rocker rocker-small" size="xs" name="conoceUrgencias">
-                          <input type="checkbox" checked={showCommit3 || !saveData3 ? false : true } onChange={(e) => saveData3 ? setShowCommit3(!e.target.checked) : setSaveData3(!saveData3)}></input>
+                          <input type="checkbox" checked={showCommit3 || !saveData3 ? false : true } onChange={(e) => setSaveData3(e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -332,7 +332,7 @@ console.log(ingreso);
                         <Col class="mid" >
                         <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="xs" name="alarmaPreventiva">
-                          <input type="checkbox" checked={showCommit4 || !saveData4 ? false : true } onChange={(e) => saveData4 ? setShowCommit4(!e.target.checked) : setSaveData4(!saveData4)}></input>
+                          <input type="checkbox" checked={showCommit4 || !saveData4 ? false : true } onChange={(e) => setSaveData4(e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -387,7 +387,7 @@ console.log(ingreso);
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="xs" name="recibeSuplementos">
-                          <input type="checkbox" name="showSuplemento" checked={showCommit10 || !saveData10 ? false : true } onChange={(e) => onChangeChecked(e)}></input>
+                          <input type="checkbox" name="showSuplemento" checked={showCommit10 || !saveData10 ? false : true } onChange={(e) => setSaveData10(e.target.checked)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>

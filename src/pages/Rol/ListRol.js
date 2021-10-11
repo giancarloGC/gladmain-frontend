@@ -7,12 +7,14 @@ import swal from 'sweetalert';
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { getRolesApi, deleteRolApi } from "../../api/rol";
 import { TOKEN } from "../../utils/constans";
+import useAuth from '../../hooks/useAuth'; //privilegios
 
 export default function ListRol(){
     const token = localStorage.getItem(TOKEN);
     const [ rolesApi, setRolesApi ] = useState([]);
     const [ latestRol, setLatestRol ] = useState(0);
     const [ loading, setLoading ] = useState(true);
+    const { user } = useAuth(); //privilegios
 
     useEffect(() => {
         (async () => {
@@ -26,6 +28,10 @@ export default function ListRol(){
         })();       
     }, []);
 
+    //privilegios
+    const validatePrivilegio = (privilegio) => {
+        return user.authorities.filter(priv => priv === privilegio);
+    }
 
     const confirmDeleteRol = (idRol) => {
         swal({
@@ -64,9 +70,12 @@ export default function ListRol(){
 
     return(
         <Container className="justify-content-center">
-            <h1 className="text-center">Listado de roles <FontAwesomeIcon icon={faPlus} size="lg" color="#2D61A4"
+            <h1 className="text-center">Listado de roles 
+            {validatePrivilegio("REGISTRAR_ROL").length > 0 && (
+                <FontAwesomeIcon icon={faPlus} size="lg" color="#2D61A4"
                     data-tip data-for = "boton1" onClick={() => window.location.replace(`/admin/addRol/${latestRol}`)}
-                /> {` `}
+                /> //{` `}
+            )}
                 <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Agregar Nuevo Rol </ReactTooltip>
             </h1> 
 
