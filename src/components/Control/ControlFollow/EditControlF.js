@@ -92,16 +92,12 @@ export default function EditControlF(props){
                       swal({
                         title: `¡El Seguimiento fue editado correctamente!`,
                         icon: 'success'
-                      }).then((value) => {
-                        window.location.replace(`/admin/ListFollowUp/${userControl.documento}`);
-                    }); 
+                      });
                     }else{
                       swal({
                         title: `¡Opss, ocurrió un error!`,
                         icon: 'danger'
-                      }).then((value) => {
-                        window.location.replace(`/admin/ListFollowUp/${userControl.documento}`);
-                    });    
+                      });   
                     }
                   });
                 }}
@@ -285,7 +281,7 @@ export default function EditControlF(props){
                       <Col md={6}> 
                         <div className="d-grid gap-2 mt-3">
                           {rolUser === "INFANTE" ? (
-                            <Button variant="primary" size="lg" href={`/admin/editInfantIncome/${infoSeg.id}/${documento}`}>
+                            <Button variant="primary" size="lg" href={`/admin/editInfantIncome/${infoSeg.id}/${documento}/${rolUser}`}>
                                Editar Ingreso
                             </Button>
                           )

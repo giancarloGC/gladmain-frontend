@@ -15,16 +15,18 @@ import AddIncomeCommit6 from "./AddIncomeCommit/AddIncomeCommit6";
 import AddIncomeCommit7 from "./AddIncomeCommit/AddIncomeCommit7";
 import AddIncomeCommit8 from "./AddIncomeCommit/AddIncomeCommit8";
 import AddIncomeCommit9 from "./AddIncomeCommit/AddIncomeCommit9";
+import AddIncomeCommit10 from "./AddIncomeCommit/AddIncomeCommit10";
 
 export default function EditInfantInc(props){
+  const { idSeg, ingreso, documento, rolUser } = props;
   const token = localStorage.getItem(TOKEN);
-  const { idSeg, documento, ingreso } = props;
 
   const [ goRedirect, setGoRedirect ] = useState(0);
 
   const [ showPatologia, setShowPatologia ] = useState(ingreso.ingreso.patologiaIdentificadaSgsss);
   const [ showMedicamentos, setShowMedicamentos ] = useState(ingreso.ingreso.recibeMedFormulada);
   const [ showRemitido, setRemitido ] = useState(ingreso.ingreso.usuarioRemitido === "1" ? true : false);
+  const [ showSuplemento, setShowSuplemento ] = useState(ingreso.ingresoInfante.recibeSuplementos === "SI" ? true : false);
   console.log(ingreso);
   /*const onChangeChecked = (e) => {
     setCheckeds({...checkeds, [e.target.name]: e.target.checked});
@@ -47,8 +49,15 @@ const onChangeChecked = (e) => {
     setDataCommit9({name: "titulooo", description: "ejemplo description"});
     setSaveData9(!saveData9);
     //setShowCommit9(!e.target.checked);
+  }else if(e.target.name === "showSuplemento"){
+    setShowSuplemento(!showSuplemento);
+    setDataCommit10({name: "titulooo", description: "ejemplo description"});
+    setSaveData10(!saveData10);
+    //setShowCommit8(!e.target.checked);
   }
 }
+
+console.log(ingreso);
 
   const [showCommit, setShowCommit] = useState(false);
   const [dataCommit, setDataCommit] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
@@ -86,6 +95,10 @@ const onChangeChecked = (e) => {
   const [dataCommit9, setDataCommit9] = useState({ dateCommit: '', name: "", description: "",  dateEnd: "", idSeg: idSeg});
   const [ saveData9, setSaveData9] = useState(ingreso.ingreso.usuarioRemitido === "1" ? true : false);
 
+  const [showCommit10, setShowCommit10] = useState(false);
+  const [dataCommit10, setDataCommit10] = useState({ dateCommit: '', name: "", description: "",  dateEnd: ""});
+  const [ saveData10, setSaveData10] = useState(ingreso.ingresoInfante.recibeSuplementos === "SI" ? true : false);
+
     return(
         <Container>
           {goRedirect && (
@@ -118,6 +131,10 @@ const onChangeChecked = (e) => {
           <AddIncomeCommit9 edit={true} showCommit9={showCommit9} setShowCommit9={setShowCommit9} setDataCommit9={setDataCommit9} dataCommit9={dataCommit9} 
             setSaveData9={setSaveData9}
           />
+          <AddIncomeCommit10 edit={true} showCommit10={showCommit10} setShowCommit10={setShowCommit10} setDataCommit10={setDataCommit10} dataCommit10={dataCommit10} 
+            setSaveData10={setSaveData10}
+          />
+          
               <Row >
               <Col sm={2}> </Col>
                 <Col sm={8} className="mt-2 mb-4" style={{backgroundColor: '#f1f1f1', "border-radius":'10px'}}> 
@@ -143,33 +160,42 @@ const onChangeChecked = (e) => {
                       causa: ingreso.ingreso.causa,
                   }}
                 
-                validate={(valores) => {
-                  let errores = {};
-
-                  if(!valores.nombrePatologia){
-                    errores.nombrePatologia = 'No se permiten campos vacíos'
-                  }
-                  if(!valores.nombreMedFormululada){
-                    errores.nombreMedFormululada = 'No se permiten campos vacíos'
-                  }
-                  if(!valores.eapb){
-                    errores.eapb = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.eapb)){
-                    errores.eapb = 'Solo puedes escribir letras';
-                  }
-                  if(!valores.ips){
-                    errores.ips = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.ips)){
-                    errores.ips = 'Solo puedes escribir letras';
-                  }
-                  if(!valores.causa){
-                    errores.causa = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.causa)){
-                    errores.causa = 'Solo puedes escribir letras';
-                  };
-
-                  return errores;
-                }}
+                  validate={(valores) => {
+                    let errores = {};
+                    if(showPatologia){
+                      if(!valores.nombrePatologia){
+                        errores.nombrePatologia = 'No se permiten campos vacíos'
+                      }
+                    }
+  
+                    if(showMedicamentos){
+                      if(!valores.nombreMedFormulada){
+                        errores.nombreMedFormulada = 'No se permiten campos vacíos'
+                      }
+                    }
+                    
+                    
+                    if(!valores.eapb){
+                      errores.eapb = 'No se permiten campos vacíos'
+                    }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.eapb)){
+                      errores.eapb = 'Solo puedes escribir letras';
+                    }
+                    if(!valores.ips){
+                      errores.ips = 'No se permiten campos vacíos'
+                    }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.ips)){
+                      errores.ips = 'Solo puedes escribir letras';
+                    }
+  
+                    if(showRemitido){
+                      if(!valores.causa){
+                        errores.causa = 'No se permiten campos vacíos'
+                      }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.causa)){
+                        errores.causa = 'Solo puedes escribir letras';
+                      }
+                    }
+                    
+                    return errores;
+                  }}
 
                 onSubmit={(valores, {resetForm}) => {
 
@@ -179,7 +205,7 @@ const onChangeChecked = (e) => {
                           idIngreso: ingreso.ingreso.id,
                           alarmaPreventiva: saveData4 ? "SI" : "NO",
                           controlCyD: saveData6 ? "SI" : "NO",
-                          recibeSuplementos: saveData8 ? "SI" : "NO",
+                          recibeSuplementos: saveData10 ? "SI" : "NO",
                           valoracionMedica: saveData5 ? "SI" : "NO",
                       },
                       ingresoMadre: null,
@@ -195,10 +221,13 @@ const onChangeChecked = (e) => {
                           nombreMedFormululada: valores.nombreMedFormululada,
                           eapb: valores.eapb,
                           ips: valores.ips,
-                          usuarioRemitido: saveData9 ? 1 : 0, //1,
-                          causa: valores.causa
+                          usuarioRemitido: saveData9 ? 1 : 0,
+                          causa: valores.causa,
                       }
                   } 
+
+                  console.log(formData);
+                  console.log(saveData10);
                   
                   updateInfantIncomeApi(formData, token).then(response => {
                     console.log(response);
@@ -206,18 +235,16 @@ const onChangeChecked = (e) => {
                       swal({
                         title: `¡El ingreso fue actualizado correctamente!`,
                         icon: 'success'
-                      });
-                      /*.then((value) => {
-                        setGoRedirect(true);
-                      });*/
+                      }).then((value) => {
+                        window.location.replace(`/admin/ListFollowUp/${documento}/${rolUser}`);
+                    }); 
                     }else{
                       swal({
                         title: `¡Opss, ocurrió un error!`,
                         icon: 'danger'
-                      });
-                      /*.then((value) => {
-                        setGoRedirect(true);
-                      });*/
+                      }).then((value) => {
+                      window.location.replace(`/admin/ListFollowUp/${documento}/${rolUser}`);
+                     }); 
                     }
                   });
                   console.log(formData);
@@ -353,6 +380,24 @@ const onChangeChecked = (e) => {
                         </InputGroup>
                         </Col>
                     </Form.Group>
+                    
+                    <Form.Group as={Row}  style={{ "marginLeft":"43px"}} className="mt-2">
+                        <Form.Label column sm="9" >
+                        <h5 style={{"fontSize": "16px", "fontWeight":"bold" }} className="mt-2"> La niña o niños recibe suplementación (vitamina A, Zinc, Hierro)</h5></Form.Label>
+                        <Col class="mid">
+                        <InputGroup hasValidation className="mt-2">
+                          <label class="rocker rocker-small" size="xs" name="recibeSuplementos">
+                          <input type="checkbox" name="showSuplemento" checked={showCommit10 || !saveData10 ? false : true } onChange={(e) => onChangeChecked(e)}></input>
+                          <span class="switch-left">Si</span>
+                          <span class="switch-right">No</span>
+                          </label>
+                            <Form.Control.Feedback type="invalid">
+                                        {errors.controlCyD}
+                                        </Form.Control.Feedback>
+                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
+                        </InputGroup>
+                        </Col>
+                    </Form.Group>
 
                     <Form.Group as={Row} style={{ "marginLeft":"43px"}} className="mt-2">
                        <Form.Label column sm="9" >
@@ -379,7 +424,7 @@ const onChangeChecked = (e) => {
                     <Col sm="9" class="mid">
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre Patología" size="xs" id="nombrePatologia" name="nombrePatologia" 
-                               value={values.nombrePatologia} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombrePatologia && touched.nombrePatologia}
+                               value={values.nombrePatologia} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
                                isValid={!errors.nombrePatologia && touched.nombrePatologia}
                             />
                             <Form.Control.Feedback type="invalid">
@@ -415,12 +460,12 @@ const onChangeChecked = (e) => {
                     <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>¿Cuál?</h5></Form.Label>
                     <Col md="9" class="mid" >
                         <InputGroup hasValidation>
-                               <Form.Control type="text" placeholder="Nombre Medicamento Formulado" size="xs" id="nombreMedFormululada" name="nombreMedFormululada" 
-                               value={values.nombreMedFormululada} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormululada && touched.nombreMedFormululada}
-                               isValid={!errors.nombreMedFormululada && touched.nombreMedFormululada}
+                               <Form.Control type="text" placeholder="Nombre Medicamento Formulado" size="xs" id="nombreMedFormulada" name="nombreMedFormulada" 
+                               value={values.nombreMedFormulada} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
+                               isValid={!errors.nombreMedFormulada && touched.nombreMedFormulada}
                             />
                             <Form.Control.Feedback type="invalid">
-                                {errors.nombreMedFormululada}
+                                {errors.nombreMedFormulada}
                             </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>

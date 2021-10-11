@@ -9,7 +9,7 @@ import moment from 'moment';
 import swal from 'sweetalert';
 
 export default function AddControlF(props){
-  const { userControl, rolUser, documento } = props;
+  const { documento, userControl, rolUser } = props;
   const token = localStorage.getItem(TOKEN);
   const { user } = AuthContext();
   const documentoLogin = user.sub.split('-');
@@ -64,13 +64,13 @@ export default function AddControlF(props){
                     nombreAcudiente: valores.nombreAcudiente,
                     tipoDocAcudiente: valores.tipoDocAcudiente,
                     numeroDocAcudiente: parseInt(valores.numeroDocAcudiente),
-                    fecha: moment().format("YYYY-MM-DD")
+                    fecha: moment().format("YYYY-MM-DD"),
+                    vigente: true
                 }
                 //resetForm();
                   valores.token = token;
                   insertSegApi(formData, token).then(response => {
                     console.log(response);
-
                     if(response === true){
                       getSegApi(userControl.documento, token).then(responseSegs => {
                         if(response.status === 403){

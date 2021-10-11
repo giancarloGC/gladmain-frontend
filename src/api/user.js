@@ -1,13 +1,11 @@
 import { urlBackend } from "./config";
 
-export function insertUserApi(data){
-    //let newDocument = parseInt(data.documento);
-    //data.documento = newDocument;
+export function insertUserApi(data, token){
     const url = `/api/usuario/REGISTRAR_USUARIO`;
     const params = {
         headers: {
             "Content-Type": "application/json",
-            "Authorization": data.token
+            "Authorization": token
         },
         method: "POST",
         body: JSON.stringify(data)

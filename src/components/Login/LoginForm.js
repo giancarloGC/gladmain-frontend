@@ -67,9 +67,12 @@ export default function LoginForm(props) {
                   });*/
                   setShowSpinner(true);
                   loginApi(valores).then(response => {
+                    console.log(response);
                     if(response.status === 500){
+                      setShowSpinner(false);
                       setTextFormSend("¡Usuario o clave incorrectos, intentelo nuevamente!");
                     }else{
+                      setShowSpinner(false);
                       setTextFormSend("¡Inicio de sesión exitoso!");
                       localStorage.removeItem(TOKEN);
                       localStorage.setItem(TOKEN, response.tokenJWT);
@@ -149,18 +152,20 @@ export default function LoginForm(props) {
   </Form.Group>  
   <div className="d-grid gap-2">
     
-  {showSpinner || (
-    <Button variant="primary" type="submit" size="lg">
-    Iniciar Sesión 
+    <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+      {showSpinner ? (
+        <>
+        <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+          {"  " + `  Cargando...`}  
+        </>
+      ):(
+        "Iniciar Sesión" 
+      )}
     </Button>
-  )
-  }
-  {showSpinner && (
-    <center>
-    <Spinner animation="border" ></Spinner> 
-    </center>
-  )
-  }
+  
+  {/*
+    <Spinner animation="border" ></Spinner> */}
+    
  
   {formSend && <p className="text-success">{textFormSend}</p>}
   </div>

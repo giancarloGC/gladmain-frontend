@@ -7,7 +7,7 @@ import { TOKEN } from "../../utils/constans";
 
 
 export default function EditInfantIncome(){
-    const { idSeg, documento} = useParams();
+    const { idSeg, documento, rolUser} = useParams();
     const [ ingreso, setIngreso ] = useState(null);
     const token = localStorage.getItem(TOKEN);
 
@@ -24,7 +24,7 @@ export default function EditInfantIncome(){
         <Container>
              <h1 className="text-center">Editar Ingreso </h1>
             {ingreso && (
-                <EditInfantInc idSeg={idSeg} documento={documento} ingreso={ingreso} />
+                <EditInfantInc idSeg={idSeg} documento={documento} ingreso={ingreso} rolUser={rolUser} />
             )} 
         </Container>
     )

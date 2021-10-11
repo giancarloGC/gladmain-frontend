@@ -29,6 +29,8 @@ export default function LayoutAdmin(props){
     const token = localStorage.getItem(TOKEN);
     const [ countAlerts, setCountAlerts ] = useState(0);
     const [ showAlert, setShowAlert ] = useState(false);
+    const [ roleUsuario, setroleUsuario ] = useState(null);
+
 
     useEffect(() => {
         (async () => {
@@ -44,6 +46,8 @@ export default function LayoutAdmin(props){
                         }else if(roleUser[1] === "2"){
                             await resolveControl(); 
                         }
+
+                        setroleUsuario(roleUser[1]);
                     }
     
                     if(!user && !isLoading){
@@ -98,7 +102,7 @@ export default function LayoutAdmin(props){
         const responseControls = await getControlNutriApi(documentoInf, token);
         if(responseControls.length > 0){
             for(var i = 0; i < responseControls.length; i++ ){
-                if(responseControls[i].estadoNutricional === "Riesgo de desnutricion aguda"){
+                if(responseControls[i].estadoNutricional === "Riesgo de Desnutrición Aguda"){
                     return 1;
                 }else{
                     return 0;
@@ -239,9 +243,17 @@ export default function LayoutAdmin(props){
                                     <NavDropdown title="Controles" id="nav-dropdown" className="subtitlesMenu"
                                         style={{"fontSize": "24px", "fontWeight": 100, "color": "#ffff"}}
                                     >
+                                        {roleUsuario && (
+                                            <>
+                                        {roleUsuario !== "4" && (
                                         <NavDropdown.Item><Link to="/admin/listUserControl/INFANTE"><h5>Infantes</h5></Link></NavDropdown.Item>
+                                        )}
                                         <NavDropdown.Divider />
+                                        {roleUsuario !== "2" && (
                                         <NavDropdown.Item><Link to="/admin/listUserControl/MADRE_GESTANTE"><h5>Madres gestantes</h5></Link></NavDropdown.Item>
+                                        )}
+                                        </>
+                                        )}
                                     </NavDropdown>
                                     </div>
                                 </Link>

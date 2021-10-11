@@ -42,8 +42,8 @@ export default function IndexCalculator(){
                     errores.edad = 'Por favor, no dejar campos vacios';
                   }else if(!/^([0-9])*$/.test(valores.edad)){
                     errores.edad = 'Edad incorrecta, solo puedes escribir números';
-                  }else if(valores.edad < 0 || valores.edad > 72){
-                    errores.edad = 'Edad invalida, solo edad entre 0 y 72 meses (6 años)';
+                  }else if(valores.edad < 0 || valores.edad > 83){
+                    errores.edad = 'Edad invalida, solo edad entre 0 y 83 meses (6 años con 11 meses)';
                   } 
 
                     if(!valores.sexo){

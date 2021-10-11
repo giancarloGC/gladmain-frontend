@@ -220,7 +220,7 @@ export default function AddControlV(props){
                       <Col sm="2">
                       <InputGroup hasValidation>
                             <Form.Control type="text" placeholder="Dígita aquí la edad" size="lg" id="edad" name="edad" 
-                                value={`${userControl.edad} meses`} is
+                                value={`${userControl.edad} meses`} is disabled
                             />
                             <Form.Control.Feedback type="invalid">
                                 jeje
