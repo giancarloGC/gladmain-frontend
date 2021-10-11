@@ -65,16 +65,20 @@ export default function ListControlCyDe(props){
             
              <Col sm={12} >
              <Container style={{backgroundColor: '#f1f1f1', borderRadius:'5px'}} >
-            <Row>
+            <Row className="mt-2 mb-2 justify-content-center">
+            <Col sm={6} >
              <Form.Group as={Row} className="mt-2 mb-2 justify-content-center">
-                    <Form.Label column sm={3} >
+                    <Form.Label column sm={7} >
                         Fecha Ultimo Control
                     </Form.Label>
                     <Col sm={3} className="row justify-content-center">
                     <Form.Control type="date" size="l" id="ultimoControl" name="ultimoControl" value={dateFormat(lastControls.ultimoControl)} disabled/>
-
                     </Col>
-                    <Form.Label column sm={3} >
+            </Form.Group> 
+            </Col>
+            <Col sm={6} >
+            <Form.Group as={Row} className="mt-2 mb-2 justify-content-center">
+                    <Form.Label column sm={7} >
                         Fecha Proximo Control
                     </Form.Label>
                     <Col sm={3} className="row justify-content-center">
@@ -82,6 +86,7 @@ export default function ListControlCyDe(props){
                     />
                     </Col>
             </Form.Group> 
+            </Col>
             </Row>
             </Container>
             </Col>

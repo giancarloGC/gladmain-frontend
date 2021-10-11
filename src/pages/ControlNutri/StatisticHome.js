@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Form, Button } from "react-bootstrap";
+import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { useParams, Link } from "react-router-dom";
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -71,8 +71,9 @@ export default function StatisticHome(){
 
     return(
         <>
-            <Container>
-            <h1 className="text-center">Patrones de Crecimiento Infantil de la OMS
+        <Row>
+        <Col sm="12">
+        <h1 className="text-center">Patrones de Crecimiento Infantil de la OMS
             <Link to={`/admin/addControlNutri/${documento}/${rolUser}`} >
                 <FontAwesomeIcon icon={faUserPlus} size="lg" color="#2D61A4" style = {{marginLeft:10}} data-tip data-for = "boton1" />
                 <ReactTooltip id="boton1" place="bottom" type="dark" effect="float">Agregar Control Nutricional</ReactTooltip>
@@ -89,6 +90,10 @@ export default function StatisticHome(){
                 )}
                 
             </h1>
+        </Col>
+        </Row>
+
+        <Container>
         {listControls.length > 0 ? (
         <>
 

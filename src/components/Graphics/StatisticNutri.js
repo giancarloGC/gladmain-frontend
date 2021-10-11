@@ -85,10 +85,13 @@ const data = {
              <center>
              <Form.Label column sm="12" style={{"fontSize": "12px !important" }}>Puntuación Z (0 a 2 años)</Form.Label>
              </center>
-              <div className="container1" style={{"backgroundColor": sexo === "FEMENINO" ? "#FF67C6" : "#35B6FE"}}> 
+             <center>
+             <div className="container1" style={{"backgroundColor": sexo === "FEMENINO" ? "#FF67C6" : "#35B6FE", alignContent:'Right'}}>
+              <div>  
+              <p></p> 
                   <div className="containerGraphic"> 
-                    <p className="ejey">Peso(kg)</p>
-                    <div style={{"max-width": "800px", "text-align":"center"}} style={{"backgroundColor": "white"}}>
+                    <center>
+                    <div style={{"text-align":"center"}} style={{"backgroundColor": "white"}}>
                       <Line 
                           data={data}
                           height={500}
@@ -107,9 +110,14 @@ const data = {
                           getDatasetAtEvent={getDatasetAtEvent}
                       />
                     </div>
+                    </center>
+                    </div>
                   </div>
                   <p className="ejex">Longitud(cm)</p>
                   </div>
+                  </center>
+                  
+              
         </Container>
     )
 

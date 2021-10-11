@@ -174,11 +174,12 @@ export default function EditControlCyD(props){
                         </p>
                     </Alert>
                   )}
-
-
+                
+                <Row >
+                 <Col sm={6}>
                   <Form.Group as={Row} className="mt-2">
-                    <Form.Label column sm="2"><h1 style={{fontSize: "20px", color:"#0084d2" }} className="mt-2">Fecha control</h1></Form.Label>
-                    <Col sm="4">
+                    <Form.Label column sm={4}><h1 style={{fontSize: "20px", color:"#0084d2" }} className="mt-2">Fecha control</h1></Form.Label>
+                    <Col>
                       <InputGroup hasValidation>
                         <Form.Control className="mt-2" type="date" size="lg" id="fechaControl" name="fechaControl" 
                           defaultValue={dateFormat(control.fechaControl)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaControl && touched.fechaControl}
@@ -190,13 +191,15 @@ export default function EditControlCyD(props){
                       </InputGroup>
                     </Col>
                     </Form.Group>
+                  </Col>
+              </Row>
 
                   <Row className="justify-content-center">
                   <Col sm={12} className="mt-3 mb-4" style={{backgroundColor: '#f1f1f1', borderRadius:'5px'}}> 
                   
                   <Form.Group as={Row} className="mt-3">
-                    <Form.Label column sm={2}> <h5 style={{fontSize: "16px"}}> Número documento </h5></Form.Label>
-                    <Col sm={4}>
+                    <Form.Label column sm={3}> <h5 style={{fontSize: "16px"}}> Número documento </h5></Form.Label>
+                    <Col >
                       <InputGroup hasValidation>
                         <Form.Control type="number" placeholder="Dígita el documento" size="l" id="documento" name="documento"
                                value={userControl.documento} onChange={handleChange} onBlur={handleBlur} disabled />
@@ -213,10 +216,10 @@ export default function EditControlCyD(props){
                   </Form.Group>
 
                   <Form.Group as={Row} className="mt-3">
-                    <Form.Label column sm={2}><h5 style={{fontSize: "16px"}}>Fecha nacimiento</h5></Form.Label>
-                    <Col sm={4}>
+                    <Form.Label column sm={3}><h5 style={{fontSize: "16px"}}>Fecha nacimiento</h5></Form.Label>
+                    <Col>
                       <InputGroup hasValidation>
-                        <Form.Control type="date" size="l" id="fechaNacimiento" name="fechaNacimiento" 
+                        <Form.Control type="text" size="l" id="fechaNacimiento" name="fechaNacimiento" 
                           value={dateFormat(userControl.fechaNacimiento)} onChange={handleChange} onBlur={handleBlur} disabled />
                        </InputGroup>
                     </Col>

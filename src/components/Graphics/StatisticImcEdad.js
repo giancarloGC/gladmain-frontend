@@ -73,9 +73,11 @@ const data = {
              <center>
              <Form.Label column sm="4" style={{"fontSize": "12px !important" }}>Puntuación Z (0 a 2 años)</Form.Label>
              </center>
+             <center>
+             <div>  
              <div className="container1" style={{"backgroundColor": sexo === "FEMENINO" ? "#FF67C6" : "#35B6FE"}}> 
-             <div className="containerGraphic"> 
-                  <p className="ejey">IMC(kg/m^2)</p>
+             <p></p> 
+              <div className="containerGraphic"> 
                 <div style={{"max-width": "800px", "text-align":"center"}} style={{"backgroundColor": "white"}}>
                   <Line 
                       data={data}
@@ -97,8 +99,10 @@ const data = {
                   />
                 </div>
                 </div>
-                <p className="ejex">Edad (en meses y años cumplidos)</p>
+                <p className="ejex">Edad (en meses y años cumplidos)</p>´
                 </div>
+             </div>
+             </center>
         </Container>
     )
     function lineas(){

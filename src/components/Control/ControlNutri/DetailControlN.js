@@ -95,15 +95,15 @@ export default function DetailControlN(props){
                   <Container style={{border:'2px solid #eee', borderRadius:'5px'}}>
                   <Form.Group as={Row} className='mt-2'>
                         <Form.Label column sm="3"><h5 style={{fontSize: "16px"}}>Documento Nutricionista</h5></Form.Label>
-                        <Col sm="3">
+                        <Col md="3">
                             <InputGroup hasValidation className="mt-2">
                             <Form.Control type="number" size="xs" id="idUsuarioNutricionista" name="idUsuarioNutricionista" 
                                value={control.idUsuarioNutricionista} onChange={handleChange} onBlur={handleBlur}  disabled
                             />
                         </InputGroup>
                         </Col>
-                        <Form.Label column sm="2"><h5 style={{fontSize: "16px"}}>Nombre Nutricionista</h5></Form.Label>
-                        <Col sm="4">
+                        <Form.Label column sm="3"><h5 style={{fontSize: "16px"}}>Nombre Nutricionista</h5></Form.Label>
+                        <Col md="3">
                         <InputGroup hasValidation className="mt-2">
                             <Form.Control type="text" placeholder="Dígita aquí el nombre" size="xs" id="nombre" name="nombre" 
                                defaultValue={nombreNutricionista} onChange={handleChange} onBlur={handleBlur} disabled
