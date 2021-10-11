@@ -23,10 +23,10 @@ export default function AddControlVMadre (props){
     return(
         <Container className="b">
             <Row> 
-              <Col sm={1}> </Col>
-                <Col sm={10} style={{backgroundColor: '#f1f1f1'}}> 
+              <Col sm={2}> </Col>
+                <Col sm={8} style={{border:'2px solid #eee', borderRadius:'5px'}}> 
                 <Row className="justify-content-center">
-                <Col sm={7}>
+                <Col sm={10}>
                 <Formik 
                 initialValues={{ 
                     fechaAplicacion: '',
@@ -49,8 +49,6 @@ export default function AddControlVMadre (props){
 
                   if(!valores.nombreVacuna){
                     errores.nombreVacuna = 'No se permiten campos vacíos'
-                  }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.nombreVacuna)){
-                    errores.nombreVacuna = 'Nombre incorrecto, solo puedes escribir letras';
                   }
 
                   if(!valores.edadGestacional){
@@ -112,34 +110,28 @@ export default function AddControlVMadre (props){
                         </Alert>
                      )}
                     
-                    <Form.Group as={Row} className="mb-3 mt-4">
-                    <Form.Label column sm="5" style={{"fontSize": "12px !important"}}>Tipo documento</Form.Label>
+                    <Form.Group as={Row} className="mt-4">
+                    <Form.Label column sm="5"> <h5 style={{fontSize: "16px"}} className="mt-1">Tipo documento</h5></Form.Label>
                        <Col sm="7">
                         <InputGroup hasValidation>
-                            <Form.Select size="lg" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
-                                defaultValue={userControl.tipoDocumento} isValid={!errors.tipoDocumento && touched.tipoDocumento} 
-                                isInvalid={!!errors.tipoDocumento && touched.tipoDocumento} disabled
+                            <Form.Select size="xs" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
+                                defaultValue={userControl.tipoDocumento} disabled
                             >
                             <option disabled>Selecciona el tipo de documento</option>
                             <option value="CC">Cédula de ciudadanía</option>
                             <option value="RC">Registro civil</option>
                             <option value="TI">Tarjeta de identidad</option>
                             <option value="CE">Cédula de extranjería</option>
-
                             </Form.Select>
-                            <Form.Control.Feedback type="invalid">
-                                        {errors.tipoDocumento}
-                                        </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                         </Col>
                         </Form.Group>
                        
-                        <Form.Group as={Row} className="mb-3 mt-3">
-                        <Form.Label column sm="5" style={{"fontSize": "12px !important"}} >Número documento</Form.Label>
+                        <Form.Group as={Row} className="mt-2">
+                        <Form.Label column sm="5"> <h5 style={{fontSize: "16px"}} className="mt-1"> Número documento </h5></Form.Label>
                         <Col sm="7">
                             <InputGroup hasValidation>
-                            <Form.Control type="number" placeholder="Dígita el documento" size="lg" id="documento" name="documento" 
+                            <Form.Control type="number" placeholder="Dígita el documento" size="xs" id="documento" name="documento" 
                                value={userControl.documento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.documento && touched.documento}
                                isValid={!errors.documento && touched.documento} disabled
                             />
@@ -151,27 +143,22 @@ export default function AddControlVMadre (props){
                         </Col>
                         </Form.Group>
                         
-                        <Form.Group as={Row} className="mb-3 mt-3">
-                        <Form.Label column md={5} style={{"fontSize": "12px !important"}}>Nombre</Form.Label>
+                        <Form.Group as={Row} className="mt-2">
+                        <Form.Label column md={5}><h5 style={{fontSize: "16px"}} className="mt-1">Nombre </h5></Form.Label>
                         <Col sm="7">
                         <InputGroup hasValidation>
-                            <Form.Control type="text" placeholder="Dígita aquí el nombre" size="lg" id="nombre" name="nombre" 
-                               value={userControl.nombre} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombre && touched.nombre}
-                               isValid={!errors.nombre && touched.nombre} disabled
+                            <Form.Control type="text" placeholder="Dígita aquí el nombre" size="xs" id="nombre" name="nombre" 
+                               value={userControl.nombre} onChange={handleChange} onBlur={handleBlur} disabled
                             />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.nombre}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                         </Col>
                         </Form.Group>
                         
-                        <Form.Group as={Row} className="mb-3 mt-3">
-                        <Form.Label column sm="5" style={{"fontSize": "12px !important"}}>Fecha Aplicacion</Form.Label>
+                        <Form.Group as={Row} className="mt-2">
+                        <Form.Label column sm="5"><h5 style={{fontSize: "16px"}} className="mt-1">Fecha Aplicacion</h5></Form.Label>
                             <Col sm="7">
                           <InputGroup hasValidation>
-                              <Form.Control type="date" size="lg" id="fechaAplicacion" name="fechaAplicacion" 
+                              <Form.Control type="date" size="xs" id="fechaAplicacion" name="fechaAplicacion" 
                                  value={dateFormat(values.fechaAplicacion)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaAplicacion && touched.fechaAplicacion}
                                  isValid={!errors.fechaAplicacion && touched.fechaAplicacion} 
                               />
@@ -183,11 +170,11 @@ export default function AddControlVMadre (props){
                           </Col>
                         </Form.Group>
 
-                        <Form.Group as={Row} className="mb-3 mt-3">
-                        <Form.Label column md={5} style={{"fontSize": "12px !important"}}>Nombre Vacuna</Form.Label>
+                        <Form.Group as={Row} className="mt-2">
+                        <Form.Label column md={5}><h5 style={{fontSize: "16px"}} className="mt-1">Nombre Vacuna</h5></Form.Label>
                         <Col sm="7">
                         <InputGroup hasValidation>
-                            <Form.Control type="text" placeholder="Dígita aquí el nombre de la vacuna" size="lg" id="nombreVacuna" name="nombreVacuna" 
+                            <Form.Control type="text" placeholder="Dígita aquí el nombre de la vacuna" size="xs" id="nombreVacuna" name="nombreVacuna" 
                                value={values.nombreVacuna} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreVacuna && touched.nombreVacuna}
                                isValid={!errors.nombreVacuna && touched.nombreVacuna}
                             />
@@ -199,11 +186,11 @@ export default function AddControlVMadre (props){
                         </Col>
                         </Form.Group>
 
-                        <Form.Group as={Row} className="mb-4 mt-3">
-                        <Form.Label column sm="5" style={{"font-size": "12px !important"}}>Edad Gestacional</Form.Label>
+                        <Form.Group as={Row} className="mt-2">
+                        <Form.Label column sm="5"><h5 style={{fontSize: "16px"}} className="mt-1">Edad Gestacional</h5></Form.Label>
                             <Col sm="7">
                            <InputGroup hasValidation>
-                              <Form.Control type="text" placeholder="Edad gestacional en semanas" size="lg" id="edadGestacional" name="edadGestacional" 
+                              <Form.Control type="text" placeholder="Edad gestacional en semanas" size="xs" id="edadGestacional" name="edadGestacional" 
                               value={values.edadGestacional} onChange={handleChange} onBlur={handleBlur} 
                               isInvalid={!!errors.edadGestacional && touched.edadGestacional}
                                 isValid={!errors.edadGestacional && touched.edadGestacional}
@@ -219,7 +206,7 @@ export default function AddControlVMadre (props){
                         <Form.Group as={Row} className="mb-4 mt-3 justify-content-center">
                         <Col sm="12">
                         <div  className="row justify-content mb-2">
-                            <Button variant="primary" type="submit" size="lg">
+                            <Button variant="primary" type="submit" size="l">
                                 Guardar
                             </Button>
                         </div>

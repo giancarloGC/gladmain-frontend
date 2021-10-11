@@ -109,44 +109,47 @@ export default function EditControlF(props){
                     } = props;
                     return (   
                     <Form onSubmit={handleSubmit}>
-                    <Form.Group as={Row} className="mb-1 mt-3">
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>No. Seguimiento</Form.Label>
-                        <Col sm="2">
-                            <InputGroup hasValidation>
-                            <Form.Control type="number" placeholder="01" size="lg" id="idSeguimiento" name="idSeguimiento" 
-                               value={infoSeg.id} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.idSeguimiento && touched.idSeguimiento}
-                               isValid={!errors.idSeguimiento && touched.idSeguimiento} disabled
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.idSeguimiento}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                        </Col>
-                        <Col sm="4"> </Col>
-
-                        <Form.Label column sm="1" style={{"fontSize": "12px !important"}}>Fecha </Form.Label>
-                        <Col sm="3">
-                          <InputGroup hasValidation>
-                              <Form.Control type="date" size="lg" id="fecha" name="fecha" 
-                                 value={dateFormat(infoSeg.fecha)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fecha && touched.fecha}
-                                 isValid={!errors.fecha && touched.fecha} disabled
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.fecha}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                        </Col>
-                    </Form.Group>
+                      <Row> 
+                      <Col sm={6}>
+                      <Form.Group as={Row} className="mt-2 mb-2">
+                              <Form.Label column md="6"> No.Seguimiento    </Form.Label>
+                                  <Col style={{display:"inline-table"}} >
+                                      <InputGroup hasValidation>
+                                      <Form.Control type="number" placeholder="01" size="lg" id="idSeguimiento" name="idSeguimiento" 
+                                        value={infoSeg.id} onChange={handleChange} onBlur={handleBlur} disabled
+                                      />
+                                  </InputGroup>
+                                  </Col>
+                            <Col md={3}> </Col>
+                      </Form.Group> 
+                      </Col>
+                      <Col sm={6}>
+                      <Form.Group as={Row} className="mt-2 mb-2">
+                      <Col md={4}> </Col>
+                        <Form.Label column md="3">
+                          Fecha 
+                          </Form.Label>
+                              <Col style={{display:"inline-table"}} className="row justify-content-center">
+                                <InputGroup hasValidation>
+                                    <Form.Control type="text" size="lg" id="fecha" name="fecha" 
+                                      value={dateFormat(infoSeg.fecha)} onChange={handleChange} onBlur={handleBlur} disabled
+                                    />
+                              </InputGroup>
+                          </Col>
+                      </Form.Group> 
+                      </Col>
+                      </Row>
+                      
+                      
+          
 
                     <center>
-                    <Form.Label column sm="4" style={{"fontSize": "12px !important"}} className="align-self-center justify-content-around mb-4"> <u>INFORMACIÓN DEL ACUDIENTE </u> </Form.Label>
+                    <Form.Label column sm="10" style={{"fontSize": "12px !important"}} className="align-self-center justify-content-around mb-4"> <u>INFORMACIÓN DEL ACUDIENTE </u> </Form.Label>
                     </center>
 
                     <Form.Group as={Row} className="mb-3">
-                     <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Tipo de Documento</Form.Label>
-                        <Col md={4}>
+                     <Form.Label column sm={3} style={{"fontSize": "12px !important"}}>Tipo de Documento</Form.Label>
+                        <Col >
                         <InputGroup hasValidation>
                             <Form.Select  size="lg" id="tipoDocAcudiente" name="tipoDocAcudiente" onChange={handleChange} onBlur={handleBlur}
                                    defaultValue={infoSeg.tipoDocAcudiente} isValid={!errors.tipoDocAcudiente && touched.tipoDocAcudiente} isInvalid={!!errors.tipoDocAcudiente && touched.tipoDocAcudiente}
@@ -164,8 +167,8 @@ export default function EditControlF(props){
                         </InputGroup>
                         </Col>
 
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Número Documento</Form.Label>
-                        <Col md={4}>
+                        <Form.Label column sm={3} style={{"fontSize": "12px !important"}}>Número Documento</Form.Label>
+                        <Col >
                         <InputGroup hasValidation>
                             <Form.Control type="text" placeholder="documento acudiente" size="lg" id="numeroDocAcudiente" name="numeroDocAcudiente" 
                             defaultValue={infoSeg.numeroDocAcudiente} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.numeroDocAcudiente && touched.numeroDocAcudiente}
@@ -181,8 +184,8 @@ export default function EditControlF(props){
 
 
                     <Form.Group as={Row} className="mb-3 mt-3">
-                    <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Nombre</Form.Label>
-                    <Col md={10}>
+                    <Form.Label column sm={3} style={{"fontSize": "12px !important"}}>Nombre</Form.Label>
+                    <Col>
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre del Acudiente" size="lg" id="nombreAcudiente" name="nombreAcudiente" 
                                defaultValue={infoSeg.nombreAcudiente} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreAcudiente && touched.nombreAcudiente}
@@ -197,12 +200,12 @@ export default function EditControlF(props){
                     </Form.Group>
 
                     <center>
-                    <Form.Label column sm="4" style={{"fontSize": "12px !important"}} className="align-self-center justify-content-around mb-4 mt-3"> <u>INFORMACIÓN DEL USUARIO </u> </Form.Label>
+                    <Form.Label column sm="10" style={{"fontSize": "12px !important"}} className="align-self-center justify-content-around mb-4 mt-3"> <u>INFORMACIÓN DEL USUARIO </u> </Form.Label>
                     </center>
 
                     <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Tipo de Documento</Form.Label>
-                        <Col md={4}>
+                        <Form.Label column sm={3} style={{"fontSize": "12px !important"}}>Tipo de Documento</Form.Label>
+                        <Col>
                         <InputGroup hasValidation>
                             <Form.Select  size="lg" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
                                     value={userControl.tipoDocumento} isValid={!errors.tipoDocumento && touched.tipoDocumento} 
@@ -221,8 +224,8 @@ export default function EditControlF(props){
                             </InputGroup>
                         </Col>
                        
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Número Documento</Form.Label>
-                            <Col md={4}>
+                        <Form.Label column sm={3} style={{"fontSize": "12px !important"}}>Número Documento</Form.Label>
+                            <Col>
                             <InputGroup hasValidation>
                             <Form.Control  type="text" placeholder="Número documento" size="lg" id="idUsuario" name="idUsuario" 
                             value={infoSeg.idUsuario} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.documento && touched.idUsuario}
@@ -237,8 +240,8 @@ export default function EditControlF(props){
                     </Form.Group>
 
                     <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Nombre </Form.Label>
-                        <Col md={4}>
+                        <Form.Label column sm={3} style={{"fontSize": "12px !important"}}>Nombre </Form.Label>
+                        <Col>
                         <InputGroup hasValidation>
                         <Form.Control type="text" placeholder="nombre usuario" size="lg" id="nombre" name="nombre" 
                                value={userControl.nombre} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombre && touched.nombre}
@@ -252,8 +255,8 @@ export default function EditControlF(props){
                         </Col>
 
                         
-                        <Form.Label column sm="2" style={{"fontSize": "12px !important"}}>Celular</Form.Label>
-                        <Col md={4}>
+                        <Form.Label column sm={3} style={{"fontSize": "12px !important"}}>Celular</Form.Label>
+                        <Col>
                         <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="Dígita aquí Teléfono" size="lg" id="celular" name="celular" 
                             value={userControl.celular} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.celular && touched.celular}

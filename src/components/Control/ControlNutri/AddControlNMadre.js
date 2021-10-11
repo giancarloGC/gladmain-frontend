@@ -165,7 +165,7 @@ export default function AddControlN(props){
                   }else if(!/^([0-9-.])*$/.test(valores.tension)){
                     errores.tension = 'Tensión incorrecta, solo puedes escribir números';
                   }else if(valores.tension < 50 || valores.tension > 190 ){
-                    errores.talla = 'La tensión debe ser mayor a 50 mmHg y menor a 190 mmHg';
+                    errores.tension = 'La tensión debe ser mayor a 50 mmHg y menor a 190 mmHg';
                   }
 
                   if(!valores.peso){
@@ -270,62 +270,99 @@ export default function AddControlN(props){
                             </p>
                         </Alert>
                     )}
-                <Row>
-                  <Col sm={3}></Col>
-                  <Col sm={6}> 
-                    <Form.Group as={Row} >
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Número documento</Form.Label>
-                        <Col sm="8" className="mt-2">
-                            <InputGroup hasValidation>
-                            <Form.Control type="number" placeholder="Dígita aquí el documento" size="lg" id="documento" name="documento" 
-                               value={userControl.documento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.documento && touched.documento}
-                               isValid={!errors.documento && touched.documento} disabled
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.documento}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                        </Col>
-                        </Form.Group>
 
-                        <Form.Group as={Row} >
-                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Nombre</Form.Label>
-                        <Col sm="8">
-                        <InputGroup hasValidation>
-                            <Form.Control type="text" placeholder="Dígita aquí el nombre" size="lg" id="nombre" name="nombre" 
-                               value={userControl.nombre} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombre && touched.nombre}
-                               isValid={!errors.nombre && touched.nombre} disabled
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.nombre}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                        </Col>
-                        </Form.Group>
-                      
-                        <Form.Group as={Row} className="mt-2">
-                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Fecha nacimiento</Form.Label>
-                        <Col sm="8" className="mt-2">
+                <Row>
+                  <Col sm={1}></Col>
+                  <Col sm={10}> 
+                  
+                  <Form.Group as={Row} className="mt-4 mb-2">
+                  <Form.Label column sm="3"><h1 style={{fontSize: "20px", color:"#0084d2" }}>Fecha control</h1></Form.Label>
+                        <Col sm="3">
                           <InputGroup hasValidation>
-                              <Form.Control type="date" size="lg" id="fechaNacimiento" name="fechaNacimiento" 
-                                 Value={dateFormat(userControl.fechaNacimiento)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaNacimiento && touched.fechaNacimiento}
-                                 isValid={!errors.fechaNacimiento && touched.fechaNacimiento} disabled
+                            <Form.Control type="date" size="lg" id="fechaControl" name="fechaControl" 
+                                 value={moment().format("YYYY-MM-DD")} onChange={handleChange} onBlur={handleBlur} disabled
                               />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.fechaNacimiento}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
-                        </Form.Group> 
+                    </Form.Group> 
 
-                        <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Sexo</Form.Label>
-                        <Col sm="8">
+                    <Container style={{border:'2px solid #eee', borderRadius:'5px'}}>                  
+                    <Form.Group as={Row} className="mt-3">
+                        <Form.Label column sm="3"><h5 style={{fontSize: "16px"}} className="mt-1">Número documento</h5></Form.Label>
+                        <Col sm="3">
+                            <InputGroup hasValidation>
+                            <Form.Control type="number" placeholder="Dígita aquí el documento" size="xs" id="documento" name="documento" 
+                               value={userControl.documento} onChange={handleChange} onBlur={handleBlur} disabled
+                            />
+                        </InputGroup>
+                        </Col>
+
+                        <Form.Label column sm="2"> <h5 style={{fontSize: "16px"}} className="mt-1"> Nombre </h5></Form.Label>
+                        <Col sm="4">
+                        <InputGroup hasValidation>
+                            <Form.Control type="text" placeholder="Dígita aquí el nombre" size="xs" id="nombre" name="nombre" 
+                               value={userControl.nombre} onChange={handleChange} onBlur={handleBlur} disabled
+                            />
+                        </InputGroup>
+                        </Col>
+                    </Form.Group>  
+
+                     <Form.Group as={Row} className="mt-2">
+                        <Form.Label column sm="3">
+                        <h5 style={{fontSize: "16px"}}>Fecha Nacimiento</h5></Form.Label>
+                        <Col sm="3">
                           <InputGroup hasValidation>
-                          <Form.Select size="lg" name="sexo" onChange={handleChange} onBlur={handleBlur}
+                              <Form.Control type="date" size="xs" id="fechaNacimiento" name="fechaNacimiento" 
+                                 Value={dateFormat(userControl.fechaNacimiento)} onChange={handleChange} onBlur={handleBlur} disabled
+                              />
+                          </InputGroup>
+                        </Col> 
+                              
+                        <Form.Label column sm="2"><h5 style={{fontSize: "16px"}}>Edad</h5></Form.Label>
+                        <Col sm="4">
+                          <InputGroup hasValidation>
+                              <Form.Control type="text" placeholder="Dígita aquí la edad" size="xs" id="edad" name="edad" 
+                               value={`${userControl.edad} meses`} onChange={handleChange} onBlur={handleBlur} disabled
+                              />
+                          </InputGroup>
+                        </Col>
+                        </Form.Group>        
+                       
+                        <Form.Group as={Row} className="mb-3 mt-4">
+                        <Form.Label column sm="3"><h5 style={{fontSize: "16px"}} className="mt-1">Tensión (mmHg)</h5></Form.Label>
+                        <Col sm="3">
+                           <InputGroup hasValidation>
+                                  <Form.Control type="number" placeholder="Dígita aquí la tensión" size="xs" id="tension" name="tension" 
+                                     value={values.tension} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.tension && touched.tension}
+                                     isValid={!errors.tension && touched.tension} 
+                                  />
+                                  <Form.Control.Feedback type="invalid">
+                                      {errors.tension}
+                                  </Form.Control.Feedback>
+                                  <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                            </InputGroup>
+                        </Col>
+                        
+                        <Form.Label column sm="2"> <h5 style={{fontSize: "16px"}} className="mt-1"> Edad Gestacional </h5></Form.Label>
+                        <Col sm="4">
+                          <InputGroup hasValidation>
+                                  <Form.Control type="number" placeholder="Edad Gestacional en semanas" size="xs" id="edadGestacional" name="edadGestacional" 
+                                     value={values.edadGestacional} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edadGestacional && touched.edadGestacional}
+                                     isValid={!errors.edadGestacional && touched.edadGestacional} 
+                                  />
+                                  <Form.Control.Feedback type="invalid">
+                                      {errors.edadGestacional}
+                                  </Form.Control.Feedback>
+                                  <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          </InputGroup>
+                        </Col>                          
+                        </Form.Group>
+
+                        <Form.Group as={Row} className="mb-3 mt-4">
+                        <Form.Label column sm="1"><h5 style={{fontSize: "16px"}}>Sexo</h5></Form.Label>
+                        <Col sm="3">
+                        <InputGroup hasValidation>
+                          <Form.Select size="xs" name="sexo" onChange={handleChange} onBlur={handleBlur}
                                 value={userControl.sexo} isValid={!errors.sexo && touched.sexo} isInvalid={!!errors.sexo && touched.sexo} disabled
                               >
                               <option disabled>Selecciona el sexo</option>
@@ -339,47 +376,11 @@ export default function AddControlN(props){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                           </Col>
-                        </Form.Group>
 
-                        <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Edad</Form.Label>
-                        <Col sm="8">
+                        <Form.Label column sm="1"><h5 style={{fontSize: "16px"}}>Peso</h5></Form.Label>
+                        <Col sm="3">
                           <InputGroup hasValidation>
-                              <Form.Control type="text" placeholder="Dígita aquí la edad" size="lg" id="edad" name="edad" 
-                               value={`${userControl.edad} meses`} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edad && touched.edad}
-                               isValid={!errors.edad && touched.edad} disabled
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.edad}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                        </Col>
-                        </Form.Group>
-
-                        <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"fontSize": "12px !important"}}>Fecha control</Form.Label>
-                        <Col sm="8">
-                          <InputGroup hasValidation>
-                              <Form.Control type="date" size="lg" id="fechaControl" name="fechaControl" 
-                                 value={moment().format("YYYY-MM-DD")} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaControl && touched.fechaControl}
-                                 isValid={!errors.fechaControl && touched.fechaControl} disabled
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  {errors.fechaControl}
-                              </Form.Control.Feedback>
-                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                          </InputGroup>
-                        </Col>
-                        </Form.Group> 
-                        
-                        <Row>
-                          <Col md={6}>
-                          <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Peso</Form.Label>
-                        <Col sm="8">
-                          <InputGroup hasValidation>
-                              <Form.Control type="text" placeholder="Peso en Kg" size="lg" id="peso" name="peso" 
+                              <Form.Control type="text" placeholder="Peso en Kg" size="xs" id="peso" name="peso" 
                                value={values.peso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.peso && touched.peso}
                                isValid={!errors.peso && touched.peso}
                               />
@@ -389,15 +390,11 @@ export default function AddControlN(props){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
-                        </Form.Group>
-                          </Col>
 
-                          <Col md={6}>
-                          <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Talla</Form.Label>
-                        <Col sm="8">
+                        <Form.Label column sm="1"><h5 style={{fontSize: "16px"}}>Talla</h5></Form.Label>
+                        <Col sm="3">
                           <InputGroup hasValidation>
-                              <Form.Control type="text" placeholder="Talla en cm" size="lg" id="talla" name="talla" 
+                              <Form.Control type="text" placeholder="Talla en cm" size="xs" id="talla" name="talla" 
                                value={values.talla} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.talla && touched.talla}
                               isValid={!errors.talla && touched.talla}
                               />
@@ -407,47 +404,10 @@ export default function AddControlN(props){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
-                        </Form.Group>   
-                          </Col>
-                          {rolUser === "MADRE_GESTANTE" && ( 
-                              <Col md={12}>
-                              <Form.Group as={Row} className="mb-3">
-                              <Form.Label column sm="4" style={{"font-size": "12px !important"}}>Tensión (mmHg)</Form.Label>
-                              <Col sm="8">
-                                  <InputGroup hasValidation>
-                                  <Form.Control type="number" placeholder="Dígita aquí la tensión" size="lg" id="tension" name="tension" 
-                                     value={values.tension} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.tension && touched.tension}
-                                     isValid={!errors.tension && touched.tension} 
-                                  />
-                                  <Form.Control.Feedback type="invalid">
-                                      {errors.tension}
-                                  </Form.Control.Feedback>
-                                  <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                              </InputGroup>
-                              </Col>
-                              
-                              <Form.Label column sm="4" className="mt-3" style={{"font-size": "12px !important"}}>Edad Gestacional</Form.Label>
-                              <Col sm="8" className="mt-3">
-                                  <InputGroup hasValidation>
-                                  <Form.Control type="number" placeholder="Edad Gestacional en semanas" size="lg" id="edadGestacional" name="edadGestacional" 
-                                     value={values.edadGestacional} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edadGestacional && touched.edadGestacional}
-                                     isValid={!errors.edadGestacional && touched.edadGestacional} 
-                                  />
-                                  <Form.Control.Feedback type="invalid">
-                                      {errors.edadGestacional}
-                                  </Form.Control.Feedback>
-                                  <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                              </InputGroup>
-                              </Col>
-                              </Form.Group>
-                              </Col>
-                            )} 
-
-                        </Row>
-
-
+                        </Form.Group>      
+                      </Container>
                   </Col>
-                  <Col sm={3}></Col>
+                  <Col sm={1}></Col>
                 </Row>
 
                 {imc !== 0 && (
