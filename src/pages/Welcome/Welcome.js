@@ -36,7 +36,7 @@ export default function Welcome(){
             <Row>
             <Col>
             <Container id="portada">
-              <Navbar variant="light" collapseOnSelect expand="lg">
+              <Navbar variant="light" inverse fluid >
                 <Container >
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
@@ -46,10 +46,8 @@ export default function Welcome(){
                         <Nav.Link href="#contact">Contacto</Nav.Link>
                         <Nav.Link href="#login" onClick={() => setShowLogin(true)}>Log in</Nav.Link>
                     </Nav>
-                    <Navbar.Brand href="#home" >
-                        <img src={Logo} className="d-inline-block align-top" alt="React Bootstrap logo" />
-                    </Navbar.Brand>
                     </Navbar.Collapse>
+                        <img src={Logo} width={"25%"} height={"auto"}className="d-inline-block align-top" alt="React Bootstrap logo" />
                 </Container>
             </Navbar>
                 <LoginForm showLogin={showLogin} setShowLogin={setShowLogin} />

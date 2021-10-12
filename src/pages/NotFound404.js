@@ -7,7 +7,7 @@ export default function NotFound404(){
     return(
         <Container>
             <p style={{"color": "#2D61A4", "fontSize": 27}}>Pagína no encontrada</p>
-            <Lottie height={600} width={870}
+            <Lottie height={500} width="70%"
                 options={{ loop: true, autoplay: true, animationData: AnimationNotFound, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
             />
         </Container>

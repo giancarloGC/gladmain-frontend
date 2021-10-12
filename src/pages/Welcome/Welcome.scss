@@ -10,21 +10,198 @@
 	color: rgb(255, 255, 255);
 }
 
-@media screen and (max-width: 520px){
+nav a {
+	display:inline-block;
+	color:rgb(236, 172, 74);
+	text-decoration:none;
+	padding:10px 20px;
+	line-height:normal;
+	font-size:20px;
+	font-weight:bold;
+	-webkit-transition:all 500ms ease;
+	-o-transition:all 500ms ease;
+	transition:all 500ms ease;
+}
+
+@media screen and (max-width: 770px){
+	nav a {
+		display:inline-block;
+		color:rgb(236, 172, 74);
+		text-decoration:none;
+		padding:10px 20px;
+		line-height:normal;
+		font-size:17px;
+		font-weight:bold;
+		-webkit-transition:all 500ms ease;
+		-o-transition:all 500ms ease;
+		transition:all 500ms ease;
+	}
+}
+@media screen and (max-width: 595px){
+	nav a {
+		display:inline-block;
+		color:rgb(236, 172, 74);
+		text-decoration:none;
+		padding:10px 20px;
+		line-height:normal;
+		font-size:16px;
+		font-weight:bold;
+		-webkit-transition:all 500ms ease;
+		-o-transition:all 500ms ease;
+		transition:all 500ms ease;
+	}
+	}
+@media screen and (max-width: 560px){
+	nav a {
+		display:inline-block;
+		color:rgb(236, 172, 74);
+		text-decoration:none;
+		padding:10px 20px;
+		line-height:normal;
+		font-size:15px;
+		font-weight:bold;
+		-webkit-transition:all 500ms ease;
+		-o-transition:all 500ms ease;
+		transition:all 500ms ease;
+	}
+	}
+
+@media screen and (max-width: 540px){
 h1{
 	font-size:25px;
 }
+nav a {
+	display:inline-block;
+	color:rgb(236, 172, 74);
+	text-decoration:none;
+	padding:10px 20px;
+	line-height:normal;
+	font-size:14px;
+	font-weight:bold;
+	-webkit-transition:all 500ms ease;
+	-o-transition:all 500ms ease;
+	transition:all 500ms ease;
 }
+}
+@media screen and (max-width: 510px){
+	nav a {
+		display:inline-block;
+		color:rgb(236, 172, 74);
+		text-decoration:none;
+		padding:10px 20px;
+		line-height:normal;
+		font-size:13px;
+		font-weight:bold;
+		-webkit-transition:all 500ms ease;
+		-o-transition:all 500ms ease;
+		transition:all 500ms ease;
+	}
+	}
+@media screen and (max-width: 485px){
+	nav a {
+		display:inline-block;
+		color:rgb(236, 172, 74);
+		text-decoration:none;
+		padding:10px 20px;
+		line-height:normal;
+		font-size:12px;
+		font-weight:bold;
+		-webkit-transition:all 500ms ease;
+		-o-transition:all 500ms ease;
+		transition:all 500ms ease;
+	}
+	}
+@media screen and (max-width: 460px){
+	nav a {
+		display:inline-block;
+		color:rgb(236, 172, 74);
+		text-decoration:none;
+		padding:10px 20px;
+		line-height:normal;
+		font-size:11px;
+		font-weight:bold;
+		-webkit-transition:all 500ms ease;
+		-o-transition:all 500ms ease;
+		transition:all 500ms ease;
+	}
+	}
 @media screen and (max-width: 450px){
 h1{
 	font-size:18px;
 }
+nav a {
+	display:inline-block;
+	color:rgb(236, 172, 74);
+	text-decoration:none;
+	padding:10px 20px;
+	line-height:normal;
+	font-size:10px;
+	font-weight:bold;
+	-webkit-transition:all 500ms ease;
+	-o-transition:all 500ms ease;
+	transition:all 500ms ease;
 }
+}
+@media screen and (max-width: 415px){
+	nav a {
+		display:inline-block;
+		color:rgb(236, 172, 74);
+		text-decoration:none;
+		padding:10px 20px;
+		line-height:normal;
+		font-size:9px;
+		font-weight:bold;
+		-webkit-transition:all 500ms ease;
+		-o-transition:all 500ms ease;
+		transition:all 500ms ease;
+	}
+	}
 @media screen and (max-width: 400px){
 h1{
 	font-size:15px;
 }
+nav a {
+	display:inline-block;
+	color:rgb(236, 172, 74);
+	text-decoration:none;
+	padding:10px 20px;
+	line-height:normal;
+	font-size:8px;
+	font-weight:bold;
+	-webkit-transition:all 500ms ease;
+	-o-transition:all 500ms ease;
+	transition:all 500ms ease;
 }
+}
+@media screen and (max-width: 380px){
+	nav a {
+		display:inline-block;
+		color:rgb(236, 172, 74);
+		text-decoration:none;
+		padding:10px 20px;
+		line-height:normal;
+		font-size:7px;
+		font-weight:bold;
+		-webkit-transition:all 500ms ease;
+		-o-transition:all 500ms ease;
+		transition:all 500ms ease;
+	}
+	}
+
+@media screen and (max-width: 350px){
+	nav a {
+		display:inline-block;
+		color:rgb(236, 172, 74);
+		text-decoration:none;
+		padding:10px 20px;
+		line-height:normal;
+		font-size:5px;
+		font-weight:bold;
+		-webkit-transition:all 500ms ease;
+		-o-transition:all 500ms ease;
+		transition:all 500ms ease;
+	}
+	}
 	
 #portada{
 	background-image: url(./../../assets/img/index.png); 
@@ -46,18 +223,7 @@ h1{
 	max-width: 100% !important;
 }
 
-nav a {
-	display:inline-block;
-	color:rgb(236, 172, 74);
-	text-decoration:none;
-	padding:10px 20px;
-	line-height:normal;
-	font-size:20px;
-	font-weight:bold;
-	-webkit-transition:all 500ms ease;
-	-o-transition:all 500ms ease;
-	transition:all 500ms ease;
-}
+
 
 .nav-link {
 	color: rgb(19, 75, 139);

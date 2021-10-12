@@ -117,7 +117,7 @@ export default function IndexCalculator(){
                       </Formik> 
                 </Col>
             </Row>
-            <Lottie height={500} width={500}
+            <Lottie height="auto" width="65%"
                 options={{ loop: true, autoplay: true, animationData: Calculator, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
             />
             </Container>

@@ -228,7 +228,7 @@ export default function ListFollow(){
             {listSeg.length === 0 && (
                 <>
                 <p style={{"color": "#2D61A4", "fontSize": 27}}>No se encontraron registros</p>
-                <Lottie height={400} width={670}
+                <Lottie height={400} width="60%"
                     options={{ loop: true, autoplay: true, animationData: NotResults, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
                 />
                 </>

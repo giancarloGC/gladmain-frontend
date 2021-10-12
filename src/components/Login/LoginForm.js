@@ -27,16 +27,14 @@ export default function LoginForm(props) {
     })();
   }, []);
     return(
-      <Modal show={showLogin} size="lg"  onHide={() => setShowLogin(false)}  centered aria-labelledby="example-custom-modal-styling-title">
+      <Modal show={showLogin} size="l" width={"100%"} height={200} onHide={() => setShowLogin(false)}  centered aria-labelledby="example-custom-modal-styling-title">
         <Modal.Header closeButton>
-          <Modal.Title id="example-custom-modal-styling-title"> Inicio de Sesión</Modal.Title>
         </Modal.Header>
         <Modal.Body className="show-grid">
         <Container >
-            <Row>
-                <Col sm={2} md={6} className="text-center">
-                <h1 className="mb-3">Iniciar sesión</h1>
-
+            <Row clasName={"justify-content-user"}>
+            <center><h1 className="mb-3" style={{fontSize:"33px"}}>Iniciar sesión</h1></center>
+                <Col sm={7} className="text-center">
                 <Formik
                 initialValues={{ document: '', password: "", role: "" }}
                 validate={(valores) => {
@@ -82,7 +80,7 @@ export default function LoginForm(props) {
                   setFormSend(true);
                   setTimeout(() => {
                       setFormSend(false);
-                  }, 3000);
+                  }, 5000);
                 }}
                 >
       {props => {
@@ -92,11 +90,11 @@ export default function LoginForm(props) {
         return (
 <Form onSubmit={handleSubmit}>
   <Form.Group as={Row} className="mb-3">
-    <Form.Label column sm="4">Usuario</Form.Label>
+    <Form.Label column sm="4"><span style={{fontSize:"18px"}}>Usuario: </span></Form.Label>
     <Col sm="8">              
     <InputGroup hasValidation>
 
-        <Form.Control size="lg" type="number" name="document" id="document" placeholder="Ej: 1090111999"
+        <Form.Control size="l" type="number" name="document" id="document" placeholder="Ej: 1090111999"
             value={values.document} onChange={handleChange} onBlur={handleBlur}
             isInvalid={!!errors.document && touched.document} isValid={!errors.document && touched.document}
         />
@@ -109,13 +107,13 @@ export default function LoginForm(props) {
   </Form.Group>
 
   <Form.Group as={Row} className="mb-3">
-    <Form.Label column sm="4">
-      Password
-    </Form.Label>
+    <Form.Label column sm="4"><span style={{fontSize:"18px"}}>
+      Password: 
+      </span></Form.Label>
     <Col sm="8">
     <InputGroup hasValidation>
 
-      <Form.Control size="lg" type="password" placeholder="Password" id="password" name="password" 
+      <Form.Control size="l" type="password" placeholder="Password" id="password" name="password" 
         value={values.password} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.password && touched.password}
         isValid={!errors.password && touched.password}
       />
@@ -127,13 +125,13 @@ export default function LoginForm(props) {
     </Col>
   </Form.Group>
 
-  <Form.Group as={Row} className="mb-5">
-  <Form.Label column sm="4">
-      Rol
-    </Form.Label>
+  <Form.Group as={Row} className="mb-3">
+  <Form.Label column sm="4"><span style={{fontSize:"18px"}}>
+      Rol:
+    </span></Form.Label>
     <Col sm="8">
     <InputGroup hasValidation>
-      <Form.Select size="lg" name="role" onChange={handleChange} onBlur={handleBlur}
+      <Form.Select size="l" name="role" onChange={handleChange} onBlur={handleBlur}
               isValid={!errors.role && touched.role} isInvalid={!!errors.role && touched.role}
       >
       <option disabled selected>Selecciona tu rol</option>
@@ -152,7 +150,7 @@ export default function LoginForm(props) {
   </Form.Group>  
   <div className="d-grid gap-2">
     
-    <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+    <Button variant="primary" type="submit" size="l" disabled={showSpinner}>
       {showSpinner ? (
         <>
         <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
@@ -172,11 +170,10 @@ export default function LoginForm(props) {
 </Form>
         );
       }}
-    </Formik>                
-
+    </Formik>         
                 </Col>
-                <Col sm={2} md={6}>
-                    <Image src={Logo} alt="img-logo" fluid />
+                <Col sm={5} className={"mt-3"}>
+                    <Image src={Logo} alt="img-logo" width={"100%"} height={"auto"}/>
                 </Col>
             </Row>
         </Container>

@@ -9,6 +9,66 @@
 main{
     padding: 20px;
 }
+.respon{
+    font-size:24px;
+    color: #fff !important;
+    margin-left: 10px;
+    font-weight: 100;
+    cursor: pointer;
+    position: relative;
+}
+
+@media screen and (max-width: 520px){
+
+    h2{
+        font-size:15px;
+    }
+    .respon{
+        font-size:20px;
+        color: #fff !important;
+        margin-left: 10px;
+        font-weight: 100;
+        cursor: pointer;
+        position: relative;
+    }
+    }
+    @media screen and (max-width: 450px){
+    h2{
+        font-size:13px;
+    }
+    .respon{
+        font-size:18px;
+        color: #fff !important;
+        margin-left: 10px;
+        font-weight: 100;
+        cursor: pointer;
+        position: relative;
+    }
+    }
+    @media screen and (max-width: 400px){
+    h2{
+        font-size:11px;
+    }
+    .respon{
+        font-size:15px;
+        color: #fff !important;
+        margin-left: 10px;
+        font-weight: 100;
+        cursor: pointer;
+        position: relative;
+    }
+    }
+    @media screen and (max-width: 380px){
+        h2{
+            font-size:8px;
+        }
+        .respon{
+            font-size:13px;
+            color: #fff !important;
+            cursor: pointer;
+            position: relative;
+        }
+        }
 
 .headers{
     width: 100%;
