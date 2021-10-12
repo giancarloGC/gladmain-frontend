@@ -27,6 +27,7 @@ import AddControlVac from "../pages/ControlVac/AddControlVac";
 import EditControlVac from "../pages/ControlVac/EditControlVac";
 import EditControlVacMadre from "../pages/ControlVac/EditControlVacMadre";
 import AddControlFollow from "../pages/ControlFollow/AddControlFollow";
+import DetailsControlFollow from "../pages/ControlFollow/DetailsControlFollow";
 import AddInfantIncome from "../pages/ControlFollow/AddInfantIncome";
 import AddMotherIncome from "../pages/ControlFollow/AddMotherIncome";
 import EditMotherIncome from "../pages/ControlFollow/EditMotherIncome";
@@ -273,6 +274,11 @@ const routes = [
                 component: EditControlFollow,
             },
             {
+                path: "/admin/detailsControlFollow/:idSeg/:documento/:rolUser",
+                exact: true,
+                component: DetailsControlFollow,
+            },
+            {
                 path: "/admin/addInfantIncome/:idSeg/:documento",
                 exact: true,
                 component: AddInfantIncome,
@@ -283,12 +289,12 @@ const routes = [
                 component: EditInfantIncome,
             }, 
             {
-                path: "/admin/detailsInfantIncome/:idSeg/:idInc",
+                path: "/admin/detailsInfantIncome/:idSeg/:documento",
                 exact: true,
                 component: DetailsInfantIncome,
             }, 
             {
-                path: "/admin/detailMotherIncome/:idSeg/:idInc",
+                path: "/admin/detailMotherIncome/:idSeg/:documento",
                 exact: true,
                 component: DetailMotherIncome,
             }, 
