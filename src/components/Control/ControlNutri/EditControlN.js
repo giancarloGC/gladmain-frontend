@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner } from "react-bootstrap";
 import { Formik } from "formik";
 import { TOKEN } from "../../../utils/constans";
 import  AuthContext  from "../../../hooks/useAuth";
@@ -30,6 +30,7 @@ export default function EditControlN(props){
     const [ showButtonAdd, setShowButtonAdd ] = useState(false);
     const [ graphicValues, setGraphicValues] = useState({ r: 3, x: 0, y: 0 });
     const [ goRedirect, setGoRedirect ] = useState(false);
+    const [ showSpinner, setShowSpinner ] = useState(false);
 
     let dateFechaNaci = moment(userControl.fechaNacimiento);
     let dateCurrent = moment();
@@ -276,8 +277,11 @@ export default function EditControlN(props){
                   console.log(formData);
 
                   formData.token = token;
+                  setShowSpinner(true);
                   updateControlApi(formData).then(response => {
+                    setShowSpinner(false);
                       if(response === true){
+                        setShowSpinner(false);
                         swal({
                           title: `¡El control fue almacenado correctamente!`,
                           icon: 'success'
@@ -285,6 +289,7 @@ export default function EditControlN(props){
                           setGoRedirect(true);
                         });
                       }else{
+                        setShowSpinner(false);
                         swal({
                           title: `¡Opss, ocurrió un error!`,
                           icon: 'danger'
@@ -498,9 +503,16 @@ export default function EditControlN(props){
                             </Form.Group> 
 
                             <div className="d-grid gap-2">
-                            <Button variant="primary" type="submit" size="lg">
-                                Editar control   <FontAwesomeIcon data-tip data-for="boton1" icon={faAddressCard} size="lg" color="#FFF" />
-                            </Button>
+                            <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                              {showSpinner ? (
+                                <>
+                                <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                                {"  " + `  Cargando...`}  
+                                </>
+                                ):(
+                                "Actualizar control " 
+                            )}
+                           </Button>
                         </div>
                   </Col>
                 </Row>

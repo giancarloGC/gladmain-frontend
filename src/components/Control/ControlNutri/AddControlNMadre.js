@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner } from "react-bootstrap";
 import { Formik } from "formik";
 import { TOKEN } from "../../../utils/constans";
 import  AuthContext  from "../../../hooks/useAuth";
@@ -30,6 +30,7 @@ export default function AddControlN(props){
     const [ showButtonAdd, setShowButtonAdd ] = useState(false);
     const [ graphicValues, setGraphicValues] = useState({ x: 0, y: 0, r: 3});
     const [ goRedirect, setGoRedirect ] = useState(false);
+    const [ showSpinner, setShowSpinner ] = useState(false);
 
     let dateFechaNaci = moment(userControl.fechaNacimiento);
     let dateCurrent = moment();
@@ -194,7 +195,7 @@ export default function AddControlN(props){
                     }else if(!/^([0-9])*$/.test(valores.edadGestacional)){
                       errores.edadGestacional = 'Solo puedes escribir números';
                     }else if(valores.edadGestacional < 10 || valores.edadGestacional > 42 ){
-                        errores.talla = 'La edad gestacional debe ser mayor a 10 semanas y menos a 42 semanas';
+                        errores.edadGestacional = 'La edad gestacional debe ser mayor a 10 semanas y menos a 42 semanas';
                       }
 
                 if(valores.edadGestacional >= 10 && valores.edadGestacional <= 42){
@@ -234,8 +235,11 @@ export default function AddControlN(props){
                 }
 
                   console.log(formData);
+                  setShowSpinner(true);
                   insertControlApi(formData, token, true).then(response => {
+                    setShowSpinner(false);
                       if(response === true){
+                        setShowSpinner(false);
                         swal({
                           title: `¡El control fue almacenado correctamente!`,
                           icon: 'success'
@@ -243,6 +247,7 @@ export default function AddControlN(props){
                           setGoRedirect(true);
                         });
                       }else{
+                        setShowSpinner(false);
                         swal({
                           title: `¡Opss, ocurrió un error!`,
                           icon: 'danger'
@@ -455,9 +460,16 @@ export default function AddControlN(props){
                             </Form.Group> 
 
                             <div className="d-grid gap-2">
-                            <Button variant="primary" type="submit" size="lg">
-                                Añadir control   <FontAwesomeIcon data-tip data-for="boton1" icon={faAddressCard} size="lg" color="#FFF" />
-                            </Button>
+                            <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                             {showSpinner ? (
+                                <>
+                                <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                                {"  " + `  Cargando...`}  
+                                </>
+                                ):(
+                                " Añadir control  " 
+                            )}<FontAwesomeIcon data-tip data-for="boton1" icon={faAddressCard} size="lg" color="#FFF" />
+                        </Button>
                         </div>
                   </Col>
                 </Row>

@@ -162,17 +162,6 @@ const onChangeBusqueda = (e) => {
                 
             <Container> 
             <Row>
-
-            {listCommit.length === 0 && (
-                <>
-                    <p style={{"color": "#2D61A4", "fontSize": 27}}>No se encontraron registros que coincidan</p>
-                    <Lottie height={500} width="80%"
-                        options={{ loop: true, autoplay: true, animationData: AnimationNotFindSearch, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
-                    />
-                </>
-            )}
-
-
             {listCommit.length > 0 && (
              <Col sm={12} >
                 {listControls.length === 0 && (

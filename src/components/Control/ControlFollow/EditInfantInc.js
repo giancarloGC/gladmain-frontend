@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-bootstrap";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import swal from 'sweetalert';
@@ -27,6 +27,7 @@ export default function EditInfantInc(props){
   const [ showMedicamentos, setShowMedicamentos ] = useState(ingreso.ingreso.recibeMedFormulada);
   const [ showRemitido, setRemitido ] = useState(ingreso.ingreso.usuarioRemitido === "1" ? true : false);
   const [ showSuplemento, setShowSuplemento ] = useState(ingreso.ingresoInfante.recibeSuplementos === "SI" ? true : false);
+  const [ showSpinner, setShowSpinner ] = useState(false);
   console.log(ingreso);
   /*const onChangeChecked = (e) => {
     setCheckeds({...checkeds, [e.target.name]: e.target.checked});
@@ -228,10 +229,12 @@ console.log(ingreso);
 
                   console.log(formData);
                   console.log(saveData10);
-                  
+                  setShowSpinner(true);
                   updateInfantIncomeApi(formData, token).then(response => {
                     console.log(response);
+                    setShowSpinner(false);
                     if(response === true){
+                      setShowSpinner(false);
                       swal({
                         title: `¡El ingreso fue actualizado correctamente!`,
                         icon: 'success'
@@ -239,6 +242,7 @@ console.log(ingreso);
                         window.location.replace(`/admin/ListFollowUp/${documento}/${rolUser}`);
                     }); 
                     }else{
+                      setShowSpinner(false);
                       swal({
                         title: `¡Opss, ocurrió un error!`,
                         icon: 'danger'
@@ -547,9 +551,16 @@ console.log(ingreso);
                     <center>
                         <Col sm={10}> 
                         <div className="d-grid gap-2 mb-3">
-                            <Button variant="primary" type="submit" size="lg">
-                               Guardar
-                            </Button>
+                          <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                              {showSpinner ? (
+                                <>
+                                <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                                {"  " + `  Cargando...`}  
+                                </>
+                                ):(
+                                "Guardar" 
+                            )}
+                          </Button>
                         </div>
                         </Col>
                       </center>

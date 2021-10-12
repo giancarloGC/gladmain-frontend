@@ -13,6 +13,7 @@ export default function EditControlF(props){
   const token = localStorage.getItem(TOKEN);
   const { user } = AuthContext();
   const documentoLogin = user.sub.split('-');
+  const [ showSpinner, setShowSpinner ] = useState(false);
 
   var documertParse = parseInt( documentoLogin[0]);
 
@@ -25,9 +26,11 @@ export default function EditControlF(props){
 
     return(
         <Container>
-            <Row style={{backgroundColor: '#f1f1f1'}}>
+            <Row>
                 <Col sm={1}></Col>
-                <Col sm={10} className="mt-2 mb-4"> 
+                <Col sm={10} className="mt-2 mb-4" style={{backgroundColor: '#f1f1f1', borderRadius: '5px'}}> 
+                <Row className='justify-content-center'>
+                <Col sm={11}> 
                 <Formik
                 
                 initialValues={{ 
@@ -86,14 +89,18 @@ export default function EditControlF(props){
                   console.log(formData);
                   //resetForm();
                   formData.token = token;
+                  setShowSpinner(true);
                   updateSegApi(formData, token).then(response => {
                     console.log(response);
+                    setShowSpinner(false);
                     if(response === true){
+                      setShowSpinner(false);
                       swal({
                         title: `¡El Seguimiento fue editado correctamente!`,
                         icon: 'success'
                       });
                     }else{
+                      setShowSpinner(false);
                       swal({
                         title: `¡Opss, ocurrió un error!`,
                         icon: 'danger'
@@ -112,7 +119,7 @@ export default function EditControlF(props){
                       <Row> 
                       <Col sm={6}>
                       <Form.Group as={Row} className="mt-2 mb-2">
-                              <Form.Label column md="6"> No.Seguimiento    </Form.Label>
+                              <Form.Label column md="6"> <h1 style={{fontSize: "20px", color:"#0084d2" }}> No.Seguimiento </h1></Form.Label>
                                   <Col style={{display:"inline-table"}} >
                                       <InputGroup hasValidation>
                                       <Form.Control type="number" placeholder="01" size="lg" id="idSeguimiento" name="idSeguimiento" 
@@ -126,9 +133,9 @@ export default function EditControlF(props){
                       <Col sm={6}>
                       <Form.Group as={Row} className="mt-2 mb-2">
                       <Col md={4}> </Col>
-                        <Form.Label column md="3">
+                        <Form.Label column md="3"> <h1 style={{fontSize: "20px", color:"#0084d2" }}> 
                           Fecha 
-                          </Form.Label>
+                          </h1></Form.Label>
                               <Col style={{display:"inline-table"}} className="row justify-content-center">
                                 <InputGroup hasValidation>
                                     <Form.Control type="text" size="lg" id="fecha" name="fecha" 
@@ -144,11 +151,13 @@ export default function EditControlF(props){
           
 
                     <center>
-                    <Form.Label column sm="10" style={{"fontSize": "12px !important"}} className="align-self-center justify-content-around mb-4"> <u>INFORMACIÓN DEL ACUDIENTE </u> </Form.Label>
+                    <Form.Label column sm="10" style={{"fontSize": "12px !important"}} className="align-self-center justify-content-around mb-4 mt-2">
+                    <u><h1 style={{fontSize: "20px", color:"#0084d2" }}>INFORMACIÓN DEL ACUDIENTE </h1></u> </Form.Label>
                     </center>
 
                     <Form.Group as={Row} className="mb-3">
-                     <Form.Label column sm={3} style={{"fontSize": "12px !important"}}>Tipo de Documento</Form.Label>
+                     <Form.Label column sm={3} style={{"fontSize": "12px !important"}}>
+                     <h5 style={{fontSize:"17px"}}>Tipo de Documento</h5></Form.Label>
                         <Col >
                         <InputGroup hasValidation>
                             <Form.Select  size="lg" id="tipoDocAcudiente" name="tipoDocAcudiente" onChange={handleChange} onBlur={handleBlur}
@@ -167,7 +176,8 @@ export default function EditControlF(props){
                         </InputGroup>
                         </Col>
 
-                        <Form.Label column sm={3} style={{"fontSize": "12px !important"}}>Número Documento</Form.Label>
+                        <Form.Label column sm={3} style={{"fontSize": "12px !important"}}>
+                        <h5 style={{fontSize:"17px"}}>Número Documento</h5></Form.Label>
                         <Col >
                         <InputGroup hasValidation>
                             <Form.Control type="text" placeholder="documento acudiente" size="lg" id="numeroDocAcudiente" name="numeroDocAcudiente" 
@@ -184,7 +194,8 @@ export default function EditControlF(props){
 
 
                     <Form.Group as={Row} className="mb-3 mt-3">
-                    <Form.Label column sm={3} style={{"fontSize": "12px !important"}}>Nombre</Form.Label>
+                    <Form.Label column sm={3} style={{"fontSize": "12px !important"}}>
+                    <h5 style={{fontSize:"17px"}}>Nombre</h5></Form.Label>
                     <Col>
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre del Acudiente" size="lg" id="nombreAcudiente" name="nombreAcudiente" 
@@ -200,11 +211,13 @@ export default function EditControlF(props){
                     </Form.Group>
 
                     <center>
-                    <Form.Label column sm="10" style={{"fontSize": "12px !important"}} className="align-self-center justify-content-around mb-4 mt-3"> <u>INFORMACIÓN DEL USUARIO </u> </Form.Label>
+                    <Form.Label column sm="10" style={{"fontSize": "12px !important"}} className="align-self-center justify-content-around mb-4 mt-3"> 
+                    <u><h1 style={{fontSize: "20px", color:"#0084d2" }}>INFORMACIÓN DEL USUARIO </h1></u> </Form.Label>
                     </center>
 
                     <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm={3} style={{"fontSize": "12px !important"}}>Tipo de Documento</Form.Label>
+                        <Form.Label column sm={3} style={{"fontSize": "12px !important"}}>
+                        <h5 style={{fontSize:"17px"}}>Tipo de Documento</h5></Form.Label>
                         <Col>
                         <InputGroup hasValidation>
                             <Form.Select  size="lg" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
@@ -224,7 +237,8 @@ export default function EditControlF(props){
                             </InputGroup>
                         </Col>
                        
-                        <Form.Label column sm={3} style={{"fontSize": "12px !important"}}>Número Documento</Form.Label>
+                        <Form.Label column sm={3} style={{"fontSize": "12px !important"}}>
+                        <h5 style={{fontSize:"17px"}}>Número Documento</h5></Form.Label>
                             <Col>
                             <InputGroup hasValidation>
                             <Form.Control  type="text" placeholder="Número documento" size="lg" id="idUsuario" name="idUsuario" 
@@ -240,7 +254,8 @@ export default function EditControlF(props){
                     </Form.Group>
 
                     <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm={3} style={{"fontSize": "12px !important"}}>Nombre </Form.Label>
+                        <Form.Label column sm={3} style={{"fontSize": "12px !important"}}>
+                        <h5 style={{fontSize:"17px"}}>Nombre </h5></Form.Label>
                         <Col>
                         <InputGroup hasValidation>
                         <Form.Control type="text" placeholder="nombre usuario" size="lg" id="nombre" name="nombre" 
@@ -255,7 +270,8 @@ export default function EditControlF(props){
                         </Col>
 
                         
-                        <Form.Label column sm={3} style={{"fontSize": "12px !important"}}>Celular</Form.Label>
+                        <Form.Label column sm={3} style={{"fontSize": "12px !important"}}>
+                        <h5 style={{fontSize:"17px"}}>Celular</h5></Form.Label>
                         <Col>
                         <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="Dígita aquí Teléfono" size="lg" id="celular" name="celular" 
@@ -273,9 +289,18 @@ export default function EditControlF(props){
                     <Form.Group as={Row} className="mb-1">
                     <Col md={6}>        
                         <div className="d-grid gap-2">
-                            <Button variant="primary" type="submit" size="lg">
-                               Guardar
-                            </Button>
+                        <div className="d-grid gap-2">
+                        <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                            {showSpinner ? (
+                              <>
+                              <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                              {"  " + `  Cargando...`}  
+                              </>
+                              ):(
+                              "Guardar" 
+                           )}
+                        </Button>
+                        </div>
                         </div>
                       </Col>
                       <Col md={6}> 
@@ -298,6 +323,8 @@ export default function EditControlF(props){
                             );
                         }}
                       </Formik> 
+                      </Col>
+                      </Row>
                 </Col>
                 <Col sm={1}></Col>
             </Row>

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useReducer } from "react";
 import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner } from "react-bootstrap";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
@@ -14,6 +15,7 @@ export default function EditControlR(props){
   console.log(infoRemi);
   const [ showHospitalizacion, setShowHospitalizacion ] = useState(infoRemi.hospitalizado ? true : false);
   const [ showFallecimiento, setShowFallecimiento ] = useState(infoRemi.fallecido ? true : false);
+  const [ showSpinner, setShowSpinner ] = useState(false);
  
   const dateFormat = (date) => {
     if(date){
@@ -130,9 +132,12 @@ export default function EditControlR(props){
                   console.log(formData);
                   //resetForm();
                   formData.token = token;
+                  setShowSpinner(true);
                   updateRemisApi(formData, token).then(response => {
+                    setShowSpinner(false);
                     console.log(response);
                     if(response === true){
+                      setShowSpinner(false);
                       swal({
                         title: `¡La remisión fue editada correctamente!`,
                         icon: 'success'
@@ -140,6 +145,7 @@ export default function EditControlR(props){
                         window.location.replace(`/admin/listControlRemission/${idSeg}/${documento}`);
                     }); 
                     }else{
+                      setShowSpinner(false);
                       swal({
                         title: `¡Opss, ocurrió un error!`,
                         icon: 'danger'
@@ -220,22 +226,24 @@ export default function EditControlR(props){
 
                         <Col md={1}></Col>
 
-                    <Form.Group as={Row} className="mt-3" style={{ "marginLeft":"6px"}}>
-                     <Form.Label column sm="3">
-                     <h5 style={{fontSize: "16px"}} className="mt-1">¿Fue Atendido?</h5></Form.Label>
-                     <Col class="mid">
-                        <InputGroup hasValidation>
+                    <Form.Group as={Row} className="mt-4 " style={{ "marginLeft":"6px"}}>
+                    <Form.Label column sm="6">
+                    <h5 style={{fontSize: "16px"}} className="mt-1">¿Fue Atendido?</h5></Form.Label>
+                        <Col>
+                        <InputGroup hasValidation style={{ justifyContent :"center"}}>
                           <label class="rocker rocker-small" size="xs" name="atendido" id="atendido" on>
                           <input type="checkbox" name="radio" checked={checkeds.radio ? true : false} unchecked={checkeds.radio ? true : false} onChange={e => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>   
                         </InputGroup>
-                      </Col>
+                        </Col>
+                      </Form.Group>
 
-                      <Form.Label column sm="3">
+                      <Form.Group as={Row} className="mt-3" style={{ "marginLeft":"6px"}}>
+                      <Form.Label column sm="5" >
                       <h5 style={{fontSize: "16px"}}> Fecha de atención</h5></Form.Label>
-                        <Col sm="4">
+                        <Col >
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="xs" id="fechaAtencion" name="fechaAtencion" 
                                  defaultValue={dateFormat(infoRemi.fechaAtencion)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaAtencion && touched.fechaAtencion}
@@ -246,16 +254,14 @@ export default function EditControlR(props){
                               </Form.Control.Feedback>
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
-                        </Col>
+                        </Col> 
                       </Form.Group>
 
-                     <Col md={1}></Col>
-
-                     <Form.Group as={Row} className="mt-3" style={{ "marginLeft":"6px"}}>
-                     <Form.Label column sm="3">
+                      <Form.Group as={Row} className="mt-3" style={{ "marginLeft":"6px"}}>
+                     <Form.Label column sm="6" >
                      <h5 style={{fontSize: "16px"}}>¿Requirio Hospitalización?</h5></Form.Label>
                      <Col class="mid">
-                        <InputGroup hasValidation>
+                     <InputGroup hasValidation style={{ justifyContent :"center"}}>
                           <label class="rocker rocker-small" size="xs" name="hospitalizado" id="hospitalizado">
                           <input type="checkbox"  name="radio1" checked={checkeds.radio1 ? true : false} unchecked={checkeds.radio1 ? true : false} onChange={e => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
@@ -263,13 +269,14 @@ export default function EditControlR(props){
                           </label>   
                         </InputGroup>
                         </Col>
+                    </Form.Group>
 
-                        {showHospitalizacion && (
-                        <>
-                        <Form.Label column sm="3">
-                        <h5 style={{fontSize: "16px"}}>Fecha Ingreso</h5></Form.Label>
-                        <Col sm="4">
-                          <InputGroup hasValidation>
+                    {showHospitalizacion && (
+                     <Form.Group as={Row} className="mt-3" style={{ "marginLeft":"6px"}}>
+                     <Form.Label column sm="5">
+                     <h5 style={{fontSize: "16px"}}>Fecha Ingreso</h5></Form.Label>
+                     <Col >
+                        <InputGroup hasValidation style={{ justifyContent :"Right"}}>
                               <Form.Control type="date" size="xs" id="fechaIngreso" name="fechaIngreso" 
                                  defaultValue={dateFormat(infoRemi.fechaIngreso)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaIngreso && touched.fechaIngreso}
                                  isValid={!errors.fechaIngreso && touched.fechaIngreso}
@@ -279,29 +286,51 @@ export default function EditControlR(props){
                               </Form.Control.Feedback>
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
-                        </Col>
-                        </>
-                        )}
-                    </Form.Group>
+                     </Col>
+                     </Form.Group>
+                    )}  
 
-                    {showHospitalizacion && (
-                    <Form.Group as={Row} style={{ "marginLeft":"6px"}}>
-                        <Form.Label column sm="3">
-                        <h5 style={{fontSize: "16px"}}>¿Falleció durante el proceso de atención en salud?</h5></Form.Label>
-                        <Col class="mid">
-                        <InputGroup hasValidation>
-                          <label class="rocker rocker-small" size="xs" name="fallecido" id="fallecido">
+                  {showHospitalizacion && (
+                    <Form.Group as={Row} className="mt-3" style={{ "marginLeft":"6px"}} >
+                    <Form.Label column sm="6">
+                    <h5 style={{fontSize: "16px"}} column sm="9">¿Falleció durante el proceso de atención en salud?</h5></Form.Label>
+                    <Col sm="6" >
+                      <InputGroup hasValidation style={{ justifyContent :"center"}}>
+                      <label class="rocker rocker-small" size="xs" name="fallecido" id="fallecido">
                           <input type="checkbox" name="radio2" checked={checkeds.radio2 ? true : false} unchecked={checkeds.radio2 ? true : false} onChange={e => onChangeChecked(e)}></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
-                          </label>  
-                        </InputGroup>
-                        </Col>
-                        
-                        <Form.Label column sm="3">
-                        <h5 style={{fontSize: "16px"}}>Fecha Egreso</h5></Form.Label>
-                        <Col sm="4">
-                          <InputGroup hasValidation>
+                          </label>
+                      </InputGroup>
+                    </Col>
+                    </Form.Group>                      
+                    )}
+
+                  {showFallecimiento && (
+                      <Form.Group as={Row} style={{ "marginLeft":"6px"}} className="mt-4">
+                      <Form.Label column sm="5">
+                      <h5 style={{fontSize: "16px"}} className="mt-2">Razón del Fallecimiento</h5></Form.Label>
+                      <Col >
+                        <InputGroup hasValidation>
+                                <Form.Control as="textarea" aria-label="With textarea" placeholder="Describir Motivo Fallecimiento" size="xs" id="razonFallecimiento" name="razonFallecimiento" 
+                                defaultValue={infoRemi.razonFallecimiento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.razonFallecimiento && touched.razonFallecimiento}
+                                isValid={!errors.razonFallecimiento && touched.razonFallecimiento}
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                  {errors.razonFallecimiento}
+                              </Form.Control.Feedback>
+                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          </InputGroup>
+                      </Col>
+                      </Form.Group>
+                    )}      
+
+                  {showHospitalizacion && !showFallecimiento && (
+                      <Form.Group as={Row} className="mt-3" style={{ "marginLeft":"6px"}}>
+                      <Form.Label column sm="5">
+                      <h5 style={{fontSize: "16px"}}>Fecha Egreso</h5></Form.Label>
+                      <Col >
+                         <InputGroup hasValidation>
                               <Form.Control type="date" size="xs" id="fechaSalida" name="fechaSalida" 
                                  defaultValue={dateFormat(infoRemi.fechaSalida)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaSalida && touched.fechaSalida}
                                  isValid={!errors.fechaSalida && touched.fechaSalida}
@@ -311,28 +340,9 @@ export default function EditControlR(props){
                               </Form.Control.Feedback>
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
-                        </Col>
-                    </Form.Group>
-                    )}
-
-                    {showFallecimiento && (
-                    <Form.Group as={Row} style={{ "marginLeft":"6px"}}>
-                    <Form.Label column sm="5">
-                    <h5 style={{fontSize: "16px"}} className="mt-2">Razón del Fallecimiento</h5></Form.Label>
-                    <Col >
-                        <InputGroup hasValidation>
-                               <Form.Control as="textarea" aria-label="With textarea" placeholder="Describir Motivo Fallecimiento" size="xs" id="razonFallecimiento" name="razonFallecimiento" 
-                               defaultValue={infoRemi.razonFallecimiento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.razonFallecimiento && touched.razonFallecimiento}
-                               isValid={!errors.razonFallecimiento && touched.razonFallecimiento}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.razonFallecimiento}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                        </InputGroup>
-                     </Col>
-                    </Form.Group>
-                    )}
+                      </Col>
+                      </Form.Group>
+                      )}    
  
                     <Form.Group as={Row} className="mt-4" style={{ "marginLeft":"6px"}}>
                         <Form.Label column sm="5" >
@@ -371,9 +381,16 @@ export default function EditControlR(props){
                     <Col md="1"> </Col>
                       <Col md="10">
                         <div className="d-grid gap-2 mb-3 mt-3">
-                            <Button variant="primary" type="submit" size="lg">
-                               Guardar
-                            </Button>
+                        <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                          {showSpinner ? (
+                                <>
+                                <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                                {"  " + `  Cargando...`}  
+                                </>
+                                ):(
+                                " Guardar" 
+                            )}
+                        </Button>
                         </div>
                       </Col>
                    <Col md="1"> </Col>

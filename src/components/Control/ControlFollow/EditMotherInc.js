@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-bootstrap";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
 import { TOKEN } from "../../../utils/constans";
 import { updateMotIncomeApi } from "../../../api/mother_income";
@@ -21,6 +21,7 @@ import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from 
 export default function EditMotherInc(props){
   const { idSeg, documento, ingreso } = props;
   const token = localStorage.getItem(TOKEN);
+  const [ showSpinner, setShowSpinner ] = useState(false);
   const [ checkeds, setCheckeds ] = useState({ 
       vomitoControlado: ingreso.ingresoMadre.vomitoControlado,
       dolorCabeza: ingreso.ingresoMadre.dolorCabeza,
@@ -253,9 +254,12 @@ export default function EditMotherInc(props){
                     }
                   }
                   console.log(formData);
+                  setShowSpinner(true);
                   updateMotIncomeApi(formData, token).then(response => {
+                    setShowSpinner(false);
                     console.log(response);
                     if(response === true){
+                      setShowSpinner(false);
                       swal({
                         title: `¡El ingreso fue actualizado correctamente!`,
                         icon: 'success'
@@ -263,6 +267,7 @@ export default function EditMotherInc(props){
                         setGoRedirect(1);
                       });
                     }else if(response.status === 403){
+                      setShowSpinner(false);
                       swal("¡No tienes autorización para realizar esta acción, comunícate con el Admin!", {
                         icon: "warning",
                       }).then((value) => {
@@ -270,6 +275,7 @@ export default function EditMotherInc(props){
                         window.location.replace("/");
                       });
                     }else{
+                      setShowSpinner(false);
                       swal({
                         title: `¡Opss, ocurrió un error!`,
                         icon: 'danger'
@@ -743,9 +749,16 @@ export default function EditMotherInc(props){
                     <center>
                         <Col sm={10}> 
                         <div className="d-grid gap-2 mb-3">
-                            <Button variant="primary" type="submit" size="lg">
-                               Actualizar
-                            </Button>
+                        <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                          {showSpinner ? (
+                                <>
+                                <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                                {"  " + `  Cargando...`}  
+                                </>
+                                ):(
+                                "Actualizar" 
+                            )}
+                        </Button>
                         </div>
                         </Col>
                       </center>

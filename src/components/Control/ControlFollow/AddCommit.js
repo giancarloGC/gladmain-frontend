@@ -13,6 +13,7 @@ export default function AddCommit(props){
   const { controlSeguimiento, documento } = props;
   const token = localStorage.getItem(TOKEN);
   const [ checkeds, setCheckeds ] = useState({ radio1: true, radio: false });
+  const [ showSpinner, setShowSpinner ] = useState(false);
   console.log(checkeds);
 
   const onChangeChecked = (e) => {
@@ -49,17 +50,12 @@ export default function AddCommit(props){
                     errores.nuevoCompromiso = 'No se permiten campos vacíos'
                   }
                   const dateCurrently2 = new Date();
-                  if(!valores.fechaCumplimiento){
-                    errores.fechaCumplimiento = 'Asegurese de selecionar una fecha';
-                  }else if(dateCurrently2 <= valores.fechaCumplimiento){
-                    errores.fechaCumplimiento = 'Seleccione una fecha valida';
-                  }
+                 
                   if(!valores.nombreAuxiliarEnfermeria){
                     errores.nombreAuxiliarEnfermeria = 'No se permiten campos vacíos'
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.nombreAuxiliarEnfermeria)){
                     errores.nombreAuxiliarEnfermeria = 'Nombre incorrecto, solo puedes escribir letras';
                   }
-
                   return errores;
                 }}
 
@@ -78,8 +74,11 @@ export default function AddCommit(props){
                   console.log(formData);
                   //resetForm();
                   formData.token = token;
+                  setShowSpinner(true);
                   insertCompApi(formData, token).then(response => {
+                    setShowSpinner(false);
                     if(response === true){
+                      setShowSpinner(false);
                       swal({
                         title: `¡El compromiso fue almacenado correctamente!`,
                         icon: 'success'
@@ -87,6 +86,7 @@ export default function AddCommit(props){
                         window.location.replace(`/admin/commitments/${controlSeguimiento.id}/${documento}`);
                     }); 
                     }else{
+                      setShowSpinner(false);
                       console.log("no resgistro remi");
                       swal({
                         title: `¡Opss, ocurrió un error!`,
@@ -185,8 +185,8 @@ export default function AddCommit(props){
 
                     <Form.Group className="mt-4">
                       <Row>
-                    <Form.Label column sm="3"><h5 style={{fontSize: "16px"}}>Fecha Cumplimiento </h5></Form.Label>
-                        <Col >
+                    <Form.Label column md="3"><h5 style={{fontSize: "16px"}}>Fecha Cumplimiento </h5></Form.Label>
+                        <Col md="3">
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="xs" id="fechaCumplimiento" name="fechaCumplimiento" 
                                  value={values.fechaCumplimiento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaCumplimiento && touched.fechaCumplimiento}
@@ -216,9 +216,16 @@ export default function AddCommit(props){
                     </Form.Group>
 
                     <div className="d-grid gap-2">
-                            <Button variant="primary" type="submit" size="lg">
-                               Guardar
-                            </Button>
+                       <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                          {showSpinner ? (
+                                <>
+                                <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                                {"  " + `  Cargando...`}  
+                                </>
+                                ):(
+                                " Guardar" 
+                            )}
+                        </Button>
                         </div><br/>
                       </Container>
                     </Form>

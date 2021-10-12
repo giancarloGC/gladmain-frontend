@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-bootstrap";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import { TOKEN } from "../../../utils/constans";
@@ -25,8 +25,8 @@ export default function AddInfantInc(props){
   const [ showPatologia, setShowPatologia ] = useState(true);
   const [ showMedicamentos, setShowMedicamentos ] = useState(true);
   const [ showRemitido, setRemitido ] = useState(true);
-   const [ showSuplemento, setShowSuplemento ] = useState(true);
-  
+  const [ showSuplemento, setShowSuplemento ] = useState(true);
+  const [ showSpinner, setShowSpinner ] = useState(false);
 
   /*const [ checkeds, setCheckeds ] = useState({ atendido: false, hospitalizado: false, fallecido: false });
   console.log(checkeds);
@@ -231,9 +231,12 @@ export default function AddInfantInc(props){
                     }
                   }
                   console.log(formData);
+                  setShowSpinner(true);
                   insertInfantIncomeApi(formData, token).then(response => {
+                    setShowSpinner(false);
                     console.log(response);
                     if(response === true){
+                      setShowSpinner(false);
                       swal({
                         title: `¡El ingreso fue almacenado correctamente!`,
                         icon: 'success'
@@ -241,10 +244,12 @@ export default function AddInfantInc(props){
                         setGoRedirect(1);
                       });
                     }else if(response.status === 403){
+                      setShowSpinner(false);
                       swal("¡No tienes autorización para realizar esta acción, comunícate con el Admin!", {
                         icon: "warning",
                       });
                     }else{
+                      setShowSpinner(false);
                       swal({
                         title: `¡Opss, ocurrió un error!`,
                         icon: 'danger'
@@ -556,9 +561,16 @@ export default function AddInfantInc(props){
                     <center>
                         <Col sm={10}> 
                         <div className="d-grid gap-2 mb-3">
-                            <Button variant="primary" type="submit" size="lg">
-                               Guardar
-                            </Button>
+                          <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                              {showSpinner ? (
+                                <>
+                                <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                                {"  " + `  Cargando...`}  
+                                </>
+                                ):(
+                                "Guardar" 
+                            )}
+                          </Button>
                         </div>
                         </Col>
                       </center>

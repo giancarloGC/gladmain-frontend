@@ -277,6 +277,7 @@ export default function AddControlN(props){
                   setShowSpinner(true);
                   insertControlApi(formData, token, true).then(response => {
                       if(response === true){
+                        setShowSpinner(false);
                         swal({
                           title: `¡El control fue almacenado correctamente!`,
                           icon: 'success'
@@ -284,6 +285,7 @@ export default function AddControlN(props){
                           setGoRedirect(true);
                         });
                       }else{
+                        setShowSpinner(false);
                         swal({
                           title: `¡Opss, ocurrió un error!`,
                           icon: 'danger'
@@ -497,18 +499,16 @@ export default function AddControlN(props){
                             </Form.Group> 
 
                             <div className="d-grid gap-2">
-                            {showSpinner || (
-                            <Button variant="primary" type="submit" size="lg">
-                                Añadir control   <FontAwesomeIcon data-tip data-for="boton1" icon={faAddressCard} size="lg" color="#FFF" />
-                            </Button>
-                             )
-                            }
-                             {showSpinner && (
-                              <center>
-                              <Spinner animation="border" ></Spinner> 
-                              </center>
-                            )
-                            }
+                            <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                              {showSpinner ? (
+                                <>
+                                <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                                {"  " + `  Cargando...`}  
+                                </>
+                                ):(
+                                "Añadir control " 
+                            )}
+                           </Button>
                         </div>
                   </Col>
                 </Row>
