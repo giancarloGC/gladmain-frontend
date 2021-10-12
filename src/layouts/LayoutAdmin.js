@@ -174,24 +174,21 @@ export default function LayoutAdmin(props){
                             <FontAwesomeIcon icon={faBars} id="btn_open" onClick={() => setOpenMenu(!openMenu)} className="icon"/>
                         </div>
                         <Nav className="justify-content-end align-items-center navlayout" activeKey="/home">
-                    <Nav.Item>
+                    <Nav.Item className="option mt-3">
                         <div className="option" id="/home">
-                            <NavDropdown title={infoUser.nombre} id="nav-dropdown" className="subtitlesMenu"
-                                style={{"fontSize": "24px", "fontWeight": 150, "color": "#D4D1D1"}}
-                            >
+                              <NavDropdown title={infoUser.nombre} id="nav-dropdown" className="respon"
+                              style={{"color": "#D4D1D1"}}
+                             >  
                             <NavDropdown.Item><Link to={`/admin/EditProfileUser/${infoUser.documento}`}>
-                            <h5><FontAwesomeIcon icon={faUserEdit} className="icon" size="1x" fill="currentColor"/>  Editar Perfil</h5></Link></NavDropdown.Item>
+                            <h2  style={{"fontSize": "15px"}}><FontAwesomeIcon icon={faUserEdit} className="icon" size="1x" fill="currentColor"/>  Editar Perfil</h2></Link></NavDropdown.Item>
                                 
                             <NavDropdown.Divider />
-                            <NavDropdown.Item><h5 onClick={() => signOff()}><FontAwesomeIcon icon={faPowerOff} className="icon" size="1x"fill="currentColor"/>  Cerrar Sesión </h5></NavDropdown.Item>
+                            <NavDropdown.Item><h2 style={{"fontSize": "15px"}} onClick={() => signOff()}><FontAwesomeIcon icon={faPowerOff} className="icon" size="1x"fill="currentColor"/>  Cerrar Sesión </h2></NavDropdown.Item>
                             </NavDropdown>
                         </div>
                     </Nav.Item>
-                    <Nav.Item>
-                      <Nav.Link eventKey="disabled">
-                      <Image src={AvatarDefault} roundedCircle fluid className="avatar"/>
-                
-                      </Nav.Link>
+                    <Nav.Item className="option mt-3">
+                      <Image height="auto" width="65%" src={AvatarDefault} roundedCircle fluid className="avatar"/>
                     </Nav.Item>
                   </Nav>
                 

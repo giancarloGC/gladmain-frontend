@@ -21,7 +21,7 @@ export default function EditInfantInc(props){
   const { idSeg, ingreso, documento, rolUser } = props;
   const token = localStorage.getItem(TOKEN);
 
-  const [ goRedirect, setGoRedirect ] = useState(0);
+  const [ goRedirect, setGoRedirect ] = useState();
 
   const [ showPatologia, setShowPatologia ] = useState(ingreso.ingreso.patologiaIdentificadaSgsss);
   const [ showMedicamentos, setShowMedicamentos ] = useState(ingreso.ingreso.recibeMedFormulada);
@@ -169,8 +169,8 @@ console.log(ingreso);
                     }
   
                     if(showMedicamentos){
-                      if(!valores.nombreMedFormulada){
-                        errores.nombreMedFormulada = 'No se permiten campos vacíos'
+                      if(!valores.nombreMedFormululada){
+                        errores.nombreMedFormululada = 'No se permiten campos vacíos'
                       }
                     }
                     
@@ -424,7 +424,7 @@ console.log(ingreso);
                     <Col sm="9" class="mid">
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre Patología" size="xs" id="nombrePatologia" name="nombrePatologia" 
-                               value={values.nombrePatologia} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
+                               value={values.nombrePatologia} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombrePatologia && touched.nombrePatologia}
                                isValid={!errors.nombrePatologia && touched.nombrePatologia}
                             />
                             <Form.Control.Feedback type="invalid">
@@ -460,12 +460,12 @@ console.log(ingreso);
                     <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>¿Cuál?</h5></Form.Label>
                     <Col md="9" class="mid" >
                         <InputGroup hasValidation>
-                               <Form.Control type="text" placeholder="Nombre Medicamento Formulado" size="xs" id="nombreMedFormulada" name="nombreMedFormulada" 
-                               value={values.nombreMedFormulada} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
-                               isValid={!errors.nombreMedFormulada && touched.nombreMedFormulada}
+                               <Form.Control type="text" placeholder="Nombre Medicamento Formulado" size="xs" id="nombreMedFormululada" name="nombreMedFormululada" 
+                               value={values.nombreMedFormululada} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormululada && touched.nombreMedFormululada}
+                               isValid={!errors.nombreMedFormululada && touched.nombreMedFormululada}
                             />
                             <Form.Control.Feedback type="invalid">
-                                {errors.nombreMedFormulada}
+                                {errors.nombreMedFormululada}
                             </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
