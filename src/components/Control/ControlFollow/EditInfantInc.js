@@ -18,7 +18,7 @@ import AddIncomeCommit9 from "./AddIncomeCommit/AddIncomeCommit9";
 import AddIncomeCommit10 from "./AddIncomeCommit/AddIncomeCommit10";
 
 export default function EditInfantInc(props){
-  const { idSeg, ingreso, documento, rolUser } = props;
+  const { idSeg, ingreso, documento, showValidationM, rolUser } = props;
   const token = localStorage.getItem(TOKEN);
 
   const [ goRedirect, setGoRedirect ] = useState();
@@ -207,7 +207,7 @@ console.log(ingreso);
                           alarmaPreventiva: saveData4 ? "SI" : "NO",
                           controlCyD: saveData6 ? "SI" : "NO",
                           recibeSuplementos: saveData10 ? "SI" : "NO",
-                          valoracionMedica: saveData5 ? "SI" : "NO",
+                          valoracionMedica: showValidationM ? saveData5 ? "SI" : "NO" : null,
                       },
                       ingresoMadre: null,
                       ingreso: {
@@ -348,7 +348,7 @@ console.log(ingreso);
                         </Col>
                     </Form.Group>
 
-                    
+                    {showValidationM && (
                     <Form.Group as={Row}  style={{ "marginLeft":"43px"}} className="mt-1">
                        <Form.Label column sm="9" >
                        <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>En niñas y menores de un mes se realizó validación médica</h5></Form.Label>
@@ -366,6 +366,8 @@ console.log(ingreso);
                         </InputGroup>
                         </Col>
                         </Form.Group>
+                        )}
+
 
                         <Form.Group as={Row}  style={{ "marginLeft":"43px"}} className="mt-2">
                         <Form.Label column sm="9" >

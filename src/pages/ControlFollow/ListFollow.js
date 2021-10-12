@@ -94,7 +94,13 @@ export default function ListFollow(){
                 console.log(listIngresos);
                 let ingresoBySeg = listIngresos.filter(registro => registro.ingreso.idSeguimiento === item.id);
                 console.log(listIngresos);
-                let totalOptions = 5;
+                let totalOptions = 0;
+                if(ingresoBySeg[0].ingresoInfante.valoracionMedica === null){
+                    totalOptions = 4;
+                }else{
+                    totalOptions = 5;
+                }
+
                 let optionsSelected = 0;
 
                 if(ingresoBySeg[0].ingreso.afiliacionSgsss === "SI"){
@@ -103,9 +109,11 @@ export default function ListFollow(){
                 if(ingresoBySeg[0].ingreso.saludOral === "SI"){
                     optionsSelected += 1;
                 };
-                if(ingresoBySeg[0].ingresoInfante.valoracionMedica === "SI"){
-                    optionsSelected += 1;
-                };
+                if(ingresoBySeg[0].ingresoInfante.valoracionMedica !== null){
+                    if(ingresoBySeg[0].ingresoInfante.valoracionMedica === "SI"){
+                        optionsSelected += 1;
+                    };
+                }
                 if(ingresoBySeg[0].ingresoInfante.controlCyD === "SI"){
                     optionsSelected += 1;
                 };
