@@ -17,6 +17,8 @@ export default function EditRol(){
     const [ infoRol, setInfoRol ] = useState({rol: {}, privilegios: {}});
     const [ name, setName ] = useState({ name: ''});
     const [ loaded, setLoaded] = useState(false);
+    const [ showSpinner, setShowSpinner ] = useState(false);
+
     useEffect(() => {
         (async () => {
             const responseRol = await getRolByIdApi(idRol, token);
@@ -79,8 +81,10 @@ export default function EditRol(){
                         }, 3000);
                     }else{
                         infoRol.rol.nombre = valores.name;
+                        setShowSpinner(true);
                         resetForm();
                         updateRolApi(infoRol, token).then(response => {
+                            setShowSpinner(false);
                             if(response === true){
                                 swal("¡Excelente, registro exitoso!, El rol fue actualizado correctamente", {
                                     icon: "success",
@@ -90,6 +94,7 @@ export default function EditRol(){
                                 }); 
                                 setShow(true);
                             }else{
+                                setShowSpinner(false);
                                 swal("Opss! Ocurrió un error al editar el rol!", {
                                     icon: "error",
                                 });
@@ -161,11 +166,18 @@ export default function EditRol(){
                             </Row>
                         </fieldset>
 
-                        <div className="d-grid gap-2">
-                            <Button variant="primary" type="submit" size="lg">
-                                Actualizar
-                            </Button>
-                        </div>
+                    <div className="d-grid gap-2">
+                        <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                        {showSpinner ? (
+                            <>
+                            <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                            {"  " + `  Cargando...`}  
+                            </>
+                        ):(
+                            "Actualizar" 
+                        )}
+                        </Button>
+                    </div>
 
                     </Form>
                             );

@@ -13,6 +13,7 @@ export default function AddControlR(props){
   const token = localStorage.getItem(TOKEN);
   const [ goRedirect, setGoRedirect ] = useState(false);
   const [ checkeds, setCheckeds ] = useState({ atendido: false, hospitalizado: false, fallecido: false });
+  const [ showSpinner, setShowSpinner ] = useState(false);
   console.log(checkeds);
 
   const [ showHospitalizacion, setShowHospitalizacion ] = useState(false);
@@ -127,9 +128,11 @@ export default function AddControlR(props){
                   console.log(formData);
                   //resetForm();
                   formData.token = token;
+                  setShowSpinner(true);
                   insertRemisApi(formData, token).then(response => {
                     console.log(response);
                     if(response === true){
+                      setShowSpinner(false);
                       swal({
                         title: `¡La remisión fue almacenada correctamente!`,
                         icon: 'success'
@@ -137,6 +140,7 @@ export default function AddControlR(props){
                         window.location.replace(`/admin/listControlRemission/${controlSeguimiento.id}/${documento}`);
                     }); 
                     }else{
+                      setShowSpinner(false);
                       swal({
                         title: `¡Opss, ocurrió un error!`,
                         icon: 'danger'
@@ -371,9 +375,16 @@ export default function AddControlR(props){
                     <Col md="1"> </Col>
                       <Col md="10">
                         <div className="d-grid gap-2 mb-3 mt-3">
-                            <Button variant="primary" type="submit" size="lg">
-                               Guardar
-                            </Button>
+                        <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                          {showSpinner ? (
+                                <>
+                                <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                                {"  " + `  Cargando...`}  
+                                </>
+                                ):(
+                                " Guardar" 
+                            )}
+                        </Button>
                         </div>
                       </Col>
                    <Col md="1"> </Col>

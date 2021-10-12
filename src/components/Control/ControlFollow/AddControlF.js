@@ -14,6 +14,7 @@ export default function AddControlF(props){
   const { user } = AuthContext();
   const documentoLogin = user.sub.split('-');
   const [ goRedirect, setGoRedirect ] = useState();
+  const [ showSpinner, setShowSpinner ] = useState(false);
 
     return(
         <Container>
@@ -69,25 +70,31 @@ export default function AddControlF(props){
                 }
                 //resetForm();
                   valores.token = token;
+                  setShowSpinner(true);
                   insertSegApi(formData, token).then(response => {
+                    setShowSpinner(false);
                     console.log(response);
                     if(response === true){
                       getSegApi(userControl.documento, token).then(responseSegs => {
                         if(response.status === 403){
+                          setShowSpinner(false);
                           swal("¡No tienes autorización para realizar esta acción, comunícate con el Admin!", {
                             icon: "warning",
                           });
                         }else{
+                          setShowSpinner(false);
                           var positionLastSeg = responseSegs.length - 1;
                           var lastSeg = responseSegs[positionLastSeg];
                           setGoRedirect(lastSeg.id);
                         }      
                       });
                     }else if(response.status === 403){
+                      setShowSpinner(false);
                       swal("¡No tienes autorización para realizar esta acción, comunícate con el Admin!", {
                         icon: "warning",
                       });
                     }else{
+                      setShowSpinner(false);
                       swal("Opss! Ocurrió un error!", {
                         icon: "error",
                       });
@@ -230,9 +237,16 @@ export default function AddControlF(props){
                       )
                     )}            
                         <div className="d-grid gap-2 mb-3">
-                            <Button variant="primary" type="submit" size="lg" >
-                               Siguiente
-                            </Button>
+                        <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                            {showSpinner ? (
+                              <>
+                              <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                              {"  " + `  Cargando...`}  
+                              </>
+                              ):(
+                              "Siguiente" 
+                           )}
+                        </Button>
                         </div>
 
                     </Form>

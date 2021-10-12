@@ -12,6 +12,7 @@ import "./Switch.scss";
 export default function EditCommit(props){
   const { segControl, control, documento, checkeds, setCheckeds} = props;
   const token = localStorage.getItem(TOKEN);
+  const [ showSpinner, setShowSpinner ] = useState(false);
  
   console.log(control);
   console.log(checkeds);
@@ -76,8 +77,11 @@ export default function EditCommit(props){
                   console.log(formData);
                   //resetForm();
                   valores.token = token;
+                  setShowSpinner(true);
                   updateCompApi(formData, token).then(response => {
+                    setShowSpinner(false);
                     if(response === true){
+                      setShowSpinner(false);
                       swal({
                         title: `¡El compromiso fue almacenado correctamente!`,
                         icon: 'success'
@@ -85,6 +89,7 @@ export default function EditCommit(props){
                         window.location.replace(`/admin/commitments/${segControl.id}/${documento}`);
                     }); 
                     }else{
+                      setShowSpinner(false);
                       console.log("no resgistro compromiso");
                       swal({
                         title: `¡Opss, ocurrió un error!`,
@@ -215,9 +220,16 @@ export default function EditCommit(props){
                     </Form.Group>
 
                     <div className="d-grid gap-2">
-                            <Button variant="primary" type="submit" size="lg">
-                               Guardar
-                            </Button>
+                         <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                          {showSpinner ? (
+                                <>
+                                <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                                {"  " + `  Cargando...`}  
+                                </>
+                                ):(
+                                " Guardar" 
+                            )}
+                        </Button>
                         </div><br/>
                       </Container>
                     </Form>

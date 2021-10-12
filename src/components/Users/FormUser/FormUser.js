@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-bootstrap";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
 import { insertUserApi } from "../../../api/user";
 import { TOKEN } from "../../../utils/constans";
@@ -18,6 +18,7 @@ export default function FormUser(){
     const [ rolesSelected, setRolesSelected ] = useState([]);
     const [ edadFinaly, setEdadFinaly ] = useState(null);
     const [ goRedirect, setGoRedirect ] = useState(false);
+    const [ showSpinner, setShowSpinner ] = useState(false);
 
     useEffect(() => {
       getRolesApi().then(response => {
@@ -84,7 +85,7 @@ export default function FormUser(){
                   }
                   
                   let docuemnt = toString(valores.documento);
-                  if(valores.documento.length < 0 || valores.documento.length > 15){
+                  if(valores.documento.length < 8 || valores.documento.length > 15){
                     errores.documento = 'Documento invalido, intente con otro';
                   }
 
@@ -157,7 +158,9 @@ export default function FormUser(){
                 }}
 
                 onSubmit={(valores, {resetForm}) => {
+                  setShowSpinner(true);
                   if(rolesSelected.length === 0){
+                    setShowSpinner(false);
                     swal("¡Opss, No has seleccionado roles!, Debes seleccionar al menos un  rol para el usuario", {
                       icon: "error",
                     });
@@ -187,8 +190,9 @@ export default function FormUser(){
                       clave: valores.clave
                     }
                     console.log(data);
-                
+                    
                     insertUserApi(data, token).then(response => {
+                      setShowSpinner(false);
                       if(response === true){
                           let successs = false;
                           successs = rolesSelected.map((item, index) => {
@@ -202,7 +206,7 @@ export default function FormUser(){
                             });
                           })
                           if(successs){
-                            console.log("entro");
+                            setShowSpinner(false);
                             swal("¡Excelente, registro exitoso!, El usuario fue almacenado correctamente", {
                               icon: "success",
                             }).then((value) => {
@@ -210,7 +214,7 @@ export default function FormUser(){
                             });
                             //setShow(true);
                           }else{
-                            console.log("no entro");
+                            setShowSpinner(false);
                             swal("Opss! Ocurrió un error!", {
                               icon: "error",
                             }).then((value) => {
@@ -429,11 +433,20 @@ export default function FormUser(){
                       </fieldset>
                       )}
 
-                        <div className="d-grid gap-2 mb-3 mt-4">
-                            <Button variant="primary" type="submit" size="lg">
-                                Añadir usuario
-                            </Button>
-                        </div>
+
+
+                    <div className="d-grid gap-2 mb-3 mt-4">
+                      <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                      {showSpinner ? (
+                          <>
+                          <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                          {"  " + `  Cargando...`}  
+                          </>
+                      ):(
+                          "Añadir usuario" 
+                      )}
+                      </Button>
+                    </div>
                     </Form>
                             );
                         }}

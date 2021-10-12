@@ -11,6 +11,7 @@ export default function EditControlVMadre (props){
     const token = localStorage.getItem(TOKEN);
     const [ textFormSend, setTextFormSend ] = useState({});
     const [show, setShow] = useState(false);
+    const [ showSpinner, setShowSpinner ] = useState(false);
 
     const dateFormat = (date) => {
         if(date){
@@ -73,8 +74,11 @@ export default function EditControlVMadre (props){
                 }
                 console.log(formData);
                 valores.token = token;
+                setShowSpinner(true);
                 updateContVaccApi(formData, token).then(response => {
+                    setShowSpinner(false);
                     if(response === true){
+                    setShowSpinner(false);
                     swal("¡Excelente, registro exitoso!, El control fue actualizado correctamente", {
                         icon: "success",
                     })
@@ -83,6 +87,7 @@ export default function EditControlVMadre (props){
                     }); 
                     setShow(true);
                     }else{
+                    setShowSpinner(false);
                     swal("Opss! Ocurrió un error!", {
                         icon: "error",
                     });
@@ -201,9 +206,16 @@ export default function EditControlVMadre (props){
                         <Form.Group as={Row} className="mb-3 mt-3 justify-content-center">
                         <Col sm="12">
                         <div  className="row justify-content mb-2">
-                            <Button variant="primary" type="submit" size="l">
-                                Guardar
-                            </Button>
+                        <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                             {showSpinner ? (
+                                <>
+                                <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                                {"  " + `  Cargando...`}  
+                                </>
+                                ):(
+                                " Guardar   " 
+                            )}
+                          </Button>
                         </div>
                         </Col>
                         </Form.Group>
