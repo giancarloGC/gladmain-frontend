@@ -12,7 +12,7 @@ import { deleteContVaccApi } from "../../../api/vaccination";
 export default function ListFollowUp(props){
     const { listSeg, documento, listInc, rolUser } = props;
     const token = localStorage.getItem(TOKEN);
-
+    console.log(listSeg);
     const dateFormat = (date) => {
         if(date){
         let dateFormated = date.split('T');
