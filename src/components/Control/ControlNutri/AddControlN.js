@@ -77,34 +77,28 @@ export default function AddControlN(props){
       let valueXLineMenosTres = userControl.edad >= 0 && userControl.edad <= 24 ? lineasGraphics.lineMenosTres[indexEjex] : lineasGraphics2_5.lineMenosTres[indexEjex];
 
       
+      //Validaciones grafica Peso para la Talla
       
       if(peso > valueXlineMasTres){
         setShowButtonAdd(false);
         setStateNutrition({ color: "danger", text: "Obesidad", animation: DangerAnimation});
-        console.log("es mayor a +3   ");
       }else if(peso > valueXlineMasDos && peso <= valueXlineMasTres){
         setShowButtonAdd(false);
         setStateNutrition({ color: "danger", text: "Sobrepeso", animation: DangerAnimation});
-        console.log("es > a la +2 y < a +3 ");
       }else if(peso > valueXlineMasUno && peso <= valueXlineMasDos){
-        console.log("es > a la +1 y < a +2 ");
         setShowButtonAdd(false);
         setStateNutrition({ color: "warning", text: "Riesgo de Sobrepeso", animation: WarningAnimation});
       }else if(peso >= valueXlineMenosUno && peso <= valueXlineMasUno){
         setShowButtonAdd(false);
-        console.log("es > a la -1 y < a +1 ");
         setStateNutrition({ color: "success", text: "Peso Adecuado para la Talla", animation: SuccessAnimation});
       }else if(peso >= valueXlineMenosDos && peso < valueXlineMenosUno){
         setShowButtonAdd(true);
-        console.log("es > a la -2 y < a -1 ");
         setStateNutrition({ color: "warning", text: "Riesgo de Desnutrición Aguda", animation: WarningAnimation});
       }else if(peso < valueXlineMenosDos && peso >= valueXLineMenosTres){
         setShowButtonAdd(true);
-        console.log("es < 2 y > a la -3 ");
         setStateNutrition({ color: "danger", text: "Desnutrición Aguda Moderada", animation: DangerAnimation});
       }else if(peso < valueXLineMenosTres){
         setShowButtonAdd(true);
-        console.log("es < a la -3 ");
         setStateNutrition({ color: "danger", text: "Desnutrición Aguda Severa", animation: DangerAnimation});
       }
     }
