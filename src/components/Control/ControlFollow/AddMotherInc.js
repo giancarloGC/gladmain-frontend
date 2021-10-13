@@ -182,14 +182,22 @@ export default function AddMotherInc(props){
                 
                 validate={(valores) => {
                   let errores = {};
+                  if(!valores.cantidadSemanas){
+                    errores.cantidadSemanas = 'Por favor, ingresa números';
+                  }else if(!/^([0-9])*$/.test(valores.cantidadSemanas)){
+                    errores.cantidadSemanas = 'solo puedes escribir números';
+                  }else if(valores.cantidadSemanas > 42){
+                    errores.cantidadSemanas = 'Cantidad de Semanas invalidas';
+                  }
+
                   if(showPatologia){
                     if(!valores.nombrePatologia){
                       errores.nombrePatologia = 'No se permiten campos vacíos'
                     }
                   }
                   if(showMedicamentos){
-                    if(!valores.nombreMedFormulada){
-                      errores.nombreMedFormulada = 'No se permiten campos vacíos'
+                    if(!valores.nombreMedFormululada){
+                      errores.nombreMedFormululada = 'No se permiten campos vacíos'
                     }
                   }
 
@@ -502,7 +510,7 @@ export default function AddMotherInc(props){
                       <Col sm="9" class="mid" style={{marginLeft:"7px"}}>
                           <InputGroup hasValidation>
                                 <Form.Control type="text" placeholder="Nombre Patología" size="xs" id="nombrePatologia" name="nombrePatologia" 
-                                value={values.nombrePatologia} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
+                                value={values.nombrePatologia} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormululada && touched.nombreMedFormululada}
                                 isValid={!errors.nombrePatologia && touched.nombrePatologia}
                               />
                               <Form.Control.Feedback type="invalid">
@@ -538,12 +546,12 @@ export default function AddMotherInc(props){
                       <h5 style={{"fontSize": "16px"}}>¿Cuál?</h5></Form.Label>
                       <Col md="9" class="mid" style={{marginLeft:"7px"}}>
                           <InputGroup hasValidation>
-                                <Form.Control type="text" placeholder="Nombre Medicamento Formulado" size="xs" id="nombreMedFormulada" name="nombreMedFormulada" 
-                                value={values.nombreMedFormulada} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
-                                isValid={!errors.nombreMedFormulada && touched.nombreMedFormulada}
+                                <Form.Control type="text" placeholder="Nombre Medicamento Formulado" size="xs" id="nombreMedFormululada" name="nombreMedFormululada" 
+                                value={values.nombreMedFormululada} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormululada && touched.nombreMedFormululada}
+                                isValid={!errors.nombreMedFormululada && touched.nombreMedFormululada}
                               />
                               <Form.Control.Feedback type="invalid">
-                                  {errors.nombreMedFormulada}
+                                  {errors.nombreMedFormululada}
                               </Form.Control.Feedback>
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>

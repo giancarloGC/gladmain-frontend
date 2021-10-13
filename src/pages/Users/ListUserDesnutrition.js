@@ -45,7 +45,7 @@ export default function ListUserDesnutrition(){
             let doc = 0;
             for(var i = 0; i < responseControls.length; i++ ){
                 if(enDesnutricion === false){
-                    if(responseControls[i].estadoNutricional === "Riesgo de Desnutrición Aguda"){
+                    if(responseControls[i].vigente === true && (responseControls[i].estadoNutricional === "Riesgo de Desnutrición Aguda" || responseControls[i].estadoNutricional === "Desnutrición Aguda Severa")){
                         doc = responseControls[i].idUsuario;
                         enDesnutricion = true;
                     }else{
