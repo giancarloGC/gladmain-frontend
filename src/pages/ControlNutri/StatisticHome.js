@@ -27,6 +27,7 @@ import Logo from "../../assets/img/logocomfaoriente.png";
 import GladMaIn from "../../assets/img/logoGladmain.PNG";
 import fuente from "../../assets/fontPDF/Amaranth-Bold.ttf";
 import fuente2 from "../../assets/fontPDF/Amaranth-Regular.ttf";
+import useAuth from '../../hooks/useAuth'; //privilegios
 
 export default function StatisticHome(){
     const { edad, sexo, documento, rolUser } = useParams();
@@ -36,6 +37,7 @@ export default function StatisticHome(){
     const [ infoUser, setInfoUser ] = useState({});
     const [ loadedPDF, setLoadedSonPDF ] = useState(false); 
     const [ loading, setLoading ] = useState(true);  
+    const { user } = useAuth(); //privilegios
     const [loaded, setLoaded] = useState(false); 
   
     useEffect(() => {
@@ -53,6 +55,10 @@ export default function StatisticHome(){
             setLoadedSonPDF(true);
         })();       
     }, []);
+
+    const validatePrivilegio = (privilegio) => {
+        return user.authorities.filter(priv => priv === privilegio);
+    }
 
     const handleCheck = (e, item) => {
         if(e.target.checked){
@@ -74,11 +80,12 @@ export default function StatisticHome(){
         <Row>
         <Col sm="12">
         <h1 className="text-center">Patrones de Crecimiento Infantil de la OMS
+        {validatePrivilegio("REGISTRAR_CONTROL").length > 0 && (
             <Link to={`/admin/addControlNutri/${documento}/${rolUser}`} >
                 <FontAwesomeIcon icon={faUserPlus} size="lg" color="#2D61A4" style = {{marginLeft:10}} data-tip data-for = "boton1" />
                 <ReactTooltip id="boton1" place="bottom" type="dark" effect="float">Agregar Control Nutricional</ReactTooltip>
             </Link>
-            
+        )}
                 {loadedPDF && (
                     <PDFDownloadLink document={<DocumentPdf listControls={listControls} setLoadedSonPDF={setLoadedSonPDF} infoUser={infoUser}/>} fileName={`ControlNutrición_${infoUser.documento}`}>
                     {({ blob, url, loading, error }) =>

@@ -19,8 +19,6 @@ import GladMaIn from "../../assets/img/logoGladmain.PNG";
 import fuente from "../../assets/fontPDF/Amaranth-Bold.ttf";
 import fuente2 from "../../assets/fontPDF/Amaranth-Regular.ttf";
 import useAuth from '../../hooks/useAuth';
-
-
 import { getMotIncomeByUserApi } from "../../api/mother_income";
 
 export default function ListFollow(){
@@ -208,13 +206,26 @@ export default function ListFollow(){
     return(
         <Container>
             <h1 className="text-center mb-4">Seguimientos de {infoUser ? infoUser.nombre : "Anonimo"}
-                {validatePrivilegio("REGISTRAR_SEGUIMIENTO").length > 0 && (
-                <Link to={`/admin/addControlFollow/${documento}/${rolUser}`}>
-                    <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton" />
-                    <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Seguimiento </ReactTooltip>
-              </Link>
-              )}
-
+                {rolUser === "INFANTE" && (
+                    validatePrivilegio("REGISTRAR_SEGUIMIENTO").length > 0 && ("LISTAR_SEGUIMIENTOS").length > 0 
+                    && ("REGISTRAR_INGRESO_INFANTE").length > 0 && (
+                       <Link to={`/admin/addControlFollow/${documento}/${rolUser}`}>
+                           <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton" />
+                           <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Seguimiento </ReactTooltip>
+                       </Link>
+                   )
+                )}
+                 
+            {rolUser === "MADRE_GESTANTE" && (
+                validatePrivilegio("REGISTRAR_SEGUIMIENTO").length > 0 && ("LISTAR_SEGUIMIENTOS").length > 0 
+                && ("REGISTRAR_INGRESO_MADRE").length > 0 && (
+                    <Link to={`/admin/addControlFollow/${documento}/${rolUser}`}>
+                        <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton" />
+                        <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Seguimiento </ReactTooltip>
+                     </Link>
+                )
+            )}
+          
               {loadedPDF && (
                     <PDFDownloadLink document={<DocumentPdf listSeg={listSeg} listIncome={listIncome} setLoadedSonPDF={setLoadedSonPDF} infoUser={infoUser}/>} fileName={`Ingreso_${infoUser.documento}`}>
                     {({ blob, url, loading, error }) =>
@@ -234,7 +245,7 @@ export default function ListFollow(){
                 </>
             )}
             {listSeg.length > 0 && (
-             <ListFollowUp  listSeg={listSeg} documento={documento} listInc={listInc} rolUser={rolUser}/>
+             <ListFollowUp  listSeg={listSeg} user={user} documento={documento} listInc={listInc} rolUser={rolUser}/>
             )}
         </Container>
     )

@@ -16,6 +16,7 @@ import Logo from "../../assets/img/logocomfaoriente.png";
 import GladMaIn from "../../assets/img/logoGladmain.PNG";
 import fuente from "../../assets/fontPDF/Amaranth-Bold.ttf";
 import fuente2 from "../../assets/fontPDF/Amaranth-Regular.ttf";
+import useAuth from '../../hooks/useAuth'; //privilegios
 
 Font.register({ family: 'Amaranth', src: fuente});
 Font.register({ family: 'Amaranth2', src: fuente2});
@@ -154,6 +155,7 @@ export default function ListVacMadre(){
     const [loaded, setLoaded] = useState(true); 
     const [ loadedPDF, setLoadedSonPDF ] = useState(false);
     const [ allControlSaved, setAllControl ] = useState([]);
+    const { user } = useAuth();
 
     useEffect(() => {
         (async () => {
@@ -181,14 +183,21 @@ export default function ListVacMadre(){
         var controlFiltred = allControlSaved.filter(user => dateFormat(user.fechaAplicacion) === e.target.value);
         setListControls(controlFiltred);
     }
+
+    const validatePrivilegio = (privilegio) => {
+        return user.authorities.filter(priv => priv === privilegio);
+    }
     
     return(
         <Container>
             <h1 className="text-center">Controles de Vacunacion de {userControl ? userControl.nombre : "Anonimo"}
+            {validatePrivilegio("REGISTRAR_CONTROL_VACUNACION").length > 0 && ("CONSULTAR_USUARIO").length > 0 && (
                 <Link to={`/admin/addControlVacMadre/${documento}`}>
                     <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton" />
                     <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Control </ReactTooltip>
                 </Link>
+            )}
+
                 {loadedPDF && (
                     <PDFDownloadLink document={<DocumentPdf userControl={userControl} listControls={listControls} setLoadedSonPDF={setLoadedSonPDF}/>} fileName="ControlVacunación.pdf">
                     {({ blob, url, loaded, error }) =>
