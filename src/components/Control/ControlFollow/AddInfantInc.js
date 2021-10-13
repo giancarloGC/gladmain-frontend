@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-bootstrap";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import { TOKEN } from "../../../utils/constans";
@@ -18,16 +18,15 @@ import AddIncomeCommit9 from "./AddIncomeCommit/AddIncomeCommit9";
 import AddIncomeCommit10 from "./AddIncomeCommit/AddIncomeCommit10";
 
 export default function AddInfantInc(props){
-  const { idSeg, documento, controlSeguimiento } = props;
+  const { idSeg, documento, showValidationM, controlSeguimiento } = props;
   const token = localStorage.getItem(TOKEN);
   const [ goRedirect, setGoRedirect ] = useState();
 
   const [ showPatologia, setShowPatologia ] = useState(true);
   const [ showMedicamentos, setShowMedicamentos ] = useState(true);
   const [ showRemitido, setRemitido ] = useState(true);
-   const [ showSuplemento, setShowSuplemento ] = useState(true);
-
-  
+  const [ showSuplemento, setShowSuplemento ] = useState(true);
+  const [ showSpinner, setShowSpinner ] = useState(false);
 
   /*const [ checkeds, setCheckeds ] = useState({ atendido: false, hospitalizado: false, fallecido: false });
   console.log(checkeds);
@@ -212,7 +211,7 @@ export default function AddInfantInc(props){
                       alarmaPreventiva: saveData4 ? "SI" : "NO",
                       controlCyD: saveData6 ? "SI" : "NO",
                       recibeSuplementos: saveData10 ? "SI" : "NO",
-                      valoracionMedica: saveData5 ? "SI" : "NO",
+                      valoracionMedica: showValidationM ? saveData5 ? "SI" : "NO" : null,
                     },
                     ingresoMadre: null,
                     ingreso: {
@@ -232,9 +231,12 @@ export default function AddInfantInc(props){
                     }
                   }
                   console.log(formData);
+                  setShowSpinner(true);
                   insertInfantIncomeApi(formData, token).then(response => {
+                    setShowSpinner(false);
                     console.log(response);
                     if(response === true){
+                      setShowSpinner(false);
                       swal({
                         title: `¡El ingreso fue almacenado correctamente!`,
                         icon: 'success'
@@ -242,10 +244,12 @@ export default function AddInfantInc(props){
                         setGoRedirect(1);
                       });
                     }else if(response.status === 403){
+                      setShowSpinner(false);
                       swal("¡No tienes autorización para realizar esta acción, comunícate con el Admin!", {
                         icon: "warning",
                       });
                     }else{
+                      setShowSpinner(false);
                       swal({
                         title: `¡Opss, ocurrió un error!`,
                         icon: 'danger'
@@ -353,24 +357,26 @@ export default function AddInfantInc(props){
                         </Col>
                     </Form.Group>
 
-                    
-                    <Form.Group as={Row}  style={{ "marginLeft":"43px"}} className="mt-1">
-                       <Form.Label column sm="9" >
-                       <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>En niñas y menores de un mes se realizó validación médica</h5></Form.Label>
-                        <Col class="mid">
-                        <InputGroup hasValidation >
-                          <label class="rocker rocker-small" size="xs" name="valoracionMedica">
-                          <input type="checkbox" checked={showCommit5 || !saveData5 ? false : true } onChange={(e) => setShowCommit5(!e.target.checked)}></input>
-                          <span class="switch-left">Si</span>
-                          <span class="switch-right">No</span>
-                          </label>
-                            <Form.Control.Feedback type="invalid">
-                                        {errors.valoracionMedica}
-                                        </Form.Control.Feedback>
-                          <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
-                        </InputGroup>
-                        </Col>
+                        {showValidationM && (
+                        <Form.Group as={Row}  style={{ "marginLeft":"43px"}} className="mt-1">
+                          <Form.Label column sm="9" >
+                          <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>En niñas y menores de un mes se realizó validación médica</h5></Form.Label>
+                            <Col class="mid">
+                            <InputGroup hasValidation >
+                              <label class="rocker rocker-small" size="xs" name="valoracionMedica">
+                              <input type="checkbox" checked={showCommit5 || !saveData5 ? false : true } onChange={(e) => setShowCommit5(!e.target.checked)}></input>
+                              <span class="switch-left">Si</span>
+                              <span class="switch-right">No</span>
+                              </label>
+                                <Form.Control.Feedback type="invalid">
+                                            {errors.valoracionMedica}
+                                            </Form.Control.Feedback>
+                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>   
+                            </InputGroup>
+                            </Col>
                         </Form.Group>
+                        )}
+
 
                         <Form.Group as={Row}  style={{ "marginLeft":"43px"}} className="mt-2">
                         <Form.Label column sm="9" >
@@ -555,9 +561,16 @@ export default function AddInfantInc(props){
                     <center>
                         <Col sm={10}> 
                         <div className="d-grid gap-2 mb-3">
-                            <Button variant="primary" type="submit" size="lg">
-                               Guardar
-                            </Button>
+                          <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                              {showSpinner ? (
+                                <>
+                                <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                                {"  " + `  Cargando...`}  
+                                </>
+                                ):(
+                                "Guardar" 
+                            )}
+                          </Button>
                         </div>
                         </Col>
                       </center>

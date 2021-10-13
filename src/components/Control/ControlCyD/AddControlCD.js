@@ -16,6 +16,7 @@ export default function AddControlCD(props){
   const [ textFormSend, setTextFormSend ] = useState({});
   const [show, setShow] = useState(false);
   const [ imc, setImc ] = useState(null);
+  const [ showSpinner, setShowSpinner ] = useState(false);
 
   let dateFechaNaci = moment(userControl.fechaNacimiento);
   let dateCurrent = moment();
@@ -28,7 +29,9 @@ export default function AddControlCD(props){
       user: responseUser,
       control: responseControl
     }
+    setShowSpinner(true);
     if(result.user === true && result.control === true){
+      setShowSpinner(false);
       swal("¡Excelente, registro exitoso!, El control fue almacenado correctamente", {
         icon: "success",
       })
@@ -37,6 +40,7 @@ export default function AddControlCD(props){
         }); 
       setShow(true);
   }else{
+    setShowSpinner(false);
     swal("Opss! Ocurrió un error!", {
       icon: "error",
   });
@@ -76,21 +80,27 @@ export default function AddControlCD(props){
 
   const updateAgeUser = async (dataUser) => {
     dataUser.token = token;
+    setShowSpinner(true);
     const responUpdateUser = await updateUserApi(dataUser);
     console.log(responUpdateUser);
     if(responUpdateUser === true){
+      setShowSpinner(false);
       return true;
     }else{
+      setShowSpinner(false);
       return false;
     }
   } 
 
   const insertcONTROLc = async (formData) => {
+    setShowSpinner(true);
     const response = await insertControlApi(formData, token, false);
       console.log(response);
       if(response === true){
+        setShowSpinner(false);
         return true;
       }else{
+        setShowSpinner(false);
         return false;
       }
   }
@@ -211,6 +221,7 @@ export default function AddControlCD(props){
                     correoElectronico: userControl.correoElectronico,
                     clave: userControl.clave
                 }
+                setShowSpinner(true);
                 updateAndInsert(dataUser, formData);
               }}
                 >
@@ -346,9 +357,16 @@ export default function AddControlCD(props){
                     </Form.Group> 
 
                     <Form.Group as={Row} className="mt-1 justify-content-center">
-                            <Button variant="primary" type="submit" size="lg">
-                                Guardar
-                            </Button>
+                        <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                              {showSpinner ? (
+                                <>
+                                <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                                {"  " + `  Cargando...`}  
+                                </>
+                                ):(
+                                "Guardar" 
+                            )}
+                        </Button>
                     </Form.Group> 
                   </Form>
                             );

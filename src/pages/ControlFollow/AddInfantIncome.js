@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from 
 import { getSegByIdApi } from "../../api/follow-up";
 import { TOKEN } from "../../utils/constans";
 import AddInfantInc from "../../components/Control/ControlFollow/AddInfantInc";
+import { getUserByIdApi } from "../../api/user";
 
 export default function AddInfantIncome(){
     const { idSeg, documento } = useParams();
@@ -12,13 +13,25 @@ export default function AddInfantIncome(){
     const [ componentLoaded, setComponentLoaded ] = useState(false); 
     const [ controlLoaded, setControlLoaded ] = useState({});
     var loading = true;
+    const [ showValidationM, setShowValidationM ] = useState(false);
 
     useEffect(() => {
         loading = false;
         getSegByIdApi(idSeg, token).then(response => {
             setControl(response);
+        });
+        getUserByIdApi(documento, token).then(response => {
+            console.log(response);
+            if(response.sexo === "FEMENINO"){
+                setShowValidationM(true);
+            }else{
+                if(response.edad <= 1){
+                    setShowValidationM(true);
+                }
+            }
             setComponentLoaded(true); 
         })
+
         if(!loading){ 
             setComponentLoaded(true); 
             setControlLoaded(controlSeguimiento);
@@ -38,7 +51,7 @@ export default function AddInfantIncome(){
         )
         :
         (
-            <AddInfantInc idSeg={idSeg} documento={documento} controlSeguimiento={controlSeguimiento}/>
+            <AddInfantInc idSeg={idSeg} showValidationM={showValidationM} documento={documento} controlSeguimiento={controlSeguimiento}/>
         )
         }
         </Container>

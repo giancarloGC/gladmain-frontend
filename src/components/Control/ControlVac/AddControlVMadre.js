@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useReducer } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
 import  AuthContext  from "../../../hooks/useAuth";
 import { TOKEN } from "../../../utils/constans";
@@ -12,6 +12,7 @@ export default function AddControlVMadre (props){
     const token = localStorage.getItem(TOKEN);
     const [ textFormSend, setTextFormSend ] = useState({});
     const [show, setShow] = useState(false);
+    const [ showSpinner, setShowSpinner ] = useState(false);
 
     const dateFormat = (date) => {
         if(date){
@@ -74,9 +75,12 @@ export default function AddControlVMadre (props){
                 }
                 console.log(formData);
                 valores.token = token;
+                setShowSpinner(true);
                 insertContVaccApi(formData, token).then(response => {
+                    setShowSpinner(false);
                     if(response === true){
-                    swal("¡Excelente, registro exitoso!, El control fue actualizado correctamente", {
+                    setShowSpinner(false);
+                    swal("¡Excelente, registro exitoso!, El control fue registrado correctamente", {
                         icon: "success",
                     })
                     .then((value) => {
@@ -84,6 +88,7 @@ export default function AddControlVMadre (props){
                     }); 
                     setShow(true);
                     }else{
+                    setShowSpinner(false);
                     swal("Opss! Ocurrió un error!", {
                         icon: "error",
                     });
@@ -206,9 +211,16 @@ export default function AddControlVMadre (props){
                         <Form.Group as={Row} className="mb-4 mt-3 justify-content-center">
                         <Col sm="12">
                         <div  className="row justify-content mb-2">
-                            <Button variant="primary" type="submit" size="l">
-                                Guardar
-                            </Button>
+                        <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                             {showSpinner ? (
+                                <>
+                                <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                                {"  " + `  Cargando...`}  
+                                </>
+                                ):(
+                                " Guardar   " 
+                            )}
+                          </Button>
                         </div>
                         </Col>
                         </Form.Group>

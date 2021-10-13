@@ -11,7 +11,7 @@ import { TOKEN } from "../../../utils/constans";
 export default function ListFollowUp(props){
     const { listSeg, user, documento, listInc, rolUser } = props;
     const token = localStorage.getItem(TOKEN);
-
+    console.log(listSeg);
     const dateFormat = (date) => {
         if(date){
         let dateFormated = date.split('T');
@@ -49,7 +49,7 @@ export default function ListFollowUp(props){
                    <Col sm={3} className="align-self-right">
                    <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Acciones</b> <br/>    
                    {validatePrivilegio("CONSULTAR_SEGUIMIENTO").length > 0 && (
-                        <Link className="enlace"to={`/admin/detailsInfantIncome/${item.id}/`} className="btn btn-primary mx-0">
+                        <Link className="enlace" to={`/admin/detailsControlFollow/${item.id}/${documento}/${rolUser}`} className="btn btn-primary mx-0">
                             <FontAwesomeIcon icon={faEye} size="l" color="white" data-tip data-for = "boton3" 
                             /> <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Ver </ReactTooltip>
                         </Link>

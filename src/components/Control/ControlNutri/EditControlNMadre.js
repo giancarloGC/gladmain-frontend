@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner } from "react-bootstrap";
 import { Formik } from "formik";
 import { TOKEN } from "../../../utils/constans";
 import  AuthContext  from "../../../hooks/useAuth";
@@ -29,6 +29,7 @@ export default function EditControlNMadre(props){
     const [ showButtonAdd, setShowButtonAdd ] = useState(false);
     const [ graphicValues, setGraphicValues] = useState({ x: 0, y: 0, r: 3});
     const [ goRedirect, setGoRedirect ] = useState(false);
+    const [ showSpinner, setShowSpinner ] = useState(false);
 
     let dateFechaNaci = moment(userControl.fechaNacimiento);
     let dateCurrent = moment();
@@ -191,9 +192,9 @@ export default function EditControlNMadre(props){
                     if(!valores.edadGestacional){
                       errores.edadGestacional = 'Por favor, ingresa solo números';
                     }else if(!/^([0-9])*$/.test(valores.edadGestacional)){
-                      errores.talla = 'Solo puedes escribir números';
+                      errores.edadGestacional = 'Solo puedes escribir números';
                     }else if(valores.edadGestacional < 10 || valores.edadGestacional > 42 ){
-                        errores.talla = 'La edad gestacional debe ser mayor a 10 semanas y menos a 42 semanas';
+                        errores.edadGestacional = 'La edad gestacional debe ser mayor a 10 semanas y menos a 42 semanas';
                       }
 
                 if(valores.edadGestacional >= 10 && valores.edadGestacional <= 42){
@@ -235,8 +236,11 @@ export default function EditControlNMadre(props){
 
                   console.log(formData);
                   formData.token = token;
+                  setShowSpinner(true);
                   updateControlApi(formData, token).then(response => {
+                    setShowSpinner(false);
                       if(response === true){
+                        setShowSpinner(false);
                         swal({
                           title: `¡El control fue actualizado correctamente!`,
                           icon: 'success'
@@ -244,6 +248,7 @@ export default function EditControlNMadre(props){
                           setGoRedirect(true);
                         });
                       }else{
+                        setShowSpinner(false);
                         swal({
                           title: `¡Opss, ocurrió un error!`,
                           icon: 'danger'
@@ -329,37 +334,7 @@ export default function EditControlNMadre(props){
                       </Form.Group>
 
                       <Form.Group as={Row} className="mb-3 mt-4">
-                        <Form.Label column sm="3"><h5 style={{fontSize: "16px"}} className="mt-1">Tensión (mmHg)</h5></Form.Label>
-                        <Col sm="3">
-                              <InputGroup hasValidation>
-                                  <Form.Control type="number" placeholder="Dígita aquí la tensión" size="xs" id="tension" name="tension" 
-                                     defaultValue={infoControl.tension} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.tension && touched.tension}
-                                     isValid={!errors.tension && touched.tension} 
-                                  />
-                                  <Form.Control.Feedback type="invalid">
-                                      {errors.tension}
-                                  </Form.Control.Feedback>
-                                  <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                              </InputGroup>
-                        </Col>
-
-                        <Form.Label column sm="2"> <h5 style={{fontSize: "16px"}} className="mt-1"> Edad Gestacional </h5></Form.Label>
-                        <Col sm="4">
-                        <InputGroup hasValidation>
-                                  <Form.Control type="number" placeholder="Edad Gestacional en semanas" size="xs" id="edadGestacional" name="edadGestacional" 
-                                     defaultValue={infoControl.edadGestacional} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edadGestacional && touched.edadGestacional}
-                                     isValid={!errors.edadGestacional && touched.edadGestacional} 
-                                  />
-                                  <Form.Control.Feedback type="invalid">
-                                      {errors.edadGestacional}
-                                  </Form.Control.Feedback>
-                                  <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
-                              </InputGroup>
-                        </Col>           
-                        </Form.Group>
-
-                        <Form.Group as={Row} className="mb-3 mt-4">
-                        <Form.Label column sm="1"><h5 style={{fontSize: "16px"}}>Sexo</h5></Form.Label>
+                        <Form.Label column sm="3"><h5 style={{fontSize: "16px"}} className="mt-1">Sexo</h5></Form.Label>
                         <Col sm="3">
                         <InputGroup hasValidation>
                           <Form.Select size="xs" name="sexo" onChange={handleChange} onBlur={handleBlur}
@@ -370,8 +345,24 @@ export default function EditControlNMadre(props){
                               <option value="MASCULINO">MASCULINO</option>
                               </Form.Select>
                           </InputGroup>
-                          </Col>
+                        </Col>
 
+                        <Form.Label column sm="2"> <h5 style={{fontSize: "16px"}} className="mt-1"> Tensión (mmHg) </h5></Form.Label>
+                        <Col sm="4">
+                        <InputGroup hasValidation>
+                                  <Form.Control type="number" placeholder="Dígita aquí la tensión" size="xs" id="tension" name="tension" 
+                                     defaultValue={infoControl.tension} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.tension && touched.tension}
+                                     isValid={!errors.tension && touched.tension} 
+                                  />
+                                  <Form.Control.Feedback type="invalid">
+                                      {errors.tension}
+                                  </Form.Control.Feedback>
+                                  <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                              </InputGroup>
+                        </Col>           
+                        </Form.Group>
+
+                        <Form.Group as={Row} className="mb-3 mt-4">
                         <Form.Label column sm="1"><h5 style={{fontSize: "16px"}}>Peso</h5></Form.Label>
                         <Col sm="3">
                           <InputGroup hasValidation>
@@ -387,7 +378,7 @@ export default function EditControlNMadre(props){
                         </Col>
 
                         <Form.Label column sm="1"><h5 style={{fontSize: "16px"}}>Talla</h5></Form.Label>
-                        <Col sm="3">
+                        <Col sm="2">
                         <InputGroup hasValidation>
                               <Form.Control type="text" placeholder="Talla en cm" size="xs" id="talla" name="talla" 
                                defaultValue={infoControl.talla} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.talla && touched.talla}
@@ -399,6 +390,20 @@ export default function EditControlNMadre(props){
                               <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                           </InputGroup>
                         </Col>
+
+                        <Form.Label column sm="2"><h5 style={{fontSize: "16px"}}>Edad Gestacional</h5></Form.Label>
+                        <Col sm="3">
+                        <InputGroup hasValidation>
+                                  <Form.Control type="number" placeholder="Edad Gestacional en semanas" size="xs" id="edadGestacional" name="edadGestacional" 
+                                     defaultValue={infoControl.edadGestacional} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.edadGestacional && touched.edadGestacional}
+                                     isValid={!errors.edadGestacional && touched.edadGestacional} 
+                                  />
+                                  <Form.Control.Feedback type="invalid">
+                                      {errors.edadGestacional}
+                                  </Form.Control.Feedback>
+                                  <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                              </InputGroup>
+                          </Col>
                         </Form.Group>
                         </Container>
                   </Col>
@@ -450,9 +455,16 @@ export default function EditControlNMadre(props){
                             </Form.Group> 
 
                             <div className="d-grid gap-2">
-                            <Button variant="primary" type="submit" size="lg">
-                                Actualizar control   <FontAwesomeIcon data-tip data-for="boton1" icon={faAddressCard} size="lg" color="#FFF" />
-                            </Button>
+                            <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                             {showSpinner ? (
+                                <>
+                                <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                                {"  " + `  Cargando...`}  
+                                </>
+                                ):(
+                                " Actualizar control   " 
+                            )}<FontAwesomeIcon data-tip data-for="boton1" icon={faAddressCard} size="lg" color="#FFF" />
+                          </Button>
                         </div>
                   </Col>
                 </Row>

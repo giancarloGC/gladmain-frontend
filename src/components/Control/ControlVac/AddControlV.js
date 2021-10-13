@@ -17,6 +17,7 @@ export default function AddControlV(props){
   const [show, setShow] = useState(false);
   const [ vaccinesSelected, setVaccinesSelected ] = useState([]);
   const [ goRedirect, setGoRedirect ] = useState(false);
+  const [ showSpinner, setShowSpinner ] = useState(false);
 
 
   const [ infoGeneral, setInfoGeneral] = useState({
@@ -174,16 +175,19 @@ export default function AddControlV(props){
               }
             ]
           }
-
+          setShowSpinner(true);
           insertContVaccApi(formData, token).then(response => {
+            setShowSpinner(false);
             console.log(response);
             if(response === true){
+              setShowSpinner(false);
               swal("¡Excelente, registro exitoso!, El control de vacunas fue almacenado correctamente", {
                 icon: "success",
               }).then((value) => {
                 setGoRedirect(true);
               });
             }else{
+              setShowSpinner(false);
               swal("Opss! Ocurrió un error!", {
                 icon: "error",
               }).then((value) => {
@@ -401,8 +405,15 @@ export default function AddControlV(props){
 
 
                     <div className="d-grid gap-2 mb-4">
-                        <Button variant="primary" type="submit" size="lg">
-                            Actualizar Control
+                        <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                          {showSpinner ? (
+                                <>
+                                <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                                {"  " + `  Cargando...`}  
+                                </>
+                                ):(
+                                "Actualizar Control" 
+                            )}
                         </Button>
                     </div>
 

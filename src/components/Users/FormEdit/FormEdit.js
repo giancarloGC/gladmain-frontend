@@ -19,6 +19,7 @@ export default function FormEdit(props){
     const [ rolesRegistred, setRolesRegistred ] = useState([]);
     const [ rolesSelected, setRolesSelected ] = useState([]);
     const [ edadFinaly, setEdadFinaly ] = useState(null);
+    const [ showSpinner, setShowSpinner ] = useState(false);
   
   const [ loaded, setLoaded] = useState(false);
   console.log(user);
@@ -96,10 +97,8 @@ export default function FormEdit(props){
       const responseRemove = await getAssignRolApi(item.idRol, user.documento, token);
           console.log(responseRemove);
           if(responseRemove === true){
-            console.log("Si entro");
             successs = true;
           }else{
-            console.log("pauilas");
             successs = false;
           }     
       return successs;
@@ -120,9 +119,9 @@ export default function FormEdit(props){
     }
 
     const resultUpdate = async (actualizationSuccess) => {
-
+      setShowSpinner(true);
       if(actualizationSuccess){
-        console.log("entro");
+        setShowSpinner(false);
         swal("¡Excelente, actualización exitosa!, El usuario fue actualizado correctamente", {
           icon: "success",
         })
@@ -131,7 +130,7 @@ export default function FormEdit(props){
         });
         setShow(true);
       }else{
-        console.log("no entro");
+        setShowSpinner(false);
         swal("Opss! Ocurrió un error al actualizar el usuario!", {
           icon: "error",
         });
@@ -160,18 +159,6 @@ export default function FormEdit(props){
                 initialValues={user}
                 validate={(valores) => {
                   let errores = {};
-                  if(!valores.tipoDocumento){
-                    errores.tipoDocumento = 'Asegurese de selecionar una opción';
-                  }
-                  if(!valores.documento){
-                    errores.documento = 'Por favor, ingresa números';
-                  }else if(!/^([0-9])*$/.test(valores.documento)){
-                    errores.documento = 'Documento incorrecto, solo puedes escribir números';
-                  }
-                  if(valores.documento.length <= 0 || valores.documento.length > 15){
-                    errores.documento = 'Documento invalido, intente con otro';
-                  }      
-
                   if(!valores.nombre){
                     errores.nombre = 'No se permiten campos vacíos'
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.nombre)){
@@ -225,7 +212,9 @@ export default function FormEdit(props){
                   return errores;
                 }}
                 onSubmit={(valores, {resetForm}) => {
+                  setShowSpinner(true);
                   if(rolesSelected.length === 0){
+                    setShowSpinner(false);
                     swal("¡Opss, No has seleccionado funciones!, Debes seleccionar al menos una función para el usuario", {
                       icon: "error",
                     });
@@ -256,9 +245,12 @@ export default function FormEdit(props){
                         token: token
                       }
                       updateUserApi(data).then(response => {
+                        setShowSpinner(true);
                         if(response === true){
+                          setShowSpinner(false);
                           updateRoles();
                         }else{
+                          setShowSpinner(false);
                           swal("Opss! Ocurrió un error!", {
                             icon: "error",
                           });
@@ -283,19 +275,14 @@ export default function FormEdit(props){
                         <Col sm="4">
                         <InputGroup hasValidation>
                             <Form.Select size="xs" name="tipoDocumento" onChange={handleChange} onBlur={handleBlur}
-                                defaultValue={user.tipoDocumento} isValid={!errors.tipoDocumento && touched.tipoDocumento} isInvalid={!!errors.tipoDocumento && touched.tipoDocumento}
+                                defaultValue={user.tipoDocumento} disabled
                             >
                             <option disabled>Selecciona el tipo de documento</option>
                             <option value="CC">Cédula de ciudadanía</option>
                             <option value="RC">Registro civil</option>
                             <option value="TI">Tarjeta de identidad</option>
                             <option value="CE">Cédula de extranjería</option>
-
                             </Form.Select>
-                            <Form.Control.Feedback type="invalid">
-                                        {errors.tipoDocumento}
-                                        </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                         </Col>
 
@@ -304,13 +291,8 @@ export default function FormEdit(props){
                         <Col sm="4">
                             <InputGroup hasValidation>
                             <Form.Control type="number" placeholder="Dígita aquí el documento" size="xs" id="documento" name="documento" 
-                            defaultValue={user.documento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.documento && touched.documento}
-                            isValid={!errors.documento && touched.documento}
+                            defaultValue={user.documento} onChange={handleChange} onBlur={handleBlur} disabled
                             />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.documento}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                         </Col>
                         </Form.Group>
@@ -484,9 +466,16 @@ export default function FormEdit(props){
                         </fieldset>
 
                         <div className="d-grid gap-2">
-                            <Button variant="primary" type="submit" size="lg">
-                                Guardar Cambios
-                            </Button>
+                        <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                            {showSpinner ? (
+                              <>
+                              <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                              {"  " + `  Cargando...`}  
+                              </>
+                              ):(
+                              "Guardar Cambios" 
+                           )}
+                        </Button>
                         </div>
 
                     </Form>

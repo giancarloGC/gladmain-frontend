@@ -8,7 +8,7 @@ import { updateSegApi } from "../../../api/follow-up";
 import swal from 'sweetalert';
 import moment from 'moment';
 
-export default function EditControlF(props){
+export default function DetailsControlF(props){
   const { infoSeg, userControl, documento, rolUser } = props;
   const token = localStorage.getItem(TOKEN);
   const { user } = AuthContext();
@@ -23,10 +23,6 @@ export default function EditControlF(props){
         return dateFormated[0];
     }
   }
-
-  const validatePrivilegio = (privilegio) => {
-    return user.authorities.filter(priv => priv === privilegio);
-}
 
     return(
         <Container>
@@ -166,6 +162,7 @@ export default function EditControlF(props){
                         <InputGroup hasValidation>
                             <Form.Select  size="lg" id="tipoDocAcudiente" name="tipoDocAcudiente" onChange={handleChange} onBlur={handleBlur}
                                    defaultValue={infoSeg.tipoDocAcudiente} isValid={!errors.tipoDocAcudiente && touched.tipoDocAcudiente} isInvalid={!!errors.tipoDocAcudiente && touched.tipoDocAcudiente}
+                                disabled
                             >
                             <option disabled selected >Selecciona el tipo de documento</option>
                             <option value="CC">Cédula de ciudadanía</option>
@@ -187,6 +184,7 @@ export default function EditControlF(props){
                             <Form.Control type="text" placeholder="documento acudiente" size="lg" id="numeroDocAcudiente" name="numeroDocAcudiente" 
                             defaultValue={infoSeg.numeroDocAcudiente} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.numeroDocAcudiente && touched.numeroDocAcudiente}
                             isValid={!errors.numeroDocAcudiente && touched.numeroDocAcudiente}
+                            disabled
                             />
                             <Form.Control.Feedback type="invalid">
                                 {errors.numeroDocAcudiente}
@@ -205,6 +203,7 @@ export default function EditControlF(props){
                                <Form.Control type="text" placeholder="Nombre del Acudiente" size="lg" id="nombreAcudiente" name="nombreAcudiente" 
                                defaultValue={infoSeg.nombreAcudiente} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreAcudiente && touched.nombreAcudiente}
                                isValid={!errors.nombreAcudiente && touched.nombreAcudiente}
+                               disabled
                             />
                             <Form.Control.Feedback type="invalid">
                                 {errors.nombreAcudiente}
@@ -292,37 +291,19 @@ export default function EditControlF(props){
 
                     <Form.Group as={Row} className="mb-1">
                     <Col md={6}>        
-                        <div className="d-grid gap-2">
-                        <div className="d-grid gap-2">
-                        <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
-                            {showSpinner ? (
-                              <>
-                              <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
-                              {"  " + `  Cargando...`}  
-                              </>
-                              ):(
-                              "Guardar" 
-                           )}
-                        </Button>
-                        </div>
-                        </div>
                       </Col>
                       <Col md={6}> 
                         <div className="d-grid gap-2 mt-3">
                           {rolUser === "INFANTE" ? (
-                            validatePrivilegio("LISTAR_INGRESOS_INFANTE").length > 0 && ("ACTUALIZAR_INGRESO_INFANTE").length > 0 && (
-                              <Button variant="primary" size="lg" href={`/admin/editInfantIncome/${infoSeg.id}/${documento}/${rolUser}`}>
-                                Editar Ingreso
-                              </Button>
-                            )
+                            <Button variant="primary" size="lg" href={`/admin/detailsInfantIncome/${infoSeg.id}/${documento}`}>
+                               Detalles del Ingreso
+                            </Button>
                           )
                         :
                           (
-                            validatePrivilegio("LISTAR_INGRESOS_MADRE").length > 0 && ("ACTUALIZAR_INGRESO_MADRE").length > 0 && (
-                              <Button variant="primary" size="lg" href={`/admin/editMotherIncome/${infoSeg.id}/${documento}`}>
-                                Editar Ingreso
-                              </Button>
-                            )
+                            <Button variant="primary" size="lg" href={`/admin/detailMotherIncome/${infoSeg.id}/${documento}`}>
+                               Detalles del Ingreso
+                            </Button>
                           )}
                         </div>
                         </Col>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-bootstrap";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import swal from 'sweetalert';
@@ -18,15 +18,16 @@ import AddIncomeCommit9 from "./AddIncomeCommit/AddIncomeCommit9";
 import AddIncomeCommit10 from "./AddIncomeCommit/AddIncomeCommit10";
 
 export default function EditInfantInc(props){
-  const { idSeg, ingreso, documento, rolUser } = props;
+  const { idSeg, ingreso, documento, showValidationM, rolUser } = props;
   const token = localStorage.getItem(TOKEN);
 
-  const [ goRedirect, setGoRedirect ] = useState(0);
+  const [ goRedirect, setGoRedirect ] = useState();
 
   const [ showPatologia, setShowPatologia ] = useState(ingreso.ingreso.patologiaIdentificadaSgsss);
   const [ showMedicamentos, setShowMedicamentos ] = useState(ingreso.ingreso.recibeMedFormulada);
   const [ showRemitido, setRemitido ] = useState(ingreso.ingreso.usuarioRemitido === "1" ? true : false);
   const [ showSuplemento, setShowSuplemento ] = useState(ingreso.ingresoInfante.recibeSuplementos === "SI" ? true : false);
+  const [ showSpinner, setShowSpinner ] = useState(false);
   console.log(ingreso);
   /*const onChangeChecked = (e) => {
     setCheckeds({...checkeds, [e.target.name]: e.target.checked});
@@ -169,8 +170,8 @@ console.log(ingreso);
                     }
   
                     if(showMedicamentos){
-                      if(!valores.nombreMedFormulada){
-                        errores.nombreMedFormulada = 'No se permiten campos vacíos'
+                      if(!valores.nombreMedFormululada){
+                        errores.nombreMedFormululada = 'No se permiten campos vacíos'
                       }
                     }
                     
@@ -206,7 +207,7 @@ console.log(ingreso);
                           alarmaPreventiva: saveData4 ? "SI" : "NO",
                           controlCyD: saveData6 ? "SI" : "NO",
                           recibeSuplementos: saveData10 ? "SI" : "NO",
-                          valoracionMedica: saveData5 ? "SI" : "NO",
+                          valoracionMedica: showValidationM ? saveData5 ? "SI" : "NO" : null,
                       },
                       ingresoMadre: null,
                       ingreso: {
@@ -228,10 +229,12 @@ console.log(ingreso);
 
                   console.log(formData);
                   console.log(saveData10);
-                  
+                  setShowSpinner(true);
                   updateInfantIncomeApi(formData, token).then(response => {
                     console.log(response);
+                    setShowSpinner(false);
                     if(response === true){
+                      setShowSpinner(false);
                       swal({
                         title: `¡El ingreso fue actualizado correctamente!`,
                         icon: 'success'
@@ -239,6 +242,7 @@ console.log(ingreso);
                         window.location.replace(`/admin/ListFollowUp/${documento}/${rolUser}`);
                     }); 
                     }else{
+                      setShowSpinner(false);
                       swal({
                         title: `¡Opss, ocurrió un error!`,
                         icon: 'danger'
@@ -344,7 +348,7 @@ console.log(ingreso);
                         </Col>
                     </Form.Group>
 
-                    
+                    {showValidationM && (
                     <Form.Group as={Row}  style={{ "marginLeft":"43px"}} className="mt-1">
                        <Form.Label column sm="9" >
                        <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>En niñas y menores de un mes se realizó validación médica</h5></Form.Label>
@@ -362,6 +366,8 @@ console.log(ingreso);
                         </InputGroup>
                         </Col>
                         </Form.Group>
+                        )}
+
 
                         <Form.Group as={Row}  style={{ "marginLeft":"43px"}} className="mt-2">
                         <Form.Label column sm="9" >
@@ -424,7 +430,7 @@ console.log(ingreso);
                     <Col sm="9" class="mid">
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre Patología" size="xs" id="nombrePatologia" name="nombrePatologia" 
-                               value={values.nombrePatologia} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
+                               value={values.nombrePatologia} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombrePatologia && touched.nombrePatologia}
                                isValid={!errors.nombrePatologia && touched.nombrePatologia}
                             />
                             <Form.Control.Feedback type="invalid">
@@ -460,12 +466,12 @@ console.log(ingreso);
                     <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>¿Cuál?</h5></Form.Label>
                     <Col md="9" class="mid" >
                         <InputGroup hasValidation>
-                               <Form.Control type="text" placeholder="Nombre Medicamento Formulado" size="xs" id="nombreMedFormulada" name="nombreMedFormulada" 
-                               value={values.nombreMedFormulada} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormulada && touched.nombreMedFormulada}
-                               isValid={!errors.nombreMedFormulada && touched.nombreMedFormulada}
+                               <Form.Control type="text" placeholder="Nombre Medicamento Formulado" size="xs" id="nombreMedFormululada" name="nombreMedFormululada" 
+                               value={values.nombreMedFormululada} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreMedFormululada && touched.nombreMedFormululada}
+                               isValid={!errors.nombreMedFormululada && touched.nombreMedFormululada}
                             />
                             <Form.Control.Feedback type="invalid">
-                                {errors.nombreMedFormulada}
+                                {errors.nombreMedFormululada}
                             </Form.Control.Feedback>
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
@@ -545,9 +551,16 @@ console.log(ingreso);
                     <center>
                         <Col sm={10}> 
                         <div className="d-grid gap-2 mb-3">
-                            <Button variant="primary" type="submit" size="lg">
-                               Guardar
-                            </Button>
+                          <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                              {showSpinner ? (
+                                <>
+                                <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                                {"  " + `  Cargando...`}  
+                                </>
+                                ):(
+                                "Guardar" 
+                            )}
+                          </Button>
                         </div>
                         </Col>
                       </center>

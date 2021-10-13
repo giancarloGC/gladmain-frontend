@@ -14,6 +14,7 @@ export default function EditControlCyD(props){
   const documentoLogin = user.sub.split('-');
   const [ textFormSend, setTextFormSend ] = useState({});
   const [show, setShow] = useState(false);
+  const [ showSpinner, setShowSpinner ] = useState(false);
 
   const dateFormat = (date) => {
     if(date){
@@ -141,8 +142,10 @@ export default function EditControlCyD(props){
               }
               console.log(formData);
               formData.token = token;
+              setShowSpinner(true);
               updateControlApi(formData).then(response => {
                 if(response === true){
+                  setShowSpinner(false);
                   swal("¡Excelente, registro exitoso!, El control fue actualizado correctamente", {
                     icon: "success",
                 })
@@ -151,6 +154,7 @@ export default function EditControlCyD(props){
                   }); 
                   setShow(true);
                 }else{
+                  setShowSpinner(false);
                   swal("Opss! Ocurrió un error!", {
                     icon: "error",
                 });
@@ -238,8 +242,8 @@ export default function EditControlCyD(props){
                     </Form.Group>
 
                     <Form.Group as={Row} className="mt-2 mb-2">
-                    <Form.Label column sm={2}><h5 style={{fontSize: "16px"}} className="mt-1">Peso (kg)</h5></Form.Label>
-                    <Col sm={4}>
+                    <Form.Label column sm={3}><h5 style={{fontSize: "16px"}} className="mt-1">Peso (kg)</h5></Form.Label>
+                    <Col sm={3}>
                       <InputGroup hasValidation>
                         <Form.Control type="text" placeholder="Peso (kg)" size="l" id="peso" name="peso" 
                           defaultValue={control.peso} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.peso && touched.peso}
@@ -270,9 +274,16 @@ export default function EditControlCyD(props){
                     </Form.Group> 
 
                 <Form.Group as={Row} className="mt-1 justify-content-center">
-                      <Button variant="primary" type="submit" size="lg"> 
-                      Guardar 
-                      </Button>
+                      <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                              {showSpinner ? (
+                                <>
+                                <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                                {"  " + `  Cargando...`}  
+                                </>
+                                ):(
+                                "Guardar" 
+                            )}
+                        </Button>
                 </Form.Group> 
                 </Form>
               );

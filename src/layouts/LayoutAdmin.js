@@ -30,7 +30,7 @@ export default function LayoutAdmin(props){
     const [ countAlerts, setCountAlerts ] = useState(0);
     const [ showAlert, setShowAlert ] = useState(false);
     const [ roleUsuario, setroleUsuario ] = useState(null);
-
+    const [ goDesnutricion, setGoDesnutricion ] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -75,39 +75,43 @@ export default function LayoutAdmin(props){
 
         const responseUsers = await listUsersByRol("INFANTE", token);
         let total = 0;
-        await responseUsers.map(async (userInfant, index) => {
+        await Promise.all(responseUsers.map(async (userInfant, index) => {
             let result = await consultControls(userInfant.documento);
-            if(result === 1){
+            if(result){
                 total ++;
             }
-        });
-        setTimeout(() => {
-            console.log(total);
-            toast.error(<Msg countAlerts={total} />, {
-                position: "bottom-right",
-                autoClose: 10000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored"
-            });
-            setShowAlert(true);
-        }, 4000);
+        }));
+
         setCountAlerts(total);
+        toast.error(<Msg countAlerts={total} setGoDesnutricion={setGoDesnutricion} />, {
+            position: "bottom-right",
+            autoClose: 10000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored"
+        });
+        setShowAlert(true);
     }
 
     const consultControls = async (documentoInf) => {
         const responseControls = await getControlNutriApi(documentoInf, token);
         if(responseControls.length > 0){
+            let enDesnutricion = false;
+            let doc = 0;
             for(var i = 0; i < responseControls.length; i++ ){
-                if(responseControls[i].estadoNutricional === "Riesgo de Desnutrición Aguda" && responseControls[i].vigente === true){
-                    return 1;
-                }else{
-                    return 0;
+                if(enDesnutricion === false){
+                    if(responseControls[i].estadoNutricional === "Riesgo de Desnutrición Aguda"){
+                        enDesnutricion = true;
+                        doc = 1;
+                    }else{
+                        doc = 0;
+                    }
                 }
             };
+            return doc;
         }
     }
 
@@ -174,34 +178,34 @@ export default function LayoutAdmin(props){
                             <FontAwesomeIcon icon={faBars} id="btn_open" onClick={() => setOpenMenu(!openMenu)} className="icon"/>
                         </div>
                         <Nav className="justify-content-end align-items-center navlayout" activeKey="/home">
-                    <Nav.Item>
+                    <Nav.Item className="option mt-3">
                         <div className="option" id="/home">
-                            <NavDropdown title={infoUser.nombre} id="nav-dropdown" className="subtitlesMenu"
-                                style={{"fontSize": "24px", "fontWeight": 150, "color": "#D4D1D1"}}
+                            <NavDropdown title={infoUser.nombre} id="nav-dropdown" className="respon"
+                              style={{"color": "#D4D1D1"}}
                             >
-
                             {validatePrivilegio("CONSULTAR_USUARIO").length > 0 && ("ACTUALIZAR_USUARIO").length > 0 && (
                             <NavDropdown.Item>
                                 <Link to={`/admin/EditProfileUser/${infoUser.documento}`}>
-                                 <h5><FontAwesomeIcon icon={faUserEdit} className="icon" size="1x" fill="currentColor"/>  Editar Perfil</h5>
+                                 <h5   style={{"fontSize": "15px"}} ><FontAwesomeIcon icon={faUserEdit} className="icon" size="1x" fill="currentColor"/>  Editar Perfil</h5>
                                  </Link>
                             </NavDropdown.Item>
                             )}
-                                
                             <NavDropdown.Divider />
-                            <NavDropdown.Item><h5 onClick={() => signOff()}><FontAwesomeIcon icon={faPowerOff} className="icon" size="1x"fill="currentColor"/>  Cerrar Sesión </h5></NavDropdown.Item>
+                            <NavDropdown.Item><h2 style={{"fontSize": "15px"}} onClick={() => signOff()}><FontAwesomeIcon icon={faPowerOff} className="icon" size="1x"fill="currentColor"/>  Cerrar Sesión </h2></NavDropdown.Item>
                             </NavDropdown>
                         </div>
                     </Nav.Item>
-                    <Nav.Item>
-                      <Nav.Link eventKey="disabled">
-                      <Image src={AvatarDefault} roundedCircle fluid className="avatar"/>
-                
-                      </Nav.Link>
+                    <Nav.Item className="option mt-3">
+                      <Image height="auto" width="65%" src={AvatarDefault} roundedCircle fluid className="avatar"/>
                     </Nav.Item>
                   </Nav>
                 
                     </header>
+
+
+                    {goDesnutricion && (
+                        <Redirect to="/admin/usersDesnutrition" />
+                    )}
                 
                 
                     <div className={openMenu ? "menu__side menu__side_move" : "menu__side"} id="menu_side">
@@ -315,11 +319,10 @@ function LoadRoutes({routes}){
     );
 }
 
-const Msg = ({ closeToast, toastProps, countAlerts }) => {
-    console.log(countAlerts);
+const Msg = ({ closeToast, toastProps, countAlerts, setGoDesnutricion }) => {
     return(
-        <div onClick={() => console.log("jiji")}>
-        ¡Hay {countAlerts} niños en riesgo de desnutrición!
-    </div>
+        <div onClick={() => setGoDesnutricion(true)}>
+            ¡Hay {countAlerts} niños en riesgo de desnutrición!
+        </div>
     )
 }

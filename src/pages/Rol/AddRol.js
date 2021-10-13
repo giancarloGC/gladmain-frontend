@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert} from "react-bootstrap";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
 import { insertRolApi } from "../../api/rol";
 import { TOKEN } from "../../utils/constans";
@@ -14,6 +14,8 @@ export default function AddRol(){
     const [show, setShow] = useState(false);
     const [ listPrivilegios, setListPrivilegios ] = useState([]);
     const [ privilegiosSelected, setPrivilegiosSelected ] = useState([]);
+    const [ showSpinner, setShowSpinner ] = useState(false);
+
     console.log(listPrivilegios);
     useEffect(() => {
         (async () => {
@@ -72,9 +74,12 @@ export default function AddRol(){
                         valores.privilegios = privilegiosSelected;
                         valores.latestRol = latestRol;
                         console.log(valores);
-                        
+
+                        setShowSpinner(true);
                         insertRolApi(valores).then(response => {
+                            setShowSpinner(false);
                             if(response === true){
+                                setShowSpinner(false);
                                 swal("¡Excelente, registro exitoso!, El rol fue almacenado correctamente", {
                                     icon: "success",
                                 })
@@ -83,6 +88,7 @@ export default function AddRol(){
                                 });
                                 setShow(true);
                             }else{
+                                setShowSpinner(false);
                                 swal("Opss! Ocurrió un error al registrar el rol!", {
                                     icon: "error",
                                 });
@@ -154,12 +160,18 @@ export default function AddRol(){
                             </Row>
                         </fieldset>
                     </Container>
-
-                        <div className="d-grid gap-2 mt-3">
-                            <Button variant="primary" type="submit" size="lg">
-                                Añadir
-                            </Button>
-                        </div>
+                    <div className="d-grid gap-2 mt-3">
+                    <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                    {showSpinner ? (
+                        <>
+                        <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                        {"  " + `  Cargando...`}  
+                        </>
+                    ):(
+                        "Añadir" 
+                    )}
+                    </Button>
+                    </div>
 
                     </Form>
                             );

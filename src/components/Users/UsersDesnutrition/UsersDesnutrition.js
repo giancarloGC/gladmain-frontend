@@ -20,27 +20,12 @@ import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import AnimationAuthorization from "../../../assets/animations/withoutAuthorization.json";
 import AnimationNotFindSearch from "../../../assets/animations/notFindSearch.json";
 
-export default function UsersDesnutrition(){
-    const [ usersApi, setUsersApi ] = useState([]);
+export default function UsersDesnutrition(props){
+    const { usersApi, setUsersApi, allUsersSaved, setAllUsersSaved } = props;
     const [ loading, setLoading ] = useState(true);
     const token = localStorage.getItem(TOKEN);
     const [ authorization, setAuthorization ] = useState(true);
-    const [ allUsersSaved, setAllUsersSaved ] = useState([]);
     const [ typeSearch, setTypeSearch ] = useState("nombre");
-    useEffect(() => {
-        (async () => {
-            const response = await getUserApi(token);
-            if(response.status === 403){
-                setLoading(false);
-                setAuthorization(false);
-            }else{
-                setLoading(false);
-                setAllUsersSaved(response);
-                setUsersApi(response);
-            };
-        })();
-    }, []);
-
 
     const search = (e) => {
         let usersFiltred = [];
@@ -62,15 +47,6 @@ export default function UsersDesnutrition(){
                         options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
                     />
                 </>
-            )}
-
-            {loading && (
-                <Row className="justify-content-md-center text-center">
-                    <Col md={1} className="justify-content-center">
-                    <Spinner animation="border" >
-                    </Spinner> 
-                    </Col>
-                </Row>
             )}
        
             {allUsersSaved && (
