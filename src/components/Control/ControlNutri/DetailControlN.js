@@ -24,8 +24,12 @@ export default function DetailControlN(props){
     let dateCurrent = moment();
     userControl.edad = dateCurrent.diff(dateFechaNaci, 'months');
 
-     let idUsuarioNutricionista;   
+    let idUsuarioNutricionista;   
  
+     const validatePrivilegio = (privilegio) => {
+      return user.authorities.filter(priv => priv === privilegio);
+    }
+
     const dateFormat = (date) => {
       if(date){
       let dateFormated = date.split('T');
@@ -207,9 +211,11 @@ export default function DetailControlN(props){
 
                     <Form.Group as={Row} className="justify-content-center" >
                     <Col md="8"> 
-                    <div  className="row justify-content mb-5">
-                      <Button variant="primary" type="submit" size="lg" href={`/admin/editControlNutri/${control.id}/${userControl.documento}/${rolUser}`}> Editar Control </Button>
-                    </div>
+                     {validatePrivilegio("ACTUALIZAR_CONTROL").length > 0 && ("CONSULTAR_CONTROL").length > 0 && ("CONSULTAR_USUARIO").length > 0 && (
+                      <div  className="row justify-content mb-5">
+                        <Button variant="primary" type="submit" size="lg" href={`/admin/editControlNutri/${control.id}/${userControl.documento}/${rolUser}`}> Editar Control </Button>
+                      </div>
+                     )}
                     </Col>
                   </Form.Group>
 

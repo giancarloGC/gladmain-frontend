@@ -23,6 +23,10 @@ export default function EditControlF(props){
     }
   }
 
+  const validatePrivilegio = (privilegio) => {
+    return user.authorities.filter(priv => priv === privilegio);
+}
+
     return(
         <Container>
             <Row style={{backgroundColor: '#f1f1f1'}}>
@@ -281,15 +285,19 @@ export default function EditControlF(props){
                       <Col md={6}> 
                         <div className="d-grid gap-2 mt-3">
                           {rolUser === "INFANTE" ? (
-                            <Button variant="primary" size="lg" href={`/admin/editInfantIncome/${infoSeg.id}/${documento}/${rolUser}`}>
-                               Editar Ingreso
-                            </Button>
+                            validatePrivilegio("LISTAR_INGRESOS_INFANTE").length > 0 && ("ACTUALIZAR_INGRESO_INFANTE").length > 0 && (
+                              <Button variant="primary" size="lg" href={`/admin/editInfantIncome/${infoSeg.id}/${documento}/${rolUser}`}>
+                                Editar Ingreso
+                              </Button>
+                            )
                           )
                         :
                           (
-                            <Button variant="primary" size="lg" href={`/admin/editMotherIncome/${infoSeg.id}/${documento}`}>
-                               Editar Ingreso
-                            </Button>
+                            validatePrivilegio("LISTAR_INGRESOS_MADRE").length > 0 && ("ACTUALIZAR_INGRESO_MADRE").length > 0 && (
+                              <Button variant="primary" size="lg" href={`/admin/editMotherIncome/${infoSeg.id}/${documento}`}>
+                                Editar Ingreso
+                              </Button>
+                            )
                           )}
                         </div>
                         </Col>

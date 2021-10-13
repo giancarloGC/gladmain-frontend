@@ -19,6 +19,7 @@ import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import AnimationAuthorization from "../../../assets/animations/withoutAuthorization.json";
 import AnimationNotFindSearch from "../../../assets/animations/notFindSearch.json";
 import { useParams } from "react-router-dom";
+import useAuth from '../../../hooks/useAuth'; //privilegios
 import "../../../components/Control/ControlHome/AllUserC.scss";
 
 export default function AllUserC (){
@@ -29,6 +30,7 @@ export default function AllUserC (){
     const [ authorization, setAuthorization ] = useState(true);
     const [ allUsersSaved, setAllUsersSaved ] = useState([]);
     const [ typeSearch, setTypeSearch ] = useState("nombre");
+    const { user } = useAuth(); //privilegios
     
     useEffect(() => {
         (async () => {
@@ -44,6 +46,11 @@ export default function AllUserC (){
             }
         })();
     }, [rolUser]);
+
+    //privilegios
+    const validatePrivilegio = (privilegio) => {
+        return user.authorities.filter(priv => priv === privilegio);
+    }
 
     const search = (e) => {
         let usersFiltred = [];
@@ -130,17 +137,21 @@ export default function AllUserC (){
 
                                             <div className="sci">
                                                 <div className="liB">
+                                                {validatePrivilegio("LISTAR_SEGUIMIENTOS").length > 0 && ("CONSULTAR_USUARIO").length > 0 && ("LISTAR_INGRESOS_MADRE").length > 0 && (
                                                     <Link className="enlace" to={`/admin/ListFollowUp/${item.documento}/${rolUser}`}>
                                                         <FontAwesomeIcon icon={faFileMedicalAlt} size="lg" color="#2D61A4" data-tip data-for = "boton4"/>
                                                         <ReactTooltip id="boton4" place="bottom" type="dark" effect="float"> Seguimiento </ReactTooltip>
                                                     </Link>
+                                                )}
                                                 </div>
 
                                                 <div className="liB">
+                                                {validatePrivilegio("LISTAR_CONTROLES_NUTRICIONALES").length > 0 && (
                                                     <Link className="enlace"  to={`/admin/statisticHomeMadre/${item.documento}/${rolUser}`}>
                                                         <FontAwesomeIcon icon={faNutritionix} size="lg" color="#2D61A4" data-tip data-for = "boton1"/>
                                                         <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Nutrición </ReactTooltip>
                                                     </Link>
+                                                )}
                                                 </div>
 
                                                 {rolUser === "MADRE_GESTANTE" || (
@@ -153,10 +164,12 @@ export default function AllUserC (){
                                                 )}
 
                                                 <div className="liB">
+                                                {validatePrivilegio("LISTAR_CONTROLES_VACUNACION").length > 0 && ("CONSULTAR_USUARIO").length > 0 && (
                                                     <Link className="enlace" to={`/admin/listVacMadre/${item.documento}`}>
                                                         <FontAwesomeIcon icon={faSyringe} size="lg" color="#2D61A4" data-tip data-for = "boton3"/>
                                                         <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Vacunación </ReactTooltip>
                                                     </Link>
+                                                )}
                                                 </div>
                                             </div>
                                         </div>
@@ -186,31 +199,39 @@ export default function AllUserC (){
 
                                             <div className="sci">
                                                 <div className="liB">
+                                                {validatePrivilegio("LISTAR_SEGUIMIENTOS").length > 0 && ("CONSULTAR_USUARIO").length > 0 && ("LISTAR_INGRESOS_INFANTE").length > 0 && (
                                                     <Link className="enlace" to={`/admin/ListFollowUp/${item.documento}/${rolUser}`}>
                                                         <FontAwesomeIcon icon={faFileMedicalAlt} size="lg" color="#2D61A4" data-tip data-for = "boton4"/>
                                                         <ReactTooltip id="boton4" place="bottom" type="dark" effect="float"> Seguimiento </ReactTooltip>
                                                     </Link>
+                                                )}
                                                 </div>
 
                                                 <div className="liB">
+                                                {validatePrivilegio("LISTAR_CONTROLES_NUTRICIONALES").length > 0 && (
                                                     <Link className="enlace"  to={`/admin/graphics/${item.edad}/${item.sexo}/${item.documento}/${rolUser}`}>
                                                         <FontAwesomeIcon icon={faNutritionix} size="lg" color="#2D61A4" data-tip data-for = "boton1"/>
                                                         <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Nutrición </ReactTooltip>
                                                     </Link>
+                                                )}
                                                 </div>
 
                                                 <div className="liB">
+                                                {validatePrivilegio("LISTAR_CONTROLES_CYD").length > 0 && ("ULTIMO_CONTROL_CYD").length > 0 && (
                                                     <Link className="enlace" to={`/admin/listControlCyD/${item.documento}`}>
                                                         <FontAwesomeIcon icon={faChartLine} size="lg" color="#2D61A4" data-tip data-for = "boton2"/>
                                                         <ReactTooltip id="boton2" place="bottom" type="dark" effect="float"> Crecimiento y Desarrollo </ReactTooltip>
                                                     </Link>
+                                                )}
                                                 </div>
 
                                                 <div className="liB">
+                                                {validatePrivilegio("LISTAR_CONTROLES_VACUNACION").length > 0 && ("CONSULTAR_USUARIO").length > 0 && (
                                                     <Link className="enlace" to={`/admin/listVaccines/${item.documento}`}>
                                                         <FontAwesomeIcon icon={faSyringe} size="lg" color="#2D61A4" data-tip data-for = "boton3"/>
                                                         <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Vacunación </ReactTooltip>
                                                     </Link>
+                                                )}
                                                 </div>
                                             </div>
                                         </div>

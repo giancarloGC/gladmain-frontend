@@ -12,17 +12,22 @@ import Lottie from 'react-lottie';
 import { Line } from "react-chartjs-2";
 import { labels, lineasGraphics } from "./../../components/Control/ControlNutri/LabelsAndLineas";
 import { labels2_5, lineasGraphics2_5 } from "./../../components/Control/ControlNutri/LabelsAndLineas2-5";
+import useAuth from '../../hooks/useAuth'; //privilegios
 import "./../../components/Control/ControlNutri/GraphicAddNutri.scss";
 
 export default function CalculateStateNutrition(){
     const [show, setShow] = useState(false);
     const { edad, sexo } = useParams();
-
+    const { user } = useAuth(); //privilegios
     const [ textFormSend, setTextFormSend ] = useState({});
     const [ stateNutrition, setStateNutrition ] = useState({ color: "", text: "", animation: null});
     const [ imc, setImc ] = useState(0);
     const [ showButtonAdd, setShowButtonAdd ] = useState(false);
     const [ graphicValues, setGraphicValues] = useState({ x: 0, y: 0, r: 10});
+
+    const validatePrivilegio = (privilegio) => {
+      return user.authorities.filter(priv => priv === privilegio);
+    }
 
     const convertKgToG = (kg) => {
       let resultado = kg * 1000;
@@ -337,11 +342,13 @@ export default function CalculateStateNutrition(){
                   <Col md={4} className="mt-5">
                   {showButtonAdd && (
                   <div className="d-grid gap-2">
+                     {validatePrivilegio("REGISTRAR_USUARIO").length > 0 && ("CONSULTAR_USUARIO").length > 0 && (
                             <Button variant="warning" type="submit" size="lg" className="text-white mb-3">
                               <Link to="/admin/addUser">
                                 Añadir nuevo usuario <FontAwesomeIcon data-tip data-for="boton1" icon={faUserPlus} size="lg" color="#FFF" /> 
                               </Link>
                             </Button>
+                     )}
                         </div>
                   )}
                             <Form.Group as={Row}>

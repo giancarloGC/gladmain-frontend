@@ -102,7 +102,7 @@ export default function LayoutAdmin(props){
         const responseControls = await getControlNutriApi(documentoInf, token);
         if(responseControls.length > 0){
             for(var i = 0; i < responseControls.length; i++ ){
-                if(responseControls[i].estadoNutricional === "Riesgo de Desnutrición Aguda"){
+                if(responseControls[i].estadoNutricional === "Riesgo de Desnutrición Aguda" && responseControls[i].vigente === true){
                     return 1;
                 }else{
                     return 0;
@@ -179,8 +179,14 @@ export default function LayoutAdmin(props){
                             <NavDropdown title={infoUser.nombre} id="nav-dropdown" className="subtitlesMenu"
                                 style={{"fontSize": "24px", "fontWeight": 150, "color": "#D4D1D1"}}
                             >
-                            <NavDropdown.Item><Link to={`/admin/EditProfileUser/${infoUser.documento}`}>
-                            <h5><FontAwesomeIcon icon={faUserEdit} className="icon" size="1x" fill="currentColor"/>  Editar Perfil</h5></Link></NavDropdown.Item>
+
+                            {validatePrivilegio("CONSULTAR_USUARIO").length > 0 && ("ACTUALIZAR_USUARIO").length > 0 && (
+                            <NavDropdown.Item>
+                                <Link to={`/admin/EditProfileUser/${infoUser.documento}`}>
+                                 <h5><FontAwesomeIcon icon={faUserEdit} className="icon" size="1x" fill="currentColor"/>  Editar Perfil</h5>
+                                 </Link>
+                            </NavDropdown.Item>
+                            )}
                                 
                             <NavDropdown.Divider />
                             <NavDropdown.Item><h5 onClick={() => signOff()}><FontAwesomeIcon icon={faPowerOff} className="icon" size="1x"fill="currentColor"/>  Cerrar Sesión </h5></NavDropdown.Item>
