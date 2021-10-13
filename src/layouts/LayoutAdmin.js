@@ -30,7 +30,7 @@ export default function LayoutAdmin(props){
     const [ countAlerts, setCountAlerts ] = useState(0);
     const [ showAlert, setShowAlert ] = useState(false);
     const [ roleUsuario, setroleUsuario ] = useState(null);
-
+    const [ goDesnutricion, setGoDesnutricion ] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -75,39 +75,43 @@ export default function LayoutAdmin(props){
 
         const responseUsers = await listUsersByRol("INFANTE", token);
         let total = 0;
-        await responseUsers.map(async (userInfant, index) => {
+        await Promise.all(responseUsers.map(async (userInfant, index) => {
             let result = await consultControls(userInfant.documento);
-            if(result === 1){
+            if(result){
                 total ++;
             }
-        });
-        setTimeout(() => {
-            console.log(total);
-            toast.error(<Msg countAlerts={total} />, {
-                position: "bottom-right",
-                autoClose: 10000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored"
-            });
-            setShowAlert(true);
-        }, 4000);
+        }));
+
         setCountAlerts(total);
+        toast.error(<Msg countAlerts={total} setGoDesnutricion={setGoDesnutricion} />, {
+            position: "bottom-right",
+            autoClose: 10000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored"
+        });
+        setShowAlert(true);
     }
 
     const consultControls = async (documentoInf) => {
         const responseControls = await getControlNutriApi(documentoInf, token);
         if(responseControls.length > 0){
+            let enDesnutricion = false;
+            let doc = 0;
             for(var i = 0; i < responseControls.length; i++ ){
-                if(responseControls[i].estadoNutricional === "Riesgo de Desnutrición Aguda"){
-                    return 1;
-                }else{
-                    return 0;
+                if(enDesnutricion === false){
+                    if(responseControls[i].estadoNutricional === "Riesgo de Desnutrición Aguda"){
+                        enDesnutricion = true;
+                        doc = 1;
+                    }else{
+                        doc = 0;
+                    }
                 }
             };
+            return doc;
         }
     }
 
@@ -193,6 +197,11 @@ export default function LayoutAdmin(props){
                   </Nav>
                 
                     </header>
+
+
+                    {goDesnutricion && (
+                        <Redirect to="/admin/usersDesnutrition" />
+                    )}
                 
                 
                     <div className={openMenu ? "menu__side menu__side_move" : "menu__side"} id="menu_side">
@@ -306,11 +315,10 @@ function LoadRoutes({routes}){
     );
 }
 
-const Msg = ({ closeToast, toastProps, countAlerts }) => {
-    console.log(countAlerts);
+const Msg = ({ closeToast, toastProps, countAlerts, setGoDesnutricion }) => {
     return(
-        <div onClick={() => console.log("jiji")}>
-        ¡Hay {countAlerts} niños en riesgo de desnutrición!
-    </div>
+        <div onClick={() => setGoDesnutricion(true)}>
+            ¡Hay {countAlerts} niños en riesgo de desnutrición!
+        </div>
     )
 }

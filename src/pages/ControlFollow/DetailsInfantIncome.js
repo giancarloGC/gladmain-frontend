@@ -3,40 +3,35 @@ import { Container, Row, Col, Spinner} from "react-bootstrap";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import DetailsInfantInc from "../../components/Control/ControlFollow/DetailsInfantInc";
 
-import { getSegByIdApi } from "../../api/follow-up";
-import { getInfantIncomeXIdApi } from "../../api/infant_income";
+import { getUserByIdApi } from "../../api/user";
+import { getInfantIncomeApi } from "../../api/infant_income";
 import { TOKEN } from "../../utils/constans";
 
 
 export default function DetailsInfantIncome(){
-    const token = localStorage.getItem(TOKEN);
-    const { idSeg, idInc } = useParams();
-    const [control, setControl] = useState({});
-    const [segControl, setSeg] = useState({});
     const [ componentLoaded, setComponentLoaded ] = useState(false); 
-    const [ segLoaded, setSegLoaded ] = useState({});
-    const [ controlLoaded, setControlLoaded ] = useState(false);
-    const [ checkeds, setCheckeds ] = useState({radio1: false, radio: false});
-    var loading = true;
-    
+
+    const { idSeg, documento, rolUser} = useParams();
+    const [ ingreso, setIngreso ] = useState(null);
+    const token = localStorage.getItem(TOKEN);
+    const [ showValidationM, setShowValidationM ] = useState(false);
+
         useEffect(() => {
-        loading = false;
-        if(!loading){ 
-        getSegByIdApi(idSeg, token).then(response => {
-            setSeg(response);
-        });
-        getInfantIncomeXIdApi(idInc, token).then(responseInc => {
-            setCheckeds({
-                radio1: responseInc.ingreso.patologiaIdentificadaSgsss === true ? true : false, 
-                radio: responseInc.ingreso.recibeMedFormulada === true ? true : false 
+        (async () => {
+            let listIngresos = await getInfantIncomeApi(documento, token);
+            let ingresoBySeg = listIngresos.filter(registro => registro.ingreso.idSeguimiento === parseInt(idSeg));
+            getUserByIdApi(documento, token).then(response => {
+                if(response.sexo === "FEMENINO"){
+                    setShowValidationM(true);
+                }else{
+                    if(response.edad <= 1){
+                        setShowValidationM(true);
+                    }
+                }
             });
-            setControl(responseInc);
-            setControlLoaded(true);
+            setIngreso(ingresoBySeg[0]);
             setComponentLoaded(true); 
-        });
-        setControlLoaded(control);
-        setSegLoaded(segControl);
-        }
+        })();
       }, []);
 
     return(
@@ -52,7 +47,7 @@ export default function DetailsInfantIncome(){
              )
            :
            (
-            <DetailsInfantInc segControl={segControl} control={control} checkeds={checkeds} setCheckeds={setCheckeds}/>
+            <DetailsInfantInc idSeg={idSeg} documento={documento} showValidationM={showValidationM} ingreso={ingreso} rolUser={rolUser} />
             )
         }
         </Container>
