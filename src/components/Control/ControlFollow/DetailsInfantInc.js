@@ -227,19 +227,34 @@ export default function DetailsInfantInc(props){
                         <Col md="1"> </Col>
                     </Form.Group>
 
-
+                    { control.ingreso.usuarioRemitido === "1" && (
                     <Form.Group as={Row}  style={{ "marginLeft":"43px"}} className="mt-3">
                        <Form.Label column sm="9"> 
                        <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>El usuario fue remitido a SGSSS </h5></Form.Label>
                         <Col class="mid">
                         <InputGroup hasValidation>
                                <Form.Control type="text" size="xs" name="showRemitido" id="usuarioRemitido" name="usuarioRemitido" 
-                               value={control.ingreso.usuarioRemitido} onChange={handleChange} onBlur={handleBlur} disabled
+                               value={"Si"} onChange={handleChange} onBlur={handleBlur} disabled
                             />
                         </InputGroup>
                         </Col>
                         <Col sm="1"></Col>
                     </Form.Group>
+                    )}
+                    { control.ingreso.usuarioRemitido === "0" && (
+                    <Form.Group as={Row}  style={{ "marginLeft":"43px"}} className="mt-3">
+                       <Form.Label column sm="9"> 
+                       <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>El usuario fue remitido a SGSSS </h5></Form.Label>
+                        <Col class="mid">
+                        <InputGroup hasValidation>
+                               <Form.Control type="text" size="xs" name="showRemitido" id="usuarioRemitido" name="usuarioRemitido" 
+                               value={"No"} onChange={handleChange} onBlur={handleBlur} disabled
+                            />
+                        </InputGroup>
+                        </Col>
+                        <Col sm="1"></Col>
+                    </Form.Group>
+                    )}
                     
                     { control.ingreso.usuarioRemitido === "1" && (
                     <Form.Group as={Row} style={{ "marginLeft":"43px"}} className="mt-3 mb-3">
