@@ -7,6 +7,9 @@ import { getRolesApi, getAssignRolApi } from "../../../api/rol";
 import swal from 'sweetalert';
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import moment from 'moment';
+import Lottie from 'react-lottie';
+import AnimationAuthorization from "../../../assets/animations/withoutAuthorization.json";
+import AnimationErrorServer from "../../../assets/animations/working-server-animation.json";
 
 export default function FormUser(){
     const [ textFormSend, setTextFormSend ] = useState({});
@@ -19,13 +22,36 @@ export default function FormUser(){
     const [ edadFinaly, setEdadFinaly ] = useState(null);
     const [ goRedirect, setGoRedirect ] = useState(false);
     const [ showSpinner, setShowSpinner ] = useState(false);
+    const [ authorization, setAuthorization ] = useState(true);
+    const [ errorServer, setErrorServer ] = useState(false);
 
     useEffect(() => {
+      (async () => {
+          const response = await getRolesApi(token);
+          console.log(response);
+          if(response.status === 403){
+              setAuthorization(false);
+          }else if(response.status === 500){
+              setErrorServer(true);
+          }else{
+              setAllRoles(response);
+              setRolesApi(response);;
+          };
+      })();
+  }, []);
+
+  /*  useEffect(() => {
       getRolesApi().then(response => {
-        setAllRoles(response);
-        setRolesApi(response);
+        if(response.status === 403){
+          setAuthorization(false);
+        }else if(response.status === 500){
+          setErrorServer(true);
+        }else{
+          setAllRoles(response);
+          setRolesApi(response);
+        }    
       })
-    }, []);
+    }, []); */
 
     let fechaNacimiento;
     let dateCurrent = moment();
@@ -46,6 +72,27 @@ export default function FormUser(){
   }
 
     return(
+      <>
+            {authorization || (
+                <>
+                    <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                        <Lottie height={500} width="80%"
+                        options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                    />
+                </>
+            )}
+
+            {errorServer && (
+                <>
+                    <h1 style={{"textAlign": "center"}}>Error en el servidor, intentelo más tarde</h1>
+                        <Lottie height={500} width="80%"
+                        options={{ loop: true, autoplay: true, animationData: AnimationErrorServer, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                    />
+                </>
+            )}
+            
+      {!errorServer && authorization && allRoles && (
+        <>
         <Container>
             <Row>
             {goRedirect && (
@@ -193,14 +240,15 @@ export default function FormUser(){
                     
                     insertUserApi(data, token).then(response => {
                       setShowSpinner(false);
-                      if(response === true){
+                    if(response === true){
                           let successs = false;
                           successs = rolesSelected.map((item, index) => {
                             return getAssignRolApi(item.idRol, valores.documento, valores.token).then(responseRol => {
                               console.log(responseRol);
                               if(responseRol === true){ 
                                 return successs = true;
-                              }else{
+                              }else if (responseRol.status === 403){
+                                setAuthorization(false);
                                 return successs = false;
                               }
                             });
@@ -222,6 +270,8 @@ export default function FormUser(){
                             });
                           //setShow(true);
                           }
+                        }else if (response.status === 403){
+                          setAuthorization(false);
                         }else{
                           swal("Opss! Ocurrió un error al almacenar el usuario!", {
                             icon: "error",
@@ -466,6 +516,9 @@ export default function FormUser(){
                 </Col>
                 <Col sm={1}></Col>
             </Row>
-        </Container>
-    )
+          </Container>
+        </>
+      )}
+    </>
+  )
 }

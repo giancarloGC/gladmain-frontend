@@ -128,13 +128,7 @@ export default function ListControlR(props){
                                         <ReactTooltip id="boton5" place="bottom" type="dark" effect="float"> Eliminar </ReactTooltip>
                                     </a >
                                 )}
-                                    <Link className="btn btn-secondary text-center mx-1">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-print-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <FontAwesomeIcon icon={faPrint} size="lg" color="white" data-tip data-for = "boton5"
-                                        />
-                                    </svg>
-                                        <ReactTooltip id="boton5" place="bottom" type="dark" effect="float"> Imprimir </ReactTooltip>
-                                    </Link >
+                                
                                 </p>                     
                             </Col>
                         </Row>

@@ -176,11 +176,11 @@ export default function LayoutAdmin(props){
 
     const popover = (
         <Popover id="popover-basic">
-          <Popover.Body>
+          <Popover.Body style ={{ backgroundColor: "#CDCCCB" }}>
             {roleUsuario && (
                 <>
                 {roleUsuario !== "4" && (
-                <NavDropdown.Item><Link to="/admin/listUserControl/INFANTE"><h5>Infantes</h5></Link></NavDropdown.Item>
+                <NavDropdown.Item><Link to="/admin/listUserControl/INFANTE"><h5 >Infantes</h5></Link></NavDropdown.Item>
                 )}
                 <NavDropdown.Divider />
                 {roleUsuario !== "2" && (
@@ -276,13 +276,11 @@ export default function LayoutAdmin(props){
                                     <div className="option">
                                     <OverlayTrigger trigger="click" placement="right" overlay={popover}>
                                         {/*<FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" onClick={() => setOpenMenu(!openMenu)}/>*/}
-                                        <button className="option"><FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" /></button>
+                                        <button style ={{ backgroundColor: "#1783db" }}><FontAwesomeIcon icon={faLaptopMedical} style ={{"color": "white"}} className="icon" size="2x" /> </button>
                                     </OverlayTrigger>  
-
-                                    <NavDropdown title="Controles" id="nav-dropdown" className="subtitlesMenu"
-                                        style={{"fontSize": "24px", "fontWeight": 100, "color": "#ffff"}}
-                                    >
-                                        {roleUsuario && (
+                                    
+                                    <h4 className="subtitlesMenu mt-2"> Controles
+                                        {/*{roleUsuario && (
                                             <>
                                         {roleUsuario !== "4" && (
                                         <NavDropdown.Item><Link to="/admin/listUserControl/INFANTE"><h5>Infantes</h5></Link></NavDropdown.Item>
@@ -292,8 +290,8 @@ export default function LayoutAdmin(props){
                                         <NavDropdown.Item><Link to="/admin/listUserControl/MADRE_GESTANTE"><h5>Madres gestantes</h5></Link></NavDropdown.Item>
                                         )}
                                         </>
-                                        )}
-                                    </NavDropdown>
+                                        )}*/}
+                                    </h4>
                                     </div>
                                 </Link>
                             )}
