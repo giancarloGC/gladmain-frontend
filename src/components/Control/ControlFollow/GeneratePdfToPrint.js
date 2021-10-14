@@ -403,18 +403,29 @@ function PDFseguimiento(props){
                 </View> 
                 </View>
                 
-                {item.ingreso.ingreso.usuarioRemitido === 1 && (
+                {item.ingreso.ingreso.usuarioRemitido != 0 && (
                 <View style={styles.tableRow}> 
                 <View style={styles.tableCol}> 
                     <Text style={styles.tableCell}>El usuario fue remitido a SGSSS: </Text> 
                 </View> 
                 <View style={styles.tableColHeader2}> 
-                    <Text style={styles.tableCell2}>{item.ingreso.ingreso.usuarioRemitido}</Text> 
+                    <Text style={styles.tableCell2}>SI</Text> 
                 </View> 
                 </View>
                 )}
 
-              {item.ingreso.ingreso.usuarioRemitido === 1 && (
+            {item.ingreso.ingreso.usuarioRemitido == 0 && (
+                <View style={styles.tableRow}> 
+                <View style={styles.tableCol}> 
+                    <Text style={styles.tableCell}>El usuario fue remitido a SGSSS: </Text> 
+                </View> 
+                <View style={styles.tableColHeader2}> 
+                    <Text style={styles.tableCell2}>NO</Text> 
+                </View> 
+                </View>
+                )}
+
+              {item.ingreso.ingreso.usuarioRemitido != 0 && (
                 <View style={styles.tableRow}> 
                 <View style={styles.tableColHeader2}> 
                     <Text style={styles.tableCell}>¿Por qué?</Text> 
