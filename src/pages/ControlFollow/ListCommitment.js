@@ -255,6 +255,8 @@ Font.register({ family: 'Amaranth', src: fuente});
 Font.register({ family: 'Amaranth2', src: fuente2});
 
 function DocumentPdf({listControls, setLoadedSonPDF, infoUser}){
+    console.log(listControls);
+    console.log(infoUser);
     useEffect(() => {
         setLoadedSonPDF(true);
     }, [])
@@ -271,6 +273,7 @@ function DocumentPdf({listControls, setLoadedSonPDF, infoUser}){
     return(
         <Document>
         <Page style={styles.body}>
+            
         <View style={styles.table2}> 
             <View style={styles.tableRow2}> 
                 <View style={styles.tableCol2}> 
@@ -341,8 +344,8 @@ function DocumentPdf({listControls, setLoadedSonPDF, infoUser}){
             </View>
             </View>
             
-         
-            {listControls.map((control, index) => (
+         {listControls.length > 0 && (
+            listControls.map((control, index) => (
             <View style={styles.table}> 
                 <View style={styles.tableRow}> 
                     <View style={styles.tableCol}> 
@@ -412,9 +415,9 @@ function DocumentPdf({listControls, setLoadedSonPDF, infoUser}){
                 )}
 
             </View>   
-           ))}
+           ))
         
-          
+                )}
         </Page>
   </Document>
     )

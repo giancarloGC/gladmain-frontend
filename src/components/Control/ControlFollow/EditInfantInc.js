@@ -282,7 +282,9 @@ console.log(ingreso);
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="xs" name="afiliacionSgsss" >
                             {/* invertir el save data */}
-                          <input type="checkbox" checked={showCommit || !saveData ? false : true } onChange={(e) => saveData ? setShowCommit(!e.target.checked) : setSaveData(!saveData)}></input>
+                          <input type="checkbox" checked={showCommit || !saveData ? false : true } onChange={(e) => saveData ? setShowCommit(!e.target.checked) : setSaveData(!saveData)}
+                            disabled={!saveData}  
+                          ></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -300,7 +302,9 @@ console.log(ingreso);
                         <Col  class="mid">
                         <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="xs" name="saludOral">
-                          <input type="checkbox" checked={showCommit2 || !saveData2 ? false : true } onChange={(e) => saveData2 ? setShowCommit2(!e.target.checked) : setSaveData2(!saveData2)}></input>
+                          <input type="checkbox" checked={showCommit2 || !saveData2 ? false : true } onChange={(e) => saveData2 ? setShowCommit2(!e.target.checked) : setSaveData2(!saveData2)}
+                            disabled={!saveData2}                            
+                          ></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -355,7 +359,9 @@ console.log(ingreso);
                         <Col class="mid">
                         <InputGroup hasValidation >
                           <label class="rocker rocker-small" size="xs" name="valoracionMedica">
-                          <input type="checkbox" checked={showCommit5 || !saveData5 ? false : true } onChange={(e) => saveData5 ? setShowCommit5(!e.target.checked) : setSaveData5(!saveData5)}></input>
+                          <input type="checkbox" checked={showCommit5 || !saveData5 ? false : true } onChange={(e) => saveData5 ? setShowCommit5(!e.target.checked) : setSaveData5(!saveData5)}
+                            disabled={!saveData5}                            
+                          ></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>
@@ -375,7 +381,9 @@ console.log(ingreso);
                         <Col class="mid">
                         <InputGroup hasValidation className="mt-2">
                           <label class="rocker rocker-small" size="xs" name="controlCyD">
-                          <input type="checkbox" checked={showCommit6 || !saveData6 ? false : true } onChange={(e) => saveData6 ? setShowCommit6(!e.target.checked) : setSaveData6(!saveData6)}></input>
+                          <input type="checkbox" checked={showCommit6 || !saveData6 ? false : true } onChange={(e) => saveData6 ? setShowCommit6(!e.target.checked) : setSaveData6(!saveData6)}
+                            disabled={!saveData6}                            
+                          ></input>
                           <span class="switch-left">Si</span>
                           <span class="switch-right">No</span>
                           </label>

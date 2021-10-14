@@ -8,6 +8,9 @@ import { updateCompApi } from "../../../api/commitment";
 import swal from 'sweetalert';
 import moment from 'moment';
 import "./Switch.scss";
+import { getInfantIncomeApi, updateInfantIncomeApi } from "../../../api/infant_income";
+import { listUsersByRol, getUserByIdApi } from "../../../api/user";
+import { getMotIncomeByUserApi, updateMotIncomeApi } from "../../../api/mother_income";
 
 export default function EditCommit(props){
   const { segControl, control, documento, checkeds, setCheckeds} = props;
@@ -81,13 +84,100 @@ export default function EditCommit(props){
                   updateCompApi(formData, token).then(response => {
                     setShowSpinner(false);
                     if(response === true){
-                      setShowSpinner(false);
+                      
+                      if(formData.fechaCumplimiento !== null){
+                            (async () => {
+                              const responseInfants = await listUsersByRol("INFANTE", token);
+                              let usersInfants = responseInfants.filter(usuarioInf => usuarioInf.documento === documento);                      
+                              if(usersInfants.length > 0){
+                                 let listIngresos = await getInfantIncomeApi(documento, token);
+                                 let ingresoBySeg = listIngresos.filter(registro => registro.ingreso.idSeguimiento === parseInt(segControl.id));
+                                 console.log(ingresoBySeg[0]);
+                                 if(control.nombre === "Cuenta con afiliación al SGSSS"){
+                                   ingresoBySeg[0].ingreso.afiliacionSgsss = "SI";
+                                 }
+                                 if(control.nombre === "Cuenta con valoración y controles en salud oral"){
+                                   ingresoBySeg[0].ingreso.saludOral = "SI";
+                                 }
+                                 if(control.nombre === "En niñas y menores de un mes se realizó validación médica"){
+                                   ingresoBySeg[0].ingresoInfante.valoracionMedica = "SI";
+                                 }
+                                 if(control.nombre === "Las niñas y niños cuentan con controles de Crecimiento y Desarrollo"){
+                                   ingresoBySeg[0].ingresoInfante.controlCyD = "SI";
+                                 }
+   
+                                 updateInfantIncomeApi(ingresoBySeg[0], token).then(response => {
+                                   if(response === true){
+                                     setShowSpinner(false);
+                                     swal({
+                                       title: `¡El compromiso fue actualizado correctamente!`,
+                                       icon: 'success'
+                                     }).then((value) => {
+                                       window.location.replace(`/admin/commitments/${segControl.id}/${documento}`);
+                                     }); 
+                                   }else{
+                                     setShowSpinner(false);
+                                     swal({
+                                       title: `¡Opss, ocurrió un error!`,
+                                       icon: 'danger'
+                                     }).then((value) => {
+                                       window.location.replace(`/admin/commitments/${segControl.id}/${documento}`);
+                                     }); 
+                                   }
+                                 });
+
+                              }else{
+                                  let listIngresos = await getMotIncomeByUserApi(documento, token);
+                                 let ingresoBySeg = listIngresos.filter(registro => registro.ingreso.idSeguimiento === parseInt(segControl.id));
+                                 console.log(ingresoBySeg[0]);
+                                 if(control.nombre === "Cuenta con afiliación al SGSSS"){
+                                   ingresoBySeg[0].ingreso.afiliacionSgsss = "SI";
+                                 }
+                                 if(control.nombre === "Cuenta con valoración y controles en salud oral"){
+                                   ingresoBySeg[0].ingreso.saludOral = "SI";
+                                 }
+                                 if(control.nombre === "Asiste a controles prenatales"){
+                                   ingresoBySeg[0].ingresoMadre.controlPrenatal = "SI";
+                                 }
+                                 if(control.nombre === "Cuenta con suministro de micronutrientes Hierro, Ácido fólico y calcio y los consume"){
+                                   ingresoBySeg[0].ingresoMadre.cuentaMicro = "SI";
+                                 }
+                                 if(control.nombre === "Se ha realizado exámenes médicos recomendados para mujeres gestantes"){
+                                  ingresoBySeg[0].ingresoMadre.examenMedico = "SI";
+                                }
+                                if(control.nombre === "Con su pareja tienen acordado método de planificación para después de que nazca la niña o niño"){
+                                  ingresoBySeg[0].ingresoMadre.metodoPlanificacion = "SI";
+                                }
+   
+                                updateMotIncomeApi(ingresoBySeg[0], token).then(response => {
+                                   if(response === true){
+                                     setShowSpinner(false);
+                                     swal({
+                                       title: `¡El compromiso fue actualizado correctamente!`,
+                                       icon: 'success'
+                                     }).then((value) => {
+                                       window.location.replace(`/admin/commitments/${segControl.id}/${documento}`);
+                                     }); 
+                                   }else{
+                                     setShowSpinner(false);
+                                     swal({
+                                       title: `¡Opss, ocurrió un error!`,
+                                       icon: 'danger'
+                                     }).then((value) => {
+                                       window.location.replace(`/admin/commitments/${segControl.id}/${documento}`);
+                                     }); 
+                                   }
+                                 });
+                              }
+                            })();
+                      }
+                      /*setShowSpinner(false);
                       swal({
-                        title: `¡El compromiso fue almacenado correctamente!`,
+                        title: `¡El compromiso fue actualizado correctamente!`,
                         icon: 'success'
                       }).then((value) => {
                         window.location.replace(`/admin/commitments/${segControl.id}/${documento}`);
-                    }); 
+                      }); */
                     }else{
                       setShowSpinner(false);
                       console.log("no resgistro compromiso");
@@ -96,7 +186,7 @@ export default function EditCommit(props){
                         icon: 'danger'
                       }).then((value) => {
                         window.location.replace(`/admin/commitments/${segControl.id}/${documento}`);
-                    }); 
+                      }); 
                     }
                   });
                 }}

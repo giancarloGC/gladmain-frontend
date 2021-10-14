@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { faBars, faUserTie, faUsers, faLaptopMedical, faHome, faUserEdit, faPowerOff, faCalculator} from '@fortawesome/free-solid-svg-icons';
 import Logo from "./../assets/img/logocomfaoriente.png";
 import AvatarDefault from './../assets/img/avatar-default.jpg'
-import { Nav, Image, NavDropdown, Container, Row, Spinner, Col } from "react-bootstrap";
+import { Nav, Image, NavDropdown, Container, Row, Spinner, Col, Popover, OverlayTrigger, Button  } from "react-bootstrap";
 import "./LayoutAdmin.scss";
 import { getUserByIdApi, listUsersByRol } from "../api/user";
 import { getControlNutriApi, getControlCyDApi } from "../api/controls";
@@ -174,6 +174,24 @@ export default function LayoutAdmin(props){
         window.location.replace("/");
     };
 
+    const popover = (
+        <Popover id="popover-basic">
+          <Popover.Body>
+            {roleUsuario && (
+                <>
+                {roleUsuario !== "4" && (
+                <NavDropdown.Item><Link to="/admin/listUserControl/INFANTE"><h5>Infantes</h5></Link></NavDropdown.Item>
+                )}
+                <NavDropdown.Divider />
+                {roleUsuario !== "2" && (
+                <NavDropdown.Item><Link to="/admin/listUserControl/MADRE_GESTANTE"><h5>Madres gestantes</h5></Link></NavDropdown.Item>
+                )}
+                </>
+            )}
+          </Popover.Body>
+        </Popover>
+      );
+
     return (
         <>
                 {user && (
@@ -251,12 +269,16 @@ export default function LayoutAdmin(props){
                                 </Link>
                             )}
 
-                            {validatePrivilegio("LISTAR_USUARIOS_ROL").length > 0 && (                
+                            {validatePrivilegio("LISTAR_USUARIOS_ROL").length > 0 && (
                                 <Link to="#" className={linkSelected.controls ? "selected" : ""}
                                     onClick={() => setLinkSelected({roles: false, users: false, controls: true})}
                                 >
                                     <div className="option">
-                                    <FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" onClick={() => setOpenMenu(!openMenu)}/>
+                                    <OverlayTrigger trigger="click" placement="right" overlay={popover}>
+                                        {/*<FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" onClick={() => setOpenMenu(!openMenu)}/>*/}
+                                        <button className="option"><FontAwesomeIcon icon={faLaptopMedical} className="icon" size="2x" /></button>
+                                    </OverlayTrigger>  
+
                                     <NavDropdown title="Controles" id="nav-dropdown" className="subtitlesMenu"
                                         style={{"fontSize": "24px", "fontWeight": 100, "color": "#ffff"}}
                                     >

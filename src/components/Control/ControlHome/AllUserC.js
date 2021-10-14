@@ -12,11 +12,13 @@ import ImageNina from "./../../../assets/img/nina.png";
 import ImageMen from "./../../../assets/img/men.png";
 import ImageWomen from "./../../../assets/img/women.png";
 
-import { listUsersByRol, getUserApi } from "../../../api/user";
+import { listUsersByRol, getUserByIdApi } from "../../../api/user";
 import { TOKEN } from "../../../utils/constans";
 import Lottie from 'react-lottie';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import AnimationAuthorization from "../../../assets/animations/withoutAuthorization.json";
+import AnimationErrorServer from "../../../assets/animations/working-server-animation.json";
+
 import AnimationNotFindSearch from "../../../assets/animations/notFindSearch.json";
 import { useParams } from "react-router-dom";
 import useAuth from '../../../hooks/useAuth'; //privilegios
@@ -28,21 +30,45 @@ export default function AllUserC (){
     const [ usersApi, setUsersApi ] = useState([]);
     const token = localStorage.getItem(TOKEN);
     const [ authorization, setAuthorization ] = useState(true);
+    const [ errorServer, setErrorServer ] = useState(false);
     const [ allUsersSaved, setAllUsersSaved ] = useState([]);
     const [ typeSearch, setTypeSearch ] = useState("nombre");
     const { user } = useAuth(); //privilegios
     
     useEffect(() => {
         (async () => {
-            const response = await listUsersByRol(rolUser, token);
-            
-            if(response.status === 403){
-                setLoading(false);
-                setAuthorization(false);
+            let infUser = user.sub.split("-");
+            if(infUser[1] === "2" || infUser[1] === "4"){
+                let docUser = parseInt(infUser[0]);
+                const response = await getUserByIdApi(docUser, token);
+
+                const dataUser = [];
+                dataUser.push(response);
+                if(response.status === 403){
+                    setLoading(false);
+                    setAuthorization(false);
+                }else if(response.status === 500){
+                    setLoading(false);
+                    setErrorServer(true);
+                }else{
+                    setLoading(false);
+                    setAllUsersSaved(dataUser);
+                    setUsersApi(dataUser);
+                }
             }else{
-                setLoading(false);
-                setAllUsersSaved(response);
-                setUsersApi(response);
+                const response = await listUsersByRol(rolUser, token);
+            
+                if(response.status === 403){
+                    setLoading(false);
+                    setAuthorization(false);
+                }else if(response.status === 500){
+                    setLoading(false);
+                    setErrorServer(true);
+                }else{
+                    setLoading(false);
+                    setAllUsersSaved(response);
+                    setUsersApi(response);
+                }
             }
         })();
     }, [rolUser]);
@@ -74,6 +100,15 @@ export default function AllUserC (){
                 </>
             )}
 
+            {errorServer && (
+                <>
+                    <h1 style={{"textAlign": "center"}}>Error en el servidor, intentelo más tarde</h1>
+                        <Lottie height={500} width="80%"
+                        options={{ loop: true, autoplay: true, animationData: AnimationErrorServer, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                    />
+                </>
+            )}
+
             {loading && (
                 <Row className="justify-content-md-center text-center">
                     <Col md={1} className="justify-content-center">
@@ -82,7 +117,7 @@ export default function AllUserC (){
                 </Row>
             )}
 
-            {allUsersSaved && (
+            {!errorServer && allUsersSaved && (
                 <>
                 {console.log("entro1")};
                     {allUsersSaved.length > 0  && (

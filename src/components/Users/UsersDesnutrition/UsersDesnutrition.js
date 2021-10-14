@@ -99,22 +99,12 @@ export default function UsersDesnutrition(props){
                                     {item.celular}
                                     </span>
                                 </h3>
+                                <h4>{item.estado}</h4>
                             </div>
                         </div>
                         <div className="sci">
                             <div className="liB" >
-                                <Link className="enlace" to={`/admin/user/${item.documento}`}>
-                                <FontAwesomeIcon icon={faEye} size="lg" color="#2D61A4" data-tip data-for = "boton1"
-                                /> <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Ver </ReactTooltip>
-                                </Link>
-                            </div>
-                            <div className="liB">
-                            <Link className="enlace" to={`/admin/editUser/${item.documento}`}>
-                                <FontAwesomeIcon icon={faPencilAlt} size="lg" color="#2D61A4" data-tip data-for = "boton2"
-                                /> <ReactTooltip id="boton2" place="bottom" type="dark" effect="float"> Editar </ReactTooltip>
-                                </Link>
-                            </div>
-                            
+                            </div>                           
                         </div>
                     </div>                
                     ))}

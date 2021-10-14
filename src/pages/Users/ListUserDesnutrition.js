@@ -27,7 +27,10 @@ export default function ListUserDesnutrition(){
             let result = await consultControls(userInfant.documento);
             console.log(result);
             if(result){
-                let infouser = await getUserByIdApi(result, token);
+                let documentEstado = result.split("/");
+                let docu = documentEstado[0];
+                let infouser = await getUserByIdApi(docu, token);
+                infouser.estado = documentEstado[1];
                 totalUsersDesnutri.push(infouser);
             };
         }));
@@ -47,7 +50,7 @@ export default function ListUserDesnutrition(){
                 if(enDesnutricion === false){
                     if(responseControls[i].vigente === true && (responseControls[i].estadoNutricional === "Riesgo de Desnutrición Aguda" 
                     || responseControls[i].estadoNutricional === "Desnutrición Aguda Moderada" || responseControls[i].estadoNutricional === "Desnutrición Aguda Severa")){
-                        doc = responseControls[i].idUsuario;
+                        doc = responseControls[i].idUsuario + "/" + responseControls[i].estadoNutricional;
                         enDesnutricion = true;
                     }else{
                         doc = 0;
