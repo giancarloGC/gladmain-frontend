@@ -10,23 +10,35 @@ import Logo from "../../../assets/img/logocomfaoriente.png";
 import GladMaIn from "../../../assets/img/logoGladmain.PNG";
 import fuente from "../../../assets/fontPDF/Amaranth-Bold.ttf";
 import fuente2 from "../../../assets/fontPDF/Amaranth-Regular.ttf";
+import { getUserByIdApi } from "../../../api/user";
+import { TOKEN } from "../../../utils/constans";
 
 Font.register({ family: 'Amaranth', src: fuente});
 Font.register({ family: 'Amaranth2', src: fuente2});
 
 
-export default function GeneratePdfToPrint({item}){
-    const [ loadedPDF, setLoadedSonPDF ] = useState(false); 
+export default function GeneratePdfToPrint({item, documento, rolUser}){
+  const token = localStorage.getItem(TOKEN);
+  const [ infoUser, setInfoUser ] = useState({}); 
+  const [ loadedPDF, setLoadedSonPDF ] = useState(false);
+
+    useEffect(() => {
+      (async () => {
+          const response2 = await getUserByIdApi(documento, token);
+          setInfoUser(response2);
+          setLoadedSonPDF(true);
+      })();       
+  }, []);
+
     useEffect(() => {
       setTimeout(() => {
         setLoadedSonPDF(true);
       }, 2000);
   }, [])
-console.log("entro");
     return(
         <>
         {loadedPDF ? (
-        <PDFDownloadLink document={<PDFseguimiento item={item} setLoadedSonPDF={setLoadedSonPDF}/>} fileName="SeguimientoEIngreso.pdf">
+        <PDFDownloadLink document={<PDFseguimiento item={item} setLoadedSonPDF={setLoadedSonPDF} infoUser={infoUser} rolUser={rolUser}/>} fileName={`SeguimientoEIngreso${infoUser.documento}`}>
             {/*allControlSaved={allControlSaved} setLoadedSonPDF={setLoadedSonPDF}/>} fileName="controlesCyD.pdf">*/}
         {({ blob, url, loaded, error }) =>
             loaded ? 'Cargando Documento...' : 
@@ -46,7 +58,7 @@ console.log("entro");
 
 function PDFseguimiento(props){
     //const {infoUser, listControls, lastControls, setLoadedSonPDF} = props;
-    const { setLoadedSonPDF, item } = props;
+    const { setLoadedSonPDF, item, infoUser, rolUser} = props;
     console.log(item);
     useEffect(() => {
         setLoadedSonPDF(true);
@@ -89,111 +101,416 @@ function PDFseguimiento(props){
         
         <Text style={{fontSize: 10, textAlign: "center"}}>-------------------------------------------------------------------------------------------------------------------------------------------------------</Text>
         
-            <View style={styles.tableUser}> 
+
+        <View style={styles.tableUser}> 
             <View style={styles.tableRowUser}> 
               <View style={styles.tableColHeaderUser}> 
-                <Text style={styles.tableCellHeaderUser}>Documento del usuario:</Text> 
+                <Text style={styles.tableCellHeaderUser}>Documento:</Text> 
               </View> 
                     <View style={styles.tableColUser2}> 
-                        <Text style={styles.tableCell}>{item.idUsuario}</Text> 
+                        <Text style={styles.tableCell}>{infoUser.documento}</Text> 
                     </View> 
               <View style={styles.tableColHeaderUser}> 
-                <Text style={styles.tableCellHeaderUser}>Documento del nutricionista:</Text> 
+                <Text style={styles.tableCellHeaderUser}>Usuario:</Text> 
               </View> 
                     <View style={styles.tableColUser}> 
-                        <Text style={styles.tableCell}>{item.idUsuarioNutricionista}</Text> 
+                        <Text style={styles.tableCell}>{infoUser.nombre}</Text> 
                     </View> 
               <View style={styles.tableColHeaderUser}> 
-                <Text style={styles.tableCellHeaderUser}>Fecha del seguimiento:</Text> 
+                <Text style={styles.tableCellHeaderUser}>Fecha Nacimiento:</Text> 
               </View> 
                     <View style={styles.tableColUser}> 
-                        <Text style={styles.tableCell}>{dateFormat(item.fecha)}</Text> 
+                        <Text style={styles.tableCell}>{dateFormat (infoUser.fechaNacimiento)}</Text> 
                     </View> 
             </View>
             <View style={styles.tableRowUser}> 
               <View style={styles.tableColHeaderUser}> 
-                <Text style={styles.tableCellHeaderUser}>Documento del acudiente:</Text> 
+                <Text style={styles.tableCellHeaderUser}>Telefono:</Text> 
               </View> 
                     <View style={styles.tableColUser2}> 
-                        <Text style={styles.tableCell}>{item.numeroDocAcudiente}</Text> 
+                        <Text style={styles.tableCell}>{infoUser.celular}</Text> 
                     </View> 
               <View style={styles.tableColHeaderUser}> 
-                <Text style={styles.tableCellHeaderUser}>Nombre acudiente:</Text> 
+                <Text style={styles.tableCellHeaderUser}>Municipio:</Text> 
               </View> 
                     <View style={styles.tableColUser}> 
-                        <Text style={styles.tableCell}>{item.nombreAcudiente}</Text> 
+                        <Text style={styles.tableCell}>{infoUser.municipio}</Text> 
                     </View> 
               <View style={styles.tableColHeaderUser}> 
-                <Text style={styles.tableCellHeaderUser}>Estado del ingreso:</Text> 
+                <Text style={styles.tableCellHeaderUser}>Dirección:</Text> 
               </View> 
                     <View style={styles.tableColUser}> 
-                        <Text style={styles.tableCell}>{item.estado} %</Text> 
+                        <Text style={styles.tableCell}>{infoUser.direccion}</Text> 
                     </View> 
             </View>
             </View>
-         
-         {/*
-           <View style={styles.table3}> 
+
+            <View style={styles.table3}> 
                 <View style={styles.tableRow}> 
                 <View style={styles.tableColHeader4}> 
-                    <Text style={styles.tableCellHeader}>Fecha Ultimo Control:</Text> 
+                    <Text style={styles.tableCellHeader}>Documento Acudiente: </Text> 
                 </View> 
                 <View style={styles.tableCol4}> 
-                        <Text style={{fontSize: 14, fontFamily: 'Amaranth2', color:'black'}}>{dateFormat(lastControls.ultimoControl)}</Text> 
+                        <Text style={{fontSize: 13, fontFamily: 'Amaranth2', color:'black'}}>{item.numeroDocAcudiente}</Text> 
                 </View> 
-                <View style={{width: "15%"}}> 
+                <View style={{width: "5%"}}> 
                         <Text></Text> 
                 </View> 
                 <View style={styles.tableColHeader4}> 
-                    <Text style={styles.tableCellHeader}>Proximo Control:</Text> 
+                    <Text style={styles.tableCellHeader}>Nombre Acudiente: </Text> 
                 </View>  
-                <View style={styles.tableCol4}> 
-                        <Text style={{fontSize: 14, fontFamily: 'Amaranth2', color:'black'}}> {dateFormat(lastControls.proximoControl)}</Text> 
+                <View style={{width: "25%"}}> 
+                        <Text style={{fontSize: 13, fontFamily: 'Amaranth2', color:'black'}}>{item.nombreAcudiente}</Text> 
                 </View> 
                 </View>
-            
             </View> 
 
-            <View style={styles.table}> 
-            <View style={styles.tableRow}> 
-              <View style={styles.tableColHeader}> 
-                <Text style={styles.tableCellHeader}>Fecha Control</Text> 
-              </View> 
-              <View style={styles.tableColHeader2}> 
-                <Text style={styles.tableCellHeader}>Peso</Text> 
-              </View>  
-              <View style={styles.tableColHeader2}> 
-                <Text style={styles.tableCellHeader}>Talla</Text> 
-              </View>
-              <View style={styles.tableColHeader2}> 
-                <Text style={styles.tableCellHeader}>IMC</Text> 
-              </View>
-              <View style={styles.tableColHeader}> 
-                <Text style={styles.tableCellHeader}>Nutricionista</Text> 
-              </View>
-            </View>
+            {rolUser === 'INFANTE' && ( 
+            <View style={styles.table3}> 
+                <View style={styles.tableRow}> 
+                <View width="100%" style={{textAlign:'center'}}> 
+                    <Text style={styles.tableCellHeader}>Progreso Ingreso: <Text style={{fontSize: 14, fontFamily: 'Amaranth2', color:'black'}}>{item.estado} % </Text></Text> 
+                </View> 
+                </View>
+            </View> 
+            )}
 
-            {listControls.map((control, index) => (
+        {rolUser === 'MADRE_GESTANTE' && ( 
+            <View style={styles.table3}> 
+                <View style={styles.tableRow}> 
+                <View style={styles.tableColHeader4}> 
+                    <Text style={styles.tableCellHeader}>Progreso Ingreso: </Text> 
+                </View> 
+                <View style={styles.tableCol4}> 
+                        <Text style={{fontSize: 13, fontFamily: 'Amaranth2', color:'black'}}>{item.estado} %</Text> 
+                </View> 
+                <View style={{width: "5%"}}> 
+                        <Text></Text> 
+                </View> 
+                <View style={styles.tableColHeader4}> 
+                    <Text style={styles.tableCellHeader}>Semanas de Gestación: </Text> 
+                </View>  
+                <View style={{width: "25%"}}> 
+                        <Text style={{fontSize: 13, fontFamily: 'Amaranth2', color:'black'}}>{item.ingreso.ingresoMadre.cantidadSemanas} Semanas </Text> 
+                </View> 
+                </View>
+            </View> 
+        )}
+
+            <View style={styles.table}> 
                 <View style={styles.tableRow}> 
                     <View style={styles.tableCol}> 
-                        <Text style={styles.tableCell}>{dateFormat (control.fechaControl)}</Text> 
+                        <Text style={styles.tableCell}>Fecha Seguimiento:</Text> 
                     </View> 
-                    <View style={styles.tableCol4}> 
-                        <Text style={styles.tableCell}>{control.peso}</Text> 
+                    <View style={styles.tableColHeader2}> 
+                        <Text style={styles.tableCell2}>{dateFormat(item.fecha)}</Text> 
                     </View> 
-                    <View style={styles.tableCol4}> 
-                        <Text style={styles.tableCell}>{control.talla}</Text> 
-                    </View> 
-                    <View style={styles.tableCol4}> 
-                        <Text style={styles.tableCell}>{control.imc}</Text> 
-                    </View> 
-                    <View style={styles.tableCol}> 
-                        <Text style={styles.tableCell}>{control.idUsuarioNutricionista}</Text> 
-                    </View>
                 </View> 
-            ))}
-            
-            </View>*/}
+                <View style={styles.tableRow}> 
+                    <View style={styles.tableCol}> 
+                        <Text style={styles.tableCell}>Documento Nutricionista:</Text> 
+                    </View> 
+                    <View style={styles.tableColHeader2}> 
+                        <Text style={styles.tableCell2}>{item.idUsuarioNutricionista}</Text> 
+                    </View> 
+                </View>
+                <View style={styles.tableRow}> 
+                    <View style={styles.tableCol}> 
+                        <Text style={styles.tableCell}>Cuenta con afiliación al SGSSS:</Text> 
+                    </View> 
+                    <View style={styles.tableColHeader2}> 
+                        <Text style={styles.tableCell2}>{item.ingreso.ingreso.afiliacionSgsss}</Text> 
+                    </View> 
+                </View> 
+
+                <View style={styles.tableRow}> 
+                    <View style={styles.tableCol}> 
+                        <Text style={styles.tableCell}>Cuenta con valoración y controles en salud oral:</Text> 
+                    </View> 
+                    <View style={styles.tableColHeader2}> 
+                        <Text style={styles.tableCell2}>{item.ingreso.ingreso.saludOral}</Text> 
+                    </View> 
+                </View> 
+
+                <View style={styles.tableRow}> 
+                    <View style={styles.tableCol}> 
+                        <Text style={styles.tableCell}>Conoce la red de salud o a quien acudir en caso de urgencia:</Text> 
+                    </View> 
+                    <View style={styles.tableColHeader2}> 
+                        <Text style={styles.tableCell2}>{item.ingreso.ingreso.conoceUrgencias}</Text> 
+                    </View> 
+                </View> 
+                
+                {rolUser === 'MADRE_GESTANTE' && ( 
+                <View style={styles.tableRow}> 
+                    <View style={styles.tableCol}> 
+                        <Text style={styles.tableCell}>Asiste a controles prenatales:</Text> 
+                    </View> 
+                    <View style={styles.tableColHeader2}> 
+                        <Text style={styles.tableCell2}>{item.ingreso.ingresoMadre.controlPrenatal}</Text> 
+                    </View> 
+                </View> 
+                )}
+
+                {rolUser === 'MADRE_GESTANTE' && ( 
+                <View style={styles.tableRow}> 
+                    <View style={styles.tableCol}> 
+                        <Text style={styles.tableCell}>Cuenta con suministro de micronutrientes Hierro, Ácido fólico y calcio y los consume:</Text> 
+                    </View> 
+                    <View style={styles.tableColHeader2}> 
+                        <Text style={styles.tableCell2}>{item.ingreso.ingresoMadre.cuentaMicro}</Text> 
+                    </View> 
+                </View> 
+                )}
+
+                {rolUser === 'MADRE_GESTANTE' && ( 
+                <View style={styles.tableRow}> 
+                    <View style={styles.tableCol}> 
+                        <Text style={styles.tableCell}>Se ha realizado exámenes médicos recomendados para mujeres gestantes:</Text> 
+                    </View> 
+                    <View style={styles.tableColHeader2}> 
+                        <Text style={styles.tableCell2}>{item.ingreso.ingresoMadre.examenMedico}</Text> 
+                    </View> 
+                </View> 
+                )}
+
+                {rolUser === 'MADRE_GESTANTE' && ( 
+                <View style={styles.tableRow}> 
+                    <View style={styles.tableCol}> 
+                        <Text style={styles.tableCell}>Reconoce las señales de peligro durante el embarazo:</Text> 
+                    </View> 
+                    <View style={styles.tableColHeader2}> 
+                        <Text style={styles.tableCell2}>{item.ingreso.ingresoMadre.senalPeligro}</Text> 
+                    </View> 
+                </View> 
+                )}
+
+                {rolUser === 'MADRE_GESTANTE' && ( 
+                <View style={styles.tableRow}> 
+                    <View style={styles.tableCol}> 
+                        <Text style={styles.tableCell}>Con su pareja tienen acordado método de planificación para después de que nazca la niña o niño:</Text> 
+                    </View> 
+                    <View style={styles.tableColHeader2}> 
+                        <Text style={styles.tableCell2}>{item.ingreso.ingresoMadre.metodoPlanificacion}</Text> 
+                    </View> 
+                </View> 
+                )}
+
+                {rolUser === 'INFANTE' && ( 
+                <View style={styles.tableRow}> 
+                <View style={styles.tableCol}> 
+                    <Text style={styles.tableCell}>Identifican signos de alarmas de enfermedades prevalentes de la 
+                    primera infancia (que ponen en peligro de muerte a niños y niñas):</Text> 
+                </View> 
+                <View style={styles.tableColHeader2}> 
+                    <Text style={styles.tableCell2}>{item.ingreso.ingresoInfante.alarmaPreventiva}</Text> 
+                </View> 
+                </View>
+                )}
+
+                  {rolUser === 'INFANTE' && item.ingreso.ingresoInfante.valoracionMedica !== null && (
+                    <View style={styles.tableRow}> 
+                    <View style={styles.tableCol}> 
+                        <Text style={styles.tableCell}>En niñas y menores de un mes se realizó validación médica:</Text> 
+                    </View> 
+                    <View style={styles.tableColHeader2}> 
+                        <Text style={styles.tableCell2}>{item.ingreso.ingresoInfante.valoracionMedica}</Text> 
+                    </View> 
+                </View>
+                )}
+
+                {rolUser === 'INFANTE' && ( 
+                <View style={styles.tableRow}> 
+                <View style={styles.tableCol}> 
+                    <Text style={styles.tableCell}>Las niñas y niños cuentan con controles de Crecimiento y Desarrollo:</Text> 
+                </View> 
+                <View style={styles.tableColHeader2}> 
+                    <Text style={styles.tableCell2}>{item.ingreso.ingresoInfante.controlCyD}</Text> 
+                </View> 
+                </View>
+                )}
+                
+                {rolUser === 'INFANTE' && ( 
+                <View style={styles.tableRow}> 
+                <View style={styles.tableCol}> 
+                    <Text style={styles.tableCell}>La niña o niños recibe suplementación (vitamina A, Zinc, Hierro):</Text> 
+                </View> 
+                <View style={styles.tableColHeader2}> 
+                    <Text style={styles.tableCell2}>{item.ingreso.ingresoInfante.recibeSuplementos}</Text> 
+                </View> 
+                </View>
+                )}
+                
+                {item.ingreso.ingreso.patologiaIdentificadaSgsss === true && (
+                <View style={styles.tableRow}> 
+                <View style={styles.tableCol}> 
+                    <Text style={styles.tableCell}>Presenta una patología asociada identificada por el SGSSS: </Text> 
+                </View> 
+                <View style={styles.tableColHeader2}> 
+                    <Text style={styles.tableCell2}>Si</Text> 
+                </View> 
+                </View>
+                )}
+                {item.ingreso.ingreso.patologiaIdentificadaSgsss === true && (
+                <View style={styles.tableRow}> 
+                <View style={styles.tableColHeader2}> 
+                    <Text style={styles.tableCell}>¿Cuál?</Text> 
+                </View> 
+                <View style={styles.tableCol}> 
+                    <Text style={styles.tableCell3}>{item.ingreso.ingreso.nombrePatologia}</Text> 
+                </View> 
+                </View>
+                )}
+                
+
+                {item.ingreso.ingreso.recibeMedFormulada === true && (
+                <View style={styles.tableRow}> 
+                <View style={styles.tableCol}> 
+                    <Text style={styles.tableCell}>Recibe medicamentos formulados por el SGSSS para alguna patología: </Text> 
+                </View> 
+                <View style={styles.tableColHeader2}> 
+                    <Text style={styles.tableCell2}>Si</Text> 
+                </View> 
+                </View>
+                )}
+
+                {item.ingreso.ingreso.recibeMedFormulada === true && (  
+                <View style={styles.tableRow}> 
+                <View style={styles.tableColHeader2}> 
+                    <Text style={styles.tableCell}>¿Cuál?</Text> 
+                </View> 
+                <View style={styles.tableCol}> 
+                    <Text style={styles.tableCell3}>{item.ingreso.ingreso.nombreMedFormululada}</Text> 
+                </View> 
+                </View>
+                )}
+
+                <View style={styles.tableRow}> 
+                <View style={styles.tableColHeader2}> 
+                    <Text style={styles.tableCell}>EAPB:</Text> 
+                </View> 
+                <View style={styles.tableCol}> 
+                    <Text style={styles.tableCell3}>{item.ingreso.ingreso.eapb}</Text> 
+                </View> 
+                </View>
+
+                <View style={styles.tableRow}> 
+                <View style={styles.tableColHeader2}> 
+                    <Text style={styles.tableCell}>IPS:</Text> 
+                </View> 
+                <View style={styles.tableCol}> 
+                    <Text style={styles.tableCell3}>{item.ingreso.ingreso.ips}</Text> 
+                </View> 
+                </View>
+                
+                {item.ingreso.ingreso.usuarioRemitido === 1 && (
+                <View style={styles.tableRow}> 
+                <View style={styles.tableCol}> 
+                    <Text style={styles.tableCell}>El usuario fue remitido a SGSSS: </Text> 
+                </View> 
+                <View style={styles.tableColHeader2}> 
+                    <Text style={styles.tableCell2}>{item.ingreso.ingreso.usuarioRemitido}</Text> 
+                </View> 
+                </View>
+                )}
+
+              {item.ingreso.ingreso.usuarioRemitido === 1 && (
+                <View style={styles.tableRow}> 
+                <View style={styles.tableColHeader2}> 
+                    <Text style={styles.tableCell}>¿Por qué?</Text> 
+                </View> 
+                <View style={styles.tableCol}> 
+                    <Text style={styles.tableCell3}>{item.ingreso.ingreso.causa}</Text> 
+                </View> 
+                </View>
+                )}
+            </View>   
+
+            {rolUser === 'MADRE_GESTANTE' && ( 
+            <View style={styles.table3}> 
+                <View style={styles.tableRow}> 
+                <View width="100%" style={{textAlign:'center'}}> 
+                    <Text style={styles.tableCellHeader}>Señales de peligro en la gestación (AIEPI)</Text> 
+                </View> 
+                </View>
+            </View> 
+            )}
+            {rolUser === 'MADRE_GESTANTE' && ( 
+            <View style={styles.table}> 
+                <View style={styles.tableRow}> 
+                    <View style={styles.tableCol}> 
+                        <Text style={styles.tableCell}>Vómito continuo:</Text> 
+                    </View> 
+                    <View style={styles.tableColHeader2}> 
+                        <Text style={styles.tableCell2}>{item.ingreso.ingresoMadre.vomitoControlado}</Text> 
+                    </View> 
+            </View> 
+
+            <View style={styles.tableRow}> 
+                    <View style={styles.tableCol}> 
+                        <Text style={styles.tableCell}>Dolor de cabeza:</Text> 
+                    </View> 
+                    <View style={styles.tableColHeader2}> 
+                        <Text style={styles.tableCell2}>{item.ingreso.ingresoMadre.dolorCabeza}</Text> 
+                    </View> 
+            </View> 
+
+            <View style={styles.tableRow}> 
+                    <View style={styles.tableCol}> 
+                        <Text style={styles.tableCell}>Fiebre:</Text> 
+                    </View> 
+                    <View style={styles.tableColHeader2}> 
+                        <Text style={styles.tableCell2}>{item.ingreso.ingresoMadre.fiebre}</Text> 
+                    </View> 
+            </View>
+
+            <View style={styles.tableRow}> 
+                    <View style={styles.tableCol}> 
+                        <Text style={styles.tableCell}>Dolor en la boca del estómago:</Text> 
+                    </View> 
+                    <View style={styles.tableColHeader2}> 
+                        <Text style={styles.tableCell2}>{item.ingreso.ingresoMadre.dolorBocaEstomago}</Text> 
+                    </View> 
+            </View>
+
+            <View style={styles.tableRow}> 
+                    <View style={styles.tableCol}> 
+                        <Text style={styles.tableCell}>Ardor al orinar:</Text> 
+                    </View> 
+                    <View style={styles.tableColHeader2}> 
+                        <Text style={styles.tableCell2}>{item.ingreso.ingresoMadre.ardorOrinar}</Text> 
+                    </View> 
+            </View>
+
+            <View style={styles.tableRow}> 
+                    <View style={styles.tableCol}> 
+                        <Text style={styles.tableCell}>Sangrado:</Text> 
+                    </View> 
+                    <View style={styles.tableColHeader2}> 
+                        <Text style={styles.tableCell2}>{item.ingreso.ingresoMadre.sangrado}</Text> 
+                    </View> 
+            </View>
+
+            <View style={styles.tableRow}> 
+                    <View style={styles.tableCol}> 
+                        <Text style={styles.tableCell}>Cara, manos o pies hinchados:</Text> 
+                    </View> 
+                    <View style={styles.tableColHeader2}> 
+                        <Text style={styles.tableCell2}>{item.ingreso.ingresoMadre.hinchamiento}</Text> 
+                    </View> 
+            </View>
+
+            <View style={styles.tableRow}> 
+                    <View style={styles.tableCol}> 
+                        <Text style={styles.tableCell}>Disminución de los movimientos fetales:</Text> 
+                    </View> 
+                    <View style={styles.tableColHeader2}> 
+                        <Text style={styles.tableCell2}>{item.ingreso.ingresoMadre.movimientoFetal}</Text> 
+                    </View> 
+            </View>
+            </View> 
+            )}
+
         </Page>
   </Document>
     )
@@ -268,8 +585,8 @@ const styles = StyleSheet.create({
       textAlign: "center",
     },  
     tableColHeader2: { 
-        width: "10%", 
-        textAlign: "center",
+        width: "15%", 
+        textAlign: "left",
       },  
     tableColHeader3: { 
         width: "35%", 
@@ -280,7 +597,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
       },
     tableCol: { 
-      width: "35%", 
+      width: "80%", 
       textAlign: "center",
     }, 
     tableCol4: { 
@@ -291,8 +608,24 @@ const styles = StyleSheet.create({
         width: "35%",
         textAlign: "center",
     },
+    tableCell2: {
+      margin: "auto", 
+      margin: 5, 
+      fontSize: 11,
+      fontWeight: 500,
+      textAlign: "right",
+      color: "#2D61A4", 
+    },  
+    tableCell3: {
+      margin: "auto", 
+      margin: 5, 
+      fontSize: 11,
+      fontWeight: 500,
+      textAlign: "right",
+      color: "#2D61A4", 
+    },
     tableCellHeader: {
-      fontSize: 14,
+      fontSize: 13,
       fontWeight: 500,
       textAlign: "center",
       color: "#2D61A4", 
@@ -301,8 +634,8 @@ const styles = StyleSheet.create({
     tableCell: { 
       margin: "auto", 
       margin: 5, 
-      fontSize: 10,
-      textAlign: "center" 
+      fontSize: 11,
+      textAlign: "left"
     }, 
     tableRow: {
         flexDirection: "row" 
