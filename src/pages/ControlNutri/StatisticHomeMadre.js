@@ -17,6 +17,7 @@ import GladMaIn from "../../assets/img/logoGladmain.PNG";
 import fuente from "../../assets/fontPDF/Amaranth-Bold.ttf";
 import fuente2 from "../../assets/fontPDF/Amaranth-Regular.ttf";
 import "./StatisticHome.scss";
+import useAuth from '../../hooks/useAuth'; //privilegios
 
 export default function StatisticHomeMadre(){
     const { documento, rolUser } = useParams();
@@ -25,6 +26,7 @@ export default function StatisticHomeMadre(){
     const [ listControls, setListControls ] = useState([]);
     const [loaded, setLoaded] = useState(true); 
     const [ loadedPDF, setLoadedSonPDF ] = useState(false);
+    const { user } = useAuth(); //privilegios
 
     useEffect(() => {
         (async () => {
@@ -40,14 +42,21 @@ export default function StatisticHomeMadre(){
         })();       
     }, []);
 
+    //privilegios
+    const validatePrivilegio = (privilegio) => {
+        return user.authorities.filter(priv => priv === privilegio);
+    }
+
     return(
         <>
             <Container>
             <h1 className="text-center">IMC para la Edad Gestacional
-            <Link to={`/admin/AddControlNutriMadre/${documento}/${rolUser}`} >
-                <FontAwesomeIcon icon={faUserPlus} size="lg" color="#2D61A4" style = {{marginLeft:10}} data-tip data-for = "boton1" />
-                <ReactTooltip id="boton1" place="bottom" type="dark" effect="float">Agregar Control Nutricional</ReactTooltip>
-            </Link>
+            {validatePrivilegio("REGISTRAR_CONTROL").length > 0 && ("CONSULTAR_USUARIO").length > 0 && (
+                <Link to={`/admin/AddControlNutriMadre/${documento}/${rolUser}`} >
+                    <FontAwesomeIcon icon={faUserPlus} size="lg" color="#2D61A4" style = {{marginLeft:10}} data-tip data-for = "boton1" />
+                    <ReactTooltip id="boton1" place="bottom" type="dark" effect="float">Agregar Control Nutricional</ReactTooltip>
+                </Link>
+            )}
             {loadedPDF && (
                     <PDFDownloadLink document={<DocumentPdf userControl={userControl} listControls={listControls} setLoadedSonPDF={setLoadedSonPDF}/>} fileName="ControlNutricionalMadre.pdf">
                     {({ blob, url, loaded, error }) =>

@@ -199,7 +199,7 @@ export default function AllUserC (){
 
                                             <div className="sci">
                                                 <div className="liB">
-                                                {validatePrivilegio("LISTAR_SEGUIMIENTOS").length > 0 && ("CONSULTAR_USUARIO").length > 0 && ("LISTAR_INGRESOS_INFANTE").length > 0 && (
+                                                {validatePrivilegio("LISTAR_SEGUIMIENTOS").length > 0 && ("LISTAR_INGRESOS_INFANTE").length > 0 && ("CONSULTAR_USUARIO").length > 0 && (
                                                     <Link className="enlace" to={`/admin/ListFollowUp/${item.documento}/${rolUser}`}>
                                                         <FontAwesomeIcon icon={faFileMedicalAlt} size="lg" color="#2D61A4" data-tip data-for = "boton4"/>
                                                         <ReactTooltip id="boton4" place="bottom" type="dark" effect="float"> Seguimiento </ReactTooltip>

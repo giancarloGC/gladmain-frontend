@@ -207,8 +207,8 @@ export default function ListFollow(){
         <Container>
             <h1 className="text-center mb-4">Seguimientos de {infoUser ? infoUser.nombre : "Anonimo"}
                 {rolUser === "INFANTE" && (
-                    validatePrivilegio("REGISTRAR_SEGUIMIENTO").length > 0 && ("LISTAR_SEGUIMIENTOS").length > 0 
-                    && ("REGISTRAR_INGRESO_INFANTE").length > 0 && (
+                    validatePrivilegio("REGISTRAR_SEGUIMIENTO").length > 0 && ("REGISTRAR_INGRESO_INFANTE").length > 0 
+                    && ("LISTAR_SEGUIMIENTOS").length > 0 && (
                        <Link to={`/admin/addControlFollow/${documento}/${rolUser}`}>
                            <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton" />
                            <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Seguimiento </ReactTooltip>
@@ -217,8 +217,8 @@ export default function ListFollow(){
                 )}
                  
             {rolUser === "MADRE_GESTANTE" && (
-                validatePrivilegio("REGISTRAR_SEGUIMIENTO").length > 0 && ("LISTAR_SEGUIMIENTOS").length > 0 
-                && ("REGISTRAR_INGRESO_MADRE").length > 0 && (
+                validatePrivilegio("REGISTRAR_SEGUIMIENTO").length > 0 && ("REGISTRAR_INGRESO_MADRE").length > 0 
+                && ("LISTAR_SEGUIMIENTOS").length > 0 && (
                     <Link to={`/admin/addControlFollow/${documento}/${rolUser}`}>
                         <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton" />
                         <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Seguimiento </ReactTooltip>

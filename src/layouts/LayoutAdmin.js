@@ -219,9 +219,11 @@ export default function LayoutAdmin(props){
                             </Link>
                             <img src={Logo} alt="image-logo" style={{"width": "150px"}} />
                         </div>
-                
+                        
                         <div className="options__menu">	
-                            {validatePrivilegio("LISTAR_ROLES").length > 0 && (
+
+                        {roleUsuario === "1" && (
+                            validatePrivilegio("LISTAR_ROLES").length > 0 && (
                                 <Link to="/admin/roles" className={linkSelected.roles ? "selected" : ""} 
                                     onClick={() => setLinkSelected({roles: true, users: false, controls: false})}
                                 >
@@ -230,8 +232,9 @@ export default function LayoutAdmin(props){
                                         <h4 className="subtitlesMenu">Roles</h4>
                                     </div>
                                 </Link>
-                            )}
-
+                            )
+                        )}
+                        
                             {validatePrivilegio("LISTAR_USUARIOS").length > 0 && (                
                                 <Link to="/admin/users" className={linkSelected.users ? "selected" : ""}                             onClick={() => setLinkSelected({roles: false, users: true, controls: false})}
                                         onClick={() => setLinkSelected({roles: false, users: true, controls: false})}
