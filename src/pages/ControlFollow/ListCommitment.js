@@ -225,13 +225,7 @@ const validatePrivilegio = (privilegio) => {
                                 <ReactTooltip id="boton5" place="bottom" type="dark" effect="float"> Eliminar </ReactTooltip>
                                 </Link>
                             )}
-                                <Link className="btn btn-secondary text-center mx-1">
-                                   <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-print-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-tip data-for = "boton6">
-                                   <FontAwesomeIcon icon={faPrint}
-                                   />
-                               </svg>
-                               <ReactTooltip id="boton6" place="bottom" type="dark" effect="float"> Imprimir </ReactTooltip>
-                               </Link > 
+                            
                             </p>                     
                         </Col>
                     </Row>

@@ -119,7 +119,6 @@ export default function AllUserC (){
 
             {!errorServer && allUsersSaved && (
                 <>
-                {console.log("entro1")};
                     {allUsersSaved.length > 0  && (
                         <>
                             <h1 className="text-center">{rolUser === "MADRE_GESTANTE" ? "Listado de Madres Gestantes" : "Listado de Infantes"} </h1>

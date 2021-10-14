@@ -19,6 +19,7 @@ import { TOKEN } from "../../../utils/constans";
 import Lottie from 'react-lottie';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import AnimationAuthorization from "../../../assets/animations/withoutAuthorization.json";
+import AnimationErrorServer from "../../../assets/animations/working-server-animation.json";
 import AnimationNotFindSearch from "../../../assets/animations/notFindSearch.json";
 import useAuth from '../../../hooks/useAuth';
 
@@ -29,15 +30,20 @@ export default function AllUsers(){
     const [ loading, setLoading ] = useState(true);
     const token = localStorage.getItem(TOKEN);
     const [ authorization, setAuthorization ] = useState(true);
+    const [ errorServer, setErrorServer ] = useState(false);
     const [ allUsersSaved, setAllUsersSaved ] = useState([]);
     const [ typeSearch, setTypeSearch ] = useState("nombre");
     const { user } = useAuth();
+    
     useEffect(() => {
         (async () => {
             const response = await getUserApi(token);
             if(response.status === 403){
                 setLoading(false);
                 setAuthorization(false);
+            }else if(response.status === 500){
+                setLoading(false);
+                setErrorServer(true);
             }else{
                 setLoading(false);
                 setAllUsersSaved(response);
@@ -109,6 +115,15 @@ export default function AllUsers(){
                     />
                 </>
             )}
+            
+            {errorServer && (
+                <>
+                    <h1 style={{"textAlign": "center"}}>Error en el servidor, intentelo más tarde</h1>
+                        <Lottie height={500} width="80%"
+                        options={{ loop: true, autoplay: true, animationData: AnimationErrorServer, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                    />
+                </>
+            )}
 
             {loading && (
                 <Row className="justify-content-md-center text-center">
@@ -119,7 +134,7 @@ export default function AllUsers(){
                 </Row>
             )}
        
-            {allUsersSaved && (
+            {!errorServer && allUsersSaved && (
                 <>
                 {allUsersSaved.length > 0  && (
                     <>
