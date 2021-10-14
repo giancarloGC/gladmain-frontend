@@ -103,7 +103,8 @@ export default function LayoutAdmin(props){
             let doc = 0;
             for(var i = 0; i < responseControls.length; i++ ){
                 if(enDesnutricion === false){
-                    if(responseControls[i].vigente === true && (responseControls[i].estadoNutricional === "Riesgo de Desnutrición Aguda" || responseControls[i].estadoNutricional === "Desnutrición Aguda Severa")){
+                    if(responseControls[i].vigente === true && (responseControls[i].estadoNutricional === "Riesgo de Desnutrición Aguda" 
+                    || responseControls[i].estadoNutricional === "Desnutrición Aguda Moderada" || responseControls[i].estadoNutricional === "Desnutrición Aguda Severa")){
                         enDesnutricion = true;
                         doc = 1;
                     }else{
@@ -124,33 +125,37 @@ export default function LayoutAdmin(props){
             return (b.id - a.id)
         });
 
-        let dateControlU = moment(ultimoC[0].proximoControl);
-        if (dateControlU.diff(dateCurrently, 'hours') > 0) {
-            let daysFaltan = dateControlU.diff(dateCurrently, 'days');
-            toast.warn(`¡Tiene un atraso de ${daysFaltan} días en su control de crecimiento y desarrollo!`, {
-                position: "bottom-right",
-                autoClose: 10000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark"
-            });
-            setShowAlert(true);
-        }else{
-            let daysFaltan = dateCurrently.diff(dateControlU, 'days');
-            toast.info(`¡Te faltan ${daysFaltan} días para registrar tu próximo control crecimiento y desarrollo!`, {
-                position: "bottom-right",
-                autoClose: 10000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark"
-            });
-            setShowAlert(true);
+        console.log(ultimoC);
+
+        if (controls.length !== 0 ) {
+            let dateControlU = moment(ultimoC[0].proximoControl);
+            if (dateControlU.diff(dateCurrently, 'hours') > 0) {
+                let daysFaltan = dateControlU.diff(dateCurrently, 'days');
+                    toast.info(`¡Te faltan ${daysFaltan} días para registrar tu próximo control crecimiento y desarrollo!`, {
+                        position: "bottom-right",
+                        autoClose: 10000,
+                        hideProgressBar: false,
+                        closeOnClick: false,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "dark"
+                });
+                setShowAlert(true);
+            }else{
+                let daysFaltan = dateCurrently.diff(dateControlU, 'days');
+                toast.warn(`¡Tiene un atraso de ${daysFaltan} días en su control de crecimiento y desarrollo!`, {
+                    position: "bottom-right",
+                    autoClose: 10000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark"
+                });
+                setShowAlert(true);
+            }
         }
     }
 
@@ -325,7 +330,7 @@ function LoadRoutes({routes}){
 const Msg = ({ closeToast, toastProps, countAlerts, setGoDesnutricion }) => {
     return(
         <div onClick={() => setGoDesnutricion(true)}>
-            ¡Hay {countAlerts} niños en riesgo de desnutrición!
+            ¡Hay {countAlerts} niños en estado de alarma de desnutrición!
         </div>
     )
 }

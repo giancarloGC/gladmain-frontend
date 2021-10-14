@@ -14,7 +14,7 @@ export default function EditCommit(props){
   const token = localStorage.getItem(TOKEN);
   const [ showSpinner, setShowSpinner ] = useState(false);
  
-  console.log(control);
+  console.log(control.tipo);
   console.log(checkeds);
   
 
@@ -129,27 +129,31 @@ export default function EditCommit(props){
                     </Form.Group>
                     
                     <Container style={{backgroundColor: '#f1f1f1', borderRadius:'5px'}}><br/>
-                    {control && (
-                      <Form.Group as={Row} className="mb-1 ">
-                      <center>
-                      <Form.Label column sm="3"><b style={{fontSize: "16px"}}>Seleccione una opción</b></Form.Label>
-                      </center>
-                      <div class="middle">
-                        <label>
-                        <input type="radio" name="radio1" checked={checkeds.radio1} onChange={e => onChangeChecked(e)}/>
-                        <div class="box">
-                          <span>Compromiso cumplido que no se mantuvo</span>
+
+                    {control.tipo !== null && (
+                      control && (
+                        <Form.Group as={Row} className="mb-1 ">
+                        <center>
+                        <Form.Label column sm="3"><b style={{fontSize: "16px"}}>Seleccione una opción</b></Form.Label>
+                        </center>
+                        <div class="middle">
+                          <label>
+                          <input type="radio" name="radio1" checked={checkeds.radio1} onChange={e => onChangeChecked(e)}/>
+                          <div class="box">
+                            <span>Compromiso cumplido que no se mantuvo</span>
+                          </div>
+                          </label>
+                          <label>
+                          <input type="radio" name="radio" checked={checkeds.radio} onChange={e => onChangeChecked(e)} />
+                          <div class="box">
+                            <span>Compromiso por nuevo factor de riesgo</span>
+                          </div>
+                          </label>
                         </div>
-                        </label>
-                        <label>
-                        <input type="radio" name="radio" checked={checkeds.radio} onChange={e => onChangeChecked(e)} />
-                        <div class="box">
-                          <span>Compromiso por nuevo factor de riesgo</span>
-                        </div>
-                        </label>
-                      </div>
-                      </Form.Group>
-                      )}
+                        </Form.Group>
+                        )
+                    )}
+                    
 
                     <Form.Group as={Row} className="mt-2">
                     <center>

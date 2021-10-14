@@ -73,27 +73,29 @@ export default function DetailsCommit(props){
                         </Col>
                     </Form.Group>
 
-                    <Container style={{border:'2px solid #eee', borderRadius:'5px'}}><br/>      
-                    <Form.Group as={Row} className="mb-1 ">
-                      
-                    <div class="middle">
-                    {control.tipo === "Compromiso cumplido que no se mantuvo" ? 
-                      <label >
-                      <input type="radio" name="radio1"  checked={true}/>
-                      <div class="box">
-                        <span>Compromiso cumplido que no se mantuvo</span>
+                    <Container style={{border:'2px solid #eee', borderRadius:'5px'}}><br/>     
+
+                    {control.tipo !== null && (
+                      <Form.Group as={Row} className="mb-1 ">
+                      <div class="middle">
+                      {control.tipo === "Compromiso cumplido que no se mantuvo" ? 
+                        <label >
+                        <input type="radio" name="radio1"  checked={true}/>
+                        <div class="box">
+                          <span>Compromiso cumplido que no se mantuvo</span>
+                        </div>
+                        </label>
+                        :
+                        <label>
+                        <input type="radio" name="radio" checked={true} />
+                        <div class="box">
+                          <span>Compromiso por nuevo factor de riesgo</span>
+                        </div>
+                        </label>
+                        }
                       </div>
-                      </label>
-                      :
-                      <label>
-                      <input type="radio" name="radio" checked={true} />
-                      <div class="box">
-                        <span>Compromiso por nuevo factor de riesgo</span>
-                      </div>
-                      </label>
-                      }
-                    </div>
                     </Form.Group>
+                    )}
 
                     <Form.Group as={Row} className="mt-2">
                     <center>

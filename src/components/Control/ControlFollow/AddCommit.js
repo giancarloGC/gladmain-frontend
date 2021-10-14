@@ -190,7 +190,7 @@ export default function AddCommit(props){
                           <InputGroup hasValidation>
                               <Form.Control type="date" size="xs" id="fechaCumplimiento" name="fechaCumplimiento" 
                                  value={values.fechaCumplimiento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaCumplimiento && touched.fechaCumplimiento}
-                                 isValid={!errors.fechaCumplimiento && touched.fechaCumplimiento}
+                                 isValid={!errors.fechaCumplimiento && touched.fechaCumplimiento} disabled
                               />
                               <Form.Control.Feedback type="invalid">
                                   {errors.fechaCumplimiento}
