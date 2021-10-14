@@ -20,6 +20,7 @@ import Lottie from 'react-lottie';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import AnimationAuthorization from "../../../assets/animations/withoutAuthorization.json";
 import AnimationNotFindSearch from "../../../assets/animations/notFindSearch.json";
+import useAuth from '../../../hooks/useAuth';
 
 import "./AllUsers.scss";
 
@@ -30,6 +31,7 @@ export default function AllUsers(){
     const [ authorization, setAuthorization ] = useState(true);
     const [ allUsersSaved, setAllUsersSaved ] = useState([]);
     const [ typeSearch, setTypeSearch ] = useState("nombre");
+    const { user } = useAuth();
     useEffect(() => {
         (async () => {
             const response = await getUserApi(token);
@@ -56,8 +58,12 @@ export default function AllUsers(){
         setUsersApi(usersFiltred);
     }
 
+    const validatePrivilegio = (privilegio) => {
+        return user.authorities.filter(priv => priv === privilegio);
+    }
 
-    /*const confirmDeleteUser = (documento) => {
+
+    const confirmDeleteUser = (documento) => {
         swal({
             title: "¿Estás seguro de eliminar el usuario?",
             text: "¡Una vez eliminado no se podrá recuperar!",
@@ -90,7 +96,7 @@ export default function AllUsers(){
                   });                  
             }
         })
-    }*/
+    }
     
 
     return(
@@ -117,10 +123,11 @@ export default function AllUsers(){
                 <>
                 {allUsersSaved.length > 0  && (
                     <>
-                    <h1 className="text-center">Lista de Usuarios <Link to="/admin/addUser" ><FontAwesomeIcon data-tip data-for="boton1" icon={faUserPlus} size="lg" color="#2D61A4"
-                        />
-                        </Link>
-                        <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Agregar Nuevo Usuario </ReactTooltip>
+                    <h1 className="text-center">Lista de Usuarios 
+                    {validatePrivilegio("REGISTRAR_USUARIO").length > 0 && ("LISTAR_ROLES").length > 0 && ("ASIGNAR_ROL").length > 0 && ( 
+                    <Link to="/admin/addUser" ><FontAwesomeIcon data-tip data-for="boton1" icon={faUserPlus} size="lg" color="#2D61A4"/></Link>
+                    )}
+                    <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Agregar Nuevo Usuario </ReactTooltip>
                     </h1>
                     <Row className="justify-content-center">
                         <Col md={4}>
@@ -172,16 +179,30 @@ export default function AllUsers(){
                         </div>
                         <div className="sci">
                             <div className="liB" >
+                            {validatePrivilegio("CONSULTAR_USUARIO").length > 0 && (
                                 <Link className="enlace" to={`/admin/user/${item.documento}`}>
                                 <FontAwesomeIcon icon={faEye} size="lg" color="#2D61A4" data-tip data-for = "boton1"
                                 /> <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Ver </ReactTooltip>
                                 </Link>
+                            )}
                             </div>
                             <div className="liB">
+                            {validatePrivilegio("CONSULTAR_USUARIO").length > 0 && ("ACTUALIZAR_USUARIO").length > 0 && ("LISTAR_ROLES").length > 0 && 
+                            ("ASIGNAR_ROL").length > 0 && ("CONSULTAR_ROLES_USUARIO").length > 0 && ("RETIRAR_ROL").length > 0 && (
                             <Link className="enlace" to={`/admin/editUser/${item.documento}`}>
                                 <FontAwesomeIcon icon={faPencilAlt} size="lg" color="#2D61A4" data-tip data-for = "boton2"
                                 /> <ReactTooltip id="boton2" place="bottom" type="dark" effect="float"> Editar </ReactTooltip>
                                 </Link>
+                            )}
+                            </div>
+
+                            <div className="liB">
+                                {validatePrivilegio("ELIMINAR_USUARIO").length > 0 && (
+                                    <a className="enlace" onClick={() => confirmDeleteUser(item.documento)}>
+                                        <FontAwesomeIcon icon={faTrash} size="lg" color="#2D61A4" data-tip data-for = "boton3"
+                                        /> <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Eliminar </ReactTooltip>
+                                    </a>
+                                )}
                             </div>
                             
                         </div>

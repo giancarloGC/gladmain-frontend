@@ -103,7 +103,7 @@ export default function LayoutAdmin(props){
             let doc = 0;
             for(var i = 0; i < responseControls.length; i++ ){
                 if(enDesnutricion === false){
-                    if(responseControls[i].estadoNutricional === "Riesgo de Desnutrición Aguda"){
+                    if(responseControls[i].vigente === true && (responseControls[i].estadoNutricional === "Riesgo de Desnutrición Aguda" || responseControls[i].estadoNutricional === "Desnutrición Aguda Severa")){
                         enDesnutricion = true;
                         doc = 1;
                     }else{
@@ -180,12 +180,16 @@ export default function LayoutAdmin(props){
                         <Nav className="justify-content-end align-items-center navlayout" activeKey="/home">
                     <Nav.Item className="option mt-3">
                         <div className="option" id="/home">
-                              <NavDropdown title={infoUser.nombre} id="nav-dropdown" className="respon"
+                            <NavDropdown title={infoUser.nombre} id="nav-dropdown" className="respon"
                               style={{"color": "#D4D1D1"}}
-                             >  
-                            <NavDropdown.Item><Link to={`/admin/EditProfileUser/${infoUser.documento}`}>
-                            <h2  style={{"fontSize": "15px"}}><FontAwesomeIcon icon={faUserEdit} className="icon" size="1x" fill="currentColor"/>  Editar Perfil</h2></Link></NavDropdown.Item>
-                                
+                            >
+                            {validatePrivilegio("CONSULTAR_USUARIO").length > 0 && ("ACTUALIZAR_USUARIO").length > 0 && (
+                            <NavDropdown.Item>
+                                <Link to={`/admin/EditProfileUser/${infoUser.documento}`}>
+                                 <h5   style={{"fontSize": "15px"}} ><FontAwesomeIcon icon={faUserEdit} className="icon" size="1x" fill="currentColor"/>  Editar Perfil</h5>
+                                 </Link>
+                            </NavDropdown.Item>
+                            )}
                             <NavDropdown.Divider />
                             <NavDropdown.Item><h2 style={{"fontSize": "15px"}} onClick={() => signOff()}><FontAwesomeIcon icon={faPowerOff} className="icon" size="1x"fill="currentColor"/>  Cerrar Sesión </h2></NavDropdown.Item>
                             </NavDropdown>

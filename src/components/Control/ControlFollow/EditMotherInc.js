@@ -182,6 +182,12 @@ export default function EditMotherInc(props){
                 
                 validate={(valores) => {
                   let errores = {};
+                  if(!valores.cantidadSemanas){
+                    errores.cantidadSemanas = 'Por favor, ingresa números';
+                  }else if(!/^([0-9])*$/.test(valores.cantidadSemanas)){
+                    errores.cantidadSemanas = 'solo puedes escribir números';
+                  }
+                  
                   if(showPatologia){
                     if(!valores.nombrePatologia){
                       errores.nombrePatologia = 'No se permiten campos vacíos'

@@ -21,7 +21,7 @@ export default function EditInfantIncome(){
                 if(response.sexo === "FEMENINO"){
                     setShowValidationM(true);
                 }else{
-                    if(response.edad <= 1){
+                    if(response.edad < 1){
                         setShowValidationM(true);
                     }
                 }

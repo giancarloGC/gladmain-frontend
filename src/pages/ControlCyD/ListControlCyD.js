@@ -17,6 +17,7 @@ import Logo from "../../assets/img/logocomfaoriente.png";
 import GladMaIn from "../../assets/img/logoGladmain.PNG";
 import fuente from "../../assets/fontPDF/Amaranth-Bold.ttf";
 import fuente2 from "../../assets/fontPDF/Amaranth-Regular.ttf";
+import useAuth from '../../hooks/useAuth'; //privilegios
 
 Font.register({ family: 'Amaranth', src: fuente});
 Font.register({ family: 'Amaranth2', src: fuente2});
@@ -175,7 +176,7 @@ function DocumentPdf({infoUser, listControls, lastControls, setLoadedSonPDF}){
 }
 
 export default function ListControlCyD(){
-    
+  
     const { documento } = useParams();
     const token = localStorage.getItem(TOKEN);
     const [ infoUser, setInfoUser ] = useState({});
@@ -184,6 +185,7 @@ export default function ListControlCyD(){
     const [ allControlSaved, setAllControl ] = useState([]);
     const [loaded, setLoaded] = useState(true); 
     const [ loadedPDF, setLoadedSonPDF ] = useState(false);
+    const { user } = useAuth(); //privilegios
 
     useEffect(() => {
         (async () => {
@@ -204,6 +206,11 @@ export default function ListControlCyD(){
         })();       
     }, []);
 
+    //privilegios
+    const validatePrivilegio = (privilegio) => {
+      return user.authorities.filter(priv => priv === privilegio);
+    }
+
     const dateFormat = (date) => {
       if(date){
       let dateFormated = date.split('T');
@@ -219,11 +226,12 @@ export default function ListControlCyD(){
     return(
         <Container>
             <h1 className="text-center">Controles de Crec. y Des. de {infoUser ? infoUser.nombre : "Anonimo"}
+            {validatePrivilegio("REGISTRAR_CONTROL").length > 0 && ("ACTUALIZAR_USUARIO").length > 0 && ("CONSULTAR_USUARIO").length > 0 &&(
                 <Link to={`/admin/addControlCyD/${documento}`}>
                     <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton" />
                     <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Control </ReactTooltip>
                 </Link>
-
+            )}
                 {loadedPDF && (
                     <PDFDownloadLink document={<DocumentPdf infoUser={infoUser} listControls={listControls} lastControls={lastControls} 
                         allControlSaved={allControlSaved} setLoadedSonPDF={setLoadedSonPDF}/>} fileName="controlesCyD.pdf">
@@ -267,7 +275,7 @@ export default function ListControlCyD(){
 
               
              {listControls.length > 0 &&  (
-                <ListControlCyDe infoUser={infoUser} lastControls={lastControls} listControls={listControls} allControlSaved={allControlSaved}  setAllControl={setAllControl}/>
+                <ListControlCyDe infoUser={infoUser} user={user} lastControls={lastControls} listControls={listControls} allControlSaved={allControlSaved}  setAllControl={setAllControl}/>
              )
             }
             

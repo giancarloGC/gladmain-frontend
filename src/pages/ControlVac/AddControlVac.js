@@ -5,7 +5,6 @@ import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from 
 import { getUserByIdApi } from "../../api/user";
 import { getVacByAgeApi } from "../../api/vaccine";
 import { getContVaccApi } from "../../api/vaccination";
-
 import { TOKEN } from "../../utils/constans";
 
 export default function AddControlVac(){

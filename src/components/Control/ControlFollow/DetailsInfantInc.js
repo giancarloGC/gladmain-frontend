@@ -511,7 +511,7 @@ console.log(ingreso);
                         </Col>
                     </Form.Group>
 
-
+                    
                     <Form.Group as={Row}  style={{ "marginLeft":"43px"}} className="mt-3">
                        <Form.Label column sm="9"> 
                        <h5 style={{"fontSize": "16px", "fontWeight":"bold" }}>El usuario fue remitido a SGSSS </h5></Form.Label>
@@ -529,7 +529,7 @@ console.log(ingreso);
                         </InputGroup>
                         </Col>
                     </Form.Group>
-                    
+                 
                     {showRemitido && (
                     <Form.Group as={Row} style={{ "marginLeft":"43px"}} className="mt-3 mb-3">
                     <Form.Label column sm="2">
