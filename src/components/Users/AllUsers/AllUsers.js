@@ -187,8 +187,8 @@ export default function AllUsers(){
                             )}
                             </div>
                             <div className="liB">
-                            {validatePrivilegio("CONSULTAR_USUARIO").length > 0 && ("ACTUALIZAR_USUARIO").length > 0 && ("LISTAR_ROLES").length > 0 && 
-                            ("ASIGNAR_ROL").length > 0 && ("CONSULTAR_ROLES_USUARIO").length > 0 && ("RETIRAR_ROL").length > 0 && (
+                            {validatePrivilegio("ACTUALIZAR_USUARIO").length > 0 && ("LISTAR_ROLES").length > 0 && ("ASIGNAR_ROL").length > 0 
+                            && ("CONSULTAR_ROLES_USUARIO").length > 0 && ("RETIRAR_ROL").length > 0 && ("CONSULTAR_USUARIO").length > 0 && (
                             <Link className="enlace" to={`/admin/editUser/${item.documento}`}>
                                 <FontAwesomeIcon icon={faPencilAlt} size="lg" color="#2D61A4" data-tip data-for = "boton2"
                                 /> <ReactTooltip id="boton2" place="bottom" type="dark" effect="float"> Editar </ReactTooltip>

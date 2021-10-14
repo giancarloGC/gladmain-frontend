@@ -17,6 +17,7 @@ import Logo from "../../assets/img/logocomfaoriente.png";
 import GladMaIn from "../../assets/img/logoGladmain.PNG";
 import fuente from "../../assets/fontPDF/Amaranth-Bold.ttf";
 import fuente2 from "../../assets/fontPDF/Amaranth-Regular.ttf";
+import useAuth from '../../hooks/useAuth';
 
 Font.register({ family: 'Amaranth', src: fuente});
 Font.register({ family: 'Amaranth2', src: fuente2});
@@ -271,6 +272,7 @@ export default function ListControlRemission(){
   const [ allRemisionsSaved, setAllRemisions ] = useState([]);
   const [loaded, setLoaded] = useState(true); 
   const [ loadedPDF, setLoadedSonPDF ] = useState(false);
+  const { user } = useAuth();
 
   useEffect(() => {
     (async () => {
@@ -288,6 +290,9 @@ export default function ListControlRemission(){
     })();       
 }, []);
 
+    const validatePrivilegio = (privilegio) => {
+        return user.authorities.filter(priv => priv === privilegio);
+    }
 
   const dateFormat = (date) => {
     if(date){
@@ -304,10 +309,14 @@ export default function ListControlRemission(){
     return(
         <Container>
             <h1 className="text-center mb-4">Remisiones de {infoUser ? infoUser.nombre : "Anonimo"}
+
+            {validatePrivilegio("REGISTRAR_REMICION").length > 0 && ("CONSULTAR_SEGUIMIENTO").length > 0 && (
               <Link to={`/admin/addControlRemission/${idSeg}/${documento}`}>
                     <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton" />
                     <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nueva Remision </ReactTooltip>
               </Link>
+            )}
+
               {loadedPDF && (
                     <PDFDownloadLink document={<DocumentPdf infoUser={infoUser} listRemis={listRemis} allRemisionsSaved={allRemisionsSaved}
                         setListRemis={setListRemis} idSeg={idSeg} documento={documento} setLoadedSonPDF={setLoadedSonPDF}/>} fileName="Remisiones.pdf">
@@ -350,8 +359,8 @@ export default function ListControlRemission(){
             </Container>
 
             {listRemis.length > 0 && (
-             <ListControlR listRemis={listRemis} allRemisionsSaved={allRemisionsSaved}
-             setListRemis={setListRemis} idSeg={idSeg} documento={documento}
+             <ListControlR listRemis={listRemis} user={user} setListRemis={setListRemis} allRemisionsSaved={allRemisionsSaved}
+             idSeg={idSeg} documento={documento}
             />
             )}
 

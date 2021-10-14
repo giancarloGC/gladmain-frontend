@@ -117,11 +117,11 @@ export default function AllUserC (){
                         <div className="sectionDiv">
                             <div className="containerP">
                                 {usersApi.map((item, index) => (
-                                    rolUser === "MADRE_GESTANTE" ? item.edad >= 200 && item.sexo === "FEMENINO" && (
+                                    rolUser === "MADRE_GESTANTE" ? item.edad >= 156 && item.sexo === "FEMENINO" && (
                                         <div className="card">
                                             <div className="content">
                                                 <div className="imgBx">
-                                                    {item.edad >= 200 ? 
+                                                    {item.edad >= 156 ? 
                                                         <img src={item.sexo === "FEMENINO" ? ImageWomen : ImageMen} alt="img" />
                                                     :
                                                         <img src={item.sexo === "FEMENINO" ? ImageNina : ImageNino} alt="img" />
@@ -175,12 +175,12 @@ export default function AllUserC (){
                                         </div>
                                     )
                                     :
-                                        item.edad < 200 && 
+                                        item.edad < 156 && 
                                     (
                                         <div className="card">
                                             <div className="content">
                                                 <div className="imgBx">
-                                                    {item.edad >= 200 ? 
+                                                    {item.edad >= 156 ? 
                                                         <img src={item.sexo === "FEMENINO" ? ImageWomen : ImageMen} alt="img" />
                                                     :
                                                         <img src={item.sexo === "FEMENINO" ? ImageNina : ImageNino} alt="img" />
@@ -199,7 +199,7 @@ export default function AllUserC (){
 
                                             <div className="sci">
                                                 <div className="liB">
-                                                {validatePrivilegio("LISTAR_SEGUIMIENTOS").length > 0 && ("CONSULTAR_USUARIO").length > 0 && ("LISTAR_INGRESOS_INFANTE").length > 0 && (
+                                                {validatePrivilegio("LISTAR_SEGUIMIENTOS").length > 0 && ("LISTAR_INGRESOS_INFANTE").length > 0 && ("CONSULTAR_USUARIO").length > 0 && (
                                                     <Link className="enlace" to={`/admin/ListFollowUp/${item.documento}/${rolUser}`}>
                                                         <FontAwesomeIcon icon={faFileMedicalAlt} size="lg" color="#2D61A4" data-tip data-for = "boton4"/>
                                                         <ReactTooltip id="boton4" place="bottom" type="dark" effect="float"> Seguimiento </ReactTooltip>

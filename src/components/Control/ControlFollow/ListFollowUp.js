@@ -53,14 +53,14 @@ export default function ListFollowUp(props){
                    </Col>
                    <Col sm={3} className="align-self-right">
                    <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Acciones</b> <br/>    
-                   {validatePrivilegio("CONSULTAR_SEGUIMIENTO").length > 0 && (
+                   {validatePrivilegio("CONSULTAR_SEGUIMIENTO").length > 0 && ( //si no poner tambien el consultar usuario
                         <Link className="enlace" to={`/admin/detailsControlFollow/${item.id}/${documento}/${rolUser}`} className="btn btn-primary mx-0">
                             <FontAwesomeIcon icon={faEye} size="l" color="white" data-tip data-for = "boton3" 
                             /> <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Ver </ReactTooltip>
                         </Link>
                    )}
 
-                    {validatePrivilegio("CONSULTAR_SEGUIMIENTO").length > 0 && ("ACTUALIZAR_SEGUIMIENTO").length > 0 && ( // sino eter consultar usuario
+                    {validatePrivilegio("ACTUALIZAR_SEGUIMIENTO").length > 0 && ("CONSULTAR_SEGUIMIENTO").length > 0 && ( // sino eter consultar usuario
                          <>
                          <Link className="enlace" to={`/admin/editControlFollow/${item.id}/${documento}/${rolUser}`} className="btn btn-warning mx-3">
                              <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-pen-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-tip data-for = "boton4" >

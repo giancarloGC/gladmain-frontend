@@ -19,6 +19,7 @@ import GladMaIn from "../../assets/img/logoGladmain.PNG";
 import fuente from "../../assets/fontPDF/Amaranth-Bold.ttf";
 import fuente2 from "../../assets/fontPDF/Amaranth-Regular.ttf";
 import AnimationNotFindSearch from "../../assets/animations/notFindSearch.json";
+import useAuth from '../../hooks/useAuth';
 
 export default function ListCommitment(){
 
@@ -29,6 +30,7 @@ export default function ListCommitment(){
   const [ loadedPDF, setLoadedSonPDF ] = useState(false); 
   const [ loading, setLoading ] = useState(true);  
   const [ listCommit, setListComit ] = useState([]);
+  const { user } = useAuth();
   
   /*useEffect(() => {
       getUserByIdApi(documento, token).then(responseUser => {
@@ -109,13 +111,19 @@ const onChangeBusqueda = (e) => {
     setListControls(commitFiltred);
 }
 
+const validatePrivilegio = (privilegio) => {
+    return user.authorities.filter(priv => priv === privilegio);
+}
+
     return(
         <Container>
             <h1 className="text-center mb-4">Compromisos de {infoUser ? infoUser.nombre : "Anonimo"}
+            {validatePrivilegio("REGISTRAR_COMPROMISO").length > 0 && ("CONSULTAR_SEGUIMIENTO").length > 0 && (
               <Link to={`/admin/addCommitment/${idSeg}/${documento}`}>
                     <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton" />
                     <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Compromiso </ReactTooltip>
               </Link>
+            )}
 
                 {loadedPDF && (
                     <PDFDownloadLink document={<DocumentPdf listControls={listControls} setLoadedSonPDF={setLoadedSonPDF} infoUser={infoUser}/>} fileName={`ControlCompromisos_${infoUser.documento}`}>
@@ -192,22 +200,31 @@ const onChangeBusqueda = (e) => {
                        </Col>
                        <Col sm={3} className="align-self-right">
                             <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Acciones</b> <br/>
+
+                            {validatePrivilegio("CONSULTAR_COMPROMISO").length > 0 && (
                                 <Link to={`/admin/detailCommitment/${idSeg}/${item.id}`} className="btn btn-primary">
                                 <FontAwesomeIcon icon={faEye} size="l" data-tip data-for = "boton3" 
                                 /> <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Ver </ReactTooltip>
                                 </Link>
+                            )}
+
+                            {validatePrivilegio("ACTUALIZAR_COMPROMISO").length > 0 && ("CONSULTAR_COMPROMISO").length > 0 && (
                                 <Link to={`/admin/editCommitment/${idSeg}/${item.id}/${documento}`} className="btn btn-warning mx-1">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-pen-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-tip data-for = "boton4">
                                         <path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
                                     </svg>
                                     <ReactTooltip id="boton4" place="bottom" type="dark" effect="float"> Editar </ReactTooltip>
                                 </Link>
+                            )}
+
+{                           validatePrivilegio("ELIMINAR_COMPROMISO").length > 0 && (
                                 <Link className="enlace btn btn-primary" onClick={() => confirmDeleteCom(item.id)}>
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-tip data-for = "boton5">
                                     <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
                                 </svg>
                                 <ReactTooltip id="boton5" place="bottom" type="dark" effect="float"> Eliminar </ReactTooltip>
-                                </Link> 
+                                </Link>
+                            )}
                                 <Link className="btn btn-secondary text-center mx-1">
                                    <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-print-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-tip data-for = "boton6">
                                    <FontAwesomeIcon icon={faPrint}

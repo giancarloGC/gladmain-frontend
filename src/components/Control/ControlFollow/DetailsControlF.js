@@ -24,6 +24,10 @@ export default function DetailsControlF(props){
     }
   }
 
+  const validatePrivilegio = (privilegio) => {
+    return user.authorities.filter(priv => priv === privilegio);
+  }
+
     return(
         <Container>
             <Row>
@@ -295,15 +299,19 @@ export default function DetailsControlF(props){
                       <Col md={6}> 
                         <div className="d-grid gap-2 mt-3">
                           {rolUser === "INFANTE" ? (
-                            <Button variant="primary" size="lg" href={`/admin/detailsInfantIncome/${infoSeg.id}/${documento}`}>
-                               Detalles del Ingreso
-                            </Button>
+                            validatePrivilegio("LISTAR_INGRESOS_INFANTE").length > 0 && ( //si no tambien colocar el consultar usuario
+                              <Button variant="primary" size="lg" href={`/admin/detailsInfantIncome/${infoSeg.id}/${documento}`}>
+                                Detalles del Ingreso
+                              </Button>
+                            )
                           )
                         :
                           (
-                            <Button variant="primary" size="lg" href={`/admin/detailMotherIncome/${infoSeg.id}/${documento}`}>
-                               Detalles del Ingreso
-                            </Button>
+                            validatePrivilegio("LISTAR_INGRESOS_MADRE").length > 0 && (
+                              <Button variant="primary" size="lg" href={`/admin/detailMotherIncome/${infoSeg.id}/${documento}`}>
+                                Detalles del Ingreso
+                              </Button>
+                            )
                           )}
                         </div>
                         </Col>

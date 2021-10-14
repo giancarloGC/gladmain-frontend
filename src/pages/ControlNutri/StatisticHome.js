@@ -80,7 +80,7 @@ export default function StatisticHome(){
         <Row>
         <Col sm="12">
         <h1 className="text-center">Patrones de Crecimiento Infantil de la OMS
-        {validatePrivilegio("REGISTRAR_CONTROL").length > 0 && (
+        {validatePrivilegio("REGISTRAR_CONTROL").length > 0 && ("CONSULTAR_USUARIO").length > 0 && (
             <Link to={`/admin/addControlNutri/${documento}/${rolUser}`} >
                 <FontAwesomeIcon icon={faUserPlus} size="lg" color="#2D61A4" style = {{marginLeft:10}} data-tip data-for = "boton1" />
                 <ReactTooltip id="boton1" place="bottom" type="dark" effect="float">Agregar Control Nutricional</ReactTooltip>
