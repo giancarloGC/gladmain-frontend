@@ -140,6 +140,7 @@ export default function ListFollow(){
            
                 let percentageCompleted = (optionsSelected / totalOptions) * 100;
                 item.estado = percentageCompleted.toString();
+                item.ingreso = ingresoBySeg[0];
                 newData.push(item);
 
             }else if(rolUser === "MADRE_GESTANTE"){
@@ -198,6 +199,7 @@ export default function ListFollow(){
                 
                 let percentageCompleted = (optionsSelected / totalOptions) * 100;
                 item.estado = percentageCompleted.toString();
+                item.ingreso = ingresoBySeg[0];
                 newData.push(item);
             }
         }));

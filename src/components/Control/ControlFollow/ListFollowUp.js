@@ -9,9 +9,14 @@ import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { TOKEN } from "../../../utils/constans";
 import { deleteContVaccApi } from "../../../api/vaccination";
 
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import GeneratePdfToPrint from "./GeneratePdfToPrint";
+
 export default function ListFollowUp(props){
     const { listSeg, documento, listInc, rolUser } = props;
     const token = localStorage.getItem(TOKEN);
+    const [ showBtnPdf, setShowBtnPdf ] = useState(null);
+
     console.log(listSeg);
     const dateFormat = (date) => {
         if(date){
@@ -19,6 +24,8 @@ export default function ListFollowUp(props){
         return dateFormated[0];
         }
     }
+
+
 
     return(
         <Container className="mt-4"> 
@@ -55,13 +62,19 @@ export default function ListFollowUp(props){
                              </svg>
                              <ReactTooltip id="boton4" place="bottom" type="dark" effect="float"> Editar </ReactTooltip>
                          </Link>
-                         <Link className="btn btn-secondary text-center mx-0">
+                         {showBtnPdf === null && showBtnPdf === item.id || showBtnPdf !== item.id && (
+                         <Link className="btn btn-secondary text-center mx-0" onClick={() => setShowBtnPdf(item.id)}>
                             <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-print-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <FontAwesomeIcon icon={faPrint} size="lg" color="white" data-tip data-for = "boton5"
-                            />
-                        </svg>
+                                <FontAwesomeIcon icon={faPrint} size="lg" color="white" data-tip data-for = "boton5"
+                                />
+                            </svg>
                             <ReactTooltip id="boton5" place="bottom" type="dark" effect="float"> Imprimir </ReactTooltip>
                         </Link >
+                         )}
+
+                        {showBtnPdf && showBtnPdf === item.id &&(
+                            <GeneratePdfToPrint item={item} />
+                        )}
                             <br></br> 
                             <Button href={`/admin/listControlRemission/${item.id}/${documento}`} style={{"fontSize": 10.3, "backgroundColor": "#fd650d", "borderColor":"#fd650d"}}>
                                 Remisiones
