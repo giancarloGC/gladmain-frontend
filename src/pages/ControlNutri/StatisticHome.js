@@ -394,7 +394,7 @@ const styles = StyleSheet.create({
       }, 
     tableCol: { 
       width: "20%", 
-      textAlign: "center",
+      textAlign: "left",
     }, 
     tableCol4: { 
         width: "8%",
@@ -417,7 +417,7 @@ const styles = StyleSheet.create({
       margin: "auto", 
       margin: 5, 
       fontSize: 10,
-      textAlign: "center" 
+      textAlign: "left",
     }, 
     tableRow: {
         flexDirection: "row" 

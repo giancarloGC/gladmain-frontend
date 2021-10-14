@@ -82,7 +82,7 @@ export default function ListFollowUp(props){
                     )}
 
                         {showBtnPdf && showBtnPdf === item.id &&(
-                            <GeneratePdfToPrint item={item} />
+                            <GeneratePdfToPrint item={item} documento={documento} rolUser={rolUser}/>
                         )}
                             <br></br> 
                         {validatePrivilegio("LISTAR_REMICIONES").length > 0 && (

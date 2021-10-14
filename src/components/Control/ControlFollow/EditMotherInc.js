@@ -683,7 +683,7 @@ export default function EditMotherInc(props){
 
                         <Form.Group as={Row}  style={{ "marginLeft":"6px"}} className="mt-3">
                        <Form.Label column sm="9" >
-                       <h5 style={{"fontSize": "16px"}} className="mt-1">Dolor en boca del estómagor</h5></Form.Label>
+                       <h5 style={{"fontSize": "16px"}} className="mt-1">Dolor en la boca del estómago</h5></Form.Label>
                         <Col class="mid">
                         <InputGroup hasValidation>
                           <label class="rocker rocker-small" size="xs" name="dolorBocaEstomago" id="dolorBocaEstomago">
