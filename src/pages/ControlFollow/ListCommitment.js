@@ -345,7 +345,8 @@ function DocumentPdf({listControls, setLoadedSonPDF, infoUser}){
             </View>
             
          {listControls.length > 0 && (
-            listControls.map((control, index) => (
+             <>
+            {listControls.map((control, index) => (
             <View style={styles.table}> 
                 <View style={styles.tableRow}> 
                     <View style={styles.tableCol}> 
@@ -415,7 +416,8 @@ function DocumentPdf({listControls, setLoadedSonPDF, infoUser}){
                 )}
 
             </View>   
-           ))
+           ))}
+           </>
         
                 )}
         </Page>
