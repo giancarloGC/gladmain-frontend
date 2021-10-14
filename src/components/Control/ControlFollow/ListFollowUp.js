@@ -32,6 +32,7 @@ export default function ListFollowUp(props){
         <Container className="mt-4"> 
             <Row > 
            <Col sm={12}>
+           {listSeg.length > 0 && (
           <ListGroup className="mt-3 mb-3">
           {listSeg.map((item, index) => (
                <ListGroup.Item className="shadow border mt-2 mb-3">
@@ -102,6 +103,7 @@ export default function ListFollowUp(props){
             </ListGroup.Item>
             ))}
             </ListGroup>
+           )}
             </Col>      
              </Row> 
         </Container>

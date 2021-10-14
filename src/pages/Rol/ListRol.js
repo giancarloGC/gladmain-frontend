@@ -103,6 +103,7 @@ function ListRolSon({rolesApi, confirmDeleteRol}){
     }
     return(
         <Container>
+        {rolesApi.length > 0 && (
         <ListGroup>
             {rolesApi.map((rol, index) => (
             <ListGroup.Item className="shadow border mt-2 mb-3">
@@ -140,6 +141,7 @@ function ListRolSon({rolesApi, confirmDeleteRol}){
         </ListGroup.Item>
             ))}
         </ListGroup>
+        )}
         </Container>
     )
 }

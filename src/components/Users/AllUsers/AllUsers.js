@@ -172,6 +172,7 @@ export default function AllUsers(){
 
                 <div className="containerGListUsers">
                 <div className="sectionDiv">
+                {usersApi.length > 0 && (
                     <div className="containerP" >
                     {usersApi.map((item, index) => (
                         <div className="card" >
@@ -224,6 +225,7 @@ export default function AllUsers(){
                     </div>                
                     ))}
                     </div>
+                )}
                 </div>
                 </div>
                 </>

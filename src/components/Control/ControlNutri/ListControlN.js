@@ -29,7 +29,7 @@ export default function ListControlN(props){
                  <Col md={3}>
                  </Col>
              </Row>
-
+             {listControls.length > 0 && (
              <ListGroup >
                  {listControls.map((item, index) => (
                 <ListGroup.Item className="shadow border mt-2 mb-3">
@@ -76,6 +76,7 @@ export default function ListControlN(props){
                  ))}
 
              </ListGroup>
+             )}
          </Container>
      )
  }

@@ -34,6 +34,7 @@ const generateCoordenadas = () => {
   let coordenadas = [];
   let lineasArray = lineas();
 
+{listControls.length > 0 && (
   listControls.map((item, index) => {
     var coor = {
       label: `Control ${item.id} - ${dateFormat(item.fechaControl)}`,
@@ -48,7 +49,8 @@ const generateCoordenadas = () => {
       pointStyle: "bubble", 
     }
     coordenadas.push(coor);
-  });
+  })
+)};
 
   const allCoordenadas = [...coordenadas, ...lineasArray];
   return allCoordenadas;

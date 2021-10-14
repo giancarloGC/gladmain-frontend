@@ -93,13 +93,13 @@ export default function UsersDesnutrition(props){
                             }
                             </div>
                             <div className="contentBx" >
-                                <h3>{item.nombre}<br/> 
-                                    <span> {item.tipoDocumento} : {item.documento}</span> <br />
-                                    <span><FontAwesomeIcon icon={faPhoneAlt} size="lg" color="#2D61A4" style={{marginRight:10}}/> 
-                                    {item.celular}
+                                <h3>{item.nombre}<br/>
+                                    <span> {item.tipoDocumento} : {item.documento} <br/>
+                                    <h3 style={{fontSize: "15px"}}> Estado 
+                                    <br/>  Nutricional: </h3>
+                                    <h5 style={{fontSize: "14px"}}> {item.estado} </h5>
                                     </span>
-                                </h3>
-                                <h4>{item.estado}</h4>
+                                    </h3>
                             </div>
                         </div>
                         <div className="sci">

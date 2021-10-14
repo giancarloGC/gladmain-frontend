@@ -118,24 +118,7 @@ export default function ListFollow(){
                 if(ingresoBySeg[0].ingresoInfante.recibeSuplementos === "SI"){
                     optionsSelected += 1;
                 };
-                /*
-                if(ingresoBySeg[0].ingreso.conoceUrgencias === "SI"){
-                    optionsSelected += 1;
-                };
-                if(ingresoBySeg[0].ingresoInfante.alarmaPreventiva === "SI"){
-                    optionsSelected += 1;
-                };
-                if(ingresoBySeg[0].ingreso.patologiaIdentificadaSgsss === true){
-                    optionsSelected += 1;
-                };
-                if(ingresoBySeg[0].ingreso.recibeMedFormulada === true){
-                    optionsSelected += 1;
-                };
-                if(ingresoBySeg[0].ingreso.usuarioRemitido === "1"){
-                    optionsSelected += 1;
-                };
-                */
-           
+               
                 let percentageCompleted = (optionsSelected / totalOptions) * 100;
                 item.estado = percentageCompleted.toString();
                 item.ingreso = ingresoBySeg[0];
@@ -167,34 +150,6 @@ export default function ListFollow(){
                 if(ingresoBySeg[0].ingresoMadre.metodoPlanificacion === "SI"){
                     optionsSelected += 1;
                 };
-        
-                /*
-                if(ingresoBySeg[0].ingreso.conoceUrgencias === "SI"){
-                    optionsSelected += 1;
-                };
-                if(ingresoBySeg[0].ingresoInfante.alarmaPreventiva === "SI"){
-                    optionsSelected += 1;
-                };
-                if(ingresoBySeg[0].ingresoInfante.controlCyD === "SI"){
-                    optionsSelected += 1;
-                };
-                if(ingresoBySeg[0].ingresoInfante.recibeSuplementos === "SI"){
-                    optionsSelected += 1;
-                };
-                if(ingresoBySeg[0].ingresoInfante.valoracionMedica === "SI"){
-                    optionsSelected += 1;
-                };
-                 if(ingresoBySeg[0].ingreso.patologiaIdentificadaSgsss === true){
-                    optionsSelected += 1;
-                };
-                if(ingresoBySeg[0].ingreso.recibeMedFormulada === true){
-                    optionsSelected += 1;
-                };
-                if(ingresoBySeg[0].ingreso.usuarioRemitido === "1"){
-                    optionsSelected += 1;
-                };
-                */
-                
                 let percentageCompleted = (optionsSelected / totalOptions) * 100;
                 item.estado = percentageCompleted.toString();
                 item.ingreso = ingresoBySeg[0];

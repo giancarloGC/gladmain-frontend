@@ -259,7 +259,7 @@ export default function LayoutAdmin(props){
                         )}
                         
                             {validatePrivilegio("LISTAR_USUARIOS").length > 0 && (                
-                                <Link to="/admin/users" className={linkSelected.users ? "selected" : ""}                             onClick={() => setLinkSelected({roles: false, users: true, controls: false})}
+                                <Link to="/admin/users" className={linkSelected.users ? "selected" : ""} onClick={() => setLinkSelected({roles: false, users: true, controls: false})}
                                         onClick={() => setLinkSelected({roles: false, users: true, controls: false})}
                                 >
                                     <div className="option">

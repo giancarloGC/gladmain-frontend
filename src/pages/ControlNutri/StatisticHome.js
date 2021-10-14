@@ -293,8 +293,8 @@ function DocumentPdf({listControls, setLoadedSonPDF, infoUser}){
                 <Text style={styles.tableCellHeader}>Nutricionista</Text> 
               </View>
             </View>
-
-            {listControls.map((control, index) => (
+            {listControls.length > 0 && (
+            listControls.map((control, index) => (
                 <View style={styles.tableRow}> 
                     <View style={styles.tableCol}> 
                         <Text style={styles.tableCell}>{dateFormat (control.fechaControl)}</Text> 
@@ -315,7 +315,8 @@ function DocumentPdf({listControls, setLoadedSonPDF, infoUser}){
                         <Text style={styles.tableCell}>{control.idUsuarioNutricionista}</Text> 
                     </View>
                 </View> 
-           ))}
+           ))
+           )}
         
           </View>
         </Page>
