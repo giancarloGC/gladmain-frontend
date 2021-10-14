@@ -107,8 +107,8 @@ function DocumentPdf({infoUser, listRemis, setLoadedSonPDF}){
                     </View> 
             </View>
             </View>
-         
-        {listRemis.map((item, index) => (
+        {listRemis.length > 0 && (
+        listRemis.map((item, index) => (
            <View style={styles.table3}> 
                 <View style={styles.tableRow}> 
                     <View style={styles.tableColHeader4}> 
@@ -258,7 +258,8 @@ function DocumentPdf({infoUser, listRemis, setLoadedSonPDF}){
                     </View> 
                 </View>
             </View> 
-            ))}
+            ))
+        )}
         </Page>
   </Document>
     )

@@ -124,7 +124,8 @@ function DocumentPdf({userControl, listControls, setLoadedSonPDF}){
                 </View> 
             </View>
          
-        {listControls.map((item, index) => (
+        {listControls.length > 0 && (
+        listControls.map((item, index) => (
             <View style={styles.table}> 
                 <View style={styles.tableRow}> 
                     <View style={styles.tableCol4}> 
@@ -141,7 +142,8 @@ function DocumentPdf({userControl, listControls, setLoadedSonPDF}){
                     </View> 
                 </View> 
             </View>
-        ))}
+        ))
+        )}
         </Page>
   </Document>
     )

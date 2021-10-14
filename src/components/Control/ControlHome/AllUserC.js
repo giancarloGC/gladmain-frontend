@@ -150,6 +150,7 @@ export default function AllUserC (){
 
                     <div className="containerGListUsers">
                         <div className="sectionDiv">
+                        {usersApi.length > 0 && (
                             <div className="containerP">
                                 {usersApi.map((item, index) => (
                                     rolUser === "MADRE_GESTANTE" ? item.edad >= 156 && item.sexo === "FEMENINO" && (
@@ -273,6 +274,7 @@ export default function AllUserC (){
                                     )
                                 ))}
                             </div>
+                            )}
                         </div>
                     </div>
                 </>

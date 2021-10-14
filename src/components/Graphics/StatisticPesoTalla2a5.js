@@ -35,7 +35,8 @@ export default function StatisticPesoTalla2a5(props){
   const generateCoordenadas = () => {
     let coordenadas = [];
     let lineasArray = lineas();
-  
+    
+    {listControls.length > 0 && (
     listControls.map((item, index) => {
       var coor = {
         label: `Control ${item.id} - ${dateFormat(item.fechaControl)}`,
@@ -50,7 +51,8 @@ export default function StatisticPesoTalla2a5(props){
         pointStyle: "bubble", 
       }
       coordenadas.push(coor);
-    });
+    })
+    )};
   
     const allCoordenadas = [...coordenadas, ...lineasArray];
     return allCoordenadas;

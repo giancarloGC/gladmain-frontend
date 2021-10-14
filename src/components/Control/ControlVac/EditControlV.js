@@ -183,11 +183,13 @@ export default function EditControlV(props){
                           (
                             <>
                             <Form.Label column sm="4" style={{"fontSize": "12px !important"}} className="justify-content-left">Vacunas:</Form.Label>
+                            {listVac.length > 0 && (
                             <InputGroup className="mb-3">
                               {listVac.map((item, index) => (
                                   checkVac(item)             
                               ))}
                               </InputGroup>
+                            )}
                             </>
                           )}
 
