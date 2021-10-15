@@ -9,7 +9,6 @@ import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { useParams } from "react-router-dom";
 import { getCompByUserApi, deleteCompApi } from "../../api/commitment";
 import { TOKEN } from "../../utils/constans";
-import Lottie from 'react-lottie';
 import NotResults from "../../assets/animations/notResults.json";
 import { getUserByIdApi } from "../../api/user";
 import { PDFDownloadLink, Document, Page, View, Text, StyleSheet, Image, Font } from '@react-pdf/renderer';
@@ -19,7 +18,9 @@ import GladMaIn from "../../assets/img/logoGladmain.PNG";
 import fuente from "../../assets/fontPDF/Amaranth-Bold.ttf";
 import fuente2 from "../../assets/fontPDF/Amaranth-Regular.ttf";
 import AnimationNotFindSearch from "../../assets/animations/notFindSearch.json";
-import useAuth from '../../hooks/useAuth';
+import Lottie from 'react-lottie';
+import useAuth from '../../hooks/useAuth'; //privilegios
+import AnimationAuthorization from "../../assets/animations/withoutAuthorization.json";
 
 export default function ListCommitment(){
 
@@ -31,6 +32,7 @@ export default function ListCommitment(){
   const [ loading, setLoading ] = useState(true);  
   const [ listCommit, setListComit ] = useState([]);
   const { user } = useAuth();
+  const [ authorization, setAuthorization ] = useState(true);
   
   /*useEffect(() => {
       getUserByIdApi(documento, token).then(responseUser => {
@@ -46,6 +48,10 @@ export default function ListCommitment(){
           }
         });
   }, []);*/
+
+  const validatePrivilegio = (privilegio) => {
+    return user.authorities.filter(priv => priv === privilegio);
+}   
 
   useEffect(() => {
     (async () => {
@@ -111,10 +117,16 @@ const onChangeBusqueda = (e) => {
     setListControls(commitFiltred);
 }
 
-const validatePrivilegio = (privilegio) => {
-    return user.authorities.filter(priv => priv === privilegio);
-}
-
+if(validatePrivilegio("LISTAR_COMPROMISOS").length === 0 ){
+    return(
+        <>
+            <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                <Lottie height={500} width="65%"
+                options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+            />
+        </>
+    )
+}else{
     return(
         <Container>
             <h1 className="text-center mb-4">Compromisos de {infoUser ? infoUser.nombre : "Anonimo"}
@@ -240,7 +252,8 @@ const validatePrivilegio = (privilegio) => {
                 </Row>     
             </Container>
             </Container> 
-    )
+        )
+    }
 }
 
 

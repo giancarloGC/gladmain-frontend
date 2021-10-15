@@ -5,7 +5,9 @@ import { getUserByIdApi } from "../../../api/user";
 import { TOKEN } from "../../../utils/constans";
 import { useParams } from "react-router-dom";
 import moment from 'moment';
-
+import Lottie from 'react-lottie';
+import useAuth from '../../../hooks/useAuth'; //privilegios
+import AnimationAuthorization from "../../../assets/animations/withoutAuthorization.json";
 import ImageMen from "./../../../assets/img/men.png";
 import ImageWomen from "./../../../assets/img/women.png";
 import ImageNino from "./../../../assets/img/nino.png";
@@ -14,18 +16,24 @@ import ImageNina from "./../../../assets/img/nina.png";
 export default function DetailsUser(){
   const { documento } = useParams();
   const token = localStorage.getItem(TOKEN);
-  const [user, setUser] = useState({});
+  const [usuario, setUser] = useState({});
   const [ loaded, setLoaded ] = useState(false);
   const [ userLoaded, setUserLoaded ] = useState(false);
+  const { user } = useAuth();
+  const [ authorization, setAuthorization ] = useState(true);
+
+  const validatePrivilegio = (privilegio) => {
+    return user.authorities.filter(priv => priv === privilegio);
+  } 
 
   const formatedDate = (date) => {
     let newDate = date.split("T");
    return newDate[0];
 };
 
-let dateFechaNaci = moment(user.fechaNacimiento);
+let dateFechaNaci = moment(usuario.fechaNacimiento);
     let dateCurrent = moment();
-    user.edad = dateCurrent.diff(dateFechaNaci, 'months');
+    usuario.edad = dateCurrent.diff(dateFechaNaci, 'months');
   
   useEffect(() => {
     getUserByIdApi(documento, token).then(response => {
@@ -35,6 +43,16 @@ let dateFechaNaci = moment(user.fechaNacimiento);
     })
   }, []);
 
+  if(validatePrivilegio("CONSULTAR_USUARIO").length === 0 ){
+    return(
+        <>
+            <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                <Lottie height={500} width="65%"
+                options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+            />
+        </>
+    )
+}else{
   return(
     <Container>
         {!userLoaded ? (
@@ -139,15 +157,15 @@ let dateFechaNaci = moment(user.fechaNacimiento);
             
             <center>
             <Card style={{width: 'auto', height: 'auto'}} className='mt-3' >
-            {user.edad > 216 ? 
-                            <Card.Img variant="top" src={user.sexo === "FEMENINO" ? ImageWomen : ImageMen} style={{"max-width": "200px"}} roundedCircle className="row justify-content-center align-self-center mt-3"/>
+            {usuario.edad > 216 ? 
+                            <Card.Img variant="top" src={usuario.sexo === "FEMENINO" ? ImageWomen : ImageMen} style={{"max-width": "200px"}} roundedCircle className="row justify-content-center align-self-center mt-3"/>
                         :
-                        <Card.Img variant="top" src={user.sexo === "FEMENINO" ? ImageNina : ImageNino} style={{"max-width": "200px"}} roundedCircle className="row justify-content-center align-self-center mt-3"/>
+                        <Card.Img variant="top" src={usuario.sexo === "FEMENINO" ? ImageNina : ImageNino} style={{"max-width": "200px"}} roundedCircle className="row justify-content-center align-self-center mt-3"/>
                             
                     }            
 
             <Card.Body style={{backgroundColor: '#0084d2'}}>
-            <Card.Title className="text-center" style={{"fontWeight":"bold", "color":"white"}}> {user.nombre}</Card.Title>
+            <Card.Title className="text-center" style={{"fontWeight":"bold", "color":"white"}}> {usuario.nombre}</Card.Title>
             </Card.Body>
             </Card>
             </center>
@@ -161,7 +179,7 @@ let dateFechaNaci = moment(user.fechaNacimiento);
             </Col>
             <Col md={5} className='mt-2'>
             <ListGroup className="list-group-flush ">
-              <ListGroupItem style={{"fontSize": "16px", "fontWeight":"bold"}}>{user.tipoDocumento}</ListGroupItem>
+              <ListGroupItem style={{"fontSize": "16px", "fontWeight":"bold"}}>{usuario.tipoDocumento}</ListGroupItem>
             </ListGroup>
             </Col>
             <Col md={1}> </Col>
@@ -176,7 +194,7 @@ let dateFechaNaci = moment(user.fechaNacimiento);
             </Col>
             <Col md={5} className='mt-2'>
             <ListGroup className="list-group-flush ">
-            <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{user.documento}</ListGroupItem>
+            <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{usuario.documento}</ListGroupItem>
             </ListGroup>
             </Col>
             <Col md={1}> </Col>
@@ -191,7 +209,7 @@ let dateFechaNaci = moment(user.fechaNacimiento);
             </Col>
             <Col md={5} className='mt-2'>
             <ListGroup className="list-group-flush ">
-              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{user.sexo}</ListGroupItem>
+              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{usuario.sexo}</ListGroupItem>
             </ListGroup>
             </Col>
             <Col md={1}> </Col>
@@ -206,7 +224,7 @@ let dateFechaNaci = moment(user.fechaNacimiento);
             </Col>
             <Col md={5} className='mt-2'>
             <ListGroup className="list-group-flush ">
-              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{formatedDate(user.fechaNacimiento)}</ListGroupItem>
+              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{formatedDate(usuario.fechaNacimiento)}</ListGroupItem>
             </ListGroup>
             </Col>
             <Col md={1}> </Col>
@@ -221,7 +239,7 @@ let dateFechaNaci = moment(user.fechaNacimiento);
             </Col>
             <Col md={5} className='mt-2'>
             <ListGroup className="list-group-flush ">
-               <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{`${user.edad} meses`}</ListGroupItem>
+               <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{`${usuario.edad} meses`}</ListGroupItem>
             </ListGroup>
             </Col>
             <Col md={1}> </Col>
@@ -236,7 +254,7 @@ let dateFechaNaci = moment(user.fechaNacimiento);
             </Col>
             <Col md={5} className='mt-2'>
             <ListGroup className="list-group-flush ">
-              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{user.celular}</ListGroupItem>
+              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{usuario.celular}</ListGroupItem>
             </ListGroup>
             </Col>
             <Col md={1}> </Col>
@@ -251,7 +269,7 @@ let dateFechaNaci = moment(user.fechaNacimiento);
             </Col>
             <Col md={5} className='mt-2'>
             <ListGroup className="list-group-flush ">
-              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{user.municipio}</ListGroupItem>
+              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{usuario.municipio}</ListGroupItem>
             </ListGroup>
             </Col>
             <Col md={1}> </Col>
@@ -266,7 +284,7 @@ let dateFechaNaci = moment(user.fechaNacimiento);
             </Col>
             <Col md={5} className='mt-2'>
             <ListGroup className="list-group-flush ">
-              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{user.direccion}</ListGroupItem>
+              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{usuario.direccion}</ListGroupItem>
             </ListGroup>
             </Col>
             <Col md={1}> </Col>
@@ -281,7 +299,7 @@ let dateFechaNaci = moment(user.fechaNacimiento);
             </Col>
             <Col md={5} className='mt-2'>
             <ListGroup className="list-group-flush ">
-              <ListGroupItem className='mt-1'style={{"fontSize": "16px", "fontWeight":"bold"}}>{user.correoElectronico}</ListGroupItem>
+              <ListGroupItem className='mt-1'style={{"fontSize": "16px", "fontWeight":"bold"}}>{usuario.correoElectronico}</ListGroupItem>
             </ListGroup>
             </Col>
             <Col md={1}> </Col>
@@ -296,5 +314,5 @@ let dateFechaNaci = moment(user.fechaNacimiento);
         )}
         </Container>
     )
-    
+  }
 }

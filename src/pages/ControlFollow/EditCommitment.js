@@ -5,6 +5,9 @@ import EditCommit from "../../components/Control/ControlFollow/EditCommit";
 import { getSegByIdApi } from "../../api/follow-up";
 import { getCompByIdApi } from "../../api/commitment";
 import { TOKEN } from "../../utils/constans";
+import Lottie from 'react-lottie';
+import useAuth from '../../hooks/useAuth'; //privilegios
+import AnimationAuthorization from "../../assets/animations/withoutAuthorization.json";
 
 export default function EditCommitment(){
 
@@ -17,6 +20,12 @@ export default function EditCommitment(){
     const [ controlLoaded, setControlLoaded ] = useState(false);
     const [ checkeds, setCheckeds ] = useState({radio1: false, radio: false});
     var loading = true;
+    const { user } = useAuth();
+    const [ authorization, setAuthorization ] = useState(true);
+
+    const validatePrivilegio = (privilegio) => {
+        return user.authorities.filter(priv => priv === privilegio);
+    } 
 
       useEffect(() => {
         loading = false;
@@ -39,22 +48,33 @@ export default function EditCommitment(){
         }
       }, []);
 
-    return(
-        <Container>
-            <h1 className="text-center">Editar Compromiso</h1>
-        {!componentLoaded ? (
-            <Row className="justify-content-md-center text-center">
-              <Col md={1} className="justify-content-center">
-              <Spinner animation="border" >
-              </Spinner> 
-              </Col>
-            </Row>
-          )
-        :
-        (
-            <EditCommit segControl={segControl} control={control} documento={documento} checkeds={checkeds} setCheckeds={setCheckeds}/>
+      if(validatePrivilegio("ACTUALIZAR_COMPROMISO").length === 0 ){
+        return(
+            <>
+                <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                    <Lottie height={500} width="65%"
+                    options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                />
+            </>
         )
-        }
-        </Container>
-    )
+    }else{
+        return(
+            <Container>
+                <h1 className="text-center">Editar Compromiso</h1>
+            {!componentLoaded ? (
+                <Row className="justify-content-md-center text-center">
+                  <Col md={1} className="justify-content-center">
+                  <Spinner animation="border" >
+                  </Spinner> 
+                  </Col>
+                </Row>
+              )
+            :
+            (
+                <EditCommit segControl={segControl} control={control} documento={documento} checkeds={checkeds} setCheckeds={setCheckeds}/>
+            )
+            }
+            </Container>
+        )
+      }
 }
