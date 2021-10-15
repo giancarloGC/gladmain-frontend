@@ -28,6 +28,8 @@ import GladMaIn from "../../assets/img/logoGladmain.PNG";
 import fuente from "../../assets/fontPDF/Amaranth-Bold.ttf";
 import fuente2 from "../../assets/fontPDF/Amaranth-Regular.ttf";
 import useAuth from '../../hooks/useAuth'; //privilegios
+import AnimationAuthorization from "../../assets/animations/withoutAuthorization.json";
+
 
 export default function StatisticHome(){
     const { edad, sexo, documento, rolUser } = useParams();
@@ -39,7 +41,12 @@ export default function StatisticHome(){
     const [ loading, setLoading ] = useState(true);  
     const { user } = useAuth(); //privilegios
     const [loaded, setLoaded] = useState(false); 
+    const [ authorization, setAuthorization ] = useState(true);
   
+    const validatePrivilegio = (privilegio) => {
+        return user.authorities.filter(priv => priv === privilegio);
+    }
+
     useEffect(() => {
         (async () => {
             const response = await getControlNutriApi(documento, token);
@@ -55,11 +62,7 @@ export default function StatisticHome(){
             setLoadedSonPDF(true);
         })();       
     }, []);
-
-    const validatePrivilegio = (privilegio) => {
-        return user.authorities.filter(priv => priv === privilegio);
-    }
-
+    
     const handleCheck = (e, item) => {
         if(e.target.checked){
             if(item === "check1"){
@@ -75,6 +78,16 @@ export default function StatisticHome(){
         }
     } 
 
+if(validatePrivilegio("LISTAR_CONTROLES_NUTRICIONALES").length === 0){
+    return(
+        <>
+            <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                <Lottie height={500} width="65%"
+                options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+            />
+        </>
+    )
+}else{
     return(
         <>
         <Row>
@@ -181,6 +194,7 @@ export default function StatisticHome(){
     </Container>
     </> 
     )
+}
 }
 
 Font.register({ family: 'Amaranth', src: fuente});

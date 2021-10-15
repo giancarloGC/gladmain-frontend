@@ -157,6 +157,8 @@ export default function EditControlCyD(props){
                   setShowSpinner(false);
                   swal("Opss! Ocurrió un error!", {
                     icon: "error",
+                }).then((value) => {
+                  window.location.replace(`/admin/listControlCyD/${userControl.documento}`);
                 });
                   setShow(true);
                 }

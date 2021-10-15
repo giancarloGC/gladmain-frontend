@@ -76,7 +76,7 @@ export default function ListRol(){
         return(
             <>
                 <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
-                    <Lottie height={500} width="80%"
+                    <Lottie height={500} width="65%"
                     options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
                 />
             </>
@@ -132,7 +132,7 @@ function ListRolSon({rolesApi, confirmDeleteRol}){
                 </Col>
                 <Col md={4} className="align-self-center justify-content-around">
                     <p style={{"color": "#2D61A4", "fontSize": 23}}><b>Acciones </b> <br/>
-                    {validatePrivilegio("CONSULTAR_ROL").length > 0 && ("ACTUALIZAR_ROL").length > 0 && ("CONSULTAR_PRIVILEGIOS").length > 0 && (
+                    {validatePrivilegio ("ACTUALIZAR_ROL").length > 0 && ("CONSULTAR_PRIVILEGIOS").length > 0 && ("CONSULTAR_ROL").length > 0 && (
                         <Link to={`/admin/editRol/${rol.idRol}`} className="btn btn-primary">
                             <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" className="bi bi-pen-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-tip data-for = "boton2">
                                 <path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>

@@ -18,6 +18,7 @@ import GladMaIn from "../../assets/img/logoGladmain.PNG";
 import fuente from "../../assets/fontPDF/Amaranth-Bold.ttf";
 import fuente2 from "../../assets/fontPDF/Amaranth-Regular.ttf";
 import useAuth from '../../hooks/useAuth'; //privilegios
+import AnimationAuthorization from "../../assets/animations/withoutAuthorization.json";
 
 Font.register({ family: 'Amaranth', src: fuente});
 Font.register({ family: 'Amaranth2', src: fuente2});
@@ -178,7 +179,6 @@ function DocumentPdf({infoUser, listControls, lastControls, setLoadedSonPDF}){
 }
 
 export default function ListControlCyD(){
-  
     const { documento } = useParams();
     const token = localStorage.getItem(TOKEN);
     const [ infoUser, setInfoUser ] = useState({});
@@ -188,30 +188,28 @@ export default function ListControlCyD(){
     const [loaded, setLoaded] = useState(true); 
     const [ loadedPDF, setLoadedSonPDF ] = useState(false);
     const { user } = useAuth(); //privilegios
+    const [ authorization, setAuthorization ] = useState(true);
+
+    const validatePrivilegio = (privilegio) => {
+      return user.authorities.filter(priv => priv === privilegio);
+    }
 
     useEffect(() => {
         (async () => {
-            const response = await getLatestCyDApi(documento, token);
+          const response = await getLatestCyDApi(documento, token);
             setLoaded(false);
             setLastControls(response);
 
             const response2 = await getUserByIdApi(documento, token);
             setLoaded(false);
             setInfoUser(response2);
-
             const response3 = await getControlCyDApi(documento, token);
             setLoaded(false);
             setListControls(response3);
             setAllControl(response3);
-            
             setLoadedSonPDF(true);
-        })();       
+        })();  
     }, []);
-
-    //privilegios
-    const validatePrivilegio = (privilegio) => {
-      return user.authorities.filter(priv => priv === privilegio);
-    }
 
     const dateFormat = (date) => {
       if(date){
@@ -225,6 +223,16 @@ export default function ListControlCyD(){
       setListControls(controlFiltred);
   }
 
+  if(validatePrivilegio("LISTAR_CONTROLES_CYD").length === 0){
+    return(
+        <>
+            <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                <Lottie height={500} width="65%"
+                options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+            />
+        </>
+    )
+  }else{
     return(
         <Container>
             <h1 className="text-center">Controles de Crec. y Des. de {infoUser ? infoUser.nombre : "Anonimo"}
@@ -292,6 +300,7 @@ export default function ListControlCyD(){
            
         </Container>
     )
+  }
 }
 
 

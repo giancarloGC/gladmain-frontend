@@ -39,7 +39,7 @@ export default function AddRol(){
             }
         })();
     }, []);
-
+    
     const handleCheck = (e, item) => {
         let privilegio = {
             id: item.id,
@@ -59,7 +59,7 @@ export default function AddRol(){
         return(
             <>
                 <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
-                    <Lottie height={500} width="80%"
+                    <Lottie height={500} width="65%"
                     options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
                 />
             </>
@@ -111,7 +111,9 @@ export default function AddRol(){
                                     setShowSpinner(false);
                                     swal("Opss! Ocurrió un error al registrar el rol!", {
                                         icon: "error",
-                                    });
+                                    }).then((value) => {
+                                        window.location.replace(`/admin/roles`);
+                                    });;
                                     setShow(true);
                                 }
                             });
