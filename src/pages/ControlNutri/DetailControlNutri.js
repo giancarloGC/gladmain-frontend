@@ -5,6 +5,9 @@ import { getUserByIdApi } from "../../api/user";
 import { getControlByIdApi } from "../../api/controls";
 import { TOKEN } from "../../utils/constans";
 import DetailControlN from "../../components/Control/ControlNutri/DetailControlN";
+import useAuth from '../../hooks/useAuth'; //privilegios
+import Lottie from 'react-lottie';
+import AnimationAuthorization from "../../assets/animations/withoutAuthorization.json";
 
 
 export default function DetailControlNutri(){ 
@@ -16,7 +19,13 @@ export default function DetailControlNutri(){
     const [ userLoaded, setUserLoaded ] = useState({});
     const [ controlLoaded, setControlLoaded ] = useState(false);
     const [ nombreNutricionista, setNombreNutricionista ] = useState("");
+    const [ authorization, setAuthorization ] = useState(true);
+    const { user } = useAuth(); //privilegios
     var loading = true;
+
+    const validatePrivilegio = (privilegio) => {
+      return user.authorities.filter(priv => priv === privilegio);
+  }
     
         useEffect(() => {
         loading = false;
@@ -24,6 +33,7 @@ export default function DetailControlNutri(){
             setUser(response);
             setComponentLoaded(true); 
         });
+      if(validatePrivilegio("CONSULTAR_CONTROL").length > 0){
         getControlByIdApi(id, token).then(response => {
             setControl(response);
             setControlLoaded(true);
@@ -31,26 +41,38 @@ export default function DetailControlNutri(){
               setNombreNutricionista(response.nombre);
           })
         })
+      }
         if(!loading){ 
         setComponentLoaded(true); 
         setUserLoaded(userControl);
         }
       }, []);
 
-    return(
-        <Container>
-            <h1 className="text-center">Detalles Control Nutricional</h1>
-            {!componentLoaded ? (
-            <Row className="justify-content-md-center text-center">
-              <Col md={1} className="justify-content-center">
-              <Spinner animation="border" >
-              </Spinner> 
-              </Col>
-            </Row>
-          )
-          : (
-              <DetailControlN userControl={userControl} control={control} nombreNutricionista={nombreNutricionista}/>
-          )}
-        </Container>        
-    )
+      if(validatePrivilegio("CONSULTAR_CONTROL").length === 0){
+        return(
+            <>
+                <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                    <Lottie height={500} width="65%"
+                    options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                />
+            </>
+        )
+    }else{  
+      return(
+          <Container>
+              <h1 className="text-center">Detalles Control Nutricional</h1>
+              {!componentLoaded ? (
+              <Row className="justify-content-md-center text-center">
+                <Col md={1} className="justify-content-center">
+                <Spinner animation="border" >
+                </Spinner> 
+                </Col>
+              </Row>
+            )
+            : (
+                <DetailControlN userControl={userControl} control={control} nombreNutricionista={nombreNutricionista}/>
+            )}
+          </Container>        
+      )
+  }
 }
