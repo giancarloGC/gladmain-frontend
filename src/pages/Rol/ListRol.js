@@ -8,6 +8,8 @@ import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { getRolesApi, deleteRolApi } from "../../api/rol";
 import { TOKEN } from "../../utils/constans";
 import useAuth from '../../hooks/useAuth'; //privilegios
+import Lottie from 'react-lottie';
+import AnimationAuthorization from "../../assets/animations/withoutAuthorization.json";
 
 export default function ListRol(){
     const token = localStorage.getItem(TOKEN);
@@ -15,6 +17,7 @@ export default function ListRol(){
     const [ latestRol, setLatestRol ] = useState(0);
     const [ loading, setLoading ] = useState(true);
     const { user } = useAuth(); //privilegios
+    const [ authorization, setAuthorization ] = useState(true);
 
     useEffect(() => {
         (async () => {
@@ -68,31 +71,43 @@ export default function ListRol(){
         })
     }
 
-    return(
-        <Container className="justify-content-center">
-            <h1 className="text-center">Listado de roles 
-            {validatePrivilegio("REGISTRAR_ROL").length > 0 && ("CONSULTAR_PRIVILEGIOS").length > 0 && (
-                <FontAwesomeIcon icon={faPlus} size="lg" color="#2D61A4"
-                    data-tip data-for = "boton1" onClick={() => window.location.replace(`/admin/addRol/${latestRol}`)}
-                /> //{` `}
-            )}
-                <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Agregar Nuevo Rol </ReactTooltip>
-            </h1> 
 
-            {loading && (
-                <Row className="justify-content-md-center text-center">
-                    <Col md={1} className="justify-content-center">
-                    <Spinner animation="border" >
-                    </Spinner> 
-                    </Col>
-                </Row>
-            )}
-
-            {rolesApi.length > 0 && (
-                <ListRolSon rolesApi={rolesApi} confirmDeleteRol={confirmDeleteRol} />
-            )}
-        </Container>
-    )
+    if(validatePrivilegio("LISTAR_ROLES").length === 0){
+        return(
+            <>
+                <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                    <Lottie height={500} width="80%"
+                    options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                />
+            </>
+        )
+    }else{
+        return(
+            <Container className="justify-content-center">
+                <h1 className="text-center">Listado de roles 
+                {validatePrivilegio("REGISTRAR_ROL").length > 0 && ("CONSULTAR_PRIVILEGIOS").length > 0 && (
+                    <FontAwesomeIcon icon={faPlus} size="lg" color="#2D61A4"
+                        data-tip data-for = "boton1" onClick={() => window.location.replace(`/admin/addRol/${latestRol}`)}
+                    /> //{` `}
+                )}
+                    <ReactTooltip id="boton1" place="bottom" type="dark" effect="float"> Agregar Nuevo Rol </ReactTooltip>
+                </h1> 
+    
+                {loading && (
+                    <Row className="justify-content-md-center text-center">
+                        <Col md={1} className="justify-content-center">
+                        <Spinner animation="border" >
+                        </Spinner> 
+                        </Col>
+                    </Row>
+                )}
+    
+                {rolesApi.length > 0 && (
+                    <ListRolSon rolesApi={rolesApi} confirmDeleteRol={confirmDeleteRol} />
+                )}
+            </Container>
+        )
+    }
 }
 
 function ListRolSon({rolesApi, confirmDeleteRol}){
