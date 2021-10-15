@@ -20,6 +20,7 @@ import fuente from "../../assets/fontPDF/Amaranth-Bold.ttf";
 import fuente2 from "../../assets/fontPDF/Amaranth-Regular.ttf";
 import useAuth from '../../hooks/useAuth';
 import { getMotIncomeByUserApi } from "../../api/mother_income";
+import AnimationAuthorization from "../../assets/animations/withoutAuthorization.json";
 
 export default function ListFollow(){
     const { documento, rolUser } = useParams();
@@ -30,25 +31,8 @@ export default function ListFollow(){
     const [ listIncome, setListIncome ] = useState([]);
     const [ loadedPDF, setLoadedSonPDF ] = useState(false); 
     const [ loading, setLoading ] = useState(true);  
+    const [ authorization, setAuthorization ] = useState(true);
     const { user } = useAuth();
-
-
-    /*useEffect(() => {
-        getUserByIdApi(documento, token).then(responseUser => {
-            setInfoUser(responseUser);
-        });
-        getSegApi(documento, token).then(response => {
-            if(response.length > 0){
-                (async () => {
-                    let newData = [];
-                    let infoCompleted = await calculateProgress(response, newData);                              
-                    console.log(response);
-                    console.log("siuuuuu");
-                    setListSeg(infoCompleted);
-                })()
-            }
-        });
-    }, []);*/
 
     useEffect(() => {
         (async () => {
@@ -74,8 +58,6 @@ export default function ListFollow(){
             setLoading(false);
             setListIncome(responseIncome);
             setLoadedSonPDF(true);
-            
-
 
         })();       
         }, []);
@@ -160,40 +142,52 @@ export default function ListFollow(){
         return newData;
     }
 
-    return(
-        <Container>
-            <h1 className="text-center mb-4">Seguimientos de {infoUser ? infoUser.nombre : "Anonimo"}
-                {rolUser === "INFANTE" && (
-                    validatePrivilegio("REGISTRAR_SEGUIMIENTO").length > 0 && ("REGISTRAR_INGRESO_INFANTE").length > 0 
-                    && ("LISTAR_SEGUIMIENTOS").length > 0 && (
-                       <Link to={`/admin/addControlFollow/${documento}/${rolUser}`}>
-                           <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton" />
-                           <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Seguimiento </ReactTooltip>
-                       </Link>
-                   )
-                )}
-                 
-            {rolUser === "MADRE_GESTANTE" && (
-                validatePrivilegio("REGISTRAR_SEGUIMIENTO").length > 0 && ("REGISTRAR_INGRESO_MADRE").length > 0 
-                && ("LISTAR_SEGUIMIENTOS").length > 0 && (
-                    <Link to={`/admin/addControlFollow/${documento}/${rolUser}`}>
-                        <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton" />
-                        <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Seguimiento </ReactTooltip>
-                     </Link>
-                )
-            )}
-            </h1>
-            {listSeg.length === 0 && (
-                <>
-                <p style={{"color": "#2D61A4", "fontSize": 27}}>No se encontraron registros</p>
-                <Lottie height={400} width="60%"
-                    options={{ loop: true, autoplay: true, animationData: NotResults, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+    if(validatePrivilegio("LISTAR_SEGUIMIENTOS").length === 0){
+        return(
+            <>
+                <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                    <Lottie height={500} width="65%"
+                    options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
                 />
-                </>
-            )}
-            {listSeg.length > 0 && (
-             <ListFollowUp  listSeg={listSeg} user={user} documento={documento} listInc={listInc} rolUser={rolUser}/>
-            )}
-        </Container>
-    )
+            </>
+        )
+    }else{
+
+        return(
+            <Container>
+                <h1 className="text-center mb-4">Seguimientos de {infoUser ? infoUser.nombre : "Anonimo"}
+                    {rolUser === "INFANTE" && (
+                        validatePrivilegio("REGISTRAR_SEGUIMIENTO").length > 0 && ("REGISTRAR_INGRESO_INFANTE").length > 0 
+                        && ("LISTAR_SEGUIMIENTOS").length > 0 && (
+                        <Link to={`/admin/addControlFollow/${documento}/${rolUser}`}>
+                            <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton" />
+                            <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Seguimiento </ReactTooltip>
+                        </Link>
+                    )
+                    )}
+                    
+                {rolUser === "MADRE_GESTANTE" && (
+                    validatePrivilegio("REGISTRAR_SEGUIMIENTO").length > 0 && ("REGISTRAR_INGRESO_MADRE").length > 0 
+                    && ("LISTAR_SEGUIMIENTOS").length > 0 && (
+                        <Link to={`/admin/addControlFollow/${documento}/${rolUser}`}>
+                            <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="l" color="#2D61A4" data-tip data-for = "boton" />
+                            <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Seguimiento </ReactTooltip>
+                        </Link>
+                    )
+                )}
+                </h1>
+                {listSeg.length === 0 && (
+                    <>
+                    <p style={{"color": "#2D61A4", "fontSize": 27}}>No se encontraron registros</p>
+                    <Lottie height={400} width="60%"
+                        options={{ loop: true, autoplay: true, animationData: NotResults, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                    />
+                    </>
+                )}
+                {listSeg.length > 0 && (
+                <ListFollowUp  listSeg={listSeg} user={user} documento={documento} listInc={listInc} rolUser={rolUser}/>
+                )}
+            </Container>
+        )
+    }
 }

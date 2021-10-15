@@ -5,6 +5,9 @@ import { getSegByIdApi } from "../../api/follow-up";
 import { TOKEN } from "../../utils/constans";
 import AddInfantInc from "../../components/Control/ControlFollow/AddInfantInc";
 import { getUserByIdApi } from "../../api/user";
+import useAuth from '../../hooks/useAuth'; //privilegios
+import Lottie from 'react-lottie';
+import AnimationAuthorization from "../../assets/animations/withoutAuthorization.json";
 
 export default function AddInfantIncome(){
     const { idSeg, documento } = useParams();
@@ -12,8 +15,14 @@ export default function AddInfantIncome(){
     const token = localStorage.getItem(TOKEN);
     const [ componentLoaded, setComponentLoaded ] = useState(false); 
     const [ controlLoaded, setControlLoaded ] = useState({});
-    var loading = true;
     const [ showValidationM, setShowValidationM ] = useState(false);
+    const [ authorization, setAuthorization ] = useState(true);
+    const { user } = useAuth(); //privilegios
+    var loading = true;
+
+    const validatePrivilegio = (privilegio) => {
+        return user.authorities.filter(priv => priv === privilegio);
+    }
 
     useEffect(() => {
         loading = false;
@@ -38,6 +47,25 @@ export default function AddInfantIncome(){
         }
         }, []);
 
+if(validatePrivilegio("REGISTRAR_SEGUIMIENTO").length === 0 ){
+    return(
+        <>
+            <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                <Lottie height={500} width="65%"
+                options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+            />
+        </>
+    )
+}else if(validatePrivilegio("REGISTRAR_INGRESO_INFANTE").length === 0 ){
+    return(
+        <>
+            <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                <Lottie height={500} width="65%"
+                options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+            />
+        </>
+    )
+}else{
     return(
         <Container>
         <h1 className="text-center">Añadir Ingreso Infante</h1>
@@ -56,4 +84,5 @@ export default function AddInfantIncome(){
         }
         </Container>
     )
+}
 }
