@@ -109,8 +109,7 @@ function DocumentPdf({infoUser, listRemis, setLoadedSonPDF}){
             </View>
             </View>
         {listRemis.length > 0 && (
-            <>
-        {listRemis.map((item, index) => (
+           listRemis.map((item, index) => (
            <View style={styles.table3}> 
                 <View style={styles.tableRow}> 
                     <View style={styles.tableColHeader4}> 
@@ -260,8 +259,7 @@ function DocumentPdf({infoUser, listRemis, setLoadedSonPDF}){
                     </View> 
                 </View>
             </View> 
-            ))}
-            </>
+            ))
         )}
         </Page>
   </Document>
@@ -276,16 +274,10 @@ export default function ListControlRemission(){
   const [ allRemisionsSaved, setAllRemisions ] = useState([]);
   const [loaded, setLoaded] = useState(true); 
   const [ loadedPDF, setLoadedSonPDF ] = useState(false);
-  const { user } = useAuth();
   const [ authorization, setAuthorization ] = useState(true);
-
-const validatePrivilegio = (privilegio) => {
-    return user.authorities.filter(priv => priv === privilegio);
-};
-
+  const { user } = useAuth();
 
   useEffect(() => {
-    
     (async () => {
         const response2 = await getUserByIdApi(documento, token);
         setLoaded(false);
@@ -298,11 +290,13 @@ const validatePrivilegio = (privilegio) => {
         
         setAllRemisions(remisionesBySeg);
         setLoadedSonPDF(true);
-    } 
-    })();     
+        }
+    })();       
 }, []);
 
-    
+    const validatePrivilegio = (privilegio) => {
+        return user.authorities.filter(priv => priv === privilegio);
+    }
 
   const dateFormat = (date) => {
     if(date){
@@ -315,86 +309,87 @@ const validatePrivilegio = (privilegio) => {
     var remisionsFiltred = allRemisionsSaved.filter(user => dateFormat(user.fechaRemision) === e.target.value);
     setListRemis(remisionsFiltred);
 }
-    if(validatePrivilegio("LISTAR_REMICIONES").length === 0){
-        return(
-            <>
-                <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
-                    <Lottie height={500} width="65%"
-                    options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
-                />
-            </>
-        )
-    }else{
-        return(
-            <Container>
-                <h1 className="text-center mb-4">Remisiones de {infoUser ? infoUser.nombre : "Anonimo"}
 
-                {validatePrivilegio("REGISTRAR_REMICION").length > 0 && ("CONSULTAR_SEGUIMIENTO").length > 0 && (
-                <Link to={`/admin/addControlRemission/${idSeg}/${documento}`}>
-                        <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton" />
-                        <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nueva Remision </ReactTooltip>
-                </Link>
+if(validatePrivilegio("LISTAR_REMICIONES").length === 0){
+    return(
+        <>
+            <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                <Lottie height={500} width="65%"
+                options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+            />
+        </>
+    )
+}else{
+    return(
+        <Container>
+            <h1 className="text-center mb-4">Remisiones de {infoUser ? infoUser.nombre : "Anonimo"}
+
+            {validatePrivilegio("REGISTRAR_REMICION").length > 0 && ("CONSULTAR_SEGUIMIENTO").length > 0 && (
+              <Link to={`/admin/addControlRemission/${idSeg}/${documento}`}>
+                    <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton" />
+                    <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nueva Remision </ReactTooltip>
+              </Link>
+            )}
+
+              {loadedPDF && (
+                    <PDFDownloadLink document={<DocumentPdf infoUser={infoUser} listRemis={listRemis} allRemisionsSaved={allRemisionsSaved}
+                        setListRemis={setListRemis} idSeg={idSeg} documento={documento} setLoadedSonPDF={setLoadedSonPDF}/>} fileName="Remisiones.pdf">
+                    {({ blob, url, loaded, error }) =>
+                        loaded ? 'Cargando Documento...' : <Button style={styles.boton}>
+                        Descargar PDF <FontAwesomeIcon icon={faPrint} style = {{marginLeft:2}} size="lg" color="white" />
+                    </Button>
+                    }
+                    </PDFDownloadLink>  
                 )}
+            </h1>
 
-                {loadedPDF && (
-                        <PDFDownloadLink document={<DocumentPdf infoUser={infoUser} listRemis={listRemis} allRemisionsSaved={allRemisionsSaved}
-                            setListRemis={setListRemis} idSeg={idSeg} documento={documento} setLoadedSonPDF={setLoadedSonPDF}/>} fileName="Remisiones.pdf">
-                        {({ blob, url, loaded, error }) =>
-                            loaded ? 'Cargando Documento...' : <Button style={styles.boton}>
-                            Descargar PDF <FontAwesomeIcon icon={faPrint} style = {{marginLeft:2}} size="lg" color="white" />
-                        </Button>
-                        }
-                        </PDFDownloadLink>  
-                    )}
-                </h1>
-
-                {loaded && (
-                    <Row className="justify-content-md-center text-center">
-                        <Col md={1} className="justify-content-center">
-                        <Spinner animation="border" >
-                        </Spinner> 
-                        </Col>
-                    </Row>
-                )}
-                
-                <Container className="mt-4"> 
-                <Row className="mt-3 justify-content-center">
-                        <Col md={5}>
-                        <Form.Group as={Row} >
-                        <Col md={5}>
-                            <Form.Label>
-                            <h1 style={{fontSize: "20px", color:"#2D61A4" }} >Buscar Remisiones</h1></Form.Label>
-                        </Col>
-                        <Col md={7}> 
-                        <InputGroup hasValidation>
-                            <Form.Control type="date" size="l" id="busqueda" name="busqueda" 
-                                    onChange={(e) => onChangeBusqueda(e)}
-                            />
-                        </InputGroup>
-                        </Col>
-                        </Form.Group>                    
-                        </Col>
+            {loaded && (
+                <Row className="justify-content-md-center text-center">
+                    <Col md={1} className="justify-content-center">
+                    <Spinner animation="border" >
+                    </Spinner> 
+                    </Col>
                 </Row>
-                </Container>
-
-                {listRemis.length > 0 && (
-                <ListControlR listRemis={listRemis} user={user} setListRemis={setListRemis} allRemisionsSaved={allRemisionsSaved}
-                idSeg={idSeg} documento={documento}
-                />
-                )}
-
-                {listRemis.length === 0 && (
-                    <>
-                    <p style={{"color": "#2D61A4", "fontSize": 27}}>No se encontraron registros</p>
-                    <Lottie height={400} width="60%"
-                        options={{ loop: true, autoplay: true, animationData: NotResults, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
-                    />
-                    </>
-                )}
-                    
+            )}
+            
+            <Container className="mt-4"> 
+            <Row className="mt-3 justify-content-center">
+                    <Col md={5}>
+                    <Form.Group as={Row} >
+                    <Col md={5}>
+                        <Form.Label>
+                        <h1 style={{fontSize: "20px", color:"#2D61A4" }} >Buscar Remisiones</h1></Form.Label>
+                    </Col>
+                    <Col md={7}> 
+                    <InputGroup hasValidation>
+                           <Form.Control type="date" size="l" id="busqueda" name="busqueda" 
+                                onChange={(e) => onChangeBusqueda(e)}
+                           />
+                       </InputGroup>
+                    </Col>
+                       </Form.Group>                    
+                    </Col>
+            </Row>
             </Container>
-        )
-    }
+
+            {listRemis.length > 0 && (
+             <ListControlR listRemis={listRemis} user={user} setListRemis={setListRemis} allRemisionsSaved={allRemisionsSaved}
+             idSeg={idSeg} documento={documento}
+            />
+            )}
+
+            {listRemis.length === 0 && (
+                <>
+                <p style={{"color": "#2D61A4", "fontSize": 27}}>No se encontraron registros</p>
+                <Lottie height={400} width="60%"
+                    options={{ loop: true, autoplay: true, animationData: NotResults, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                />
+                </>
+            )}
+                 
+        </Container>
+    )
+ }
 }
 
 const styles = StyleSheet.create({
