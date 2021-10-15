@@ -10,6 +10,7 @@ import moment from 'moment';
 import Lottie from 'react-lottie';
 import AnimationAuthorization from "../../../assets/animations/withoutAuthorization.json";
 import AnimationErrorServer from "../../../assets/animations/working-server-animation.json";
+import useAuth from '../../../hooks/useAuth';
 
 export default function FormUser(){
     const [ textFormSend, setTextFormSend ] = useState({});
@@ -24,9 +25,16 @@ export default function FormUser(){
     const [ showSpinner, setShowSpinner ] = useState(false);
     const [ authorization, setAuthorization ] = useState(true);
     const [ errorServer, setErrorServer ] = useState(false);
+    const { user } = useAuth();
 
+     //privilegios
+     const validatePrivilegio = (privilegio) => {
+      return user.authorities.filter(priv => priv === privilegio);
+  }
+  
     useEffect(() => {
       (async () => {
+        if(validatePrivilegio("LISTAR_ROLES").length > 0){
           const response = await getRolesApi(token);
           console.log(response);
           if(response.status === 403){
@@ -37,6 +45,7 @@ export default function FormUser(){
               setAllRoles(response);
               setRolesApi(response);;
           };
+        }
       })();
   }, []);
 
@@ -71,28 +80,18 @@ export default function FormUser(){
       }
   }
 
+  if(validatePrivilegio("REGISTRAR_USUARIO").length === 0){
+    return(
+        <>
+            <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                <Lottie height={500} width="65%"
+                options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+            />
+        </>
+    )
+  }else{
     return(
       <>
-            {authorization || (
-                <>
-                    <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
-                        <Lottie height={500} width="80%"
-                        options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
-                    />
-                </>
-            )}
-
-            {errorServer && (
-                <>
-                    <h1 style={{"textAlign": "center"}}>Error en el servidor, intentelo más tarde</h1>
-                        <Lottie height={500} width="80%"
-                        options={{ loop: true, autoplay: true, animationData: AnimationErrorServer, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
-                    />
-                </>
-            )}
-            
-      {!errorServer && authorization && allRoles && (
-        <>
         <Container>
             <Row>
             {goRedirect && (
@@ -517,8 +516,7 @@ export default function FormUser(){
                 <Col sm={1}></Col>
             </Row>
           </Container>
-        </>
-      )}
     </>
   )
+ }
 }

@@ -17,6 +17,8 @@ import GladMaIn from "../../assets/img/logoGladmain.PNG";
 import fuente from "../../assets/fontPDF/Amaranth-Bold.ttf";
 import fuente2 from "../../assets/fontPDF/Amaranth-Regular.ttf";
 import useAuth from '../../hooks/useAuth'; //privilegios
+import AnimationAuthorization from "../../assets/animations/withoutAuthorization.json";
+import AnimationErrorServer from "../../assets/animations/working-server-animation.json";
 
 Font.register({ family: 'Amaranth', src: fuente});
 Font.register({ family: 'Amaranth2', src: fuente2});
@@ -158,7 +160,13 @@ export default function ListVacMadre(){
     const [ loadedPDF, setLoadedSonPDF ] = useState(false);
     const [ allControlSaved, setAllControl ] = useState([]);
     const { user } = useAuth();
+    const [ authorization, setAuthorization ] = useState(true);
+    const [ errorServer, setErrorServer ] = useState(false);
 
+    const validatePrivilegio = (privilegio) => {
+        return user.authorities.filter(priv => priv === privilegio);
+    }
+    
     useEffect(() => {
         (async () => {
             const response = await getUserByIdApi(documento, token);
@@ -186,76 +194,83 @@ export default function ListVacMadre(){
         setListControls(controlFiltred);
     }
 
-    const validatePrivilegio = (privilegio) => {
-        return user.authorities.filter(priv => priv === privilegio);
-    }
-    
-    return(
-        <Container>
-            <h1 className="text-center">Controles de Vacunacion de {userControl ? userControl.nombre : "Anonimo"}
-            {validatePrivilegio("REGISTRAR_CONTROL_VACUNACION").length > 0 && ("CONSULTAR_USUARIO").length > 0 && (
-                <Link to={`/admin/addControlVacMadre/${documento}`}>
-                    <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton" />
-                    <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Control </ReactTooltip>
-                </Link>
-            )}
-
-                {loadedPDF && (
-                    <PDFDownloadLink document={<DocumentPdf userControl={userControl} listControls={listControls} setLoadedSonPDF={setLoadedSonPDF}/>} fileName="ControlVacunación.pdf">
-                    {({ blob, url, loaded, error }) =>
-                        loaded ? 'Cargando Documento...' : <Button style={styles.boton}>
-                        Descargar PDF <FontAwesomeIcon icon={faPrint} style = {{marginLeft:2}} size="lg" color="white" />
-                    </Button>
-                    }
-                    </PDFDownloadLink>  
-                )}
-            </h1>
-
-            <Container className="mt-4"> 
-            <Row className="mt-3 justify-content-center">
-                    <Col md={5}>
-                    <Form.Group as={Row} >
-                    <Col md={5}>
-                        <Form.Label>
-                        <h1 style={{fontSize: "20px", color:"#2D61A4" }} >Buscar Control </h1></Form.Label>
-                    </Col>
-                    <Col md={7}> 
-                    <InputGroup hasValidation>
-                           <Form.Control type="date" size="sm" id="busqueda" name="busqueda" 
-                                onChange={(e) => onChangeBusqueda(e)}
-                           />
-                       </InputGroup>
-                    </Col>
-                       </Form.Group>                    
-                    </Col>
-            </Row>
-            </Container>
-
-            {loaded && (
-                <Row className="justify-content-md-center text-center">
-                    <Col md={1} className="justify-content-center">
-                    <Spinner animation="border" >
-                    </Spinner> 
-                    </Col>
-                </Row>
-            )}
-
-            {listControls.length > 0 && (
-                <ListVMadre listControls={listControls} allControlSaved={allControlSaved}  setAllControl={setAllControl}/>
-             )
-            }
-
-            {listControls.length === 0 && (
-                <>
-                <p style={{"color": "#2D61A4", "font-size": 27}}>No se encontraron registros</p>
-                <Lottie height={400} width="60%"
-                    options={{ loop: true, autoplay: true, animationData: NotResults, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+    if(validatePrivilegio("LISTAR_CONTROLES_VACUNACION").length === 0){
+        return(
+            <>
+                <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                    <Lottie height={500} width="65%"
+                    options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
                 />
-                </>
-            )}
-            
-        </Container>        
-    )
+            </>
+        )
+    }else{
+        return(
+            <Container>
+                <h1 className="text-center">Controles de Vacunacion de {userControl ? userControl.nombre : "Anonimo"}
+                {validatePrivilegio("REGISTRAR_CONTROL_VACUNACION").length > 0 && ("CONSULTAR_USUARIO").length > 0 && (
+                    <Link to={`/admin/addControlVacMadre/${documento}`}>
+                        <FontAwesomeIcon icon={faPlus} style = {{marginLeft:10}} size="lg" color="#2D61A4" data-tip data-for = "boton" />
+                        <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Control </ReactTooltip>
+                    </Link>
+                )}
+
+                    {loadedPDF && (
+                        <PDFDownloadLink document={<DocumentPdf userControl={userControl} listControls={listControls} setLoadedSonPDF={setLoadedSonPDF}/>} fileName="ControlVacunación.pdf">
+                        {({ blob, url, loaded, error }) =>
+                            loaded ? 'Cargando Documento...' : <Button style={styles.boton}>
+                            Descargar PDF <FontAwesomeIcon icon={faPrint} style = {{marginLeft:2}} size="lg" color="white" />
+                        </Button>
+                        }
+                        </PDFDownloadLink>  
+                    )}
+                </h1>
+
+                <Container className="mt-4"> 
+                <Row className="mt-3 justify-content-center">
+                        <Col md={5}>
+                        <Form.Group as={Row} >
+                        <Col md={5}>
+                            <Form.Label>
+                            <h1 style={{fontSize: "20px", color:"#2D61A4" }} >Buscar Control </h1></Form.Label>
+                        </Col>
+                        <Col md={7}> 
+                        <InputGroup hasValidation>
+                            <Form.Control type="date" size="sm" id="busqueda" name="busqueda" 
+                                    onChange={(e) => onChangeBusqueda(e)}
+                            />
+                        </InputGroup>
+                        </Col>
+                        </Form.Group>                    
+                        </Col>
+                </Row>
+                </Container>
+
+                {loaded && (
+                    <Row className="justify-content-md-center text-center">
+                        <Col md={1} className="justify-content-center">
+                        <Spinner animation="border" >
+                        </Spinner> 
+                        </Col>
+                    </Row>
+                )}
+
+                {listControls.length > 0 && (
+                    <ListVMadre listControls={listControls} allControlSaved={allControlSaved}  setAllControl={setAllControl}/>
+                )
+                }
+
+                {listControls.length === 0 && (
+                    <>
+                    <p style={{"color": "#2D61A4", "font-size": 27}}>No se encontraron registros</p>
+                    <Lottie height={400} width="60%"
+                        options={{ loop: true, autoplay: true, animationData: NotResults, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                    />
+                    </>
+                )}
+                
+            </Container>        
+        )
+    }
 }
 
 const styles = StyleSheet.create({

@@ -18,6 +18,7 @@ import fuente from "../../assets/fontPDF/Amaranth-Bold.ttf";
 import fuente2 from "../../assets/fontPDF/Amaranth-Regular.ttf";
 import "./StatisticHome.scss";
 import useAuth from '../../hooks/useAuth'; //privilegios
+import AnimationAuthorization from "../../assets/animations/withoutAuthorization.json";
 
 export default function StatisticHomeMadre(){
     const { documento, rolUser } = useParams();
@@ -27,6 +28,8 @@ export default function StatisticHomeMadre(){
     const [loaded, setLoaded] = useState(true); 
     const [ loadedPDF, setLoadedSonPDF ] = useState(false);
     const { user } = useAuth(); //privilegios
+    const [ authorization, setAuthorization ] = useState(true);
+    const [ errorServer, setErrorServer ] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -47,55 +50,65 @@ export default function StatisticHomeMadre(){
         return user.authorities.filter(priv => priv === privilegio);
     }
 
-    return(
-        <>
-            <Container>
-            <h1 className="text-center">IMC para la Edad Gestacional
-            {validatePrivilegio("REGISTRAR_CONTROL").length > 0 && ("CONSULTAR_USUARIO").length > 0 && (
-                <Link to={`/admin/AddControlNutriMadre/${documento}/${rolUser}`} >
-                    <FontAwesomeIcon icon={faUserPlus} size="lg" color="#2D61A4" style = {{marginLeft:10}} data-tip data-for = "boton1" />
-                    <ReactTooltip id="boton1" place="bottom" type="dark" effect="float">Agregar Control Nutricional</ReactTooltip>
-                </Link>
-            )}
-            {loadedPDF && (
-                    <PDFDownloadLink document={<DocumentPdf userControl={userControl} listControls={listControls} setLoadedSonPDF={setLoadedSonPDF}/>} fileName="ControlNutricionalMadre.pdf">
-                    {({ blob, url, loaded, error }) =>
-                        loaded ? 'Cargando Documento...' : <Button style={styles.boton}>
-                        Descargar PDF <FontAwesomeIcon icon={faPrint} style = {{marginLeft:2}} size="lg" color="white" />
-                    </Button>
-                    }
-                    </PDFDownloadLink>  
-                )}
-            </h1>
-
-            {loaded && (
-                <Row className="justify-content-md-center text-center">
-                    <Col md={1} className="justify-content-center">
-                    <Spinner animation="border" >
-                    </Spinner> 
-                    </Col>
-                </Row>
-            )}
-
-        {listControls.length > 0 ? (
-        <>
-          <StatisticMadreGestante listControls={listControls} token={token} documento={documento}/>
-        </>
-        )
-        :
-        (
+    if(validatePrivilegio("LISTAR_CONTROLES_NUTRICIONALES").length === 0){
+        return(
             <>
-            <p style={{"color": "#2D61A4", "font-size": 27}}>No se encontraron registros</p>
-            <Lottie height={400} width="60%"
-                options={{ loop: true, autoplay: true, animationData: NotResults, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
-            />
+                <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                    <Lottie height={500} width="65%"
+                    options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                />
             </>
         )
-        }
-    </Container>
-    </>
-        
-    )
+    }else{
+        return(
+            <>
+                <Container>
+                <h1 className="text-center">IMC para la Edad Gestacional
+                {validatePrivilegio("REGISTRAR_CONTROL").length > 0 && ("CONSULTAR_USUARIO").length > 0 && (
+                    <Link to={`/admin/AddControlNutriMadre/${documento}/${rolUser}`} >
+                        <FontAwesomeIcon icon={faUserPlus} size="lg" color="#2D61A4" style = {{marginLeft:10}} data-tip data-for = "boton1" />
+                        <ReactTooltip id="boton1" place="bottom" type="dark" effect="float">Agregar Control Nutricional</ReactTooltip>
+                    </Link>
+                )}
+                {loadedPDF && (
+                        <PDFDownloadLink document={<DocumentPdf userControl={userControl} listControls={listControls} setLoadedSonPDF={setLoadedSonPDF}/>} fileName="ControlNutricionalMadre.pdf">
+                        {({ blob, url, loaded, error }) =>
+                            loaded ? 'Cargando Documento...' : <Button style={styles.boton}>
+                            Descargar PDF <FontAwesomeIcon icon={faPrint} style = {{marginLeft:2}} size="lg" color="white" />
+                        </Button>
+                        }
+                        </PDFDownloadLink>  
+                    )}
+                </h1>
+
+                {loaded && (
+                    <Row className="justify-content-md-center text-center">
+                        <Col md={1} className="justify-content-center">
+                        <Spinner animation="border" >
+                        </Spinner> 
+                        </Col>
+                    </Row>
+                )}
+
+            {listControls.length > 0 ? (
+            <>
+            <StatisticMadreGestante listControls={listControls} token={token} documento={documento}/>
+            </>
+            )
+            :
+            (
+                <>
+                <p style={{"color": "#2D61A4", "font-size": 27}}>No se encontraron registros</p>
+                <Lottie height={400} width="60%"
+                    options={{ loop: true, autoplay: true, animationData: NotResults, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                />
+                </>
+            )
+            }
+        </Container>
+        </>
+     )
+    }
 }
 
 Font.register({ family: 'Amaranth', src: fuente});

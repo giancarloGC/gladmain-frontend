@@ -6,6 +6,10 @@ import { TOKEN } from "../../../utils/constans";
 import { insertContVaccApi } from "../../../api/vaccination";
 import swal from 'sweetalert';
 import moment from 'moment';
+import Lottie from 'react-lottie';
+import useAuth from '../../../hooks/useAuth'; //privilegios
+import AnimationAuthorization from "../../../assets/animations/withoutAuthorization.json";
+import AnimationErrorServer from "../../../assets/animations/working-server-animation.json";
 
 export default function AddControlVMadre (props){
     const { userControl } = props;
@@ -13,6 +17,13 @@ export default function AddControlVMadre (props){
     const [ textFormSend, setTextFormSend ] = useState({});
     const [show, setShow] = useState(false);
     const [ showSpinner, setShowSpinner ] = useState(false);
+    const { user } = useAuth();
+    const [ authorization, setAuthorization ] = useState(true);
+    const [ errorServer, setErrorServer ] = useState(false);
+
+    const validatePrivilegio = (privilegio) => {
+      return user.authorities.filter(priv => priv === privilegio);
+    }
 
     const dateFormat = (date) => {
         if(date){
@@ -21,6 +32,16 @@ export default function AddControlVMadre (props){
         }
     }
 
+    if(validatePrivilegio("REGISTRAR_CONTROL_VACUNACION").length === 0){
+      return(
+          <>
+              <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                  <Lottie height={500} width="65%"
+                  options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+              />
+          </>
+      )
+  }else{
     return(
         <Container className="b">
             <Row> 
@@ -235,4 +256,5 @@ export default function AddControlVMadre (props){
             </Row>
         </Container>
     )
+  }
 }

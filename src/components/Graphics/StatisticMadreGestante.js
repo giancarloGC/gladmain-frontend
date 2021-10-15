@@ -3,6 +3,9 @@ import { Container, Form } from "react-bootstrap";
 import { Line } from "react-chartjs-2";
 import moment from 'moment';
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
+import Lottie from 'react-lottie';
+import AnimationAuthorization from "../../assets/animations/withoutAuthorization.json";
+import useAuth from '../../hooks/useAuth';
 
 import "./StatisticNutri.scss";
 
@@ -11,6 +14,14 @@ export default function StatisticMadreGestante(props){
   const { rolUser } = useParams();
   const [ goRedirect, setGoRedirect ] = useState(false);
   const [ idControl, setIdControl ] = useState(0);
+  const [ authorization, setAuthorization ] = useState(true);
+  const [ errorServer, setErrorServer ] = useState(false);
+  const { user } = useAuth();
+
+  //privilegios
+  const validatePrivilegio = (privilegio) => {
+    return user.authorities.filter(priv => priv === privilegio);
+}
 
   const getDatasetAtEvent = async (dataset) => {
     if (!dataset.length) return;
@@ -65,6 +76,17 @@ const data = {
               36,37,38,39,40,41,42 ],
     datasets: generateCoordenadas()
   };
+
+  if(validatePrivilegio("LISTAR_CONTROLES_NUTRICIONALES").length === 0){
+    return(
+        <>
+            <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                <Lottie height={500} width="65%"
+                options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+            />
+        </>
+    )
+  }else{
     return(
         <Container>
               {goRedirect && (
@@ -104,6 +126,7 @@ const data = {
               </center>
         </Container>
     )
+  }
 
     function lineas(){
       return [{
