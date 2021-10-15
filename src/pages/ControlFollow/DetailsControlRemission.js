@@ -4,6 +4,9 @@ import DetailsControlR from "../../components/Control/ControlFollow/DetailsContr
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import { getRemisByIdApi } from "../../api/remission";
 import { TOKEN } from "../../utils/constans";
+import useAuth from '../../hooks/useAuth'; //privilegios
+import Lottie from 'react-lottie';
+import AnimationAuthorization from "../../assets/animations/withoutAuthorization.json";
 
 export default function DetailsControlRemission(){
     const { idSeg, idRemi } = useParams();
@@ -11,8 +14,14 @@ export default function DetailsControlRemission(){
     const [ remiLoaded, setRemiLoaded ] = useState({});
     const token = localStorage.getItem(TOKEN);
     const [ checkeds, setCheckeds ] = useState({radio: false, radio1: false, radio2: false});
-    const [ componentLoaded, setComponentLoaded ] = useState(false);   
+    const [ componentLoaded, setComponentLoaded ] = useState(false);
+    const [ authorization, setAuthorization ] = useState(true);
+    const { user } = useAuth(); //privilegios   
     var loading = true;
+
+    const validatePrivilegio = (privilegio) => {
+        return user.authorities.filter(priv => priv === privilegio);
+    }
 
 
     useEffect(() => {
@@ -30,24 +39,34 @@ export default function DetailsControlRemission(){
         setRemiLoaded(infoRemi);
         }
       }, []);
-
-    return(
-        <Container>
-            <h1 className="text-center">Detalles Remisión</h1>
-        {!componentLoaded ? (
-            <Row className="justify-content-md-center text-center">
-              <Col md={1} className="justify-content-center">
-              <Spinner animation="border" >
-              </Spinner> 
-              </Col>
-            </Row>
-          )
-        :
-        (
-            <DetailsControlR idSeg={idSeg} infoRemi={infoRemi} checkeds={checkeds} setCheckeds={setCheckeds}/>
+      if(validatePrivilegio("CONSULTAR_REMICION").length === 0){
+        return(
+            <>
+                <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                    <Lottie height={500} width="65%"
+                    options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                />
+            </>
         )
-        }
-        </Container>
-    )
+    }else{
+        return(
+            <Container>
+                <h1 className="text-center">Detalles Remisión</h1>
+            {!componentLoaded ? (
+                <Row className="justify-content-md-center text-center">
+                <Col md={1} className="justify-content-center">
+                <Spinner animation="border" >
+                </Spinner> 
+                </Col>
+                </Row>
+            )
+            :
+            (
+                <DetailsControlR idSeg={idSeg} infoRemi={infoRemi} checkeds={checkeds} setCheckeds={setCheckeds}/>
+            )
+            }
+            </Container>
+        )
+    }
     
 }

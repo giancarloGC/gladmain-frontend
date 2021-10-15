@@ -5,6 +5,9 @@ import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from 
 import { getInfantIncomeApi } from "../../api/infant_income";
 import { TOKEN } from "../../utils/constans";
 import { getUserByIdApi } from "../../api/user";
+import useAuth from '../../hooks/useAuth'; //privilegios
+import Lottie from 'react-lottie';
+import AnimationAuthorization from "../../assets/animations/withoutAuthorization.json";
 
 
 export default function EditInfantIncome(){
@@ -12,6 +15,12 @@ export default function EditInfantIncome(){
     const [ ingreso, setIngreso ] = useState(null);
     const token = localStorage.getItem(TOKEN);
     const [ showValidationM, setShowValidationM ] = useState(false);
+    const [ authorization, setAuthorization ] = useState(true);
+    const { user } = useAuth(); //privilegios
+
+    const validatePrivilegio = (privilegio) => {
+        return user.authorities.filter(priv => priv === privilegio);
+    }
 
     useEffect(() => {
         (async () => {
@@ -30,12 +39,32 @@ export default function EditInfantIncome(){
         })();
     }, [])
 
-    return(
-        <Container>
-             <h1 className="text-center">Editar Ingreso </h1>
-            {ingreso && (
-                <EditInfantInc idSeg={idSeg} documento={documento} showValidationM={showValidationM} ingreso={ingreso} rolUser={rolUser} />
-            )} 
-        </Container>
-    )
+    if(validatePrivilegio("ACTUALIZAR_SEGUIMIENTO").length === 0){
+        return(
+            <>
+                <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                    <Lottie height={500} width="65%"
+                    options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                />
+            </>
+        )
+    }else if(validatePrivilegio("ACTUALIZAR_INGRESO_INFANTE").length === 0){
+        return(
+            <>
+                <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                    <Lottie height={500} width="65%"
+                    options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                />
+            </>
+        )
+    }else{
+        return(
+            <Container>
+                <h1 className="text-center">Editar Ingreso </h1>
+                {ingreso && (
+                    <EditInfantInc idSeg={idSeg} documento={documento} showValidationM={showValidationM} ingreso={ingreso} rolUser={rolUser} />
+                )} 
+            </Container>
+        )
+    }
 }

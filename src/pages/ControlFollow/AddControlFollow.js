@@ -34,7 +34,16 @@ export default function AddControlFollow(){
         }
         }, []);
 
-    if(validatePrivilegio("REGISTRAR_SEGUIMIENTO").length === 0 ){
+        if(validatePrivilegio("REGISTRAR_INGRESO_INFANTE").length === 0 ){
+            return(
+                <>
+                    <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>
+                        <Lottie height={500} width="65%"
+                        options={{ loop: true, autoplay: true, animationData: AnimationAuthorization, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
+                    />
+                </>
+            )
+        }else if(validatePrivilegio("REGISTRAR_SEGUIMIENTO").length === 0 ){
         return(
             <>
                 <h1 style={{"textAlign": "center"}}>No tienes autorización</h1>

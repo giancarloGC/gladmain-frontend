@@ -5,8 +5,8 @@ import { getRolByIdApi, updateRolApi } from "../../api/rol";
 import { TOKEN } from "../../utils/constans";
 import { getPrivilegiosApi } from "../../api/consultar_privilegios";
 import { useParams } from "react-router-dom";
-import useAuth from '../../hooks/useAuth'; //privilegios
 import swal from 'sweetalert';
+import useAuth from '../../hooks/useAuth'; //privilegios
 import Lottie from 'react-lottie';
 import AnimationAuthorization from "../../assets/animations/withoutAuthorization.json";
 
