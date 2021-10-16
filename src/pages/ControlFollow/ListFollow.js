@@ -43,7 +43,6 @@ export default function ListFollow(){
                     let newData = [];
                     let infoCompleted = await calculateProgress(response, newData);                              
                     console.log(infoCompleted);
-                    console.log("siuuuuu");
                     setListSeg(infoCompleted);
                 })()
             }
@@ -58,7 +57,6 @@ export default function ListFollow(){
             setLoading(false);
             setListIncome(responseIncome);
             setLoadedSonPDF(true);
-
         })();       
         }, []);
 
@@ -138,7 +136,6 @@ export default function ListFollow(){
                 newData.push(item);
             }
         }));
-        console.log("espero padre");
         return newData;
     }
 

@@ -21,6 +21,7 @@ export default function GeneratePdfToPrint({item, documento, rolUser}){
   const token = localStorage.getItem(TOKEN);
   const [ infoUser, setInfoUser ] = useState({}); 
   const [ loadedPDF, setLoadedSonPDF ] = useState(false);
+  const [fontLoaded, setFontLoaded] = useState(false);
 
     useEffect(() => {
       (async () => {
@@ -34,10 +35,13 @@ export default function GeneratePdfToPrint({item, documento, rolUser}){
       setTimeout(() => {
         setLoadedSonPDF(true);
       }, 2000);
+      setTimeout(() => {
+        setFontLoaded(true);
+    }, 3000);
   }, [])
     return(
         <>
-        {loadedPDF ? (
+        {fontLoaded && loadedPDF ? (
         <PDFDownloadLink document={<PDFseguimiento item={item} setLoadedSonPDF={setLoadedSonPDF} infoUser={infoUser} rolUser={rolUser}/>} fileName={`SeguimientoEIngreso${infoUser.documento}`}>
             {/*allControlSaved={allControlSaved} setLoadedSonPDF={setLoadedSonPDF}/>} fileName="controlesCyD.pdf">*/}
         {({ blob, url, loaded, error }) =>

@@ -41,6 +41,7 @@ export default function StatisticHome(){
     const [ loading, setLoading ] = useState(true);  
     const { user } = useAuth(); //privilegios
     const [loaded, setLoaded] = useState(false); 
+    const [fontLoaded, setFontLoaded] = useState(false);
     const [ authorization, setAuthorization ] = useState(true);
   
     const validatePrivilegio = (privilegio) => {
@@ -60,6 +61,9 @@ export default function StatisticHome(){
             setInfoUser(response2);
 
             setLoadedSonPDF(true);
+            setTimeout(() => {
+                setFontLoaded(true);
+            }, 3000);
         })();       
     }, []);
     
@@ -99,7 +103,7 @@ if(validatePrivilegio("LISTAR_CONTROLES_NUTRICIONALES").length === 0){
                 <ReactTooltip id="boton1" place="bottom" type="dark" effect="float">Agregar Control Nutricional</ReactTooltip>
             </Link>
         )}
-                {loadedPDF && (
+                {fontLoaded && loadedPDF && (
                     <PDFDownloadLink document={<DocumentPdf listControls={listControls} setLoadedSonPDF={setLoadedSonPDF} infoUser={infoUser}/>} fileName={`ControlNutrición_${infoUser.documento}`}>
                     {({ blob, url, loading, error }) =>
                         loading ? '' : <Button style={styles.boton}>

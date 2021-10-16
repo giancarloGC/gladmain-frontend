@@ -231,7 +231,7 @@ function DocumentPdf({infoUser, listRemis, setLoadedSonPDF}){
                 </View>
                 )}
 
-                {item.razonFallecimiento !== null && 
+                {item.razonFallecimiento !== null || item.razonFallecimiento !== '' &&
                 <View style={styles.tableRow}>
                     <View style={styles.tableColHeader4}> 
                         <Text style={styles.tableCellHeader}>Razon Fallecimiento:</Text> 
