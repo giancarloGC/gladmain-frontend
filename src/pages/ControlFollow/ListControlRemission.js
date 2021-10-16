@@ -23,8 +23,8 @@ import AnimationAuthorization from "../../assets/animations/withoutAuthorization
 Font.register({ family: 'Amaranth', src: fuente});
 Font.register({ family: 'Amaranth2', src: fuente2});
 
-function DocumentPdf({infoUser, listRemis, setLoadedSonPDF}){
-    
+function DocumentPdf({infoUser, listRemis, setLoadedSonPDF}){  
+
     useEffect(() => {
         setLoadedSonPDF(true);
     }, [])
@@ -275,6 +275,7 @@ export default function ListControlRemission(){
   const [loaded, setLoaded] = useState(true); 
   const [ loadedPDF, setLoadedSonPDF ] = useState(false);
   const [ authorization, setAuthorization ] = useState(true);
+  const [fontLoaded, setFontLoaded] = useState(false);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -290,6 +291,9 @@ export default function ListControlRemission(){
         
         setAllRemisions(remisionesBySeg);
         setLoadedSonPDF(true);
+        setTimeout(() => {
+            setFontLoaded(true);
+        }, 3000);
         }
     })();       
 }, []);
@@ -331,7 +335,8 @@ if(validatePrivilegio("LISTAR_REMICIONES").length === 0){
               </Link>
             )}
 
-              {loadedPDF && (
+
+              {fontLoaded && loadedPDF && (
                     <PDFDownloadLink document={<DocumentPdf infoUser={infoUser} listRemis={listRemis} allRemisionsSaved={allRemisionsSaved}
                         setListRemis={setListRemis} idSeg={idSeg} documento={documento} setLoadedSonPDF={setLoadedSonPDF}/>} fileName="Remisiones.pdf">
                     {({ blob, url, loaded, error }) =>
