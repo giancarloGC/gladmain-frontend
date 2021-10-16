@@ -162,6 +162,7 @@ export default function ListVacMadre(){
     const { user } = useAuth();
     const [ authorization, setAuthorization ] = useState(true);
     const [ errorServer, setErrorServer ] = useState(false);
+    const [fontLoaded, setFontLoaded] = useState(false);
 
     const validatePrivilegio = (privilegio) => {
         return user.authorities.filter(priv => priv === privilegio);
@@ -179,6 +180,9 @@ export default function ListVacMadre(){
 
             setAllControl(response2);
             setLoadedSonPDF(true);
+            setTimeout(() => {
+                setFontLoaded(true);
+            }, 3000);
         })();       
     }, []);
 
@@ -214,7 +218,7 @@ export default function ListVacMadre(){
                     </Link>
                 )}
 
-                    {loadedPDF && (
+                    {fontLoaded && loadedPDF && (
                         <PDFDownloadLink document={<DocumentPdf userControl={userControl} listControls={listControls} setLoadedSonPDF={setLoadedSonPDF}/>} fileName="ControlVacunación.pdf">
                         {({ blob, url, loaded, error }) =>
                             loaded ? 'Cargando Documento...' : <Button style={styles.boton}>

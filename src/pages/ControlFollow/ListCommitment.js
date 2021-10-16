@@ -31,6 +31,7 @@ export default function ListCommitment(){
   const [ loadedPDF, setLoadedSonPDF ] = useState(false); 
   const [ loading, setLoading ] = useState(true);  
   const [ listCommit, setListComit ] = useState([]);
+  const [fontLoaded, setFontLoaded] = useState(false);
   const { user } = useAuth();
   const [ authorization, setAuthorization ] = useState(true);
   
@@ -67,6 +68,9 @@ export default function ListCommitment(){
         setLoading(false);
         setInfoUser(responseUser);
         setLoadedSonPDF(true);
+        setTimeout(() => {
+            setFontLoaded(true);
+        }, 3000);
     })();       
     }, []);
 
@@ -137,7 +141,7 @@ if(validatePrivilegio("LISTAR_COMPROMISOS").length === 0 ){
               </Link>
             )}
 
-                {loadedPDF && (
+                {fontLoaded && loadedPDF && (
                     <PDFDownloadLink document={<DocumentPdf listControls={listControls} setLoadedSonPDF={setLoadedSonPDF} infoUser={infoUser}/>} fileName={`ControlCompromisos_${infoUser.documento}`}>
                     {({ blob, url, loading, error }) =>
                         loading ? '' : <Button style={styles.boton}>

@@ -189,6 +189,7 @@ export default function ListControlCyD(){
     const [ loadedPDF, setLoadedSonPDF ] = useState(false);
     const { user } = useAuth(); //privilegios
     const [ authorization, setAuthorization ] = useState(true);
+    const [fontLoaded, setFontLoaded] = useState(false);
 
     const validatePrivilegio = (privilegio) => {
       return user.authorities.filter(priv => priv === privilegio);
@@ -208,6 +209,9 @@ export default function ListControlCyD(){
             setListControls(response3);
             setAllControl(response3);
             setLoadedSonPDF(true);
+            setTimeout(() => {
+              setFontLoaded(true);
+          }, 3000);
         })();  
     }, []);
 
@@ -242,7 +246,7 @@ export default function ListControlCyD(){
                     <ReactTooltip id="boton" place="bottom" type="dark" effect="float"> Añadir Nuevo Control </ReactTooltip>
                 </Link>
             )}
-                {loadedPDF && (
+                {fontLoaded && loadedPDF && (
                     <PDFDownloadLink document={<DocumentPdf infoUser={infoUser} listControls={listControls} lastControls={lastControls} 
                         allControlSaved={allControlSaved} setLoadedSonPDF={setLoadedSonPDF}/>} fileName="controlesCyD.pdf">
                     {({ blob, url, loaded, error }) =>

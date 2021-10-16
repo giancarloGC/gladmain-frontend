@@ -30,6 +30,7 @@ export default function StatisticHomeMadre(){
     const { user } = useAuth(); //privilegios
     const [ authorization, setAuthorization ] = useState(true);
     const [ errorServer, setErrorServer ] = useState(false);
+    const [fontLoaded, setFontLoaded] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -40,8 +41,11 @@ export default function StatisticHomeMadre(){
             const response2 = await getControlNutriApi(documento, token);
             setLoaded(false);
             setListControls(response2);
-            
+    
             setLoadedSonPDF(true);
+            setTimeout(() => {
+                setFontLoaded(true);
+            }, 3000);
         })();       
     }, []);
 
@@ -70,7 +74,7 @@ export default function StatisticHomeMadre(){
                         <ReactTooltip id="boton1" place="bottom" type="dark" effect="float">Agregar Control Nutricional</ReactTooltip>
                     </Link>
                 )}
-                {loadedPDF && (
+                {fontLoaded && loadedPDF && (
                         <PDFDownloadLink document={<DocumentPdf userControl={userControl} listControls={listControls} setLoadedSonPDF={setLoadedSonPDF}/>} fileName="ControlNutricionalMadre.pdf">
                         {({ blob, url, loaded, error }) =>
                             loaded ? 'Cargando Documento...' : <Button style={styles.boton}>
