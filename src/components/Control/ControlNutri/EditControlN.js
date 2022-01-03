@@ -55,7 +55,7 @@ export default function EditControlN(props){
 
     const calculateIMC = (kg, metros) => {
       const imca = kg / (metros * metros);
-      let imcC = imca.toFixed(3);
+      let imcC = imca.toFixed(2);
       setImc(imcC);
     }
 

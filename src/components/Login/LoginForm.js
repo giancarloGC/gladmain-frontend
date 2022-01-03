@@ -24,6 +24,7 @@ export default function LoginForm(props) {
     (async () => {
       const response = await getRolesApi();
       setRolesApi(response);
+      console.log(response);
     })();
   }, []);
     return(
@@ -75,10 +76,13 @@ export default function LoginForm(props) {
                       localStorage.removeItem(TOKEN);
                       localStorage.setItem(TOKEN, response.tokenJWT);
                       window.location.replace("/admin");
+                      console.log(response);
                     }
                   });
                   setFormSend(true);
                   setTimeout(() => {
+                      setFormSend(false);
+                      setFormSend(false);
                       setFormSend(false);
                   }, 5000);
                 }}

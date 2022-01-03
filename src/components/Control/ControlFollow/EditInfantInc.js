@@ -18,7 +18,7 @@ import AddIncomeCommit9 from "./AddIncomeCommit/AddIncomeCommit9";
 import AddIncomeCommit10 from "./AddIncomeCommit/AddIncomeCommit10";
 
 export default function EditInfantInc(props){
-  const { idSeg, ingreso, documento, showValidationM, rolUser } = props;
+  const { idSeg, ingreso, setIngreso, documento, showValidationM, rolUser } = props;
   const token = localStorage.getItem(TOKEN);
 
   const [ goRedirect, setGoRedirect ] = useState();
@@ -32,12 +32,14 @@ export default function EditInfantInc(props){
   /*const onChangeChecked = (e) => {
     setCheckeds({...checkeds, [e.target.name]: e.target.checked});
 }*/
-
+console.log(ingreso);
 const onChangeChecked = (e) => {
   if(e.target.name === "showPatologia"){
     setShowPatologia(!showPatologia);
     setDataCommit7({name: "titulooo", description: "ejemplo description"});
     setSaveData7(!saveData7); 
+    ingreso.ingreso.nombrePatologia = "";
+    setIngreso(ingreso);
     //saveData7 ? setShowCommit7(!e.target.checked) : setSaveData7(!saveData7);
     //setShowCommit7(!e.target.checked);
   }else if(e.target.name === "showMedicamentos"){
@@ -217,13 +219,13 @@ console.log(ingreso);
                           saludOral: saveData2 ? "SI" : "NO",
                           conoceUrgencias: saveData3 ? "SI" : "NO",
                           patologiaIdentificadaSgsss: saveData7 ? true : false,
-                          nombrePatologia: valores.nombrePatologia,
+                          nombrePatologia: saveData7 ? valores.nombrePatologia : "",
                           recibeMedFormulada: saveData8 ? 1 : 0,
-                          nombreMedFormululada: valores.nombreMedFormululada,
+                          nombreMedFormululada: saveData8 ? valores.nombreMedFormululada : "",
                           eapb: valores.eapb,
                           ips: valores.ips,
                           usuarioRemitido: saveData9 ? 1 : 0,
-                          causa: valores.causa,
+                          causa: saveData9 ? valores.causa : "",
                       }
                   } 
 
@@ -438,7 +440,7 @@ console.log(ingreso);
                     <Col sm="9" class="mid">
                         <InputGroup hasValidation>
                                <Form.Control type="text" placeholder="Nombre Patología" size="xs" id="nombrePatologia" name="nombrePatologia" 
-                               value={values.nombrePatologia} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombrePatologia && touched.nombrePatologia}
+                               value={ingreso.ingreso.nombrePatologia ? values.nombrePatologia : ""} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombrePatologia && touched.nombrePatologia}
                                isValid={!errors.nombrePatologia && touched.nombrePatologia}
                             />
                             <Form.Control.Feedback type="invalid">

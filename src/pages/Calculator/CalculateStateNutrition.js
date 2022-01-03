@@ -41,10 +41,10 @@ export default function CalculateStateNutrition(){
 
     const calculateIMC = (kg, metros) => {
       const imca = kg / (metros * metros);
-      let imcC = parseInt(imca);
+      let imcC = imca.toFixed(2);
       setImc(imcC);
     }
-
+ 
     const calculateStateNutrition = (talla, peso) => {
       //Mirar en que indice esta la talla dijitada para el eje x
       const indexToFind = (element) => element > talla -1;

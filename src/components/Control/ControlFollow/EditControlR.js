@@ -121,10 +121,10 @@ export default function EditControlR(props){
                     fechaAtencion: valores.fechaAtencion,
                     motivo: valores.motivo,
                     hospitalizado: checkeds.radio1 ? 1 : 0,
-                    fechaIngreso: valores.fechaIngreso,
+                    fechaIngreso: checkeds.radio1 ? valores.fechaIngreso : null,
                     fechaSalida: valores.fechaSalida,
                     fallecido: checkeds.radio2 ? 1 : 0,
-                    razonFallecimiento: valores.razonFallecimiento,
+                    razonFallecimiento: checkeds.radio2 ? valores.razonFallecimiento : "",
                     seguimiento: valores.seguimiento,
                     nombreAuxEnfermero: valores.nombreAuxEnfermero,
                   }
