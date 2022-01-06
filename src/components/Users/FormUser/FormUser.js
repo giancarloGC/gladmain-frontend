@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "react-bootstrap";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner, FormLabel} from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
 import { insertUserApi } from "../../../api/user";
 import { TOKEN } from "../../../utils/constans";
@@ -104,6 +104,8 @@ export default function FormUser(){
                 <Col sm={10} className="justify-aling-content-center">
                 <Formik
                 initialValues={{ 
+                    fechaRegistro: dateCurrent.format("YYYY-MM-DD"),
+                    fechaInclusion: '',
                     documento: '',
                     tipoDocumento: '', 
                     nombre: '', 
@@ -121,6 +123,14 @@ export default function FormUser(){
                 }} 
                 validate={(valores) => {
                   let errores = {};
+                  if(valores.fechaRegistro !== dateCurrent.format("YYYY-MM-DD")){
+                    errores.fechaRegistro = 'Fecha invalida, asegurese de que la fecha actual sea correcta';
+                  }
+
+                  if(valores.fechaInclusion < dateCurrent.format("YYYY-MM-DD")){
+                    errores.fechaInclusion = 'Fecha invalida, la fecha debe ser mayor a la fecha actual';
+                  }
+
                   if(!valores.tipoDocumento){
                     errores.tipoDocumento = 'Asegurese de selecionar una opción';
                   }
@@ -233,7 +243,8 @@ export default function FormUser(){
                       municipio: valores.municipio,
                       direccion: valores.direccion,
                       correoElectronico: valores.correoElectronico,
-                      clave: valores.clave
+                      clave: valores.clave,
+                      fechaIngresoPrograma: valores.fechaInclusion
                     }
                     console.log(data);
                     
@@ -298,6 +309,38 @@ export default function FormUser(){
                     return (   
                     
                     <Form onSubmit={handleSubmit}>
+                      <Form.Group as={Row} className="mb-3 mt-3">
+                        <Col md={6}>
+                          <InputGroup hasValidation>
+                            <Form.Label column sm={5}><h1 style={{fontSize: "20px", color:"#0084d2"}} className="mt-2">Fecha registro</h1></Form.Label>
+                            <Form.Control type="date" placeholder="Fecha de registro" size="xs" id="fechaRegistro" name="fechaRegistro" 
+                              value={dateCurrent.format("YYYY-MM-DD")} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaRegistro && touched.fechaRegistro}
+                              isValid={!errors.fechaRegistro && touched.fechaRegistro} disabled
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                  {errors.fechaRegistro}
+                              </Form.Control.Feedback>
+                              <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          </InputGroup>
+                        </Col>
+
+                        <Col md={6}>
+                          <InputGroup hasValidation>
+                            <Form.Label column sm={5}>
+                              <h1 style={{fontSize: "20px", color:"#0084d2"}} className="mt-2">Fecha inclusión</h1>
+                            </Form.Label>
+                            <Form.Control type="date" size="xs" id="fechaInclusion" name="fechaInclusion" placeholder="Fecha inclusión"
+                              value={values.fechaInclusion} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaInclusion && touched.fechaInclusion}
+                              isValid={!errors.fechaInclusion && touched.fechaInclusion}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                  {errors.fechaInclusion}
+                            </Form.Control.Feedback>
+                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          </InputGroup>
+                        </Col>
+                      </Form.Group>
+
                         <Form.Group as={Row} className="mb-3 mt-3">
                        <Col md={6}>
                         <InputGroup hasValidation>
