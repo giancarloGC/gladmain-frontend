@@ -84,12 +84,13 @@ export default function EditCommit(props){
                   updateCompApi(formData, token).then(response => {
                     setShowSpinner(false);
                     if(response === true){
-                      
                       if(formData.fechaCumplimiento !== null){
                             (async () => {
                               const responseInfants = await listUsersByRol("INFANTE", token);
-                              let usersInfants = responseInfants.filter(usuarioInf => usuarioInf.documento === documento);                      
+                              let docParseado = parseInt(documento);                     
+                              let usersInfants = responseInfants.filter(usuarioInf => usuarioInf.documento === docParseado); 
                               if(usersInfants.length > 0){
+                                console.log("es niño");
                                  let listIngresos = await getInfantIncomeApi(documento, token);
                                  let ingresoBySeg = listIngresos.filter(registro => registro.ingreso.idSeguimiento === parseInt(segControl.id));
                                  console.log(ingresoBySeg[0]);
@@ -170,7 +171,7 @@ export default function EditCommit(props){
                                  });
                               }
                             })();
-                      }
+                          }
                       /*setShowSpinner(false);
                       swal({
                         title: `¡El compromiso fue actualizado correctamente!`,

@@ -293,8 +293,8 @@ export default function EditControlF(props){
                     <Form.Group as={Row} className="mb-1">
                     <Col md={6}>        
                         <div className="d-grid gap-2">
-                        <div className="d-grid gap-2">
-                        <Button variant="primary" type="submit" size="xs" disabled={showSpinner}>
+                        <div className="d-grid gap-2 mt-1">
+                        <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
                             {showSpinner ? (
                               <>
                               <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>

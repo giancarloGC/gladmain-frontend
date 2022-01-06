@@ -24,7 +24,7 @@ export default function EditUser(){
     }
 
     useEffect(() => {
-        if(validatePrivilegio("CONSULTAR_USUARIO").length === 0){
+        if(validatePrivilegio("CONSULTAR_USUARIO").length > 0){
             getUserByIdApi(documento, token).then(response => {
                 setUser(response);
                 setLoaded(true);

@@ -22,6 +22,7 @@ export default function ListRol(){
     useEffect(() => {
         (async () => {
             const response = await getRolesApi();
+            console.log(response);
             setLoading(false);
             setRolesApi(response);
             let rolesDesc = response.sort(function (a, b){

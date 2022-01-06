@@ -336,7 +336,7 @@ export default function AddControlCD(props){
                         <Form.Label column sm="2"><h5 style={{fontSize: "16px"}} className="mt-1">Talla (cm) </h5></Form.Label>
                         <Col sm="2">
                           <InputGroup hasValidation>
-                              <Form.Control type="number" placeholder="Talla en (m)" size="l" id="talla" name="talla" 
+                              <Form.Control type="number" placeholder="Talla en (cm)" size="l" id="talla" name="talla" 
                                defaultValue={values.talla} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.talla && touched.talla}
                               isValid={!errors.talla && touched.talla}
                               />

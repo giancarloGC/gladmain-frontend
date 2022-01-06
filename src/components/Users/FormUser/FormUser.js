@@ -238,6 +238,7 @@ export default function FormUser(){
                     console.log(data);
                     
                     insertUserApi(data, token).then(response => {
+                      console.log(response);
                       setShowSpinner(false);
                     if(response === true){
                           let successs = false;
@@ -272,9 +273,15 @@ export default function FormUser(){
                         }else if (response.status === 403){
                           setAuthorization(false);
                         }else{
-                          swal("Opss! Ocurrió un error al almacenar el usuario!", {
-                            icon: "error",
-                          });
+                          if(response.message === "ESTE USUARIO YA SE ENCONTRABA REGISTRADO"){
+                            swal("¡El usuario ya está registrado, intente con otro!", {
+                              icon: "warning",
+                            });
+                          }else{
+                            swal("Opss! Ocurrió un error al almacenar el usuario!", {
+                              icon: "error",
+                            });
+                          }
                             setShow(true);
                         }
                   });

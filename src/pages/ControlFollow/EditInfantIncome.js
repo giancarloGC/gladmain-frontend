@@ -62,7 +62,7 @@ export default function EditInfantIncome(){
             <Container>
                 <h1 className="text-center">Editar Ingreso </h1>
                 {ingreso && (
-                    <EditInfantInc idSeg={idSeg} documento={documento} showValidationM={showValidationM} ingreso={ingreso} rolUser={rolUser} />
+                    <EditInfantInc setIngreso={setIngreso} idSeg={idSeg} documento={documento} showValidationM={showValidationM} ingreso={ingreso} rolUser={rolUser} />
                 )} 
             </Container>
         )
