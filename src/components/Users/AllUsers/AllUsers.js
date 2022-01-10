@@ -13,8 +13,7 @@ import ImageWomen from "./../../../assets/img/women.png";
 import ImageNino from "./../../../assets/img/nino.png";
 import ImageNina from "./../../../assets/img/nina.png";
 
-import { getUserApi } from "../../../api/user";
-import { deleteUserApi } from "../../../api/user";
+import { getUserApi, deleteUserApi, getUsersInactivesApi } from "../../../api/user";
 import { TOKEN } from "../../../utils/constans";
 
 import Lottie from 'react-lottie';
@@ -60,9 +59,9 @@ export default function AllUsers(){
         })();
     }, []);
 
+
+    // Animación activada para buscar activos o inactivos
     const activesAnimation = (estado) => {
-        console.log(estado);
-        console.log("encendido");
         var tl = new TimelineLite({delay: 1}),
         firstBg = document.querySelectorAll(estado ? '.text__active-bg' : '.text__inactive-bg'),
         word  = document.querySelectorAll('.text__word');
@@ -119,14 +118,36 @@ export default function AllUsers(){
         })
     }
 
-    const onChangeUsers = (e) => {
+    const onChangeUsers = async (e) => {
         if(!e.target.checked){
+            //Buscar los usuarios activos
             activesAnimation(false);
+            setLoading(true);
+            let responseListUsers = await getUserApi(token);
+            updateUsersList(responseListUsers);
             setAnimationActives(true);
         }else{
+            //Buscar los usuarios inactivos
             activesAnimation(true);
+            setLoading(true);
+            let responseListUsers = await getUsersInactivesApi(token);
+            updateUsersList(responseListUsers);
             setAnimationActives(false);
         }
+    }
+
+    const updateUsersList = (responseListUsers) => {
+        if(responseListUsers.status === 403){
+            setLoading(false);
+            setAuthorization(false);
+        }else if(responseListUsers.status === 500){
+            setLoading(false);
+            setErrorServer(true);
+        }else{
+            setLoading(false);
+            setAllUsersSaved(responseListUsers);
+            setUsersApi(responseListUsers);
+        };
     }
     
     if(validatePrivilegio("LISTAR_USUARIOS").length === 0){

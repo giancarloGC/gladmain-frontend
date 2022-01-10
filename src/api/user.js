@@ -98,3 +98,19 @@ export function listUsersByRol(nameRol, token){
             .then(result => {return result})
             .catch(err => {return err});
 }
+
+export function getUsersInactivesApi(token){
+    const url = `/api/usuario/LISTAR_USUARIOS_INACTIVOS`;
+    const params = {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": token
+        },
+        method: "GET"
+    };
+
+    return fetch(url, params)
+        .then(response => {return response.json()})
+        .then(result => {return result})
+        .catch(err => {return err});
+}
