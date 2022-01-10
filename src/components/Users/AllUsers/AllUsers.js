@@ -4,7 +4,8 @@ import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from 
 import swal from 'sweetalert';
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhoneAlt, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPhoneAlt, faPencilAlt, faTrash, faUserSlash } from '@fortawesome/free-solid-svg-icons';
+import {TweenMax, Power2, TimelineLite} from "gsap";
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 
 import ImageMen from "./../../../assets/img/men.png";
@@ -34,6 +35,7 @@ export default function AllUsers(){
     const [ allUsersSaved, setAllUsersSaved ] = useState([]);
     const [ typeSearch, setTypeSearch ] = useState("nombre");
     const { user } = useAuth();
+    const [ animationActives, setAnimationActives ] = useState(true);
 
      //privilegios
      const validatePrivilegio = (privilegio) => {
@@ -52,11 +54,24 @@ export default function AllUsers(){
             }else{
                 setLoading(false);
                 setAllUsersSaved(response);
+                activesAnimation(true);
                 setUsersApi(response);
             };
         })();
     }, []);
 
+    const activesAnimation = (estado) => {
+        console.log(estado);
+        console.log("encendido");
+        var tl = new TimelineLite({delay: 1}),
+        firstBg = document.querySelectorAll(estado ? '.text__active-bg' : '.text__inactive-bg'),
+        word  = document.querySelectorAll('.text__word');
+      
+        tl.to(word, 0.3, {opacity:0})  
+            .to(firstBg, 0.2, {scaleX:1})
+            .to(word, 0.1, {opacity: 1, color: estado ? "#737477" : "#042b64"}, "-=0.1")  
+            .to(firstBg, 0.2, {scaleX:0});
+    }
 
     const search = (e) => {
         let usersFiltred = [];
@@ -103,6 +118,16 @@ export default function AllUsers(){
             }
         })
     }
+
+    const onChangeUsers = (e) => {
+        if(!e.target.checked){
+            activesAnimation(false);
+            setAnimationActives(true);
+        }else{
+            activesAnimation(true);
+            setAnimationActives(false);
+        }
+    }
     
     if(validatePrivilegio("LISTAR_USUARIOS").length === 0){
         return(
@@ -126,7 +151,7 @@ export default function AllUsers(){
                 )}
                     {allUsersSaved.length > 0  && (
                         <>
-                        <h1 className="text-center">Lista de Usuarios 
+                        <h1 className="text-center">Lista de usuarios
                         {validatePrivilegio("REGISTRAR_USUARIO").length > 0 && ("LISTAR_ROLES").length > 0 && ("ASIGNAR_ROL").length > 0 && ( 
                         <Link to="/admin/addUser" ><FontAwesomeIcon data-tip data-for="boton1" icon={faUserPlus} size="lg" color="#2D61A4"/></Link>
                         )}
@@ -145,6 +170,25 @@ export default function AllUsers(){
                                     <option value="documento">Buscar por documento</option>
                                 </Form.Select>
                             </Col>
+                            <Col md={2}>
+                            </Col>
+                            <Col md={2}>
+                                <div className="tal">
+                                    <p className='text'>
+                                        <span className={`${animationActives ? "text__active" : "text__inactive"}`}>                                
+                                            <span className="text__word" id="titleActives">{animationActives ? "Activos" : "Inactivos"}</span>
+                                            <span className={`${animationActives ? "text__active-bg" : "text__inactive-bg"}`}></span>
+                                        </span>
+                                    </p>
+                                </div>
+                            </Col>
+                            <Col md={1}>
+                                <div className="button r" id="button-6">
+                                    <input type="checkbox" className="checkbox" onChange={(e) => onChangeUsers(e)}/>
+                                    <div className="knobs"></div>
+                                    <div className="layer"></div>
+                                </div>
+                            </Col> 
                         </Row>
                         </>
                     )}
@@ -161,6 +205,7 @@ export default function AllUsers(){
                     <div className="containerGListUsers">
                     <div className="sectionDiv">
                     {usersApi.length > 0 && (
+                    <div>
                         <div className="containerP" >
                         {usersApi.map((item, index) => (
                             <div className="card" >
@@ -213,6 +258,7 @@ export default function AllUsers(){
                         </div>                
                         ))}
                         </div>
+                    </div>
                     )}
                     </div>
                     </div>

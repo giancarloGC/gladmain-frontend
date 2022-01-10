@@ -1,34 +1,206 @@
-.containerGListUsers {
-    /*display: flex;
+//text active - inactives   
+.tal{
+    display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    background: #e5e5ee;
-    min-height: 100vh;*/
+    font-family: 'Lato';
+    font-weight: 900;
+    color: #353535;
+    position: relative;
+  }
+.text{
+    margin-top: 40px;
+    display: inline-block;
+    font-size: 26px;
+    line-height: 1.205;
+    text-transform: capitalize;
+    font-family: sans-serif;
 }
+  
+  .text__active, .text__inactive{
+    position: relative;
+  }
+  
+  .text__word{
+    opacity: 0;
+    color: #353535;
+  }
+  
+  .text__active-bg, .text__inactive-bg{
+    display: block;
+    width: 100%;
+    height: 80%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+  
+  .text__active-bg{
+    background-color: #8bbcd1;
+  }
+  
+  .text__inactive-bg{
+    background-color: #a79d9a;
+  }
+  
+  .text__second{
+    margin-left: 15vmin;
+  }
+  
+  .restart{
+    position: absolute;
+    font-size: 12px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border: none;
+    border-bottom: 1px dotted grey;
+    padding: 0;
+    margin: 0 auto 2%;
+    cursor: pointer;
+    color: grey;
+  }
+  
 
-.sectionDiv::before {
-    /*content: "";
+//Switch active - inactives
+.toggle-button-cover {
+    display: table-cell;
+    position: relative;
+    width: 200px;
+    height: 140px;
+    box-sizing: border-box;
+  }
+  
+  .button-cover {
+    height: 100px;
+    margin: 20px;
+    background-color: #fff;
+    box-shadow: 0 10px 20px -8px #c5d6d6;
+    border-radius: 4px;
+  }
+  
+  .button-cover:before {
+    counter-increment: button-counter;
+    content: counter(button-counter);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    color: #b6cece;
+    font-size: 12px;
+    line-height: 1;
+    padding: 5px;
+  }
+  
+  .button-cover,
+  .knobs,
+  .layer {
     position: absolute;
     top: 0;
+    right: 0;
+    bottom: 0;
     left: 0;
+  }
+  
+  .button {
+    position: relative;
+    top: 50%;
+    width: 74px;
+    height: 36px;
+    margin: -12px auto 0 auto;
+    margin-left: -35px;
+    overflow: hidden;
+  }
+  
+  .button.r,
+  .button.r .layer {
+    border-radius: 100px;
+  }
+  
+  .button.b2 {
+    border-radius: 2px;
+  }
+  
+  .checkbox {
+    position: relative;
     width: 100%;
     height: 100%;
-    background: linear-gradient(#f00, #f0f);
-    clip-path: circle(30% at right 70%);*/
-}
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 3;
+  }
+  
+  .knobs {
+    z-index: 2;
+  }
+  
+  .layer {
+    width: 100%;
+    background-color: #9fbdca;
+    transition: 0.3s ease all;
+    z-index: 1;
+  }
 
-.sectionDiv::after {
-    /*content: "";
+
+// Button 6 
+#button-6 {
+    overflow: visible;
+  }
+  
+  #button-6 .knobs:before {
+    content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(#2196f3, #e91e63);
-    clip-path: circle(20% at 10% 10%);*/
-}
+    top: 6px;
+    left: 5px;
+    width: 20px;
+    height: 10px;
+    color: rgb(44, 140, 189);
+    font-size: 10x;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1;
+    padding: 12px 12px;
+    background-color: #2e397c;
+    border-radius: 50%;
+  }
+  
+  #button-6 .layer,
+  #button-6 .knobs,
+  #button-6 .knobs:before {
+    transform: rotateZ(0);
+    transition: 0.4s cubic-bezier(0.18, 0.89, 0.35, 1.15) all;
+  }
+  
+  #button-6 .checkbox:checked + .knobs {
+    transform: rotateZ(-180deg);
+  }
+  
+  #button-6 .checkbox:checked + .knobs:before {
+    content: "";
+    background-color: #7c7a7a;
+    transform: rotateZ(180deg);
+  }
 
+  #button-6 .checkbox:checked ~ .layer {
+    background-color: #c0c0c0;
+    transform: rotateZ(180deg);
+  }
+
+  #button-6 .checkbox:checked .textActive {
+    transform: translateY(-20px);
+    opacity: 0;
+    transition: 3.5s;
+    opacity: 0.9;
+    transform: translateY(0px);
+  }
+
+  //Card
 .containerP {
     position: relative;
     z-index: 1;

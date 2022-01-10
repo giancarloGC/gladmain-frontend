@@ -16,6 +16,8 @@
     "bootstrap": "^5.0.2",
     "chart.js": "^3.5.1",
     "formik": "^2.2.9",
+    "greensock": "^1.20.2",
+    "gsap": "^3.6.0",
     "http-proxy-middleware": "^2.0.1",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.1",
