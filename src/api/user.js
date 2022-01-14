@@ -131,3 +131,21 @@ export function updateStateUserApi(data){
             .then(result => {return result})
             .catch(err => {return err});
 }
+
+export function bitacoraUserApi(data){
+    const url = `/api/usuario/LISTAR_BITACORA_USUARIO/${data.documento}`;
+    const params = {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": data.token
+        },
+        method: "GET"
+    };
+
+    return fetch(url, params)
+            .then(response => {
+                return response.json()
+            })
+            .then(result => {return result})
+            .catch(error => {return error});
+}

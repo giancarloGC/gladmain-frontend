@@ -301,3 +301,28 @@
     color: rgb(128, 116, 116);
     font-size: 24px;
 }
+
+.containerP .card .sci2 {
+  position: absolute;
+  //margin-top: 50px;
+  bottom: 3px;
+  display: flex;
+}
+
+.containerP .card .sci2 .liB{
+  list-style: none;
+  margin: 0 10px;
+  transform: translateY(40px);
+  transition: 0.5s;
+  opacity: 0;
+}
+
+.containerP .card:hover .sci2 .liB{
+  transform: translateY(2px);
+  opacity: 1;
+}
+
+.containerP .card .sci2 .liB .enlace {
+  color: rgb(128, 116, 116);
+  font-size: 24px;
+}

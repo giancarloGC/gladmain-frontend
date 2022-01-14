@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from 
 import swal from 'sweetalert';
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhoneAlt, faPencilAlt, faTrash, faUserSlash, faUserCheck } from '@fortawesome/free-solid-svg-icons';
+import { faPhoneAlt, faPencilAlt, faTrash, faUserSlash, faUserCheck, faHistory, faCommentMedical } from '@fortawesome/free-solid-svg-icons';
 import {TweenMax, Power2, TimelineLite} from "gsap";
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 
@@ -325,7 +325,25 @@ export default function AllUsers(){
                                             /> <ReactTooltip id="boton4" place="bottom" type="dark" effect="float"> {item.fechaIngresoPrograma ? 'Desactivar' : 'Activar'} </ReactTooltip>
                                         </Link>
                                     )}
-                                </div>            
+                                </div>             
+                            </div>
+                            <div className="sci2">
+                                <div className="liB">
+                                    {validatePrivilegio("LISTAR_BITACORA_USUARIO").length > 0 && (
+                                        <Link className="enlace" to={`/admin/users/bitacoraUser/${item.documento}`}>
+                                            <FontAwesomeIcon icon={faHistory} size="lg" color="#2D61A4" data-tip data-for = "boton5"
+                                            /> <ReactTooltip id="boton5" place="bottom" type="dark" effect="float"> Bitacora </ReactTooltip>
+                                        </Link>
+                                    )}
+                                </div>
+                                <div className="liB">
+                                    {validatePrivilegio("MODIFICAR_ESTADO_USUARIO").length > 0 && (
+                                        <Link className="enlace" onClick={() => confirmDesactiveUser(item.documento, item.nombre, item.fechaIngresoPrograma)}>
+                                            <FontAwesomeIcon icon={faCommentMedical} size="lg" color="#2D61A4" data-tip data-for = "boton4"
+                                            /> <ReactTooltip id="boton4" place="bottom" type="dark" effect="float"> {item.fechaIngresoPrograma ? 'Desactivar' : 'Activar'} </ReactTooltip>
+                                        </Link>
+                                    )}
+                                </div>  
                             </div>
                         </div>                
                         ))}

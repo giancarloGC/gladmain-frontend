@@ -61,6 +61,7 @@ import IndexCalculator from "../pages/Calculator/IndexCalculator";
 import calculateStateNutrition from "../pages/Calculator/CalculateStateNutrition";
 import AddControlVacMadre from "../pages/ControlVac/AddControlVacMadre";
 import NotFound404 from "../pages/NotFound404";
+import BitacoraUser from "../pages/Users/BitacoraUser"; 
 
 const routes = [
     {
@@ -372,6 +373,11 @@ const routes = [
                 path: "/admin/addControlVacMadre/:documento",
                 exact: true,
                 component: AddControlVacMadre,
+            },
+            {
+                path: "/admin/users/bitacoraUser/:documento",
+                exact: true,
+                component: BitacoraUser,
             }
         ]
     }   
