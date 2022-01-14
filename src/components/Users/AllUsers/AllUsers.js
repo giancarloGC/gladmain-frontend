@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from 
 import swal from 'sweetalert';
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhoneAlt, faPencilAlt, faTrash, faUserSlash } from '@fortawesome/free-solid-svg-icons';
+import { faPhoneAlt, faPencilAlt, faTrash, faUserSlash, faUserCheck } from '@fortawesome/free-solid-svg-icons';
 import {TweenMax, Power2, TimelineLite} from "gsap";
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 
@@ -13,7 +13,7 @@ import ImageWomen from "./../../../assets/img/women.png";
 import ImageNino from "./../../../assets/img/nino.png";
 import ImageNina from "./../../../assets/img/nina.png";
 
-import { getUserApi, deleteUserApi, getUsersInactivesApi } from "../../../api/user";
+import { getUserApi, deleteUserApi, getUsersInactivesApi, updateStateUserApi } from "../../../api/user";
 import { TOKEN } from "../../../utils/constans";
 
 import Lottie from 'react-lottie';
@@ -116,6 +116,49 @@ export default function AllUsers(){
                   });                  
             }
         })
+    }
+
+    const confirmDesactiveUser = (documento, nombre, fechaIngresoPrograma) => {
+        swal({
+            title: `¿Estás seguro de ${fechaIngresoPrograma ? 'desactivar' : 'activar'} el usuario?`,
+            text: `¡Escribe la razón por la cual lo ${fechaIngresoPrograma ? 'desactivas!' : 'activas!'}`,
+            content: "input",
+            icon: "warning",
+            buttons: ['Cancelar', `Sí, ${fechaIngresoPrograma ? 'desactivar' : 'activar'}`],
+            dangerMode: fechaIngresoPrograma ? true : false,
+          })
+          .then(descripcion => {
+            if (!descripcion) throw null;
+            let documentoAprobador = user.sub.split("-");
+            let data = {
+                idUsuario: documento,
+                accion: fechaIngresoPrograma ? false : true,
+                nombreUsuario: nombre,
+                descripcion: descripcion,
+                documentoAprobador: parseInt(documentoAprobador[0])
+            };
+            data.token = token;
+            updateStateUser(data);
+          });
+    }
+
+    const updateStateUser = async (data) => {
+        const response = await updateStateUserApi(data);
+        if(response === true){
+            swal("Excelente! Información actualizada!", {
+                icon: "success",
+            })
+            .then((value) => {
+                window.location.replace("/admin/users")
+              });                      
+        }else{
+            swal("Opss! Ocurrió un error al actualizar la información!", {
+                icon: "error",
+            })
+            .then((value) => {
+                window.location.replace("/admin/users");
+              });                  
+        }
     }
 
     const onChangeUsers = async (e) => {
@@ -268,13 +311,21 @@ export default function AllUsers(){
 
                                 <div className="liB">
                                     {validatePrivilegio("ELIMINAR_USUARIO").length > 0 && (
-                                        <a className="enlace" onClick={() => confirmDeleteUser(item.documento)}>
+                                        <Link className="enlace" onClick={() => confirmDeleteUser(item.documento)}>
                                             <FontAwesomeIcon icon={faTrash} size="lg" color="#2D61A4" data-tip data-for = "boton3"
                                             /> <ReactTooltip id="boton3" place="bottom" type="dark" effect="float"> Eliminar </ReactTooltip>
-                                        </a>
+                                        </Link>
                                     )}
                                 </div>
-                                
+
+                                <div className="liB">
+                                    {validatePrivilegio("MODIFICAR_ESTADO_USUARIO").length > 0 && (
+                                        <Link className="enlace" onClick={() => confirmDesactiveUser(item.documento, item.nombre, item.fechaIngresoPrograma)}>
+                                            <FontAwesomeIcon icon={item.fechaIngresoPrograma ? faUserSlash : faUserCheck} size="lg" color="#2D61A4" data-tip data-for = "boton4"
+                                            /> <ReactTooltip id="boton4" place="bottom" type="dark" effect="float"> {item.fechaIngresoPrograma ? 'Desactivar' : 'Activar'} </ReactTooltip>
+                                        </Link>
+                                    )}
+                                </div>            
                             </div>
                         </div>                
                         ))}
