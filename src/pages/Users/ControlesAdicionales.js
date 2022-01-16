@@ -105,7 +105,7 @@ export default function ControlesAdicionales(){
 
                 <Row className="justify-content-md-center text-center">
                     <Col md={6} className="justify-content-center">
-                    <Link to={`/admin/users/addControlAdicional/${documento}/${optionsControl.psicosocial ? '1' : ''}${optionsControl.educacion ? ' 2' : ''}${optionsControl.promocion ? '2' : ''}`} className="btn btn-primary">Añadir {optionsControl.psicosocial && 'Control Psicosocial '} {optionsControl.educacion && 'Control de educación '} {optionsControl.promocion && 'Control de Promoción y Prevención '}<FontAwesomeIcon data-tip data-for="boton1" icon={faCommentMedical} size="lg" color="#2D61A4"/></Link> 
+                    <Link to={`/admin/users/addControlAdicional/${documento}/${optionsControl.psicosocial ? '1' : ''}${optionsControl.educacion ? '2' : ''}${optionsControl.promocion ? '3' : ''}`} className="btn btn-primary">Añadir {optionsControl.psicosocial && 'Control Psicosocial '} {optionsControl.educacion && 'Control de educación '} {optionsControl.promocion && 'Control de Promoción y Prevención '}<FontAwesomeIcon data-tip data-for="boton1" icon={faCommentMedical} size="lg" color="#2D61A4"/></Link> 
                     </Col>
                 </Row>
                         
@@ -135,7 +135,7 @@ export default function ControlesAdicionales(){
                 </Col>
                 <Col md={3} className="align-self-center justify-content-around">
                 <p style={{"color": "#2D61A4", "fontSize": 23}}><b>Acciones </b> <br/>
-                        <Link to="" className="btn btn-primary">
+                        <Link to={`/admin/users/editControlAdicional/${documento}/${optionsControl.psicosocial ? '1' : ''}${optionsControl.educacion ? ' 2' : ''}${optionsControl.promocion ? '3' : ''}/${control.id}`} className="btn btn-primary">
                             <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" className="bi bi-pen-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-tip data-for = "boton2">
                                 <path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
                             </svg>

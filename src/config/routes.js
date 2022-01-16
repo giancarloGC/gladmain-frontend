@@ -64,6 +64,7 @@ import NotFound404 from "../pages/NotFound404";
 import BitacoraUser from "../pages/Users/BitacoraUser"; 
 import ControlesAdicionales from "../pages/Users/ControlesAdicionales";
 import AddControlAdicional from "../pages/Users/AddControlAdicional";
+import EditControlAdicional from "../pages/Users/EditControlAdicional";
 
 const routes = [
     {
@@ -390,6 +391,11 @@ const routes = [
                 path: "/admin/users/addControlAdicional/:documento/:typeControl",
                 exact: true,
                 component: AddControlAdicional
+            },
+            {
+                path: "/admin/users/editControlAdicional/:documento/:typeControl/:idControl",
+                exact: true,
+                component: EditControlAdicional
             }
         ]
     }   

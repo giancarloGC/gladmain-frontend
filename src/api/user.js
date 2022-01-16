@@ -182,3 +182,36 @@ export function addControlAdicionalApi(data){
         .then(response => {return response})
         .catch(error => {return error});
 }
+
+export function getControlAdicionalByIdApi(data){
+    const url = `/api/control_adicional/CONSULTAR_CONTROL/${data.id}`;
+    const params = {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": data.token
+        },
+        method: "GET",
+    };
+
+    return fetch(url, params)
+        .then(response => {return response.json()})
+        .then(response => {return response})
+        .catch(error => {return error});
+}
+
+export function editControlAdicionalApi(data){
+    const url = `/api/control_adicional/ACTUALIZAR_CONTROL`;
+    const params = {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": data.token
+        },
+        method: "POST",
+        body: JSON.stringify(data)
+    };
+
+    return fetch(url, params)
+        .then(response => {return response.json()})
+        .then(response => {return response})
+        .catch(error => {return error});
+}
