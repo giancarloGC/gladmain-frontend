@@ -63,6 +63,7 @@ import AddControlVacMadre from "../pages/ControlVac/AddControlVacMadre";
 import NotFound404 from "../pages/NotFound404";
 import BitacoraUser from "../pages/Users/BitacoraUser"; 
 import ControlesAdicionales from "../pages/Users/ControlesAdicionales";
+import AddControlAdicional from "../pages/Users/AddControlAdicional";
 
 const routes = [
     {
@@ -384,6 +385,11 @@ const routes = [
                 path: "/admin/users/controlesAdicionales/:documento",
                 exact: true,
                 component: ControlesAdicionales
+            },
+            {
+                path: "/admin/users/addControlAdicional/:documento/:typeControl",
+                exact: true,
+                component: AddControlAdicional
             }
         ]
     }   

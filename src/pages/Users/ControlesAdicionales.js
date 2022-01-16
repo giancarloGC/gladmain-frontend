@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Container, ListGroup, Form, Col, Row, Spinner, Button } from "react-bootstrap";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faPrint, faHistory, faCommentMedical } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faPrint, faHistory, faCommentMedical, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import swal from 'sweetalert';
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { getRolesApi, deleteRolApi } from "../../api/rol";
@@ -64,6 +64,10 @@ export default function ControlesAdicionales(){
             typeControl: typeControl //El 1 es Psicosocial, el 2 educación, el 3 es promocion
         };
         let response = await listControlsAdicionalesApi(data); 
+        if(response.length > 0){
+            response = response.filter(user => user.idUsuario === parseInt(documento));
+            setListControls(response);
+        }
         setListControls(response);
     }
 
@@ -99,6 +103,11 @@ export default function ControlesAdicionales(){
                     <Form.Check type="checkbox" inline label="Control de Promoción y Prevención" checked={optionsControl.promocion} onChange={(e) => handleCheck(e, "check3")}/>
                 </center>
 
+                <Row className="justify-content-md-center text-center">
+                    <Col md={6} className="justify-content-center">
+                    <Link to={`/admin/users/addControlAdicional/${documento}/${optionsControl.psicosocial ? '1' : ''}${optionsControl.educacion ? ' 2' : ''}${optionsControl.promocion ? '2' : ''}`} className="btn btn-primary">Añadir {optionsControl.psicosocial && 'Control Psicosocial '} {optionsControl.educacion && 'Control de educación '} {optionsControl.promocion && 'Control de Promoción y Prevención '}<FontAwesomeIcon data-tip data-for="boton1" icon={faCommentMedical} size="lg" color="#2D61A4"/></Link> 
+                    </Col>
+                </Row>
                         
         {listControls.length === 0 && (
             <>

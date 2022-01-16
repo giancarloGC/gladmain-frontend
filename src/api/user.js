@@ -165,3 +165,20 @@ export function listControlsAdicionalesApi(data){
         .then(response => {return response})
         .catch(error => {return error})
 }
+
+export function addControlAdicionalApi(data){
+    const url = `/api/control_adicional/REGISTRAR_CONTROL`;
+    const params = {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": data.token
+        },
+        method: "POST",
+        body: JSON.stringify(data)
+    };
+
+    return fetch(url, params)
+        .then(response => {return response.json()})
+        .then(response => {return response})
+        .catch(error => {return error});
+}
