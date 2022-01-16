@@ -6,7 +6,7 @@ import { faPlus, faPrint, faHistory, faCommentMedical, faUserPlus } from '@forta
 import swal from 'sweetalert';
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { getRolesApi, deleteRolApi } from "../../api/rol";
-import { listControlsAdicionalesApi } from "../../api/user";
+import { listControlsAdicionalesApi, deleteControlAdicionalApi } from "../../api/user";
 import { TOKEN } from "../../utils/constans";
 import { useParams } from "react-router-dom";
 import useAuth from '../../hooks/useAuth'; //privilegios
@@ -69,6 +69,45 @@ export default function ControlesAdicionales(){
             setListControls(response);
         }
         setListControls(response);
+    }
+
+    const confirmDeleteControl = (id) => {
+        swal({
+            title: "¿Estás seguro de eliminar el control?",
+            text: "¡Una vez eliminado no se podrá recuperar!",
+            icon: "warning",
+            buttons: ['Cancelar', 'Sí, eliminar'],
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                deleteControl(id);
+            }
+          });
+    }
+
+    const deleteControl = (id) => {
+        const data = {
+            id: id,
+            token: token
+        }; 
+        deleteControlAdicionalApi(data).then(response => {
+            if(response === true){
+                swal("Excelente! Control eliminado!", {
+                    icon: "success",
+                })
+                .then((value) => {
+                    window.location.replace(`/admin/users/controlesAdicionales/${documento}`)
+                  });                      
+            }else{
+                swal("Opss! Ocurrió un error al eliminar el control!", {
+                    icon: "error",
+                })
+                .then((value) => {
+                    window.location.replace(`/admin/users/controlesAdicionales/${documento}`);
+                  });                  
+            }
+        })
     }
 
     if(validatePrivilegio("LISTAR_BITACORA_USUARIO").length === 0){
@@ -142,7 +181,7 @@ export default function ControlesAdicionales(){
                             <ReactTooltip id="boton2" place="bottom" type="dark" effect="float"> Editar </ReactTooltip>
                         </Link>
 
-                        <Link className="btn btn-secondary text-center mx-3">
+                        <Link className="btn btn-secondary text-center mx-3" onClick={() => confirmDeleteControl(control.id)}>
                             <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" className="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-tip data-for = "boton3">
                                 <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
                             </svg>

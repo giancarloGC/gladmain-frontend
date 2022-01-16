@@ -215,3 +215,19 @@ export function editControlAdicionalApi(data){
         .then(response => {return response})
         .catch(error => {return error});
 }
+
+export function deleteControlAdicionalApi(data){
+    const url = `/api/control_adicional/ELIMINAR_CONTROL/${data.id}`;
+    const params = {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": data.token
+        },
+        method: "GET"
+    }
+
+    return fetch(url, params)
+    .then(response => {return response.json()})
+    .then(response => {return response})
+    .catch(error => {return error});
+}
