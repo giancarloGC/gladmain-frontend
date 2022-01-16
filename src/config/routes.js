@@ -62,6 +62,7 @@ import calculateStateNutrition from "../pages/Calculator/CalculateStateNutrition
 import AddControlVacMadre from "../pages/ControlVac/AddControlVacMadre";
 import NotFound404 from "../pages/NotFound404";
 import BitacoraUser from "../pages/Users/BitacoraUser"; 
+import ControlesAdicionales from "../pages/Users/ControlesAdicionales";
 
 const routes = [
     {
@@ -378,6 +379,11 @@ const routes = [
                 path: "/admin/users/bitacoraUser/:documento",
                 exact: true,
                 component: BitacoraUser,
+            },
+            {
+                path: "/admin/users/controlesAdicionales/:documento",
+                exact: true,
+                component: ControlesAdicionales
             }
         ]
     }   

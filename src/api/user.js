@@ -149,3 +149,19 @@ export function bitacoraUserApi(data){
             .then(result => {return result})
             .catch(error => {return error});
 }
+
+export function listControlsAdicionalesApi(data){
+    const url = `/api/control_adicional/LISTAR_CONTROLES/${data.typeControl}`;
+    const params = {
+        headers: {
+            "Content-Type": "application/json",
+            'Authorization': data.token
+        },
+        method: "GET"
+    }
+
+    return fetch(url, params)
+        .then(response => {return response.json()})
+        .then(response => {return response})
+        .catch(error => {return error})
+}

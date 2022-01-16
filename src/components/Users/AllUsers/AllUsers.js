@@ -337,12 +337,10 @@ export default function AllUsers(){
                                     )}
                                 </div>
                                 <div className="liB">
-                                    {validatePrivilegio("MODIFICAR_ESTADO_USUARIO").length > 0 && (
-                                        <Link className="enlace" onClick={() => confirmDesactiveUser(item.documento, item.nombre, item.fechaIngresoPrograma)}>
-                                            <FontAwesomeIcon icon={faCommentMedical} size="lg" color="#2D61A4" data-tip data-for = "boton4"
-                                            /> <ReactTooltip id="boton4" place="bottom" type="dark" effect="float"> {item.fechaIngresoPrograma ? 'Desactivar' : 'Activar'} </ReactTooltip>
+                                        <Link className="enlace" to={`/admin/users/controlesAdicionales/${item.documento}`}>
+                                            <FontAwesomeIcon icon={faCommentMedical} size="lg" color="#2D61A4" data-tip data-for = "boton6"
+                                            /> <ReactTooltip id="boton6" place="bottom" type="dark" effect="float"> Controles adicionales </ReactTooltip>
                                         </Link>
-                                    )}
                                 </div>  
                             </div>
                         </div>                
