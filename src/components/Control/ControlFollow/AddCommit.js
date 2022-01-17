@@ -38,6 +38,7 @@ export default function AddCommit(props){
                   fechaCumplimiento: '',
                   nombreAuxiliarEnfermeria: '',
                   tipo: '',
+                  fechaTentativaCumplimiento: ''
                 }}
                 
                 validate={(valores) => {
@@ -56,6 +57,10 @@ export default function AddCommit(props){
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.nombreAuxiliarEnfermeria)){
                     errores.nombreAuxiliarEnfermeria = 'Nombre incorrecto, solo puedes escribir letras';
                   }
+
+                  if(!valores.fechaTentativaCumplimiento){
+                    errores.fechaTentativaCumplimiento = 'No se permiten campos vacíos'
+                  }
                   return errores;
                 }}
 
@@ -69,6 +74,7 @@ export default function AddCommit(props){
                     fechaCumplimiento: valores.fechaCumplimiento,
                     nombreAuxiliarEnfermeria: valores.nombreAuxiliarEnfermeria,
                     tipo: checkeds.radio ? "Compromiso por nuevo factor de riesgo" : "Compromiso cumplido que no se mantuvo",
+                    fechaTentativaCump: valores.fechaTentativaCumplimiento
                   }
 
                   console.log(formData);
@@ -214,6 +220,25 @@ export default function AddCommit(props){
                         </Col>
                         </Row>
                     </Form.Group>
+
+                    <Form.Group as={Row} className="mt-1">
+                    <center>
+                    <Form.Label column sm="3"><b style={{fontSize: "16px"}}>Fecha tentativa cumplimiento</b></Form.Label>
+                    </center>
+                    <Col sm={12}>
+                        <InputGroup hasValidation>
+                        <Form.Control type="date" size="xs" id="fechaTentativaCumplimiento" name="fechaTentativaCumplimiento" 
+                                 value={values.fechaTentativaCumplimiento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaTentativaCumplimiento && touched.fechaTentativaCumplimiento}
+                                 isValid={!errors.fechaTentativaCumplimiento && touched.fechaTentativaCumplimiento}
+                              />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.fechaTentativaCumplimiento}
+                            </Form.Control.Feedback>
+                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                        </InputGroup>
+                     </Col>
+                    </Form.Group>
+
 
                     <div className="d-grid gap-2">
                        <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>

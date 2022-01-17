@@ -57,6 +57,7 @@ export default function ListCommitment(){
   useEffect(() => {
     (async () => {
         const response = await getCompByUserApi(documento, token);
+        console.log(response);
         setLoading(false);
         if(response.length > 0){
             let compromisosBySegui = response.filter(comp => comp.idSeguimientoSalud.toString() === idSeg );
@@ -205,14 +206,17 @@ if(validatePrivilegio("LISTAR_COMPROMISOS").length === 0 ){
 
                    <Container>
                    <Row >
-                       <Col sm={3} className="align-self-center">
+                       <Col sm={2} className="align-self-center">
                            <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Inicio</b> <br/>{dateFormat(item.fechaCompromiso)}</p>
                        </Col>
                        <Col sm={3} className="align-self-center">
                            <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Nombre </b> <br/>{item.nombre}</p>
                        </Col>
-                       <Col sm={3} className="align-self-center">
+                       <Col sm={2} className="align-self-center">
                            <p style={{"color": "#2D61A4", "fontSize": 19.2}}><b>Fin</b> <br/>{dateFormat(item.fechaCumplimiento)}</p>
+                       </Col>
+                       <Col sm={2} className="align-self-center">
+                           <p style={{"color": "#2D61A4", "fontSize": 19.2}}><b>Tentativa cumplimiento</b> <br/>{item.fechaTentativaCump ? dateFormat(item.fechaTentativaCump) : "Ninguna"}</p>
                        </Col>
                        <Col sm={3} className="align-self-right">
                             <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Acciones</b> <br/>
