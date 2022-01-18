@@ -33,7 +33,7 @@ export default function FormEdit(props){
   const [ loaded, setLoaded] = useState(false);
 
     var loading = true;
-
+console.log(usuario);
     useEffect(() => {
       (async () => {
             const responseRoles = await getRolesApi();
@@ -260,7 +260,8 @@ export default function FormEdit(props){
                           direccion: valores.direccion,
                           correoElectronico: valores.correoElectronico,
                           clave: valores.clave,
-                          token: token
+                          token: token,
+                          fechaIngresoPrograma: valores.fechaIngresoPrograma
                         }
                         updateUserApi(data).then(response => {
                           setShowSpinner(true);
@@ -287,6 +288,25 @@ export default function FormEdit(props){
                       } = props;
                       return (   
                       <Form onSubmit={handleSubmit}>
+                      <Form.Group as={Row} className="mb-3 mt-3">
+                        <Col md={12}>
+                          <InputGroup hasValidation>
+                            <Form.Label column sm={5}>
+                              <h1 style={{fontSize: "20px", color:"#0084d2"}} className="mt-2">Fecha inclusión</h1>
+                            </Form.Label>
+                            <Form.Control type="date" size="xs" id="fechaIngresoPrograma" name="fechaIngresoPrograma" placeholder="Fecha inclusión"
+                              defaultValue={dateFormat(usuario.fechaIngresoPrograma)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaIngresoPrograma && touched.fechaIngresoPrograma}
+                              isValid={!errors.fechaIngresoPrograma && touched.fechaIngresoPrograma}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                  {errors.fechaIngresoPrograma}
+                            </Form.Control.Feedback>
+                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                          </InputGroup>
+                        </Col>
+                      </Form.Group>
+
+
                           <Form.Group as={Row} className="mb-1 mt-3">
                           <Form.Label column sm="2">
                           <h5 style={{fontSize:'17px'}}>Tipo documento</h5></Form.Label>
