@@ -30,6 +30,7 @@ export default function BitacoraUser(){
                 documento: documento
             };
             const response = await bitacoraUserApi(data);
+            console.log(response);
             console.log(response.length);
             setLoading(false);
             setRolesApi(response);

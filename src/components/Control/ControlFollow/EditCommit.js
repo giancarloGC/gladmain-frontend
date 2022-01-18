@@ -17,7 +17,7 @@ export default function EditCommit(props){
   const token = localStorage.getItem(TOKEN);
   const [ showSpinner, setShowSpinner ] = useState(false);
  
-  console.log(control.tipo);
+  console.log(control);
   console.log(checkeds);
   
 
@@ -50,6 +50,7 @@ export default function EditCommit(props){
                   fechaCumplimiento: control.fechaCumplimiento,
                   nombreAuxiliarEnfermeria: control.nombreAuxiliarEnfermeria,
                   tipo: control.tipo,
+                  fechaTentativaCump: control.fechaTentativaCump ? control.fechaTentativaCump : '' 
                 }}
                 
                 validate={(valores) => {
@@ -76,6 +77,7 @@ export default function EditCommit(props){
                     fechaCumplimiento: valores.fechaCumplimiento,
                     nombreAuxiliarEnfermeria: valores.nombreAuxiliarEnfermeria,
                     tipo: checkeds.radio ? "Compromiso por nuevo factor de riesgo" : "Compromiso cumplido que no se mantuvo",
+                    fechaTentativaCump: valores.fechaTentativaCump
                   }
                   console.log(formData);
                   //resetForm();
@@ -312,6 +314,24 @@ export default function EditCommit(props){
                             <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
                         </InputGroup>
                         </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row} className="mt-1">
+                    <center>
+                    <Form.Label column sm="3"><b style={{fontSize: "16px"}}>Fecha tentativa cumplimiento</b></Form.Label>
+                    </center>
+                    <Col sm={12}>
+                        <InputGroup hasValidation>
+                        <Form.Control type="date" size="xs" id="fechaTentativaCump" name="fechaTentativaCump" 
+                                 defaultValue={dateFormat(control.fechaTentativaCump)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaTentativaCump && touched.fechaTentativaCump}
+                                 isValid={!errors.fechaTentativaCump && touched.fechaTentativaCump}
+                              />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.fechaTentativaCump}
+                            </Form.Control.Feedback>
+                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                        </InputGroup>
+                     </Col>
                     </Form.Group>
 
                     <div className="d-grid gap-2">

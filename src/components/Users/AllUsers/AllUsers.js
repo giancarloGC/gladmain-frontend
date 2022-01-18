@@ -22,6 +22,7 @@ import AnimationAuthorization from "../../../assets/animations/withoutAuthorizat
 import AnimationErrorServer from "../../../assets/animations/working-server-animation.json";
 import AnimationNotFindSearch from "../../../assets/animations/notFindSearch.json";
 import useAuth from '../../../hooks/useAuth';
+import moment from 'moment';
 
 import "./AllUsers.scss";
 
@@ -135,7 +136,8 @@ export default function AllUsers(){
                 accion: fechaIngresoPrograma ? false : true,
                 nombreUsuario: nombre,
                 descripcion: descripcion,
-                documentoAprobador: parseInt(documentoAprobador[0])
+                documentoAprobador: parseInt(documentoAprobador[0]),
+                fechaCambio: moment()
             };
             data.token = token;
             updateStateUser(data);
