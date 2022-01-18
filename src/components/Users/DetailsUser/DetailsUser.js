@@ -37,6 +37,7 @@ let dateFechaNaci = moment(usuario.fechaNacimiento);
   
   useEffect(() => {
     getUserByIdApi(documento, token).then(response => {
+      console.log(response);
         setUser(response);
         setUserLoaded(true);
         setLoaded(true);
@@ -169,6 +170,36 @@ let dateFechaNaci = moment(usuario.fechaNacimiento);
             </Card.Body>
             </Card>
             </center>
+
+            <Row>
+            <Col md={1}> </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem style={{"fontSize": "16px", "color":"#0084d2", "fontWeight":"bold" }}>Fecha de registro:</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem style={{"fontSize": "16px", "fontWeight":"bold"}}>{usuario.fechaRegistro ? formatedDate(usuario.fechaRegistro) : 'Ninguna'}</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={1}> </Col>
+            </Row>
+
+            <Row>
+            <Col md={1}> </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem style={{"fontSize": "16px", "color":"#0084d2", "fontWeight":"bold" }}>Fecha de inclusión:</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem style={{"fontSize": "16px", "fontWeight":"bold"}}>{usuario.fechaIngresoPrograma ? formatedDate(usuario.fechaIngresoPrograma) : 'Ninguna'}</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={1}> </Col>
+            </Row>
 
             <Row>
             <Col md={1}> </Col>
