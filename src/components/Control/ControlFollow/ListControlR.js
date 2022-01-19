@@ -99,7 +99,7 @@ export default function ListControlR(props){
                                 <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Entidad Remisión</b> <br/>{item.entidadRemitida}</p>
                             </Col>
                             <Col sm={4} className="align-self-center" >
-                                <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Aux. Enfermeria</b><br/>{item.nombreAuxEnfermero}</p>
+                                <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Profesional encargado</b><br/>{item.nombreAuxEnfermero}</p>
                             </Col>
                             <Col sm={3} className="align-self-right">
                                 <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Acciones</b> <br/>

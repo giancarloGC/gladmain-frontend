@@ -301,10 +301,10 @@ export default function EditCommit(props){
                         </Form.Group>
 
                         <Form.Group as={Row} className="mt-4">
-                        <Form.Label column sm="4"><h5 style={{fontSize: "16px"}}>Nombre Aux. Enfermero(a)</h5></Form.Label>
+                        <Form.Label column sm="4"><h5 style={{fontSize: "16px"}}>Profesional encargado</h5></Form.Label>
                         <Col>
                         <InputGroup hasValidation>
-                        <Form.Control type="text" placeholder="nombre Auxiliar enfermero(a)" size="xs" id="nombreAuxiliarEnfermeria" name="nombreAuxiliarEnfermeria" 
+                        <Form.Control type="text" placeholder="Nombre profesional" size="xs" id="nombreAuxiliarEnfermeria" name="nombreAuxiliarEnfermeria" 
                                defaultValue={control.nombreAuxiliarEnfermeria} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreAuxiliarEnfermeria && touched.nombreAuxiliarEnfermeria}
                                isValid={!errors.nombreAuxiliarEnfermeria && touched.nombreAuxiliarEnfermeria}
                             />

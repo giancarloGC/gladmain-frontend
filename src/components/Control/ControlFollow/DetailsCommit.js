@@ -131,10 +131,10 @@ export default function DetailsCommit(props){
                                  value={dateFormat(control.fechaCumplimiento)} onChange={handleChange} onBlur={handleBlur} disabled
                               /> </InputGroup>
                         </Col>
-                        <Form.Label column sm="3"><h5 style={{fontSize: "16px"}}>Nombre Aux. Enfermero(a)</h5></Form.Label>
+                        <Form.Label column sm="3"><h5 style={{fontSize: "16px"}}>Profesional encargado</h5></Form.Label>
                         <Col>
                         <InputGroup hasValidation>
-                        <Form.Control type="text" placeholder="nombre Auxiliar enfermero(a)" size="xs" id="nombreAuxiliarEnfermeria" name="nombreAuxiliarEnfermeria" 
+                        <Form.Control type="text" placeholder="Nombre profesional" size="xs" id="nombreAuxiliarEnfermeria" name="nombreAuxiliarEnfermeria" 
                                value={control.nombreAuxiliarEnfermeria} onChange={handleChange} onBlur={handleBlur} disabled
                             />
                         </InputGroup>

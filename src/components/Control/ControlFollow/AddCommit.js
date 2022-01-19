@@ -205,10 +205,10 @@ export default function AddCommit(props){
                           </InputGroup>
                         </Col>
 
-                        <Form.Label column sm="2"><h5 style={{fontSize: "16px"}}>Nombre Aux. Enfermero(a)</h5></Form.Label>
+                        <Form.Label column sm="2"><h5 style={{fontSize: "16px"}}>Profesional encargado</h5></Form.Label>
                         <Col md={4}>
                         <InputGroup hasValidation>
-                        <Form.Control type="text" placeholder="nombre Auxiliar enfermero(a)" size="xs" id="nombreAuxiliarEnfermeria" name="nombreAuxiliarEnfermeria" 
+                        <Form.Control type="text" placeholder="Nombre profesional" size="xs" id="nombreAuxiliarEnfermeria" name="nombreAuxiliarEnfermeria" 
                                value={values.nombreAuxiliarEnfermeria} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreAuxiliarEnfermeria && touched.nombreAuxiliarEnfermeria}
                                isValid={!errors.nombreAuxiliarEnfermeria && touched.nombreAuxiliarEnfermeria}
                             />

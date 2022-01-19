@@ -363,10 +363,10 @@ export default function EditControlR(props){
 
                     <Form.Group as={Row} className="mt-4" style={{ "marginLeft":"6px"}}>
                         <Form.Label column sm="5">
-                        <h5 style={{fontSize: "16px"}} className="mt-1">Nombre Auxiliar de Enfermeria </h5> </Form.Label>
+                        <h5 style={{fontSize: "16px"}} className="mt-1">Profesional encargado </h5> </Form.Label>
                         <Col >
                         <InputGroup hasValidation>
-                        <Form.Control type="text" placeholder="Nombre del Enfermero(a)" size="xs" id="nombreAuxEnfermero" name="nombreAuxEnfermero" 
+                        <Form.Control type="text" placeholder="Nombre del profesional" size="xs" id="nombreAuxEnfermero" name="nombreAuxEnfermero" 
                                defaultValue={infoRemi.nombreAuxEnfermero} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.nombreAuxEnfermero && touched.nombreAuxEnfermero}
                                isValid={!errors.nombreAuxEnfermero && touched.nombreAuxEnfermero}
                             />

@@ -56,7 +56,7 @@ export default function ListOtherCommit(){
                         <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Tipo</b> <br/></p>
                     </Col>
                     <Col md={2} className="row justify-content-center align-self-center">
-                        <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Aux. Enfermer@</b> <br/></p>
+                        <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Profesional encargado</b> <br/></p>
                     </Col>
                     <Col md={1} className="row justify-content-center align-self-center">
                         <p style={{"color": "#2D61A4", "fontSize": 20}}><b>Fecha Fin</b> <br/></p>
