@@ -423,10 +423,51 @@ console.log(usuario);
                           <h5 style={{fontSize:'17px'}}>Municipio</h5></Form.Label>
                           <Col sm="4">
                             <InputGroup hasValidation>
-                                <Form.Control type="text" placeholder="Dígita aquí el municipio" size="xs" id="municipio" name="municipio" 
-                                defaultValue={usuario.municipio} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.municipio && touched.municipio}
-                                isValid={!errors.municipio && touched.municipio}
-                                />
+                                <Form.Select size="xs" id="municipio" name="municipio" defaultValue={usuario.municipio} 
+                            onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.municipio && touched.municipio}
+                            isValid={!errors.municipio && touched.municipio}
+                            >
+                                <option disabled>Selecciona el municipio</option>
+                                <option value="Cúcuta">Cúcuta</option>                                
+                                <option value="El Zulia">El Zulia</option>
+                                <option value="Los Patios">Los Patios</option>
+                                <option value="Puerto Santander">Puerto Santander</option>
+                                <option value="San Cayetano">San Cayetano</option>
+                                <option value="Villa del Rosario">Villa del Rosario</option>
+                                <option value="El Tarra">El Tarra</option>
+                                <option value="Sardinata">Sardinata</option>
+                                <option value="Tibú">Tibú</option>
+                                <option value="Arboledas">Arboledas</option>
+                                <option value="Cucutilla">Cucutilla</option>
+                                <option value="Gramalote">Gramalote</option>
+                                <option value="Lourdes">Lourdes</option>
+                                <option value="Salazar de las Palmas">Salazar de las Palmas</option>
+                                <option value="Santiago">Santiago</option>
+                                <option value="Villa Caro">Villa Caro</option>
+                                <option value="Ábrego">Ábrego</option>
+                                <option value="Cáchira">Cáchira</option>
+                                <option value="Convención">Convención</option>
+                                <option value="El Carmén">El Carmén</option>
+                                <option value="Hacarí">Hacarí</option>
+                                <option value="La Esperanza">La Esperanza</option>
+                                <option value="La Playa de Belén">La Playa de Belén</option>
+                                <option value="Ocaña">Ocaña</option>
+                                <option value="San Calixto">San Calixto</option>
+                                <option value="Teorama">Teorama</option>
+                                <option value="Cácota">Cácota</option>
+                                <option value="Chitagá">Chitagá</option>
+                                <option value="Mutiscua">Mutiscua</option>
+                                <option value="Pamplona">Pamplona</option>
+                                <option value="Pamplonita">Pamplonita</option>
+                                <option value="Santo Domingo de Silos">Santo Domingo de Silos</option>
+                                <option value="Bochalema">Bochalema</option>
+                                <option value="Chinácota">Chinácota</option>
+                                <option value="Durania">Durania</option>
+                                <option value="Herrán">Herrán</option>
+                                <option value="Labateca">Labateca</option>
+                                <option value="Ragonvalia">Ragonvalia</option>
+                                <option value="Toledo">Toledo</option>
+                            </Form.Select>
                                 <Form.Control.Feedback type="invalid">
                                     {errors.municipio}
                                 </Form.Control.Feedback>

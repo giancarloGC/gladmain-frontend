@@ -56,8 +56,8 @@ export default function AllUserC (){
                     setUsersApi(dataUser);
                 }
             }else{
-                const response = await listUsersByRol(rolUser, token);
-            
+                let response = await listUsersByRol(rolUser, token);
+            console.log(response);
                 if(response.status === 403){
                     setLoading(false);
                     setAuthorization(false);
@@ -65,6 +65,11 @@ export default function AllUserC (){
                     setLoading(false);
                     setErrorServer(true);
                 }else{
+                    const documentoUserLoged = user.sub.split("-");
+                    const responseDataLogued = await getUserByIdApi(documentoUserLoged[0], token);
+                    response = await response.filter(user => user.municipio === responseDataLogued.municipio);
+                    response = await response.filter(user => user.fechaIngresoPrograma !== null);
+                    console.log(response);
                     setLoading(false);
                     setAllUsersSaved(response);
                     setUsersApi(response);

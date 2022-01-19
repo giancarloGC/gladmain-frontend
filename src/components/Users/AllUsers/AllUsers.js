@@ -13,7 +13,7 @@ import ImageWomen from "./../../../assets/img/women.png";
 import ImageNino from "./../../../assets/img/nino.png";
 import ImageNina from "./../../../assets/img/nina.png";
 
-import { getUserApi, deleteUserApi, getUsersInactivesApi, updateStateUserApi } from "../../../api/user";
+import { getUserByIdApi, getUserApi, deleteUserApi, getUsersInactivesApi, updateStateUserApi } from "../../../api/user";
 import { TOKEN } from "../../../utils/constans";
 
 import Lottie from 'react-lottie';
@@ -44,18 +44,29 @@ export default function AllUsers(){
     
     useEffect(() => {
         (async () => {
-            const response = await getUserApi(token);
-            if(response.status === 403){
+            const documentoUserLoged = user.sub.split("-");
+            const responseDataLogued = await getUserByIdApi(documentoUserLoged[0], token);
+            if(responseDataLogued.status === 403){
                 setLoading(false);
                 setAuthorization(false);
-            }else if(response.status === 500){
+            }else if(responseDataLogued.status === 500){
                 setLoading(false);
                 setErrorServer(true);
             }else{
-                setLoading(false);
-                setAllUsersSaved(response);
-                activesAnimation(true);
-                setUsersApi(response);
+                let response = await getUserApi(token);
+                if(response.status === 403){
+                    setLoading(false);
+                    setAuthorization(false);
+                }else if(response.status === 500){
+                    setLoading(false);
+                    setErrorServer(true);
+                }else{
+                    response = response.filter(user => user.municipio === responseDataLogued.municipio);
+                    setLoading(false);
+                    setAllUsersSaved(response);
+                    activesAnimation(true);
+                    setUsersApi(response);
+                };
             };
         })();
     }, []);
@@ -181,7 +192,7 @@ export default function AllUsers(){
         }
     }
 
-    const updateUsersList = (responseListUsers) => {
+    const updateUsersList = async (responseListUsers) => {
         if(responseListUsers.status === 403){
             setLoading(false);
             setAuthorization(false);
@@ -190,6 +201,9 @@ export default function AllUsers(){
             setErrorServer(true);
         }else{
             setLoading(false);
+            const documentoUserLoged = user.sub.split("-");
+            const responseDataLogued = await getUserByIdApi(documentoUserLoged[0], token);
+            responseListUsers = responseListUsers.filter(user => user.municipio === responseDataLogued.municipio);
             setAllUsersSaved(responseListUsers);
             setUsersApi(responseListUsers);
         };
