@@ -140,6 +140,24 @@ export default function DetailsCommit(props){
                         </InputGroup>
                         </Col>
                     </Form.Group><br/>
+
+                    <Form.Group as={Row} className="mt-1">
+                    <center>
+                    <Form.Label column sm="3"><b style={{fontSize: "16px"}}>Fecha tentativa cumplimiento</b></Form.Label>
+                    </center>
+                    <Col sm={12}>
+                        <InputGroup hasValidation>
+                        <Form.Control type="date" size="xs" id="fechaTentativaCumplimiento" disabled name="fechaTentativaCumplimiento" 
+                                 defaultValue={dateFormat(control.fechaTentativaCump)} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaTentativaCumplimiento && touched.fechaTentativaCumplimiento}
+                                 isValid={!errors.fechaTentativaCumplimiento && touched.fechaTentativaCumplimiento}
+                              />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.fechaTentativaCumplimiento}
+                            </Form.Control.Feedback>
+                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                        </InputGroup>
+                     </Col>
+                    </Form.Group>
                     </Container>
                     </Form>
                             );
