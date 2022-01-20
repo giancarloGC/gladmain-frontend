@@ -4,7 +4,7 @@ import {BrowserRouter as Route, Switch, Redirect, Link} from "react-router-dom";
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSyringe, faChartLine, faPhoneAlt, faFileMedicalAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSyringe, faCommentMedical, faChartLine, faPhoneAlt, faFileMedicalAlt } from '@fortawesome/free-solid-svg-icons';
 import { faNutritionix } from '@fortawesome/free-brands-svg-icons';
 
 import ImageNino from "./../../../assets/img/nino.png";
@@ -273,6 +273,13 @@ export default function AllUserC (){
                                                     </Link>
                                                 )}
                                                 </div>
+
+                                                <div className="liB">
+                                        <Link className="enlace" to={`/admin/users/controlesAdicionales/${item.documento}`}>
+                                            <FontAwesomeIcon icon={faCommentMedical} size="lg" color="#2D61A4" data-tip data-for = "boton6"
+                                            /> <ReactTooltip id="boton6" place="bottom" type="dark" effect="float"> Controles adicionales </ReactTooltip>
+                                        </Link>
+                                </div>  
                                             </div>
                                         </div>
                                     )

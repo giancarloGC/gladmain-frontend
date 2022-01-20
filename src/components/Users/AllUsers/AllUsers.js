@@ -341,9 +341,7 @@ export default function AllUsers(){
                                             /> <ReactTooltip id="boton4" place="bottom" type="dark" effect="float"> {item.fechaIngresoPrograma ? 'Desactivar' : 'Activar'} </ReactTooltip>
                                         </Link>
                                     )}
-                                </div>             
-                            </div>
-                            <div className="sci2">
+                                </div> 
                                 <div className="liB">
                                     {validatePrivilegio("LISTAR_BITACORA_USUARIO").length > 0 && (
                                         <Link className="enlace" to={`/admin/users/bitacoraUser/${item.documento}`}>
@@ -351,13 +349,10 @@ export default function AllUsers(){
                                             /> <ReactTooltip id="boton5" place="bottom" type="dark" effect="float"> Bitacora </ReactTooltip>
                                         </Link>
                                     )}
-                                </div>
-                                <div className="liB">
-                                        <Link className="enlace" to={`/admin/users/controlesAdicionales/${item.documento}`}>
-                                            <FontAwesomeIcon icon={faCommentMedical} size="lg" color="#2D61A4" data-tip data-for = "boton6"
-                                            /> <ReactTooltip id="boton6" place="bottom" type="dark" effect="float"> Controles adicionales </ReactTooltip>
-                                        </Link>
-                                </div>  
+                                </div>            
+                            </div>
+                            <div className="sci2">
+
                             </div>
                         </div>                
                         ))}

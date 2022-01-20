@@ -286,7 +286,7 @@
 
 .containerP .card .sci .liB{
     list-style: none;
-    margin: 0 10px;
+    margin: 0 -10px;
     transform: translateY(40px);
     transition: 0.5s;
     opacity: 0;
@@ -295,6 +295,7 @@
 .containerP .card:hover .sci .liB{
     transform: translateY(2px);
     opacity: 1;
+    margin: 0 5px;
 }
 
 .containerP .card .sci .liB .enlace {
