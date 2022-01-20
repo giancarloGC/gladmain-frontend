@@ -14,6 +14,7 @@ import "./LayoutAdmin.scss";
 import { getUserByIdApi, listUsersByRol } from "../api/user";
 import { getControlNutriApi, getControlCyDApi } from "../api/controls";
 import { TOKEN } from "../utils/constans";
+import { getCompByUserApi } from "../api/commitment";
 
 import useAuth from '../hooks/useAuth';
 
@@ -45,6 +46,11 @@ export default function LayoutAdmin(props){
                             await resolveAlerts();
                         }else if(roleUser[1] === "2"){
                             await resolveControl(); 
+                            let documento = user.sub.split("-");
+                            await resolveCompromisos(documento);
+                        }else if(roleUser[1] === "4"){
+                            let documento = user.sub.split("-");
+                            await resolveCompromisos(documento);
                         }
 
                         setroleUsuario(roleUser[1]);
@@ -71,8 +77,6 @@ export default function LayoutAdmin(props){
     }
 
     const consultIntantes = async () => {
-        console.log("start");
-
         const responseUsers = await listUsersByRol("INFANTE", token);
         let total = 0;
         await Promise.all(responseUsers.map(async (userInfant, index) => {
@@ -124,8 +128,6 @@ export default function LayoutAdmin(props){
         const ultimoC = controls.sort(function (a, b){
             return (b.id - a.id)
         });
-
-        console.log(ultimoC);
 
         if (controls.length !== 0 ) {
             let dateControlU = moment(ultimoC[0].proximoControl);
@@ -191,6 +193,30 @@ export default function LayoutAdmin(props){
           </Popover.Body>
         </Popover>
       );
+
+    const resolveCompromisos = async (documento) => {
+        const responseCompromisos = await getCompByUserApi(documento[0], token);
+        const dateCurrently = moment();
+        const notifi = responseCompromisos.filter(comp => {
+            if(comp.fechaTentativaCump){
+                let datetentative = moment(comp.fechaTentativaCump);
+                return dateCurrently.diff(datetentative, 'days') > 0;
+            };
+        });
+        if(notifi.length > 0){
+            toast.warn(`¡No has cumplido tus compromisos asignados!`, {
+                position: "bottom-right",
+                autoClose: 10000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark"
+            });
+            setShowAlert(true);
+        }
+    }
 
     return (
         <>
