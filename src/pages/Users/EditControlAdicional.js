@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner} from "react-bootstrap";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner, ListGroup, ListGroupItem, Card} from "react-bootstrap";
 import { Formik, Field, ErrorMessage } from "formik";
-import { getControlAdicionalByIdApi, editControlAdicionalApi } from "../../api/user";
+import { getControlAdicionalByIdApi, editControlAdicionalApi, getUserByIdApi } from "../../api/user";
 import { TOKEN } from "../../utils/constans";
 import { getPrivilegiosApi } from "../../api/consultar_privilegios";
 import { useParams } from "react-router-dom";
@@ -9,6 +9,10 @@ import useAuth from '../../hooks/useAuth'; //privilegios
 import swal from 'sweetalert';
 import Lottie from 'react-lottie';
 import AnimationAuthorization from "../../assets/animations/withoutAuthorization.json";
+import ImageMen from "../../assets/img/men.png";
+import ImageWomen from "../../assets/img/women.png";
+import ImageNino from "../../assets/img/nino.png";
+import ImageNina from "../../assets/img/nina.png";
 
 export default function EditControlAdicional(){
     const { documento, typeControl, idControl } = useParams();
@@ -30,6 +34,8 @@ export default function EditControlAdicional(){
     const [ showSpinner, setShowSpinner ] = useState(false);
     const [ authorization, setAuthorization ] = useState(true);
     const [ loaded, setLoaded ] = useState(false);
+    const [usuario, setUser] = useState({});
+    const [ userLoaded, setUserLoaded ] = useState(false);
     
     const validatePrivilegio = (privilegio) => {
         return user.authorities.filter(priv => priv === privilegio);
@@ -37,6 +43,11 @@ export default function EditControlAdicional(){
 
     useEffect(() => {
         (async () => {
+            getUserByIdApi(documento, token).then(response => {
+                console.log(response);
+                  setUser(response);
+            });
+
             const data = {
                 token: token,
                 id: parseInt(idControl)
@@ -47,6 +58,12 @@ export default function EditControlAdicional(){
         })();
     }, []);
     
+    
+    const formatedDate = (date) => {
+        let newDate = date.split("T");
+       return newDate[0];
+    };
+
     const handleCheck = (e, item) => {
         let privilegio = {
             id: item.id,
@@ -141,6 +158,131 @@ export default function EditControlAdicional(){
                         } = props;
                         return (   
                         <Form onSubmit={handleSubmit}>
+
+<center>
+            <Card style={{width: 'auto', height: 'auto'}} className='mt-3' >
+            {usuario.edad > 216 ? 
+                            <Card.Img variant="top" src={usuario.sexo === "FEMENINO" ? ImageWomen : ImageMen} style={{"max-width": "200px"}} roundedCircle className="row justify-content-center align-self-center mt-3"/>
+                        :
+                        <Card.Img variant="top" src={usuario.sexo === "FEMENINO" ? ImageNina : ImageNino} style={{"max-width": "200px"}} roundedCircle className="row justify-content-center align-self-center mt-3"/>
+                            
+                    }            
+
+            <Card.Body style={{backgroundColor: '#0084d2'}}>
+            <Card.Title className="text-center" style={{"fontWeight":"bold", "color":"white"}}> {usuario.nombre}</Card.Title>
+            </Card.Body>
+            </Card>
+            </center>
+
+            <Row>
+            <Col md={1}> </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem style={{"fontSize": "16px", "color":"#0084d2", "fontWeight":"bold" }}>Fecha de inclusión:</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem style={{"fontSize": "16px", "fontWeight":"bold"}}>{usuario.fechaIngresoPrograma ? formatedDate(usuario.fechaIngresoPrograma) : 'Ninguna'}</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={1}> </Col>
+            </Row>
+
+            <Row>
+            <Col md={1}> </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "color":"#0084d2", "fontWeight":"bold" }}>Numero de Documento:</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+            <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{usuario.documento}</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={1}> </Col>
+            </Row>
+
+            <Row>
+            <Col md={1}> </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "color":"#0084d2", "fontWeight":"bold" }}>Fecha de Nacimiento:</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{formatedDate(usuario.fechaNacimiento)}</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={1}> </Col>
+            </Row>
+
+            <Row>
+            <Col md={1}> </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "color":"#0084d2", "fontWeight":"bold" }}>Edad:</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+               <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{`${usuario.edad} meses`}</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={1}> </Col>
+            </Row>
+
+            <Row>
+            <Col md={1}> </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "color":"#0084d2", "fontWeight":"bold" }}>Celular:</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{usuario.celular}</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={1}> </Col>
+            </Row>
+
+            <Row>
+            <Col md={1}> </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "color":"#0084d2", "fontWeight":"bold" }}>Municipio:</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{usuario.municipio}</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={1}> </Col>
+            </Row>
+
+            <Row>
+            <Col md={1}> </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "color":"#0084d2", "fontWeight":"bold" }}>Dirección:</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={5} className='mt-2'>
+            <ListGroup className="list-group-flush ">
+              <ListGroupItem className='mt-1' style={{"fontSize": "16px", "fontWeight":"bold"}}>{usuario.direccion}</ListGroupItem>
+            </ListGroup>
+            </Col>
+            <Col md={1}> </Col>
+            </Row>
+
+
+
+
+
                             <Form.Group className="mb-3">
                             <InputGroup hasValidation>
                                 <Form.Control type="text" placeholder="Dígita aquí el nombre del proceso" size="lg" id="name" name="name" 

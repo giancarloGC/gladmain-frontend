@@ -6,7 +6,7 @@ import { faPlus, faPrint, faHistory, faCommentMedical, faUserPlus } from '@forta
 import swal from 'sweetalert';
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import { getRolesApi, deleteRolApi } from "../../api/rol";
-import { listControlsAdicionalesApi, deleteControlAdicionalApi } from "../../api/user";
+import { listControlsAdicionalesApi, getUserByIdApi, deleteControlAdicionalApi } from "../../api/user";
 import { TOKEN } from "../../utils/constans";
 import { useParams } from "react-router-dom";
 import useAuth from '../../hooks/useAuth'; //privilegios
@@ -21,10 +21,13 @@ export default function ControlesAdicionales(){
     const [ optionsControl, setOptionsControl ] = useState({ psicosocial: true, educacion: false, promocion: false });
     const [ loading, setLoading ] = useState(true);
     const { user } = useAuth(); //privilegios
+    const [ infoUser, setInfoUser ] = useState({nombre : ''});
     const [ authorization, setAuthorization ] = useState(true);
 
     useEffect(() => {
         (async () => {
+            const responseUser = await getUserByIdApi(documento, token);
+            setInfoUser({nombre: responseUser.nombre});
             const data = {
                 token: token,
                 typeControl: 1 //El 1 es Psicosocial
@@ -122,7 +125,7 @@ export default function ControlesAdicionales(){
     }else{
         return(
             <Container className="justify-content-center">
-                <h1 className="text-center">Controles adicionales 
+                <h1 className="text-center">Controles adicionales de {infoUser.nombre && infoUser.nombre}
                     <FontAwesomeIcon icon={faCommentMedical} size="lg" color="#2D61A4"
                         data-tip data-for = "boton1" />
                 </h1> 
