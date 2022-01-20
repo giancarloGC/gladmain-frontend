@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner, Table} from "react-bootstrap";
+import { Container, Row, Col, Button, Form, InputGroup, Alert, Spinner, Table, Modal} from "react-bootstrap";
 import {BrowserRouter as Router, Route, Switch, Redirect, Link, useParams} from "react-router-dom";
 import { Formik, Field, ErrorMessage } from "formik";
 import { TOKEN } from "../../../utils/constans";
@@ -18,7 +18,8 @@ export default function AddControlV(props){
   const [ vaccinesSelected, setVaccinesSelected ] = useState([]);
   const [ goRedirect, setGoRedirect ] = useState(false);
   const [ showSpinner, setShowSpinner ] = useState(false);
-
+  const [ showModal, setShowModal ] = useState(false);
+  const [ newInfoVac, setNewInfoVac ] = useState({ lote: '', institucion: '', profesional: ''});
 
   const [ infoGeneral, setInfoGeneral] = useState({
       Tuberculosis_0: { fecha: null, idVac: 1, nombreVac: "Tuberculosis B.C.G", dosis: 1 }, 
@@ -157,48 +158,139 @@ export default function AddControlV(props){
 
     const saveControlVac = async (e) => {
       e.preventDefault();
-      const arrayControl = Object.values(infoGeneral);
-      const filtroVac = arrayControl.filter(control => control.fecha !== null);
-      filtroVac.map((item, index) => {
-          const formData = {
-            idUsuario: userControl.documento,
-            fechaAplicacion: item.fecha,
-            dosis: item.dosis,
-            edadGestacional: null,
-            vigente: true,
-            vacunas: [
-              {
-                id: item.idVac,
-                meses: userControl.edad,
-                nombre: item.nombreVac,
-              }
-            ]
-          }
-          setShowSpinner(true);
-          insertContVaccApi(formData, token).then(response => {
-            setShowSpinner(false);
-            console.log(response);
-            if(response === true){
-              setShowSpinner(false);
-              swal("¡Excelente, registro exitoso!, El control de vacunas fue almacenado correctamente", {
-                icon: "success",
-              }).then((value) => {
-                setGoRedirect(true);
-              });
-            }else{
-              setShowSpinner(false);
-              swal("Opss! Ocurrió un error!", {
-                icon: "error",
-              }).then((value) => {
-                setGoRedirect(true);
-              });
-            }
-          });
-      });
+      setShowModal(true);
     }
 
     return(
         <Container>
+      <Modal show={showModal ? true : false} size="xs"  onHide={() => setShowModal(false)}  centered aria-labelledby="example-custom-modal-styling-title">
+        <Modal.Header closeButton>
+          <Modal.Title id="example-custom-modal-styling-title" style={{fontSize: "20px"}}> Actualizar el control de vacunas </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="show-grid">
+
+        <Formik
+                    initialValues={newInfoVac}
+                    validate={(valores) => {
+                    let errores = {};
+                    if(!valores.lote){
+                        errores.lote = 'No se permiten campos vacíos'
+                    }
+                    if(!valores.institucion){
+                      errores.institucion = 'No se permiten campos vacíos'
+                    }
+                    if(!valores.profesional){
+                      errores.profesional = 'No se permiten campos vacíos'
+                    }
+                    return errores;
+                    }}
+                    onSubmit={(valores, {resetForm}) => {
+                      const arrayControl = Object.values(infoGeneral);
+                      const filtroVac = arrayControl.filter(control => control.fecha !== null);
+                      filtroVac.map((item, index) => {
+                          const formData = {
+                            idUsuario: userControl.documento,
+                            fechaAplicacion: item.fecha,
+                            dosis: item.dosis,
+                            edadGestacional: null,
+                            vigente: true,
+                            lote: valores.lote,
+                            institucion: valores.institucion,
+                            profesionalSalud: valores.profesional,
+                            vacunas: [
+                              {
+                                id: item.idVac,
+                                meses: userControl.edad,
+                                nombre: item.nombreVac,
+                              }
+                            ]
+                          }
+                          setShowSpinner(true);
+                          insertContVaccApi(formData, token).then(response => {
+                            setShowSpinner(false);
+                            console.log(response);
+                            if(response === true){
+                              setShowSpinner(false);
+                              swal("¡Excelente, registro exitoso!, El control de vacunas fue almacenado correctamente", {
+                                icon: "success",
+                              }).then((value) => {
+                                setGoRedirect(true);
+                              });
+                            }else{
+                              setShowSpinner(false);
+                              swal("Opss! Ocurrió un error!", {
+                                icon: "error",
+                              }).then((value) => {
+                                setGoRedirect(true);
+                              });
+                            }
+                          });
+                      });
+                    }}
+                    >
+                    {props => {
+                        const { values, touched, errors, dirty, isSubmitting,
+                                handleChange, handleBlur, handleSubmit, handleReset
+                        } = props;
+                        return (   
+                        <Form onSubmit={handleSubmit}>
+                            <Form.Group className="mb-3">
+                            <InputGroup hasValidation>
+                                <Form.Control type="text" placeholder="Dígita aquí el lote" size="ls" id="lote" name="lote" 
+                                value={values.lote} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.lote && touched.lote}
+                                isValid={!errors.lote && touched.lote}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.lote}
+                                </Form.Control.Feedback>
+                                <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                            </InputGroup>
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                            <InputGroup hasValidation>
+                                <Form.Control type="text" placeholder="Dígita aquí la institución" size="ls" id="institucion" name="institucion" 
+                                value={values.institucion} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.institucion && touched.institucion}
+                                isValid={!errors.institucion && touched.institucion}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.institucion}
+                                </Form.Control.Feedback>
+                                <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                            </InputGroup>
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                            <InputGroup hasValidation>
+                                <Form.Control type="text" placeholder="Dígita aquí el nombre del profesional" size="ls" id="profesional" name="profesional" 
+                                value={values.profesional} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.profesional && touched.profesional}
+                                isValid={!errors.profesional && touched.profesional}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.profesional}
+                                </Form.Control.Feedback>
+                                <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                            </InputGroup>
+                            </Form.Group>
+
+                            <div className="d-grid gap-2 mt-3">
+                        <Button variant="primary" type="submit" size="lg" disabled={showSpinner}>
+                        {showSpinner ? (
+                            <>
+                            <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">  </span>
+                            {"  " + `  Cargando...`}  
+                            </>
+                        ):(
+                            "Guardar" 
+                        )}
+                        </Button>
+                        </div>
+
+                            </Form>
+                                );
+                            }}
+                        </Formik> 
+
+</Modal.Body>
+        </Modal>
               {goRedirect && (
                    <Redirect to={`/admin/listVaccines/${userControl.documento}`} />
               )}

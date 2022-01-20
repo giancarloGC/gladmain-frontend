@@ -20,6 +20,7 @@ export default function ListV(props){
     const { documento } = useParams();
     const token = localStorage.getItem(TOKEN);
     const [ infoUser, setInfoUser ] = useState(null);
+    console.log(listControls);
 
     useEffect(() => {
         getUserByIdApi(documento, token).then(responseUser => {
