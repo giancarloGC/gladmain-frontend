@@ -40,8 +40,17 @@ export default function ListV(props){
         const { text, dosis, nameVac, sufijoVac} = props; 
         return (
           <>
+            <td>
+                {searchByDosis(dosis, nameVac).lote}
+            </td>
+            <td>
+                {searchByDosis(dosis, nameVac).institucion}
+            </td>
+            <td>
+                {searchByDosis(dosis, nameVac).profesional}
+            </td>
             <td>{text}
-            {searchByDosis(dosis, nameVac) && (
+            {searchByDosis(dosis, nameVac).fechaAplicacion && (
                 <div>
                     <Lottie height={45} width={45} 
                         options={{ loop: false, autoplay: true, animationData: AnimationCheck, rendererSettings: {preserveAspectRatio: 'xMidYMid slice'}}}  
@@ -50,23 +59,34 @@ export default function ListV(props){
             )}
             </td>
             <td>
-              {searchByDosis(dosis, nameVac)}
+              {searchByDosis(dosis, nameVac).fechaAplicacion}
             </td>
           </>
         )
     }
 
     const searchByDosis = (countDosis, nombreVac) => {
-        let fechaAplicacion = null;
+        let infoAll = {
+            lote: null,
+            institucion: null,
+            profesional: null,
+            fechaAplicacion: null
+        };
+        //let fechaAplicacion = null;
         let dosis = listControls.filter(control => control.dosis === countDosis);
         if(dosis.length > 0){
           dosis.map((control, index) => {
             if(control.vacunasRegistradas.length > 0){
               let listVac = control.vacunasRegistradas.filter(vac => vac.nombre === nombreVac);
               if(listVac.length > 0){
-                fechaAplicacion = dateFormat(control.fechaAplicacion);
-              }else{
+                infoAll.lote = control.lote && control.lote;
+                infoAll.institucion = control.institucion && control.institucion;
+                infoAll.profesional = control.profesionalSalud && control.profesionalSalud;
+                infoAll.fechaAplicacion = dateFormat(control.fechaAplicacion)
+                                //infoAll.fechaAplicacion = dateFormat(control.fechaAplicacion);
+                                //fechaAplicacion = dateFormat(control.fechaAplicacion);
               }
+              console.log(infoAll);
             }else{
             }
           })
@@ -74,7 +94,7 @@ export default function ListV(props){
     
           //return false;
         }
-        return fechaAplicacion;
+        return infoAll;
     }
 
     const formatedDate = (date) => {
@@ -163,6 +183,9 @@ export default function ListV(props){
     <tr>
       <th>Edad</th>
       <th>Me protege de</th>
+      <th>Lote</th>
+      <th>Institución</th>
+      <th>Profesional</th>
       <th>Dosis</th>
       <th>Fecha de Aplicación</th>
     </tr>
