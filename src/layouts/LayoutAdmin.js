@@ -198,7 +198,8 @@ export default function LayoutAdmin(props){
         const responseCompromisos = await getCompByUserApi(documento[0], token);
         const dateCurrently = moment();
         const notifi = responseCompromisos.filter(comp => {
-            if(comp.fechaTentativaCump){
+            if(comp.fechaTentativaCump && !comp.fechaCumplimiento){
+                console.log("");
                 let datetentative = moment(comp.fechaTentativaCump);
                 return dateCurrently.diff(datetentative, 'days') > 0;
             };

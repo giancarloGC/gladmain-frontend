@@ -211,6 +211,13 @@ export default function AllUserC (){
                                                     </Link>
                                                 )}
                                                 </div>
+
+                                                <div className="liB">
+                                                        <Link className="enlace" to={`/admin/users/controlesAdicionales/${item.documento}`}>
+                                                            <FontAwesomeIcon icon={faCommentMedical} size="lg" color="#2D61A4" data-tip data-for = "boton6"
+                                                            /> <ReactTooltip id="boton6" place="bottom" type="dark" effect="float"> Controles adicionales </ReactTooltip>
+                                                        </Link>
+                                                </div>  
                                             </div>
                                         </div>
                                     )
