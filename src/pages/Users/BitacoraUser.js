@@ -80,6 +80,14 @@ function ListRolSon({rolesApi}){
     const validatePrivilegio = (privilegio) => {
         return user.authorities.filter(priv => priv === privilegio);
     }
+
+    const dateFormat = (date) => {
+        if(date){
+        let dateFormated = date.split('T');
+        return dateFormated[0];
+        }
+      }
+
     return(
         <Container>
         
@@ -98,14 +106,17 @@ function ListRolSon({rolesApi}){
             <ListGroup.Item className="shadow border mt-2 mb-3">
             <Container>
             <Row>
-                <Col md={4} className="align-self-center">
+                <Col md={3} className="align-self-center">
                     <p style={{"color": "#2D61A4", "fontSize": 23}}><b>Acción </b> <br/> {rol.accion ? 'Activado' : 'Desactivado'}</p>
                 </Col>
-                <Col md={4} className="align-self-center">
+                <Col md={3} className="align-self-center">
                     <p style={{"color": "#2D61A4", "fontSize": 23}}><b>Descripción </b> <br/> {rol.descripcion}</p>
                 </Col>
-                <Col md={4} className="align-self-center justify-content-around">
+                <Col md={3} className="align-self-center justify-content-around">
                     <p style={{"color": "#2D61A4", "fontSize": 23}}><b>Aprobador </b> <br/> {rol.documentoAprobador}</p>               
+                </Col>
+                <Col md={3} className="align-self-center justify-content-around">
+                    <p style={{"color": "#2D61A4", "fontSize": 23}}><b>Fecha del cambio </b> <br/> {dateFormat(rol.fechaCambio)}</p>               
                 </Col>
             </Row>
             </Container>

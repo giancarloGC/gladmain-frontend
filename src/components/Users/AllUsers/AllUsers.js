@@ -148,7 +148,7 @@ export default function AllUsers(){
                 nombreUsuario: nombre,
                 descripcion: descripcion,
                 documentoAprobador: parseInt(documentoAprobador[0]),
-                fechaCambio: moment()
+                fechaCambio: moment()//.format("DD-MM-YYYY")
             };
             data.token = token;
             updateStateUser(data);
@@ -156,7 +156,9 @@ export default function AllUsers(){
     }
 
     const updateStateUser = async (data) => {
+        console.log(data);
         const response = await updateStateUserApi(data);
+        console.log(response);
         if(response === true){
             swal("Excelente! Información actualizada!", {
                 icon: "success",
