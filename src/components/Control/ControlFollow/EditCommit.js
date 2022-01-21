@@ -55,6 +55,13 @@ export default function EditCommit(props){
                 
                 validate={(valores) => {
                   let errores = {};
+                  let dateCurrent = moment();
+                  let dateFechaCompromiso = moment(valores.fechaCompromiso);
+                  let dateFechaCumplimiento = moment(valores.fechaCumplimiento);
+                  if(dateFechaCumplimiento.diff(dateCurrent, 'hours') > 0 || dateFechaCumplimiento.diff(dateFechaCompromiso, 'hours') < 0){
+                    errores.fechaCumplimiento = 'Seleccione una fecha valida';
+                  }
+
                   const dateCurrently2 = new Date();
                  if(dateCurrently2 <= valores.fechaCumplimiento){
                     errores.fechaCumplimiento = 'Seleccione una fecha valida';
