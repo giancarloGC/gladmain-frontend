@@ -28,7 +28,8 @@ export default function AddIncomeCommit(props) {
                   dateCommit: moment().format("YYYY-MM-DD"),  
                   name: "Las niñas y niños cuentan con controles de Crecimiento y Desarrollo", 
                   description: "",  
-                  dateEnd: ""
+                  dateEnd: "",
+                  fechaTentativaCumplimiento: ''
                 }}
                 validate={(valores) => {
                   let errores = {};
@@ -36,6 +37,9 @@ export default function AddIncomeCommit(props) {
                     errores.description = 'No se permiten campos vacíos'
                   }else if(!/^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$/g.test(valores.description)){
                     errores.description = 'Nombre incorrecto, solo puedes escribir letras';
+                  }
+                  if(!valores.fechaTentativaCumplimiento){
+                    errores.fechaTentativaCumplimiento = 'No se permiten campos vacíos'
                   }
                   return errores;
                 }}
@@ -48,7 +52,8 @@ export default function AddIncomeCommit(props) {
                     nuevoCompromiso: valores.description,
                     fechaCumplimiento: edit ? valores.dateEnd : null,
                     nombreAuxiliarEnfermeria: null,
-                    tipo: null
+                    tipo: null,
+                    fechaTentativaCump: valores.fechaTentativaCumplimiento
                   };
 
                   insertCompApi(formData, token).then(response => {
@@ -134,6 +139,25 @@ export default function AddIncomeCommit(props) {
         </InputGroup>
         </Col>
     </Form.Group>
+
+
+    <Form.Group as={Row} className="mt-1">
+                    <center>
+                    <Form.Label column sm="3"><b style={{fontSize: "16px"}}>Fecha tentativa cumplimiento</b></Form.Label>
+                    </center>
+                    <Col sm={12}>
+                        <InputGroup hasValidation>
+                        <Form.Control type="date" size="xs" id="fechaTentativaCumplimiento" name="fechaTentativaCumplimiento" 
+                                 value={values.fechaTentativaCumplimiento} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.fechaTentativaCumplimiento && touched.fechaTentativaCumplimiento}
+                                 isValid={!errors.fechaTentativaCumplimiento && touched.fechaTentativaCumplimiento}
+                              />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.fechaTentativaCumplimiento}
+                            </Form.Control.Feedback>
+                            <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                        </InputGroup>
+                     </Col>
+                    </Form.Group>
 
     <Form.Group as={Row} className="mb-1">
     <Col sm="3"></Col>
