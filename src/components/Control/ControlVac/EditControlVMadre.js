@@ -20,6 +20,8 @@ export default function EditControlVMadre (props){
     const [ authorization, setAuthorization ] = useState(true);
     const [ errorServer, setErrorServer ] = useState(false);
 
+    console.log(infoControl);
+
     const validatePrivilegio = (privilegio) => {
       return user.authorities.filter(priv => priv === privilegio);
   }
@@ -53,6 +55,9 @@ export default function EditControlVMadre (props){
                     fechaAplicacion: infoControl.fechaAplicacion,
                     nombreVacuna: infoControl.nombreVacuna, 
                     edadGestacional: infoControl.edadGestacional,
+                    lote: infoControl.lote, 
+                    institucion: infoControl.institucion,
+                    profesional: infoControl.profesionalSalud
                 }}
                 
                 validate={(valores) => {
@@ -78,6 +83,17 @@ export default function EditControlVMadre (props){
                     errores.edadGestacional = 'Edad gestacional incorrecta, solo puedes escribir valores enteros';
                   }
 
+                  
+                  if(!valores.lote){
+                    errores.lote = 'No se permiten campos vacíos'
+                }
+                if(!valores.institucion){
+                  errores.institucion = 'No se permiten campos vacíos'
+                }
+                if(!valores.profesional){
+                  errores.profesional = 'No se permiten campos vacíos'
+                }
+
                   return errores;
                 }}
 
@@ -91,7 +107,10 @@ export default function EditControlVMadre (props){
                     fechaAplicacion: valores.fechaAplicacion,
                     dosis: null,
                     edadGestacional: valores.edadGestacional,
-                    vigente: false
+                    vigente: false,
+                    lote: valores.lote,
+                    institucion: valores.institucion,
+                    profesionalSalud: valores.profesional,
                 }
                 console.log(formData);
                 valores.token = token;
@@ -223,6 +242,44 @@ export default function EditControlVMadre (props){
                           </InputGroup>
                           </Col>
                         </Form.Group> 
+
+                        <Form.Group className="mb-3">
+                            <InputGroup hasValidation>
+                                <Form.Control type="text" placeholder="Dígita aquí el lote" size="ls" id="lote" name="lote" 
+                                defaultValue={infoControl.lote} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.lote && touched.lote}
+                                isValid={!errors.lote && touched.lote}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.lote}
+                                </Form.Control.Feedback>
+                                <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                            </InputGroup>
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                            <InputGroup hasValidation>
+                                <Form.Control type="text" placeholder="Dígita aquí la institución" size="ls" id="institucion" name="institucion" 
+                                defaultValue={infoControl.institucion} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.institucion && touched.institucion}
+                                isValid={!errors.institucion && touched.institucion}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.institucion}
+                                </Form.Control.Feedback>
+                                <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                            </InputGroup>
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                            <InputGroup hasValidation>
+                                <Form.Control type="text" placeholder="Dígita aquí el nombre del profesional" size="ls" id="profesional" name="profesional" 
+                                defaultValue={infoControl.profesionalSalud} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.profesional && touched.profesional}
+                                isValid={!errors.profesional && touched.profesional}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.profesional}
+                                </Form.Control.Feedback>
+                                <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                            </InputGroup>
+                            </Form.Group>
+
 
                         <Form.Group as={Row} className="mb-3 mt-3 justify-content-center">
                         <Col sm="12">

@@ -53,7 +53,8 @@ export default function AddControlVMadre (props){
                 initialValues={{ 
                     fechaAplicacion: '',
                     nombreVacuna: '', 
-                    edadGestacional: ''
+                    edadGestacional: '',
+                    lote: '', institucion: '', profesional: ''
                 }}
                 
                 validate={(valores) => {
@@ -79,6 +80,16 @@ export default function AddControlVMadre (props){
                     errores.edadGestacional = 'Edad gestacional incorrecta, solo puedes escribir valores enteros';
                   }
 
+                  if(!valores.lote){
+                    errores.lote = 'No se permiten campos vacíos'
+                }
+                if(!valores.institucion){
+                  errores.institucion = 'No se permiten campos vacíos'
+                }
+                if(!valores.profesional){
+                  errores.profesional = 'No se permiten campos vacíos'
+                }
+
                   return errores;
                 }}
 
@@ -92,6 +103,9 @@ export default function AddControlVMadre (props){
                     dosis: null,
                     edadGestacional: valores.edadGestacional,
                     vigente: false,
+                    lote: valores.lote,
+                    institucion: valores.institucion,
+                    profesionalSalud: valores.profesional,
                     vacunas: null
                 }
                 console.log(formData);
@@ -228,6 +242,43 @@ export default function AddControlVMadre (props){
                           </InputGroup>
                           </Col>
                         </Form.Group> 
+
+                        <Form.Group className="mb-3">
+                            <InputGroup hasValidation>
+                                <Form.Control type="text" placeholder="Dígita aquí el lote" size="ls" id="lote" name="lote" 
+                                value={values.lote} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.lote && touched.lote}
+                                isValid={!errors.lote && touched.lote}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.lote}
+                                </Form.Control.Feedback>
+                                <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                            </InputGroup>
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                            <InputGroup hasValidation>
+                                <Form.Control type="text" placeholder="Dígita aquí la institución" size="ls" id="institucion" name="institucion" 
+                                value={values.institucion} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.institucion && touched.institucion}
+                                isValid={!errors.institucion && touched.institucion}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.institucion}
+                                </Form.Control.Feedback>
+                                <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                            </InputGroup>
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                            <InputGroup hasValidation>
+                                <Form.Control type="text" placeholder="Dígita aquí el nombre del profesional" size="ls" id="profesional" name="profesional" 
+                                value={values.profesional} onChange={handleChange} onBlur={handleBlur} isInvalid={!!errors.profesional && touched.profesional}
+                                isValid={!errors.profesional && touched.profesional}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.profesional}
+                                </Form.Control.Feedback>
+                                <Form.Control.Feedback>Luce bien!</Form.Control.Feedback>
+                            </InputGroup>
+                            </Form.Group>
 
                         <Form.Group as={Row} className="mb-4 mt-3 justify-content-center">
                         <Col sm="12">
